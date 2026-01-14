@@ -2506,6 +2506,61 @@ def _aggregate_items(items: List[Dict]) -> Dict:
         "vendor_number": items[0].get("vendor_number", "--"),
     }
 
+def _render_demand_graph_html(fig: go.Figure) -> str:
+    fig_html = fig.to_html(include_plotlyjs=False, full_html=False, config={"displayModeBar": False})
+    return f"""
+    <html>
+      <head>
+        <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+        <style>
+          :root {{
+            --panel-strong: rgba(30, 52, 16, 0.55);
+            --panel: rgba(40, 63, 22, 0.55);
+            --border: rgba(255,255,255,0.10);
+            --text: #ffffff;
+          }}
+          body {{
+            margin: 0;
+            background: transparent;
+            color: var(--text);
+            font-family: "Manrope", sans-serif;
+          }}
+          .demand-card {{
+            background: transparent;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+          }}
+          .demand-header {{
+            background: var(--panel-strong);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding: 10px 16px;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            font-weight: 700;
+            color: var(--text);
+            text-transform: uppercase;
+          }}
+          .demand-body {{
+            background: var(--panel);
+            padding: 12px 16px 8px 16px;
+          }}
+          .demand-body .plotly-graph-div {{
+            margin: 0 !important;
+          }}
+        </style>
+      </head>
+      <body>
+        <div class="demand-card">
+          <div class="demand-header">DEMAND GRAPH</div>
+          <div class="demand-body">
+            {fig_html}
+          </div>
+        </div>
+      </body>
+    </html>
+    """
+
 def _series_from_monthly_rows(rows: List[Dict], sku: str) -> Dict:
     if not rows:
         return {}
@@ -2869,34 +2924,6 @@ def render_webapp() -> None:
           box-shadow: var(--shadow);
         }
 
-        .demand-card {
-          background: transparent;
-          border: 0;
-          box-shadow: none;
-          margin-bottom: 18px;
-        }
-
-        .demand-header {
-          background: var(--panel-strong);
-          border: 1px solid rgba(255,255,255,0.08);
-          border-bottom: 0;
-          border-radius: 16px 16px 0 0;
-          padding: 10px 16px;
-          font-size: 0.72rem;
-          letter-spacing: 0.12em;
-          font-weight: 700;
-          color: #ffffff;
-          text-transform: uppercase;
-        }
-
-        .demand-body {
-          background: var(--panel);
-          border: 1px solid var(--panel-border);
-          border-top: 0;
-          border-radius: 0 0 16px 16px;
-          padding: 12px 16px 8px 16px;
-        }
-
         .demand-body .plotly-html {
           margin: 0;
         }
@@ -3140,14 +3167,7 @@ def render_webapp() -> None:
             forecast_fig = _build_forecast_chart_multi(series_list)
 
     fig_html = forecast_fig.to_html(include_plotlyjs="cdn", full_html=False)
-    demand_html = f"""
-    <div class="demand-card">
-      <div class="demand-header">DEMAND GRAPH</div>
-      <div class="demand-body">
-        <div class="plotly-html">{fig_html}</div>
-      </div>
-    </div>
-    """
+    demand_html = _render_demand_graph_html(forecast_fig)
     components.html(demand_html, height=460, scrolling=False)
 
     st.markdown(_render_queue_table_html(queue_df), unsafe_allow_html=True)
