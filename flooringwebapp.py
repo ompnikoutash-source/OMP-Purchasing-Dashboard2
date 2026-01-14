@@ -2314,6 +2314,52 @@ def _build_forecast_chart(series: Dict) -> go.Figure:
     )
     return fig
 
+def _build_forecast_chart_multi(series_list: List[Dict]) -> go.Figure:
+    fig = go.Figure()
+    palette = ["#2f6fdd", "#6ccf7c", "#f7b84b", "#d96fd9", "#ff8b2c", "#66d0f5"]
+    if not series_list:
+        series_list = [{"label": "Demand", "series": {"x": ["Nov 23", "Nov 30"], "y": [72.4, 74.8]}}]
+
+    for idx, item in enumerate(series_list):
+        series = item.get("series", {})
+        x_vals = series.get("x") or []
+        y_vals = series.get("y") or []
+        if not x_vals or not y_vals:
+            continue
+        fig.add_trace(
+            go.Scatter(
+                x=x_vals,
+                y=y_vals,
+                mode="lines+markers",
+                line=dict(color=palette[idx % len(palette)], width=3),
+                marker=dict(size=6),
+                name=item.get("label", f"Item {idx+1}"),
+            )
+        )
+
+    fig.update_layout(
+        margin=dict(l=40, r=24, t=40, b=36),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="rgba(244,246,235,0.92)", family="Manrope, sans-serif"),
+        showlegend=True,
+        height=300,
+        legend=dict(orientation="h", yanchor="bottom", y=-0.25, x=0.02),
+    )
+    fig.update_xaxes(
+        showgrid=False,
+        ticks="",
+        showline=False,
+        tickfont=dict(size=11),
+    )
+    fig.update_yaxes(
+        showgrid=True,
+        gridcolor="rgba(255,255,255,0.12)",
+        zeroline=False,
+        tickfont=dict(size=11),
+    )
+    return fig
+
 def _render_queue_table_html(rows: List[Dict]) -> str:
     header = """
     <div class="queue-card">
@@ -2384,6 +2430,29 @@ def _render_segmentation_table_html(segmentation: Dict) -> str:
       {body}
     </div>
     """
+
+def _aggregate_items(items: List[Dict]) -> Dict:
+    if not items:
+        return {}
+    total_available = sum(float(item.get("available", 0.0) or 0.0) for item in items)
+    total_on_po = sum(float(item.get("on_po", 0.0) or 0.0) for item in items)
+    total_backorder = sum(float(item.get("backorder", 0.0) or 0.0) for item in items)
+    total_inv = sum(float(item.get("inventory_position", 0.0) or 0.0) for item in items)
+    total_lt_demand = sum(float(item.get("lt_demand", 0.0) or 0.0) for item in items)
+    avg_daily = sum(float(item.get("daily_avg_demand", 0.0) or 0.0) for item in items)
+    days_cover = total_inv / avg_daily if avg_daily > 0 else 0.0
+    lead_time_days = int(round(np.mean([item.get("lead_time_days", 0) or 0 for item in items])))
+    return {
+        "available": total_available,
+        "on_po": total_on_po,
+        "backorder": total_backorder,
+        "inventory_position": total_inv,
+        "lt_demand": total_lt_demand,
+        "daily_avg_demand": avg_daily,
+        "days_of_cover": days_cover,
+        "lead_time_days": lead_time_days,
+        "vendor_number": items[0].get("vendor_number", "--"),
+    }
 
 def _build_spending_chart(spending: Dict) -> go.Figure:
     rng = np.random.default_rng(7)
@@ -2797,36 +2866,38 @@ def render_webapp() -> None:
 
         st.markdown("---")
         st.markdown("### Controls")
-        search_term = st.text_input("Search (item, description, vendor)", value="")
         rollup = st.selectbox("Forecast rollup", ["W", "M"], index=0)
         show_risk_only = st.checkbox("Show only Risk items", value=False)
 
-        st.markdown("---")
-        st.markdown("### Data pull SQL")
-        for src in data.get("sql_sources", []):
-            st.markdown(f"- `{src}`")
-
     items = data.get("items", []) or _demo_webapp_payload().get("items", [])
-    if search_term:
-        search_lower = search_term.lower()
-        items = [
-            item
-            for item in items
-            if search_lower in str(item.get("item_number", "")).lower()
-            or search_lower in str(item.get("description", "")).lower()
-            or search_lower in str(item.get("vendor_name", "")).lower()
-        ]
     if not items:
         items = _demo_webapp_payload().get("items", [])
 
-    item_numbers = [item.get("item_number", "Unknown") for item in items]
-    selected_item_number = st.sidebar.selectbox("Item number", item_numbers, index=0)
-    selected_item = next((item for item in items if item.get("item_number") == selected_item_number), items[0])
+    vendor_names = sorted({str(item.get("vendor_name", "")).strip() for item in items if item.get("vendor_name")})
+    if not vendor_names:
+        vendor_names = ["--"]
+    selected_vendor = st.sidebar.selectbox("Vendor name", vendor_names, index=0)
+
+    vendor_items = [item for item in items if str(item.get("vendor_name", "")).strip() == selected_vendor]
+    item_options = ["All items"] + [str(item.get("description", "")) for item in vendor_items]
+    selected_desc = st.sidebar.selectbox("Item description", item_options, index=0)
+
+    if selected_desc != "All items":
+        selected_item = next((item for item in vendor_items if str(item.get("description", "")) == selected_desc), vendor_items[0])
+    else:
+        selected_item = None
 
     run_meta = data.get("run_meta", {})
-    header_title = f"{selected_item.get('item_number','')} | {selected_item.get('description','')}"
-    vendor_label = selected_item.get("vendor_name") or "--"
-    vendor_number = selected_item.get("vendor_number") or "--"
+    if selected_item:
+        header_title = f"{selected_item.get('item_number','')} | {selected_item.get('description','')}"
+        vendor_label = selected_item.get("vendor_name") or "--"
+        vendor_number = selected_item.get("vendor_number") or "--"
+        vendor_summary = selected_item
+    else:
+        header_title = f"{selected_vendor} | All items"
+        vendor_label = selected_vendor or "--"
+        vendor_summary = _aggregate_items(vendor_items)
+        vendor_number = vendor_summary.get("vendor_number", "--")
     horizon_days = run_meta.get("forecast_horizon_days", FUTURE_FORECAST_DAYS)
     run_stamp = run_meta.get("run_timestamp_local", "--")
 
@@ -2852,6 +2923,7 @@ def render_webapp() -> None:
             for row in queue_rows
             if float(row.get("inventory_position", 0.0)) < float(row.get("lt_demand", 0.0))
         ]
+    queue_rows = [row for row in queue_rows if str(row.get("vendor_name", "")).strip() == selected_vendor] or queue_rows
     if not queue_rows:
         queue_rows = [
             {
@@ -2871,7 +2943,14 @@ def render_webapp() -> None:
 
     st.markdown(_render_queue_table_html(queue_rows), unsafe_allow_html=True)
 
-    forecast_fig = _build_forecast_chart(selected_item.get("forecast_series", {}))
+    if selected_item:
+        forecast_fig = _build_forecast_chart(selected_item.get("forecast_series", {}))
+    else:
+        series_list = [
+            {"label": item.get("item_number", item.get("description", "")), "series": item.get("forecast_series", {})}
+            for item in vendor_items
+        ]
+        forecast_fig = _build_forecast_chart_multi(series_list)
 
     col_chart, col_metrics, col_seg = st.columns([2.2, 1.1, 1.1], gap="large")
     with col_chart:
@@ -2881,23 +2960,23 @@ def render_webapp() -> None:
         st.markdown(
             _render_metric_card_html(
                 "INVENTORY POSITION",
-                _format_number(float(selected_item.get("inventory_position", 0.0)), 2),
-                f"Available {_format_number(float(selected_item.get('available', 0.0)),2)} | On PO {_format_number(float(selected_item.get('on_po', 0.0)),2)}",
+                _format_number(float(vendor_summary.get("inventory_position", 0.0)), 2),
+                f"Available {_format_number(float(vendor_summary.get('available', 0.0)),2)} | On PO {_format_number(float(vendor_summary.get('on_po', 0.0)),2)}",
             ),
             unsafe_allow_html=True,
         )
         st.markdown(
             _render_metric_card_html(
                 "LEAD TIME",
-                f"{int(selected_item.get('lead_time_days', 0) or 0)} days",
-                f"Vendor {selected_item.get('vendor_number','--')}",
+                f"{int(vendor_summary.get('lead_time_days', 0) or 0)} days",
+                f"Vendor {vendor_number}",
             ),
             unsafe_allow_html=True,
         )
         st.markdown(
             _render_metric_card_html(
                 "DEMAND DURING LEAD TIME",
-                _format_number(float(selected_item.get("lt_demand", 0.0)), 2),
+                _format_number(float(vendor_summary.get("lt_demand", 0.0)), 2),
                 "Status OK",
             ),
             unsafe_allow_html=True,
@@ -2905,13 +2984,13 @@ def render_webapp() -> None:
         st.markdown(
             _render_metric_card_html(
                 "DAYS OF COVER",
-                _format_number(float(selected_item.get("days_of_cover", 0.0)), 1),
-                f"Avg daily demand {_format_number(float(selected_item.get('daily_avg_demand', 0.0)),2)}",
+                _format_number(float(vendor_summary.get("days_of_cover", 0.0)), 1),
+                f"Avg daily demand {_format_number(float(vendor_summary.get('daily_avg_demand', 0.0)),2)}",
             ),
             unsafe_allow_html=True,
         )
     with col_seg:
-        suggested_qty = selected_item.get("suggested_order_qty")
+        suggested_qty = None if selected_item is None else selected_item.get("suggested_order_qty")
         suggested_label = "NA" if suggested_qty is None else _format_number(float(suggested_qty), 2)
         st.markdown(
             _render_metric_card_html(
@@ -2921,10 +3000,11 @@ def render_webapp() -> None:
             ),
             unsafe_allow_html=True,
         )
-        st.markdown(
-            _render_segmentation_table_html(selected_item.get("segmentation", {})),
-            unsafe_allow_html=True,
-        )
+        if selected_item:
+            st.markdown(
+                _render_segmentation_table_html(selected_item.get("segmentation", {})),
+                unsafe_allow_html=True,
+            )
 
 if __name__ == "__main__":
     if _is_streamlit_runtime():
