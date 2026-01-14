@@ -2868,46 +2868,29 @@ def render_webapp() -> None:
           box-shadow: var(--shadow);
         }
 
-        .demand-header {
-          margin-bottom: 0;
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 0;
+        .demand-card {
+          background: var(--panel-strong);
+          border-radius: 16px;
+          border: 1px solid rgba(255,255,255,0.08);
+          box-shadow: var(--shadow);
+          overflow: hidden;
+          margin-bottom: 18px;
         }
 
-        .demand-header .queue-header {
+        .demand-card .queue-header {
           border-radius: 16px 16px 0 0;
         }
 
-        .demand-header + div[data-testid="stPlotlyChart"] {
-          margin-top: 0;
-          border-radius: 0 0 16px 16px !important;
-          overflow: hidden !important;
-          clip-path: inset(0 0 0 0 round 0 0 16px 16px);
+        .demand-body {
+          padding: 12px 16px 8px 16px;
         }
 
-        .demand-header + div[data-testid="stPlotlyChart"] > div,
-        .demand-header + div[data-testid="stPlotlyChart"] .plot-container,
-        .demand-header + div[data-testid="stPlotlyChart"] .svg-container,
-        .demand-header + div[data-testid="stPlotlyChart"] .js-plotly-plot,
-        .demand-header + div[data-testid="stPlotlyChart"] .plotly {
-          border-radius: 0 0 16px 16px !important;
-          overflow: hidden !important;
-        }
-
-        .demand-plot-wrap {
-          background: var(--panel);
-          border: 1px solid var(--panel-border);
-          border-top: 0;
-          border-radius: 0 0 16px 16px;
-          box-shadow: var(--shadow-soft);
-          overflow: hidden;
-        }
-
-        .demand-plot-wrap div[data-testid="stPlotlyChart"] {
+        .demand-body div[data-testid="stPlotlyChart"] {
           background: transparent;
           border: 0;
           box-shadow: none;
-          padding: 12px 0 4px 0;
+          padding: 0;
+          margin: 0;
         }
 
         .queue-header {
@@ -3150,15 +3133,14 @@ def render_webapp() -> None:
 
     st.markdown(
         """
-        <div class="queue-card demand-header">
+        <div class="demand-card">
           <div class="queue-header">DEMAND GRAPH</div>
-        </div>
+          <div class="demand-body">
         """,
         unsafe_allow_html=True,
     )
-    st.markdown("<div class='demand-plot-wrap'>", unsafe_allow_html=True)
     st.plotly_chart(forecast_fig, use_container_width=True, config={"displayModeBar": False})
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div></div>", unsafe_allow_html=True)
 
     st.markdown(_render_queue_table_html(queue_df), unsafe_allow_html=True)
 
