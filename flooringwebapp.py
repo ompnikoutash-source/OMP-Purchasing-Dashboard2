@@ -2888,6 +2888,11 @@ def render_webapp() -> None:
           border-radius: 0 0 16px 16px !important;
         }
 
+        .demand-header + div[data-testid="stPlotlyChart"] .js-plotly-plot,
+        .demand-header + div[data-testid="stPlotlyChart"] .plotly {
+          border-radius: 0 0 16px 16px !important;
+        }
+
         .queue-header {
           padding: 10px 16px;
           font-size: 0.72rem;
