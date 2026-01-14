@@ -17,13 +17,30 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
-import pyodbc
 import streamlit as st
-from scipy import stats
-from statsmodels.tsa.holtwinters import ExponentialSmoothing, SimpleExpSmoothing
-from sklearn.neural_network import MLPRegressor
-from sklearn.ensemble import RandomForestRegressor
-from xgboost import XGBRegressor
+try:
+    import pyodbc
+except Exception:
+    pyodbc = None
+try:
+    from scipy import stats
+except Exception:
+    stats = None
+try:
+    from statsmodels.tsa.holtwinters import ExponentialSmoothing, SimpleExpSmoothing
+except Exception:
+    ExponentialSmoothing = None
+    SimpleExpSmoothing = None
+try:
+    from sklearn.neural_network import MLPRegressor
+    from sklearn.ensemble import RandomForestRegressor
+except Exception:
+    MLPRegressor = None
+    RandomForestRegressor = None
+try:
+    from xgboost import XGBRegressor
+except Exception:
+    XGBRegressor = None
 
 
 # Suppress all warnings
@@ -85,7 +102,7 @@ DAYS_PER_WEEK = 7
 DAYS_PER_MONTH = 30.4
 WEEKS_PER_MONTH = DAYS_PER_MONTH / DAYS_PER_WEEK
 SERVICE_LEVEL = 0.9  # 90% service level (reduced from 95%)
-Z_SCORE = stats.norm.ppf(SERVICE_LEVEL)
+Z_SCORE = stats.norm.ppf(SERVICE_LEVEL) if stats is not None else 1.28
 
 LEADTIMES_XLSX = "Lead Times.xlsx"
 CUTOFF_DATE = "2020-06-01"
@@ -139,6 +156,8 @@ def _load_credentials():
     return uid, pwd
 
 def _connect():
+    if pyodbc is None:
+        raise RuntimeError("pyodbc is not available. Install local forecasting dependencies to run forecasts.")
     uid, pwd = _load_credentials()
     conn_str = f"DSN={DSN_NAME};UID={uid};PWD={pwd};"
     print(f"  Attempting database connection...")
