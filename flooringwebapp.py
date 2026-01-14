@@ -2296,21 +2296,22 @@ def _build_forecast_chart(series: Dict) -> go.Figure:
         margin=dict(l=40, r=24, t=40, b=36),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="rgba(244,246,235,0.92)", family="Manrope, sans-serif"),
+        font=dict(color="rgba(255,255,255,0.88)", family="Manrope, sans-serif"),
         showlegend=False,
         height=300,
     )
     fig.update_xaxes(
-        showgrid=False,
+        showgrid=True,
+        gridcolor="rgba(255,255,255,0.08)",
         ticks="",
         showline=False,
-        tickfont=dict(size=11),
+        tickfont=dict(size=11, color="rgba(255,255,255,0.65)"),
     )
     fig.update_yaxes(
         showgrid=True,
-        gridcolor="rgba(255,255,255,0.12)",
+        gridcolor="rgba(255,255,255,0.08)",
         zeroline=False,
-        tickfont=dict(size=11),
+        tickfont=dict(size=11, color="rgba(255,255,255,0.65)"),
     )
     return fig
 
@@ -2341,22 +2342,23 @@ def _build_forecast_chart_multi(series_list: List[Dict]) -> go.Figure:
         margin=dict(l=40, r=24, t=40, b=36),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="rgba(244,246,235,0.92)", family="Manrope, sans-serif"),
+        font=dict(color="rgba(255,255,255,0.88)", family="Manrope, sans-serif"),
         showlegend=True,
         height=300,
         legend=dict(orientation="h", yanchor="bottom", y=-0.25, x=0.02),
     )
     fig.update_xaxes(
-        showgrid=False,
+        showgrid=True,
+        gridcolor="rgba(255,255,255,0.08)",
         ticks="",
         showline=False,
-        tickfont=dict(size=11),
+        tickfont=dict(size=11, color="rgba(255,255,255,0.65)"),
     )
     fig.update_yaxes(
         showgrid=True,
-        gridcolor="rgba(255,255,255,0.12)",
+        gridcolor="rgba(255,255,255,0.08)",
         zeroline=False,
-        tickfont=dict(size=11),
+        tickfont=dict(size=11, color="rgba(255,255,255,0.65)"),
     )
     return fig
 
@@ -2647,16 +2649,18 @@ def render_webapp() -> None:
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap');
 
         :root {
-          --bg: #5d6f2f;
-          --bg-dark: #4b5a25;
-          --panel: rgba(71,86,28,0.82);
-          --panel-strong: rgba(58,72,20,0.9);
-          --panel-border: rgba(255,255,255,0.12);
-          --text: #f2f5e7;
-          --muted: rgba(242,245,231,0.66);
-          --accent: #ff8b2c;
+          --bg1: #6f8c34;
+          --bg2: #5e7a2f;
+          --bg3: #4f6927;
+          --panel: rgba(40, 63, 22, 0.55);
+          --panel-strong: rgba(30, 52, 16, 0.55);
+          --panel-border: rgba(255,255,255,0.10);
+          --text: rgba(255,255,255,0.92);
+          --muted: rgba(255,255,255,0.68);
+          --accent: #ff8a2a;
           --blue: #2f6fdd;
-          --shadow: 0 12px 24px rgba(0,0,0,0.28);
+          --shadow: 0 12px 30px rgba(0,0,0,0.18);
+          --shadow-soft: 0 6px 16px rgba(0,0,0,0.12);
         }
 
         html, body, [class*="css"]  {
@@ -2665,7 +2669,7 @@ def render_webapp() -> None:
         }
 
         .stApp {
-          background: linear-gradient(135deg, #5f7431 0%, #516228 48%, #46561f 100%);
+          background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 60%, var(--bg3) 100%);
         }
 
         .block-container {
@@ -2674,7 +2678,7 @@ def render_webapp() -> None:
         }
 
         section[data-testid="stSidebar"] {
-          background: #4f6126;
+          background: rgba(30, 52, 16, 0.25);
           border-right: 1px solid rgba(255,255,255,0.08);
         }
 
@@ -2702,21 +2706,24 @@ def render_webapp() -> None:
           display: inline-flex;
           padding: 6px 12px;
           border-radius: 999px;
-          background: rgba(0,0,0,0.25);
+          border: 1px solid var(--panel-border);
+          background: rgba(255,255,255,0.06);
           font-size: 0.75rem;
-          letter-spacing: 0.04em;
+          letter-spacing: 0.08em;
           text-transform: uppercase;
+          color: var(--muted);
         }
 
         .export-btn {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          padding: 8px 14px;
-          border-radius: 999px;
+          padding: 10px 14px;
+          border-radius: 14px;
+          border: 1px solid rgba(0,0,0,0.15);
           background: var(--accent);
-          color: #1d1d1d;
-          font-weight: 700;
+          color: rgba(20,20,20,0.95);
+          font-weight: 750;
           font-size: 0.8rem;
           text-decoration: none;
         }
@@ -2786,29 +2793,31 @@ def render_webapp() -> None:
 
         .metric-card {
           background: var(--panel);
-          border-radius: 16px;
-          padding: 14px 16px;
-          border: 1px solid rgba(255,255,255,0.12);
-          box-shadow: var(--shadow);
+          border-radius: 18px;
+          padding: 14px 16px 12px 16px;
+          border: 1px solid var(--panel-border);
+          box-shadow: var(--shadow-soft);
           margin-bottom: 14px;
         }
 
         .metric-title {
           font-size: 0.72rem;
           letter-spacing: 0.12em;
-          color: #d7e3aa;
+          color: var(--muted);
+          text-transform: uppercase;
         }
 
         .metric-value {
-          font-size: 1.3rem;
-          font-weight: 700;
-          margin-top: 8px;
+          font-size: 1.55rem;
+          font-weight: 750;
+          margin-top: 6px;
+          color: rgba(255,255,255,0.96);
         }
 
         .metric-sub {
-          font-size: 0.75rem;
+          font-size: 0.78rem;
           color: var(--muted);
-          margin-top: 4px;
+          margin-top: 6px;
         }
 
         .seg-card {
@@ -2845,7 +2854,7 @@ def render_webapp() -> None:
           border: 1px solid var(--panel-border);
           border-radius: 18px;
           padding: 12px 14px 4px 14px;
-          box-shadow: var(--shadow);
+          box-shadow: var(--shadow-soft);
         }
 
         </style>
@@ -2866,8 +2875,6 @@ def render_webapp() -> None:
 
         st.markdown("---")
         st.markdown("### Controls")
-        rollup = st.selectbox("Forecast rollup", ["W", "M"], index=0)
-        show_risk_only = st.checkbox("Show only Risk items", value=False)
 
     items = data.get("items", []) or _demo_webapp_payload().get("items", [])
     if not items:
@@ -2917,12 +2924,6 @@ def render_webapp() -> None:
     )
 
     queue_rows = data.get("queue", [])
-    if show_risk_only:
-        queue_rows = [
-            row
-            for row in queue_rows
-            if float(row.get("inventory_position", 0.0)) < float(row.get("lt_demand", 0.0))
-        ]
     queue_rows = [row for row in queue_rows if str(row.get("vendor_name", "")).strip() == selected_vendor] or queue_rows
     if not queue_rows:
         queue_rows = [
