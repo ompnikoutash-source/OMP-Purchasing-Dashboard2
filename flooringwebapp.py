@@ -2333,13 +2333,13 @@ def _build_forecast_chart(series: Dict) -> go.Figure:
         )
     )
     fig.update_layout(
-        margin=dict(l=40, r=60, t=60, b=40),
+        margin=dict(l=40, r=60, t=40, b=40),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="rgba(255,255,255,0.88)", family="Manrope, sans-serif"),
         showlegend=bool(hist_vals),
-        legend=dict(font=dict(color="#ffffff"), orientation="h", x=0.02, y=1.12, bgcolor="rgba(0,0,0,0)"),
-        height=300,
+        legend=dict(font=dict(color="#ffffff"), orientation="h", x=0.72, y=0.98, bgcolor="rgba(0,0,0,0)", xanchor="left", yanchor="top"),
+        height=360,
     )
     fig.update_xaxes(
         showgrid=True,
@@ -2386,8 +2386,8 @@ def _build_forecast_chart_multi(series_list: List[Dict]) -> go.Figure:
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="rgba(255,255,255,0.88)", family="Manrope, sans-serif"),
         showlegend=True,
-        height=300,
-        legend=dict(orientation="h", yanchor="bottom", y=-0.25, x=0.02, font=dict(color="#ffffff")),
+        height=360,
+        legend=dict(orientation="h", x=0.72, y=0.98, xanchor="left", yanchor="top", font=dict(color="#ffffff")),
     )
     fig.update_xaxes(
         showgrid=True,
@@ -2860,7 +2860,13 @@ def render_webapp() -> None:
         }
 
         .demand-header {
-          margin-bottom: 6px;
+          margin-bottom: 0;
+        }
+
+        .demand-header + div[data-testid="stPlotlyChart"] {
+          margin-top: 0;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
         }
 
         .queue-header {
