@@ -2184,9 +2184,9 @@ def _build_webapp_payload(df_results: pd.DataFrame, df_monthly: pd.DataFrame) ->
                 continue
             last = series.tail(6)
             series_payload = {
-                "fc_x": [d.strftime("%b %d") for d in last.index],
+                "fc_x": [d.strftime("%Y-%m-%d") for d in last.index],
                 "fc_y": [float(v) for v in last.values],
-                "x": [d.strftime("%b %d") for d in last.index],
+                "x": [d.strftime("%Y-%m-%d") for d in last.index],
                 "y": [float(v) for v in last.values],
             }
             if row_type_col and row_type_col in sku_df.columns:
@@ -2195,17 +2195,17 @@ def _build_webapp_payload(df_results: pd.DataFrame, df_monthly: pd.DataFrame) ->
                 hist_series = sku_df.loc[hist_mask].groupby(col_month)[col_hist].sum().sort_index().tail(12) if col_hist else None
                 fc_series = sku_df.loc[fc_mask].groupby(col_month)[col_forecast].sum().sort_index().tail(12) if col_forecast else None
                 if hist_series is not None and not hist_series.empty:
-                    series_payload["hist_x"] = [d.strftime("%b %d") for d in hist_series.index]
+                    series_payload["hist_x"] = [d.strftime("%Y-%m-%d") for d in hist_series.index]
                     series_payload["hist_y"] = [float(v) for v in hist_series.values]
                 if fc_series is not None and not fc_series.empty:
-                    series_payload["fc_x"] = [d.strftime("%b %d") for d in fc_series.index]
+                    series_payload["fc_x"] = [d.strftime("%Y-%m-%d") for d in fc_series.index]
                     series_payload["fc_y"] = [float(v) for v in fc_series.values]
-                    series_payload["x"] = [d.strftime("%b %d") for d in fc_series.index]
+                    series_payload["x"] = [d.strftime("%Y-%m-%d") for d in fc_series.index]
                     series_payload["y"] = [float(v) for v in fc_series.values]
             elif col_hist and col_hist in sku_df.columns:
                 hist_series = sku_df[sku_df[col_hist].notna()].groupby(col_month)[col_hist].sum().sort_index().tail(12)
                 if not hist_series.empty:
-                    series_payload["hist_x"] = [d.strftime("%b %d") for d in hist_series.index]
+                    series_payload["hist_x"] = [d.strftime("%Y-%m-%d") for d in hist_series.index]
                     series_payload["hist_y"] = [float(v) for v in hist_series.values]
             sku_series[str(sku)] = series_payload
             first_date = series.index.min()
@@ -2302,10 +2302,13 @@ def _is_streamlit_runtime() -> bool:
         return False
 
 def _build_forecast_chart(series: Dict) -> go.Figure:
-    hist_x = series.get("hist_x") or series.get("x") or ["Nov 23", "Nov 30", "Dec 07", "Dec 14", "Dec 21"]
+    hist_x = series.get("hist_x") or series.get("x") or ["2025-11-23", "2025-11-30", "2025-12-07", "2025-12-14", "2025-12-21"]
     hist_vals = series.get("hist_y") or []
-    fc_x = series.get("fc_x") or series.get("x") or ["Nov 23", "Nov 30", "Dec 07", "Dec 14", "Dec 21"]
+    fc_x = series.get("fc_x") or series.get("x") or ["2025-11-23", "2025-11-30", "2025-12-07", "2025-12-14", "2025-12-21"]
     fc_vals = series.get("fc_y") or series.get("y") or [72.4, 74.8, 74.9, 74.9, 74.1]
+
+    hist_x = pd.to_datetime(hist_x, errors="coerce") if hist_x else hist_x
+    fc_x = pd.to_datetime(fc_x, errors="coerce") if fc_x else fc_x
 
     fig = go.Figure()
     if hist_vals:
@@ -2343,6 +2346,7 @@ def _build_forecast_chart(series: Dict) -> go.Figure:
         ticks="",
         showline=False,
         tickfont=dict(size=11, color="rgba(255,255,255,0.65)"),
+        tickformat="%b '%y",
     )
     fig.update_yaxes(
         showgrid=True,
@@ -2519,10 +2523,10 @@ def _series_from_monthly_rows(rows: List[Dict], sku: str) -> Dict:
     fc = fc.sort_values("Month")
     series: Dict[str, List[float]] = {}
     if not hist.empty and "Historical Demand" in hist.columns:
-        series["hist_x"] = [d.strftime("%b %d") for d in hist["Month"].tail(12)]
+        series["hist_x"] = [d.strftime("%Y-%m-%d") for d in hist["Month"].tail(12)]
         series["hist_y"] = [float(v) for v in hist["Historical Demand"].tail(12)]
     if not fc.empty and "Forecast" in fc.columns:
-        series["fc_x"] = [d.strftime("%b %d") for d in fc["Month"].tail(12)]
+        series["fc_x"] = [d.strftime("%Y-%m-%d") for d in fc["Month"].tail(12)]
         series["fc_y"] = [float(v) for v in fc["Forecast"].tail(12)]
         series["x"] = series["fc_x"]
         series["y"] = series["fc_y"]
@@ -2549,11 +2553,11 @@ def _series_from_monthly_rows_vendor(rows: List[Dict], vendor: str) -> Dict:
     series: Dict[str, List[float]] = {}
     if not hist.empty and "Historical Demand" in hist.columns:
         hist_series = hist.groupby("Month")["Historical Demand"].sum().sort_index().tail(12)
-        series["hist_x"] = [d.strftime("%b %d") for d in hist_series.index]
+        series["hist_x"] = [d.strftime("%Y-%m-%d") for d in hist_series.index]
         series["hist_y"] = [float(v) for v in hist_series.values]
     if not fc.empty and "Forecast" in fc.columns:
         fc_series = fc.groupby("Month")["Forecast"].sum().sort_index().tail(12)
-        series["fc_x"] = [d.strftime("%b %d") for d in fc_series.index]
+        series["fc_x"] = [d.strftime("%Y-%m-%d") for d in fc_series.index]
         series["fc_y"] = [float(v) for v in fc_series.values]
         series["x"] = series["fc_x"]
         series["y"] = series["fc_y"]
