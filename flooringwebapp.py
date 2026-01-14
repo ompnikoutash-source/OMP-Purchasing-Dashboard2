@@ -2841,17 +2841,6 @@ def render_webapp() -> None:
     )
 
     with st.sidebar:
-        st.markdown("### Data source")
-        uploaded = st.file_uploader("Upload forecast JSON", type=["json"])
-        if uploaded is not None:
-            try:
-                data = json.load(uploaded)
-                st.success("Using uploaded JSON")
-            except Exception:
-                st.error("Could not parse JSON file.")
-        st.caption(f"Local file: `{WEBAPP_JSON_PATH.name}`")
-
-        st.markdown("---")
         st.markdown("### Controls")
 
     items = data.get("items", []) or _demo_webapp_payload().get("items", [])
