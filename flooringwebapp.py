@@ -2319,7 +2319,7 @@ def _build_forecast_chart(series: Dict) -> go.Figure:
                 mode="lines+markers",
                 line=dict(color="#d46a1f", width=3),
                 marker=dict(size=6, color="#d46a1f"),
-                name="Historical demand",
+                name="Historical",
             )
         )
     fig.add_trace(
