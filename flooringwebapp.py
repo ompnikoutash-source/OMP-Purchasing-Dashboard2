@@ -18,6 +18,7 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
+import streamlit.components.v1 as components
 try:
     import pyodbc
 except Exception:
@@ -2942,7 +2943,8 @@ def render_webapp() -> None:
             for item in items[:6]
         ]
 
-    st.markdown(_render_queue_table_html(queue_rows), unsafe_allow_html=True)
+    queue_html = _render_queue_table_html(queue_rows)
+    components.html(queue_html, height=220 + 34 * max(1, len(queue_rows)))
 
     if selected_item:
         forecast_fig = _build_forecast_chart(selected_item.get("forecast_series", {}))
