@@ -2870,7 +2870,7 @@ def render_webapp() -> None:
 
         .demand-card {
           background: var(--panel-strong);
-          border-radius: 16px;
+          border-radius: 0;
           border: 1px solid rgba(255,255,255,0.08);
           box-shadow: var(--shadow);
           overflow: hidden;
@@ -2878,7 +2878,7 @@ def render_webapp() -> None:
         }
 
         .demand-card .queue-header {
-          border-radius: 16px 16px 0 0;
+          border-radius: 0;
         }
 
         .demand-body {
@@ -2891,6 +2891,7 @@ def render_webapp() -> None:
           box-shadow: none;
           padding: 0;
           margin: 0;
+          border-radius: 0;
         }
 
         .queue-header {
