@@ -2861,6 +2861,12 @@ def render_webapp() -> None:
 
         .demand-header {
           margin-bottom: 0;
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        .demand-header .queue-header {
+          border-radius: 16px 16px 0 0;
         }
 
         .demand-header + div[data-testid="stPlotlyChart"] {
