@@ -2894,6 +2894,22 @@ def render_webapp() -> None:
           overflow: hidden !important;
         }
 
+        .demand-plot-wrap {
+          background: var(--panel);
+          border: 1px solid var(--panel-border);
+          border-top: 0;
+          border-radius: 0 0 16px 16px;
+          box-shadow: var(--shadow-soft);
+          overflow: hidden;
+        }
+
+        .demand-plot-wrap div[data-testid="stPlotlyChart"] {
+          background: transparent;
+          border: 0;
+          box-shadow: none;
+          padding: 12px 0 4px 0;
+        }
+
         .queue-header {
           padding: 10px 16px;
           font-size: 0.72rem;
@@ -3034,11 +3050,11 @@ def render_webapp() -> None:
         }
 
         div[data-testid="stPlotlyChart"] {
-          background: var(--panel);
-          border: 1px solid var(--panel-border);
+          background: transparent;
+          border: 0;
           border-radius: 0;
           padding: 12px 0 4px 0;
-          box-shadow: var(--shadow-soft);
+          box-shadow: none;
           overflow: hidden;
         }
 
@@ -3140,7 +3156,9 @@ def render_webapp() -> None:
         """,
         unsafe_allow_html=True,
     )
+    st.markdown("<div class='demand-plot-wrap'>", unsafe_allow_html=True)
     st.plotly_chart(forecast_fig, use_container_width=True, config={"displayModeBar": False})
+    st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown(_render_queue_table_html(queue_df), unsafe_allow_html=True)
 
