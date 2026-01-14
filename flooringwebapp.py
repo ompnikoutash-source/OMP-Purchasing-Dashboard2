@@ -2171,6 +2171,8 @@ def _build_webapp_payload(df_results: pd.DataFrame, df_monthly: pd.DataFrame) ->
     sku_first_dates: Dict[str, str] = {}
     sku_history_days: Dict[str, int] = {}
 
+    row_type_col = _get_first_column(df_monthly, ["Row_Type", "row_type"]) if df_monthly is not None else None
+
     if df_monthly is not None and not df_monthly.empty and col_month and col_sku and (col_forecast or col_hist):
         df_m = df_monthly.copy()
         df_m[col_month] = pd.to_datetime(df_m[col_month], errors="coerce")
@@ -2187,10 +2189,24 @@ def _build_webapp_payload(df_results: pd.DataFrame, df_monthly: pd.DataFrame) ->
                 "x": [d.strftime("%b %d") for d in last.index],
                 "y": [float(v) for v in last.values],
             }
-            if col_hist and col_hist in sku_df.columns:
-                hist_series = sku_df[sku_df[col_hist].notna()].groupby(col_month)[col_hist].sum().sort_index().tail(6)
-                series_payload["hist_x"] = [d.strftime("%b %d") for d in hist_series.index]
-                series_payload["hist_y"] = [float(v) for v in hist_series.values]
+            if row_type_col and row_type_col in sku_df.columns:
+                hist_mask = sku_df[row_type_col].astype(str).str.upper().eq("HIST")
+                fc_mask = sku_df[row_type_col].astype(str).str.upper().isin(["FCST", "CATCHUP"])
+                hist_series = sku_df.loc[hist_mask].groupby(col_month)[col_hist].sum().sort_index().tail(12) if col_hist else None
+                fc_series = sku_df.loc[fc_mask].groupby(col_month)[col_forecast].sum().sort_index().tail(12) if col_forecast else None
+                if hist_series is not None and not hist_series.empty:
+                    series_payload["hist_x"] = [d.strftime("%b %d") for d in hist_series.index]
+                    series_payload["hist_y"] = [float(v) for v in hist_series.values]
+                if fc_series is not None and not fc_series.empty:
+                    series_payload["fc_x"] = [d.strftime("%b %d") for d in fc_series.index]
+                    series_payload["fc_y"] = [float(v) for v in fc_series.values]
+                    series_payload["x"] = [d.strftime("%b %d") for d in fc_series.index]
+                    series_payload["y"] = [float(v) for v in fc_series.values]
+            elif col_hist and col_hist in sku_df.columns:
+                hist_series = sku_df[sku_df[col_hist].notna()].groupby(col_month)[col_hist].sum().sort_index().tail(12)
+                if not hist_series.empty:
+                    series_payload["hist_x"] = [d.strftime("%b %d") for d in hist_series.index]
+                    series_payload["hist_y"] = [float(v) for v in hist_series.values]
             sku_series[str(sku)] = series_payload
             first_date = series.index.min()
             last_date = series.index.max()
