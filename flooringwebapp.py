@@ -3026,8 +3026,12 @@ def render_webapp() -> None:
           background: var(--panel);
           border: 1px solid var(--panel-border);
           border-radius: 0;
-          padding: 12px 14px 4px 14px;
+          padding: 12px 0 4px 0;
           box-shadow: var(--shadow-soft);
+        }
+
+        .demand-header + div[data-testid="stPlotlyChart"] {
+          padding-right: 0;
         }
 
         </style>
