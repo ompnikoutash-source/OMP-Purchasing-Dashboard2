@@ -18,7 +18,6 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
-import streamlit.components.v1 as components
 try:
     import pyodbc
 except Exception:
@@ -2363,47 +2362,25 @@ def _build_forecast_chart_multi(series_list: List[Dict]) -> go.Figure:
     )
     return fig
 
-def _render_queue_table_html(rows: List[Dict]) -> str:
-    header = """
-    <div class="queue-card">
-      <div class="queue-header">PURCHASING QUEUE</div>
-      <div class="queue-table">
-        <div class="queue-row queue-head">
-          <div>Item</div>
-          <div>Description</div>
-          <div>Vendor</div>
-          <div>Vend #</div>
-          <div>Available</div>
-          <div>On PO</div>
-          <div>Backorder</div>
-          <div>Inv Position</div>
-          <div>Lead Time (days)</div>
-          <div>LT Demand</div>
-        </div>
-    """
-    body_rows = []
-    for row in rows:
-        body_rows.append(
-            f"""
-            <div class="queue-row">
-              <div>{row.get('item_number','')}</div>
-              <div class="text-clip">{row.get('description','')}</div>
-              <div>{row.get('vendor_name','')}</div>
-              <div>{row.get('vendor_number','')}</div>
-              <div>{_format_number(float(row.get('available', 0.0)), 2)}</div>
-              <div>{_format_number(float(row.get('on_po', 0.0)), 2)}</div>
-              <div>{_format_number(float(row.get('backorder', 0.0)), 2)}</div>
-              <div>{_format_number(float(row.get('inventory_position', 0.0)), 2)}</div>
-              <div>{int(row.get('lead_time_days', 0) or 0)}</div>
-              <div>{_format_number(float(row.get('lt_demand', 0.0)), 2)}</div>
-            </div>
-            """
-        )
-    footer = """
-      </div>
-    </div>
-    """
-    return header + "".join(body_rows) + footer
+def _build_queue_df_from_inventory(metrics: List[Dict]) -> pd.DataFrame:
+    if not metrics:
+        return pd.DataFrame()
+    df = pd.DataFrame(metrics)
+    rename_map = {
+        "sku": "Item",
+        "description": "Description",
+        "collection": "Vendor",
+        "vendor_number": "Vend #",
+        "available_sf": "Available",
+        "on_po_sf": "On PO",
+        "backorder_sf": "Backorder",
+        "inventory_position": "Inv Position",
+        "lead_time_days": "Lead Time (days)",
+        "lead_time_mean_demand": "LT Demand",
+    }
+    cols = [c for c in rename_map.keys() if c in df.columns]
+    df = df[cols].rename(columns=rename_map)
+    return df
 
 def _render_metric_card_html(title: str, value: str, subtitle: Optional[str] = None) -> str:
     subtitle_html = f"<div class='metric-sub'>{subtitle}</div>" if subtitle else ""
@@ -2924,27 +2901,22 @@ def render_webapp() -> None:
         unsafe_allow_html=True,
     )
 
-    queue_rows = data.get("queue", [])
-    queue_rows = [row for row in queue_rows if str(row.get("vendor_name", "")).strip() == selected_vendor] or queue_rows
-    if not queue_rows:
-        queue_rows = [
-            {
-                "item_number": item.get("item_number", ""),
-                "description": item.get("description", ""),
-                "vendor_name": item.get("vendor_name", ""),
-                "vendor_number": item.get("vendor_number", ""),
-                "available": item.get("available", 0.0),
-                "on_po": item.get("on_po", 0.0),
-                "backorder": item.get("backorder", 0.0),
-                "inventory_position": item.get("inventory_position", 0.0),
-                "lead_time_days": item.get("lead_time_days", 0),
-                "lt_demand": item.get("lt_demand", 0.0),
-            }
-            for item in items[:6]
-        ]
+    metrics_rows = data.get("Inventory_Metrics", [])
+    queue_df = _build_queue_df_from_inventory(metrics_rows)
+    if not queue_df.empty:
+        queue_df = queue_df[queue_df["Vendor"].astype(str).str.strip() == selected_vendor]
+    if queue_df.empty:
+        queue_df = _build_queue_df_from_inventory(_demo_webapp_payload().get("Inventory_Metrics", []))
 
-    queue_html = _render_queue_table_html(queue_rows)
-    components.html(queue_html, height=220 + 34 * max(1, len(queue_rows)))
+    st.markdown(
+        """
+        <div class="queue-card">
+          <div class="queue-header">PURCHASING QUEUE</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.dataframe(queue_df, use_container_width=True, hide_index=True)
 
     if selected_item:
         forecast_fig = _build_forecast_chart(selected_item.get("forecast_series", {}))
