@@ -2181,10 +2181,14 @@ def _build_webapp_payload(df_results: pd.DataFrame, df_monthly: pd.DataFrame) ->
             if series.empty:
                 continue
             last = series.tail(6)
-            sku_series[str(sku)] = {
+            series_payload = {
                 "x": [d.strftime("%b %d") for d in last.index],
                 "y": [float(v) for v in last.values],
             }
+            if col_hist and col_hist in sku_df.columns:
+                hist_series = sku_df.groupby(col_month)[col_hist].sum().sort_index().tail(6)
+                series_payload["hist_y"] = [float(v) for v in hist_series.values]
+            sku_series[str(sku)] = series_payload
             first_date = series.index.min()
             last_date = series.index.max()
             if pd.notna(first_date) and pd.notna(last_date):
@@ -2281,8 +2285,20 @@ def _is_streamlit_runtime() -> bool:
 def _build_forecast_chart(series: Dict) -> go.Figure:
     x_vals = series.get("x") or ["Nov 23", "Nov 30", "Dec 07", "Dec 14", "Dec 21"]
     y_vals = series.get("y") or [72.4, 74.8, 74.9, 74.9, 74.1]
+    hist_vals = series.get("hist_y") or []
 
     fig = go.Figure()
+    if hist_vals:
+        fig.add_trace(
+            go.Scatter(
+                x=x_vals,
+                y=hist_vals,
+                mode="lines+markers",
+                line=dict(color="#d46a1f", width=3),
+                marker=dict(size=6, color="#d46a1f"),
+                name="Historical demand",
+            )
+        )
     fig.add_trace(
         go.Scatter(
             x=x_vals,
@@ -2290,6 +2306,7 @@ def _build_forecast_chart(series: Dict) -> go.Figure:
             mode="lines+markers",
             line=dict(color="#2f6fdd", width=3),
             marker=dict(size=6, color="#2f6fdd"),
+            name="Forecast",
         )
     )
     fig.update_layout(
@@ -2297,7 +2314,7 @@ def _build_forecast_chart(series: Dict) -> go.Figure:
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="rgba(255,255,255,0.88)", family="Manrope, sans-serif"),
-        showlegend=False,
+        showlegend=bool(hist_vals),
         height=300,
     )
     fig.update_xaxes(
@@ -2381,6 +2398,34 @@ def _build_queue_df_from_inventory(metrics: List[Dict]) -> pd.DataFrame:
     cols = [c for c in rename_map.keys() if c in df.columns]
     df = df[cols].rename(columns=rename_map)
     return df
+
+def _render_queue_table_html(df: pd.DataFrame) -> str:
+    if df is None or df.empty:
+        return """
+        <div class="queue-card">
+          <div class="queue-header">PURCHASING QUEUE</div>
+          <div class="queue-empty">No items for selected vendor.</div>
+        </div>
+        """
+    headers = "".join(f"<div>{col}</div>" for col in df.columns)
+    rows = []
+    for _, row in df.iterrows():
+        cells = []
+        for col in df.columns:
+            value = row[col]
+            if isinstance(value, (int, float)) and col not in ("Item", "Description", "Vendor", "Vend #"):
+                value = _format_number(float(value), 2)
+            cells.append(f"<div class='text-clip'>{value}</div>")
+        rows.append(f"<div class='queue-row'>{''.join(cells)}</div>")
+    return f"""
+    <div class="queue-card">
+      <div class="queue-header">PURCHASING QUEUE</div>
+      <div class="queue-table">
+        <div class="queue-row queue-head">{headers}</div>
+        {''.join(rows)}
+      </div>
+    </div>
+    """
 
 def _render_metric_card_html(title: str, value: str, subtitle: Optional[str] = None) -> str:
     subtitle_html = f"<div class='metric-sub'>{subtitle}</div>" if subtitle else ""
@@ -2763,10 +2808,46 @@ def render_webapp() -> None:
           background: rgba(255,255,255,0.04);
         }
 
+        .queue-empty {
+          padding: 12px 16px 16px 16px;
+          color: var(--muted);
+          font-size: 0.85rem;
+        }
+
         .text-clip {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+        }
+
+        .metric-stack {
+          background: var(--panel);
+          border-radius: 18px;
+          padding: 14px 16px 12px 16px;
+          border: 1px solid var(--panel-border);
+          box-shadow: var(--shadow-soft);
+        }
+
+        .metric-stack .metric-title {
+          margin-bottom: 6px;
+        }
+
+        .metric-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          padding: 6px 0;
+          border-bottom: 1px solid rgba(255,255,255,0.08);
+          font-size: 0.9rem;
+        }
+
+        .metric-row:last-child {
+          border-bottom: none;
+        }
+
+        .metric-row span {
+          color: var(--muted);
+          font-size: 0.82rem;
         }
 
         .metric-card {
@@ -2897,16 +2978,6 @@ def render_webapp() -> None:
     if queue_df.empty:
         queue_df = _build_queue_df_from_inventory(_demo_webapp_payload().get("Inventory_Metrics", []))
 
-    st.markdown(
-        """
-        <div class="queue-card">
-          <div class="queue-header">PURCHASING QUEUE</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    st.dataframe(queue_df, use_container_width=True, hide_index=True)
-
     if selected_item:
         forecast_fig = _build_forecast_chart(selected_item.get("forecast_series", {}))
     else:
@@ -2916,41 +2987,25 @@ def render_webapp() -> None:
         ]
         forecast_fig = _build_forecast_chart_multi(series_list)
 
-    col_chart, col_metrics, col_seg = st.columns([2.2, 1.1, 1.1], gap="large")
-    with col_chart:
-        st.markdown("<div class='pill'>FORECAST</div>", unsafe_allow_html=True)
-        st.plotly_chart(forecast_fig, use_container_width=True, config={"displayModeBar": False})
+    st.markdown("<div class='pill'>FORECAST</div>", unsafe_allow_html=True)
+    st.plotly_chart(forecast_fig, use_container_width=True, config={"displayModeBar": False})
+
+    st.markdown(_render_queue_table_html(queue_df), unsafe_allow_html=True)
+
+    col_metrics, col_seg = st.columns([1.2, 1.0], gap="large")
     with col_metrics:
         st.markdown(
-            _render_metric_card_html(
-                "INVENTORY POSITION",
-                _format_number(float(vendor_summary.get("inventory_position", 0.0)), 2),
-                f"Available {_format_number(float(vendor_summary.get('available', 0.0)),2)} | On PO {_format_number(float(vendor_summary.get('on_po', 0.0)),2)}",
-            ),
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            _render_metric_card_html(
-                "LEAD TIME",
-                f"{int(vendor_summary.get('lead_time_days', 0) or 0)} days",
-                f"Vendor {vendor_number}",
-            ),
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            _render_metric_card_html(
-                "DEMAND DURING LEAD TIME",
-                _format_number(float(vendor_summary.get("lt_demand", 0.0)), 2),
-                "Status OK",
-            ),
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            _render_metric_card_html(
-                "DAYS OF COVER",
-                _format_number(float(vendor_summary.get("days_of_cover", 0.0)), 1),
-                f"Avg daily demand {_format_number(float(vendor_summary.get('daily_avg_demand', 0.0)),2)}",
-            ),
+            f"""
+            <div class="metric-stack">
+              <div class="metric-title">INVENTORY POSITION</div>
+              <div class="metric-value">{_format_number(float(vendor_summary.get("inventory_position", 0.0)), 2)}</div>
+              <div class="metric-sub">Available {_format_number(float(vendor_summary.get('available', 0.0)),2)} | On PO {_format_number(float(vendor_summary.get('on_po', 0.0)),2)} | BO {_format_number(float(vendor_summary.get('backorder', 0.0)),2)}</div>
+              <div class="metric-row"><div>Lead time</div><span>{int(vendor_summary.get("lead_time_days", 0) or 0)} days</span></div>
+              <div class="metric-row"><div>Demand during lead time</div><span>{_format_number(float(vendor_summary.get("lt_demand", 0.0)), 2)}</span></div>
+              <div class="metric-row"><div>Days of cover</div><span>{_format_number(float(vendor_summary.get("days_of_cover", 0.0)), 1)}</span></div>
+              <div class="metric-row"><div>Avg daily demand</div><span>{_format_number(float(vendor_summary.get('daily_avg_demand', 0.0)),2)}</span></div>
+            </div>
+            """,
             unsafe_allow_html=True,
         )
     with col_seg:
