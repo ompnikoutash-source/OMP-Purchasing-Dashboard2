@@ -2339,7 +2339,7 @@ def _build_forecast_chart(series: Dict) -> go.Figure:
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="rgba(255,255,255,0.88)", family="Manrope, sans-serif"),
         showlegend=bool(hist_vals),
-        legend=dict(font=dict(color="#ffffff"), orientation="h", x=0.02, y=-0.22, bgcolor="rgba(0,0,0,0)", xanchor="left", yanchor="top"),
+        legend=dict(font=dict(color="#ffffff"), orientation="h", x=0.5, y=-0.22, bgcolor="rgba(0,0,0,0)", xanchor="center", yanchor="top"),
         height=360,
     )
     fig.update_xaxes(
@@ -2388,7 +2388,7 @@ def _build_forecast_chart_multi(series_list: List[Dict]) -> go.Figure:
         font=dict(color="rgba(255,255,255,0.88)", family="Manrope, sans-serif"),
         showlegend=True,
         height=360,
-        legend=dict(orientation="h", x=0.02, y=-0.22, xanchor="left", yanchor="top", font=dict(color="#ffffff")),
+        legend=dict(orientation="h", x=0.5, y=-0.22, xanchor="center", yanchor="top", font=dict(color="#ffffff")),
     )
     fig.update_xaxes(
         showgrid=True,
@@ -2880,6 +2880,10 @@ def render_webapp() -> None:
 
         .demand-header + div[data-testid="stPlotlyChart"] {
           margin-top: 0;
+          border-radius: 0 0 16px 16px;
+        }
+
+        .demand-header + div[data-testid="stPlotlyChart"] > div {
           border-radius: 0 0 16px 16px;
         }
 
