@@ -2338,7 +2338,7 @@ def _build_forecast_chart(series: Dict) -> go.Figure:
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="rgba(255,255,255,0.88)", family="Manrope, sans-serif"),
         showlegend=bool(hist_vals),
-        legend=dict(font=dict(color="#ffffff"), orientation="h", x=0.02, y=-0.18),
+        legend=dict(font=dict(color="#ffffff"), orientation="v", x=0.02, y=0.98, bgcolor="rgba(0,0,0,0)"),
         height=300,
     )
     fig.update_xaxes(
@@ -2860,7 +2860,11 @@ def render_webapp() -> None:
         }
 
         .demand-header {
-          margin-bottom: 10px;
+          margin-bottom: -10px;
+        }
+
+        .demand-header + div[data-testid="stPlotlyChart"] {
+          margin-top: 0;
         }
 
         .queue-header {
