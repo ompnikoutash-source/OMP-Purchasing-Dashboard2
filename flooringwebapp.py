@@ -2881,16 +2881,17 @@ def render_webapp() -> None:
         .demand-header + div[data-testid="stPlotlyChart"] {
           margin-top: 0;
           border-radius: 0 0 16px 16px !important;
-          overflow: hidden;
+          overflow: hidden !important;
+          clip-path: inset(0 0 0 0 round 0 0 16px 16px);
         }
 
-        .demand-header + div[data-testid="stPlotlyChart"] > div {
-          border-radius: 0 0 16px 16px !important;
-        }
-
+        .demand-header + div[data-testid="stPlotlyChart"] > div,
+        .demand-header + div[data-testid="stPlotlyChart"] .plot-container,
+        .demand-header + div[data-testid="stPlotlyChart"] .svg-container,
         .demand-header + div[data-testid="stPlotlyChart"] .js-plotly-plot,
         .demand-header + div[data-testid="stPlotlyChart"] .plotly {
           border-radius: 0 0 16px 16px !important;
+          overflow: hidden !important;
         }
 
         .queue-header {
