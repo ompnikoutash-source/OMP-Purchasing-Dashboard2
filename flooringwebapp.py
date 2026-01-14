@@ -2499,6 +2499,35 @@ def _aggregate_items(items: List[Dict]) -> Dict:
         "vendor_number": items[0].get("vendor_number", "--"),
     }
 
+def _series_from_monthly_rows(rows: List[Dict], sku: str) -> Dict:
+    if not rows:
+        return {}
+    df = pd.DataFrame(rows)
+    if df.empty or "SKU" not in df.columns or "Month" not in df.columns:
+        return {}
+    df = df[df["SKU"].astype(str) == str(sku)]
+    if df.empty:
+        return {}
+    df["Month"] = pd.to_datetime(df["Month"], errors="coerce")
+    df = df[df["Month"].notna()]
+    if df.empty:
+        return {}
+    row_type_col = "Row_Type" if "Row_Type" in df.columns else None
+    hist = df[df[row_type_col].astype(str).str.upper().eq("HIST")] if row_type_col else df[df["Historical Demand"].notna()]
+    fc = df[df[row_type_col].astype(str).str.upper().isin(["FCST", "CATCHUP"])] if row_type_col else df[df["Forecast"].notna()]
+    hist = hist.sort_values("Month")
+    fc = fc.sort_values("Month")
+    series: Dict[str, List[float]] = {}
+    if not hist.empty and "Historical Demand" in hist.columns:
+        series["hist_x"] = [d.strftime("%b %d") for d in hist["Month"].tail(12)]
+        series["hist_y"] = [float(v) for v in hist["Historical Demand"].tail(12)]
+    if not fc.empty and "Forecast" in fc.columns:
+        series["fc_x"] = [d.strftime("%b %d") for d in fc["Month"].tail(12)]
+        series["fc_y"] = [float(v) for v in fc["Forecast"].tail(12)]
+        series["x"] = series["fc_x"]
+        series["y"] = series["fc_y"]
+    return series
+
 def _build_spending_chart(spending: Dict) -> go.Figure:
     rng = np.random.default_rng(7)
     x_vals = spending.get("x") or [str(d) for d in range(1, 31)]
@@ -3002,8 +3031,12 @@ def render_webapp() -> None:
     if queue_df.empty:
         queue_df = _build_queue_df_from_inventory(_demo_webapp_payload().get("Inventory_Metrics", []))
 
+    monthly_rows = data.get("Monthly_Projections", [])
     if selected_item:
-        forecast_fig = _build_forecast_chart(selected_item.get("forecast_series", {}))
+        series = selected_item.get("forecast_series", {}) or {}
+        if not series.get("hist_y"):
+            series = {**series, **_series_from_monthly_rows(monthly_rows, selected_item.get("item_number", ""))}
+        forecast_fig = _build_forecast_chart(series)
     else:
         series_list = [
             {
