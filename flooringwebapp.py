@@ -2791,17 +2791,21 @@ def render_webapp() -> None:
           display: grid;
           grid-template-columns: 0.9fr 1.5fr 1.2fr 0.7fr 0.9fr 0.8fr 0.9fr 1fr 0.9fr 0.9fr;
           gap: 10px;
-          font-size: 0.78rem;
+          font-size: 0.82rem;
           padding: 6px 8px;
           border-radius: 10px;
+          color: rgba(255,255,255,0.98);
         }
 
         .queue-head {
           font-weight: 700;
-          color: rgba(242,245,231,0.8);
+          font-size: 0.74rem;
+          letter-spacing: 0.03em;
+          color: rgba(255,255,255,0.72);
           border-bottom: 1px solid rgba(255,255,255,0.08);
           margin-bottom: 6px;
           padding-bottom: 8px;
+          text-transform: none;
         }
 
         .queue-row:not(.queue-head) {
