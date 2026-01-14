@@ -107,6 +107,7 @@ Z_SCORE = stats.norm.ppf(SERVICE_LEVEL) if stats is not None else 1.28
 LEADTIMES_XLSX = "Lead Times.xlsx"
 CUTOFF_DATE = "2020-06-01"
 WEBAPP_JSON_PATH = Path(__file__).resolve().parent / "flooringwebappJSON"
+UI_BUILD = "2026-01-14T15:10:00"
 
 def _load_credentials():
     print("  Loading credentials...")
@@ -3082,7 +3083,7 @@ def render_webapp() -> None:
           <div class="hero-title">{header_title}</div>
           <div class="hero-sub">{vendor_label} (Vendor {vendor_number})</div>
           <div class="hero-sub">Horizon: {horizon_days} days | Run: {run_stamp}</div>
-          <div class="build-stamp">UI build: {data.get("generated_at","")}</div>
+          <div class="build-stamp">UI build: {UI_BUILD}</div>
         </div>
         """,
         unsafe_allow_html=True,
