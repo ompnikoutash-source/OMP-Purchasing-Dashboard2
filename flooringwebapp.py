@@ -2762,8 +2762,8 @@ def render_webapp() -> None:
           --panel: rgba(40, 63, 22, 0.55);
           --panel-strong: rgba(30, 52, 16, 0.55);
           --panel-border: rgba(255,255,255,0.10);
-          --text: rgba(255,255,255,0.92);
-          --muted: rgba(255,255,255,0.68);
+          --text: #ffffff;
+          --muted: #ffffff;
           --accent: #ff8a2a;
           --blue: #2f6fdd;
           --shadow: 0 12px 30px rgba(0,0,0,0.18);
@@ -2818,7 +2818,7 @@ def render_webapp() -> None:
           font-size: 0.75rem;
           letter-spacing: 0.08em;
           text-transform: uppercase;
-          color: var(--muted);
+          color: #ffffff;
         }
 
         .export-btn {
@@ -2840,10 +2840,11 @@ def render_webapp() -> None:
           font-weight: 800;
           margin: 8px 0;
           letter-spacing: 0.02em;
+          color: #ffffff;
         }
 
         .hero-sub {
-          color: var(--muted);
+          color: #ffffff;
           font-size: 0.9rem;
           margin-top: 6px;
         }
@@ -2862,7 +2863,7 @@ def render_webapp() -> None:
           font-size: 0.72rem;
           letter-spacing: 0.12em;
           font-weight: 700;
-          color: #d2dda3;
+          color: #ffffff;
           background: rgba(0,0,0,0.2);
           border-radius: 16px 16px 0 0;
         }
@@ -2885,7 +2886,7 @@ def render_webapp() -> None:
           font-weight: 700;
           font-size: 0.74rem;
           letter-spacing: 0.03em;
-          color: rgba(255,255,255,0.72);
+          color: #ffffff;
           border-bottom: 1px solid rgba(255,255,255,0.08);
           margin-bottom: 6px;
           padding-bottom: 8px;
@@ -2898,7 +2899,7 @@ def render_webapp() -> None:
 
         .queue-empty {
           padding: 12px 16px 16px 16px;
-          color: var(--muted);
+          color: #ffffff;
           font-size: 0.85rem;
         }
 
@@ -2934,7 +2935,7 @@ def render_webapp() -> None:
         }
 
         .metric-row span {
-          color: var(--muted);
+          color: #ffffff;
           font-size: 0.82rem;
         }
 
@@ -2950,7 +2951,7 @@ def render_webapp() -> None:
         .metric-title {
           font-size: 0.72rem;
           letter-spacing: 0.12em;
-          color: var(--muted);
+          color: #ffffff;
           text-transform: uppercase;
         }
 
@@ -2963,7 +2964,7 @@ def render_webapp() -> None:
 
         .metric-sub {
           font-size: 0.78rem;
-          color: var(--muted);
+          color: #ffffff;
           margin-top: 6px;
         }
 
