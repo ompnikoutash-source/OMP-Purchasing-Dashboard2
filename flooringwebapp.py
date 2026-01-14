@@ -2869,19 +2869,30 @@ def render_webapp() -> None:
         }
 
         .demand-card {
-          background: var(--panel-strong);
-          border-radius: 0;
-          border: 1px solid rgba(255,255,255,0.08);
-          box-shadow: var(--shadow);
-          overflow: hidden;
+          background: transparent;
+          border: 0;
+          box-shadow: none;
           margin-bottom: 18px;
         }
 
-        .demand-card .queue-header {
-          border-radius: 0;
+        .demand-header {
+          background: var(--panel-strong);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-bottom: 0;
+          border-radius: 16px 16px 0 0;
+          padding: 10px 16px;
+          font-size: 0.72rem;
+          letter-spacing: 0.12em;
+          font-weight: 700;
+          color: #ffffff;
+          text-transform: uppercase;
         }
 
         .demand-body {
+          background: var(--panel);
+          border: 1px solid var(--panel-border);
+          border-top: 0;
+          border-radius: 0 0 16px 16px;
           padding: 12px 16px 8px 16px;
         }
 
@@ -3135,7 +3146,7 @@ def render_webapp() -> None:
     st.markdown(
         """
         <div class="demand-card">
-          <div class="queue-header">DEMAND GRAPH</div>
+          <div class="demand-header">DEMAND GRAPH</div>
           <div class="demand-body">
         """,
         unsafe_allow_html=True,
