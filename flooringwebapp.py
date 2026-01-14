@@ -2333,12 +2333,12 @@ def _build_forecast_chart(series: Dict) -> go.Figure:
         )
     )
     fig.update_layout(
-        margin=dict(l=40, r=24, t=40, b=36),
+        margin=dict(l=40, r=60, t=40, b=60),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="rgba(255,255,255,0.88)", family="Manrope, sans-serif"),
         showlegend=bool(hist_vals),
-        legend=dict(font=dict(color="#ffffff")),
+        legend=dict(font=dict(color="#ffffff"), orientation="h", x=0.02, y=-0.18),
         height=300,
     )
     fig.update_xaxes(
