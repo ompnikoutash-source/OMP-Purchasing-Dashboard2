@@ -2182,11 +2182,14 @@ def _build_webapp_payload(df_results: pd.DataFrame, df_monthly: pd.DataFrame) ->
                 continue
             last = series.tail(6)
             series_payload = {
+                "fc_x": [d.strftime("%b %d") for d in last.index],
+                "fc_y": [float(v) for v in last.values],
                 "x": [d.strftime("%b %d") for d in last.index],
                 "y": [float(v) for v in last.values],
             }
             if col_hist and col_hist in sku_df.columns:
-                hist_series = sku_df.groupby(col_month)[col_hist].sum().sort_index().tail(6)
+                hist_series = sku_df[sku_df[col_hist].notna()].groupby(col_month)[col_hist].sum().sort_index().tail(6)
+                series_payload["hist_x"] = [d.strftime("%b %d") for d in hist_series.index]
                 series_payload["hist_y"] = [float(v) for v in hist_series.values]
             sku_series[str(sku)] = series_payload
             first_date = series.index.min()
@@ -2283,15 +2286,16 @@ def _is_streamlit_runtime() -> bool:
         return False
 
 def _build_forecast_chart(series: Dict) -> go.Figure:
-    x_vals = series.get("x") or ["Nov 23", "Nov 30", "Dec 07", "Dec 14", "Dec 21"]
-    y_vals = series.get("y") or [72.4, 74.8, 74.9, 74.9, 74.1]
+    hist_x = series.get("hist_x") or series.get("x") or ["Nov 23", "Nov 30", "Dec 07", "Dec 14", "Dec 21"]
     hist_vals = series.get("hist_y") or []
+    fc_x = series.get("fc_x") or series.get("x") or ["Nov 23", "Nov 30", "Dec 07", "Dec 14", "Dec 21"]
+    fc_vals = series.get("fc_y") or series.get("y") or [72.4, 74.8, 74.9, 74.9, 74.1]
 
     fig = go.Figure()
     if hist_vals:
         fig.add_trace(
             go.Scatter(
-                x=x_vals,
+                x=hist_x,
                 y=hist_vals,
                 mode="lines+markers",
                 line=dict(color="#d46a1f", width=3),
@@ -2301,8 +2305,8 @@ def _build_forecast_chart(series: Dict) -> go.Figure:
         )
     fig.add_trace(
         go.Scatter(
-            x=x_vals,
-            y=y_vals,
+            x=fc_x,
+            y=fc_vals,
             mode="lines+markers",
             line=dict(color="#2f6fdd", width=3),
             marker=dict(size=6, color="#2f6fdd"),
@@ -2362,7 +2366,7 @@ def _build_forecast_chart_multi(series_list: List[Dict]) -> go.Figure:
         font=dict(color="rgba(255,255,255,0.88)", family="Manrope, sans-serif"),
         showlegend=True,
         height=300,
-        legend=dict(orientation="h", yanchor="bottom", y=-0.25, x=0.02),
+        legend=dict(orientation="h", yanchor="bottom", y=-0.25, x=0.02, font=dict(color="#ffffff")),
     )
     fig.update_xaxes(
         showgrid=True,
@@ -2986,12 +2990,18 @@ def render_webapp() -> None:
         forecast_fig = _build_forecast_chart(selected_item.get("forecast_series", {}))
     else:
         series_list = [
-            {"label": item.get("item_number", item.get("description", "")), "series": item.get("forecast_series", {})}
+            {
+                "label": item.get("item_number", item.get("description", "")),
+                "series": {
+                    "x": item.get("forecast_series", {}).get("fc_x") or item.get("forecast_series", {}).get("x"),
+                    "y": item.get("forecast_series", {}).get("fc_y") or item.get("forecast_series", {}).get("y"),
+                },
+            }
             for item in vendor_items
         ]
         forecast_fig = _build_forecast_chart_multi(series_list)
 
-    st.markdown("<div class='pill'>FORECAST</div>", unsafe_allow_html=True)
+    st.markdown("<div class='pill'>DEMAND GRAPH</div>", unsafe_allow_html=True)
     st.plotly_chart(forecast_fig, use_container_width=True, config={"displayModeBar": False})
 
     st.markdown(_render_queue_table_html(queue_df), unsafe_allow_html=True)
