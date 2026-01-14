@@ -2528,6 +2528,37 @@ def _series_from_monthly_rows(rows: List[Dict], sku: str) -> Dict:
         series["y"] = series["fc_y"]
     return series
 
+def _series_from_monthly_rows_vendor(rows: List[Dict], vendor: str) -> Dict:
+    if not rows:
+        return {}
+    df = pd.DataFrame(rows)
+    if df.empty or "collection" not in df.columns or "Month" not in df.columns:
+        return {}
+    df = df[df["collection"].astype(str) == str(vendor)]
+    if df.empty:
+        return {}
+    df["Month"] = pd.to_datetime(df["Month"], errors="coerce")
+    df = df[df["Month"].notna()]
+    if df.empty:
+        return {}
+    row_type_col = "Row_Type" if "Row_Type" in df.columns else None
+    hist = df[df[row_type_col].astype(str).str.upper().eq("HIST")] if row_type_col else df[df["Historical Demand"].notna()]
+    fc = df[df[row_type_col].astype(str).str.upper().isin(["FCST", "CATCHUP"])] if row_type_col else df[df["Forecast"].notna()]
+    hist = hist.sort_values("Month")
+    fc = fc.sort_values("Month")
+    series: Dict[str, List[float]] = {}
+    if not hist.empty and "Historical Demand" in hist.columns:
+        hist_series = hist.groupby("Month")["Historical Demand"].sum().sort_index().tail(12)
+        series["hist_x"] = [d.strftime("%b %d") for d in hist_series.index]
+        series["hist_y"] = [float(v) for v in hist_series.values]
+    if not fc.empty and "Forecast" in fc.columns:
+        fc_series = fc.groupby("Month")["Forecast"].sum().sort_index().tail(12)
+        series["fc_x"] = [d.strftime("%b %d") for d in fc_series.index]
+        series["fc_y"] = [float(v) for v in fc_series.values]
+        series["x"] = series["fc_x"]
+        series["y"] = series["fc_y"]
+    return series
+
 def _build_spending_chart(spending: Dict) -> go.Figure:
     rng = np.random.default_rng(7)
     x_vals = spending.get("x") or [str(d) for d in range(1, 31)]
@@ -3038,17 +3069,21 @@ def render_webapp() -> None:
             series = {**series, **_series_from_monthly_rows(monthly_rows, selected_item.get("item_number", ""))}
         forecast_fig = _build_forecast_chart(series)
     else:
-        series_list = [
-            {
-                "label": item.get("item_number", item.get("description", "")),
-                "series": {
-                    "x": item.get("forecast_series", {}).get("fc_x") or item.get("forecast_series", {}).get("x"),
-                    "y": item.get("forecast_series", {}).get("fc_y") or item.get("forecast_series", {}).get("y"),
-                },
-            }
-            for item in vendor_items
-        ]
-        forecast_fig = _build_forecast_chart_multi(series_list)
+        vendor_series = _series_from_monthly_rows_vendor(monthly_rows, selected_vendor)
+        if vendor_series.get("hist_y") or vendor_series.get("fc_y"):
+            forecast_fig = _build_forecast_chart(vendor_series)
+        else:
+            series_list = [
+                {
+                    "label": item.get("item_number", item.get("description", "")),
+                    "series": {
+                        "x": item.get("forecast_series", {}).get("fc_x") or item.get("forecast_series", {}).get("x"),
+                        "y": item.get("forecast_series", {}).get("fc_y") or item.get("forecast_series", {}).get("y"),
+                    },
+                }
+                for item in vendor_items
+            ]
+            forecast_fig = _build_forecast_chart_multi(series_list)
 
     st.markdown("<div class='pill'>DEMAND GRAPH</div>", unsafe_allow_html=True)
     st.plotly_chart(forecast_fig, use_container_width=True, config={"displayModeBar": False})
