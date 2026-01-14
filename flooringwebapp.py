@@ -2880,10 +2880,7 @@ def render_webapp() -> None:
 
         .demand-header + div[data-testid="stPlotlyChart"] {
           margin-top: 0;
-          border-top-left-radius: 0;
-          border-top-right-radius: 0;
-          border-bottom-left-radius: 16px;
-          border-bottom-right-radius: 16px;
+          border-radius: 0;
         }
 
         .queue-header {
@@ -3028,7 +3025,7 @@ def render_webapp() -> None:
         div[data-testid="stPlotlyChart"] {
           background: var(--panel);
           border: 1px solid var(--panel-border);
-          border-radius: 18px;
+          border-radius: 0;
           padding: 12px 14px 4px 14px;
           box-shadow: var(--shadow-soft);
         }
