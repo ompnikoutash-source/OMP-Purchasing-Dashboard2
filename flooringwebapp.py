@@ -2880,11 +2880,12 @@ def render_webapp() -> None:
 
         .demand-header + div[data-testid="stPlotlyChart"] {
           margin-top: 0;
-          border-radius: 0 0 16px 16px;
+          border-radius: 0 0 16px 16px !important;
+          overflow: hidden;
         }
 
         .demand-header + div[data-testid="stPlotlyChart"] > div {
-          border-radius: 0 0 16px 16px;
+          border-radius: 0 0 16px 16px !important;
         }
 
         .queue-header {
