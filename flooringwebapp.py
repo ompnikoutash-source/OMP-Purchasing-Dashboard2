@@ -3028,6 +3028,7 @@ def render_webapp() -> None:
           border-radius: 0;
           padding: 12px 0 4px 0;
           box-shadow: var(--shadow-soft);
+          overflow: hidden;
         }
 
         .demand-header + div[data-testid="stPlotlyChart"] {
