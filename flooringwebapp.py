@@ -2850,6 +2850,14 @@ def render_webapp() -> None:
           margin-top: 6px;
         }
 
+        .build-stamp {
+          font-size: 0.72rem;
+          letter-spacing: 0.06em;
+          color: #ffffff;
+          opacity: 0.8;
+          margin-top: 6px;
+        }
+
         .queue-card {
           background: var(--panel-strong);
           border-radius: 16px;
@@ -3074,6 +3082,7 @@ def render_webapp() -> None:
           <div class="hero-title">{header_title}</div>
           <div class="hero-sub">{vendor_label} (Vendor {vendor_number})</div>
           <div class="hero-sub">Horizon: {horizon_days} days | Run: {run_stamp}</div>
+          <div class="build-stamp">UI build: {data.get("generated_at","")}</div>
         </div>
         """,
         unsafe_allow_html=True,
