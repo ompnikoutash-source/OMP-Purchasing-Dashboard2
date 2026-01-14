@@ -1,0 +1,39 @@
+name: Update flooringwebapp JSON
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * *"
+
+jobs:
+  generate-json:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate flooringwebappJSON
+        env:
+          GARTMAN_UID: ${{ secrets.GARTMAN_UID }}
+          GARTMAN_PWD: ${{ secrets.GARTMAN_PWD }}
+        run: python flooringwebapp.py
+
+      - name: Commit JSON update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add flooringwebappJSON
+          if git diff --cached --quiet; then
+            echo "No JSON changes to commit."
+          else
+            git commit -m "Update flooringwebappJSON"
+            git push
+          fi
