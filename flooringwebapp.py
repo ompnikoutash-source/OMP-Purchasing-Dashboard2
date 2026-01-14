@@ -2873,6 +2873,8 @@ def render_webapp() -> None:
           margin-top: 0;
           border-top-left-radius: 0;
           border-top-right-radius: 0;
+          border-bottom-left-radius: 16px;
+          border-bottom-right-radius: 16px;
         }
 
         .queue-header {
