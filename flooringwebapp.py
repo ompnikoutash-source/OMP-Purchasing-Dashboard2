@@ -18,6 +18,7 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
+import streamlit.components.v1 as components
 try:
     import pyodbc
 except Exception:
@@ -2896,13 +2897,8 @@ def render_webapp() -> None:
           padding: 12px 16px 8px 16px;
         }
 
-        .demand-body div[data-testid="stPlotlyChart"] {
-          background: transparent;
-          border: 0;
-          box-shadow: none;
-          padding: 0;
+        .demand-body .plotly-html {
           margin: 0;
-          border-radius: 0;
         }
 
         .queue-header {
@@ -3143,16 +3139,16 @@ def render_webapp() -> None:
             ]
             forecast_fig = _build_forecast_chart_multi(series_list)
 
-    st.markdown(
-        """
-        <div class="demand-card">
-          <div class="demand-header">DEMAND GRAPH</div>
-          <div class="demand-body">
-        """,
-        unsafe_allow_html=True,
-    )
-    st.plotly_chart(forecast_fig, use_container_width=True, config={"displayModeBar": False})
-    st.markdown("</div></div>", unsafe_allow_html=True)
+    fig_html = forecast_fig.to_html(include_plotlyjs="cdn", full_html=False)
+    demand_html = f"""
+    <div class="demand-card">
+      <div class="demand-header">DEMAND GRAPH</div>
+      <div class="demand-body">
+        <div class="plotly-html">{fig_html}</div>
+      </div>
+    </div>
+    """
+    components.html(demand_html, height=460, scrolling=False)
 
     st.markdown(_render_queue_table_html(queue_df), unsafe_allow_html=True)
 
