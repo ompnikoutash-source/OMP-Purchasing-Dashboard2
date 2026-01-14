@@ -2338,6 +2338,7 @@ def _build_forecast_chart(series: Dict) -> go.Figure:
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="rgba(255,255,255,0.88)", family="Manrope, sans-serif"),
         showlegend=bool(hist_vals),
+        legend=dict(font=dict(color="#ffffff")),
         height=300,
     )
     fig.update_xaxes(
@@ -2858,6 +2859,10 @@ def render_webapp() -> None:
           box-shadow: var(--shadow);
         }
 
+        .demand-header {
+          margin-bottom: 10px;
+        }
+
         .queue-header {
           padding: 10px 16px;
           font-size: 0.72rem;
@@ -3090,7 +3095,14 @@ def render_webapp() -> None:
             ]
             forecast_fig = _build_forecast_chart_multi(series_list)
 
-    st.markdown("<div class='pill'>DEMAND GRAPH</div>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="queue-card demand-header">
+          <div class="queue-header">DEMAND GRAPH</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     st.plotly_chart(forecast_fig, use_container_width=True, config={"displayModeBar": False})
 
     st.markdown(_render_queue_table_html(queue_df), unsafe_allow_html=True)
