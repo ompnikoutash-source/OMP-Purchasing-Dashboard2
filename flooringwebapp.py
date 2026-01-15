@@ -3172,38 +3172,7 @@ def render_webapp() -> None:
 
     st.markdown(_render_queue_table_html(queue_df), unsafe_allow_html=True)
 
-    col_metrics, col_seg = st.columns([1.2, 1.0], gap="large")
-    with col_metrics:
-        st.markdown(
-            f"""
-            <div class="metric-stack">
-              <div class="metric-title">INVENTORY POSITION</div>
-              <div class="metric-value">{_format_number(float(vendor_summary.get("inventory_position", 0.0)), 2)}</div>
-              <div class="metric-sub">Available {_format_number(float(vendor_summary.get('available', 0.0)),2)} | On PO {_format_number(float(vendor_summary.get('on_po', 0.0)),2)} | BO {_format_number(float(vendor_summary.get('backorder', 0.0)),2)}</div>
-              <div class="metric-row"><div>Lead time</div><span>{int(vendor_summary.get("lead_time_days", 0) or 0)} days</span></div>
-              <div class="metric-row"><div>Demand during lead time</div><span>{_format_number(float(vendor_summary.get("lt_demand", 0.0)), 2)}</span></div>
-              <div class="metric-row"><div>Days of cover</div><span>{_format_number(float(vendor_summary.get("days_of_cover", 0.0)), 1)}</span></div>
-              <div class="metric-row"><div>Avg daily demand</div><span>{_format_number(float(vendor_summary.get('daily_avg_demand', 0.0)),2)}</span></div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    with col_seg:
-        suggested_qty = None if selected_item is None else selected_item.get("suggested_order_qty")
-        suggested_label = "NA" if suggested_qty is None else _format_number(float(suggested_qty), 2)
-        st.markdown(
-            _render_metric_card_html(
-                "SUGGESTED ORDER QTY",
-                suggested_label,
-                "Daily JSON does not include planning yet" if suggested_qty is None else "",
-            ),
-            unsafe_allow_html=True,
-        )
-        if selected_item:
-            st.markdown(
-                _render_segmentation_table_html(selected_item.get("segmentation", {})),
-                unsafe_allow_html=True,
-            )
+    # Removed metric/segmentation sections below Purchasing Queue per request.
 
 if __name__ == "__main__":
     if _is_streamlit_runtime():
