@@ -11,13 +11,20 @@ Fixed Issues:
 from __future__ import annotations
 import json
 import math, os, warnings
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
+import warnings
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
+
+warnings.filterwarnings(
+    "ignore",
+    message="pandas only supports SQLAlchemy connectable",
+    category=UserWarning,
+)
 import streamlit.components.v1 as components
 try:
     import pyodbc
@@ -60,7 +67,7 @@ warnings.filterwarnings("ignore")
 # ============================================================
 # CONFIGURATION - CHANGE THIS TO PROCESS SPECIFIC SKU OR ALL
 # ============================================================
-FOCUS_SKU = "GFALO7501"  # Leave blank "" to use SKU list or process ALL SKUs
+FOCUS_SKU = ""  # Leave blank "" to use SKU list or process ALL SKUs
 USE_GLOBAL_MODEL = True  # Set to True to train a single XGBoost model across ALL SKUs
 FORECAST_SKU_LIST_FILE = "Forecast SKU List.xlsx"  # Excel file with list of SKUs to forecast
 USE_SKU_LIST = True  # Set to True to only process SKUs in the list file
@@ -1025,15 +1032,20 @@ def select_best_forecast(y_historical, global_model=None, global_feature_cols=No
             
             # Calculate wMAPE on validation
             w = wmape(y_val.values, forecast_val.values)
+            w_finite = np.isfinite(w)
+            w_display = f"{w:.2f}%" if w_finite else "NA"
             
             # Calculate ratio to historical average for sanity check
             forecast_avg = forecast_val.mean()
             historical_avg = y_historical.mean()
             ratio = forecast_avg / historical_avg if historical_avg > 0 else 0
             
-            print(f"    {method_name}: wMAPE={w:.2f}%, Forecast avg={forecast_avg:.2f} (ratio={ratio:.2f}x)")
-            
-            if historical_avg > 0:
+            print(f"    {method_name}: wMAPE={w_display}, Forecast avg={forecast_avg:.2f} (ratio={ratio:.2f}x)")
+
+            if not w_finite:
+                adjusted = float("inf")
+                bias_note = "no signal"
+            elif historical_avg > 0:
                 if ratio < 0.5:
                     adjusted = w * 1.5
                     bias_note = "severe under-forecast"
@@ -1050,12 +1062,13 @@ def select_best_forecast(y_historical, global_model=None, global_feature_cols=No
                 adjusted = w
                 bias_note = "no history"
 
-            candidates.append({
-                "name": method_name,
-                "wmape": w,
-                "adjusted": adjusted,
-                "bias_note": bias_note,
-            })
+            if w_finite:
+                candidates.append({
+                    "name": method_name,
+                    "wmape": w,
+                    "adjusted": adjusted,
+                    "bias_note": bias_note,
+                })
                 
         except Exception as e:
             print(f"    {method_name}: ERROR ({e})")
@@ -1065,9 +1078,18 @@ def select_best_forecast(y_historical, global_model=None, global_feature_cols=No
         best = min(candidates, key=lambda x: x["adjusted"])
         best_method = best["name"]
         best_wmape = best["wmape"]
+    else:
+        historical_avg = y_historical.mean()
+        best_forecast = pd.Series(
+            [historical_avg] * FUTURE_FORECAST_WEEKS,
+            index=pd.date_range(y_historical.index[-1] + pd.Timedelta(weeks=1),
+                                periods=FUTURE_FORECAST_WEEKS, freq="W-SUN"),
+        )
+        best_method = "Historical Avg (fallback)"
+        best_wmape = float("nan")
 
     # Generate final forecast with best method
-    if best_method:
+    if best_method and best_forecast is None:
         best_forecast, _ = methods[best_method](y_historical, FUTURE_FORECAST_WEEKS)
         
         # Sanity check: if wMAPE > 100%, all methods failed
@@ -1513,7 +1535,7 @@ def process_sku(conn, sku_row, lead_times_excel, abc_map, global_model=None, glo
         print(f"  SKIPPED: All methods failed")
         return None
     
-    print(f"  Best Method: {best_method} (wMAPE: {best_wmape:.2f}%)")
+    print(f"  Best Method: {best_method} (wMAPE: {_format_metric(best_wmape)}%)")
     
     # Check forecast sanity (compare weekly averages)
     forecast_weekly_avg = weekly_forecast.mean()
@@ -2032,7 +2054,10 @@ def run_inventory_planning():
                     pct = 100 * count / len(df_results)
                     avg_adi = df_results[df_results['demand_class'] == demand_class]['adi'].mean()
                     avg_cv2 = df_results[df_results['demand_class'] == demand_class]['cv2'].mean()
-                    print(f"  {demand_class}: {count} SKUs ({pct:.1f}%) - Avg ADI={avg_adi:.2f}, Avg CV²={avg_cv2:.2f}")
+                    print(
+                        f"  {demand_class}: {count} SKUs ({pct:.1f}%) - "
+                        f"Avg ADI={_format_metric(avg_adi)}, Avg CV2={_format_metric(avg_cv2)}"
+                    )
                 
                 print(f"\n{'='*70}")
                 print("FORECAST METHOD SELECTION SUMMARY")
@@ -2041,7 +2066,7 @@ def run_inventory_planning():
                 for method, count in method_counts.items():
                     pct = 100 * count / len(df_results)
                     avg_wmape = df_results[df_results['forecast_method'] == method]['forecast_wmape'].mean()
-                    print(f"  {method}: {count} SKUs ({pct:.1f}%) - Avg wMAPE: {avg_wmape:.2f}%")
+                    print(f"  {method}: {count} SKUs ({pct:.1f}%) - Avg wMAPE: {_format_metric(avg_wmape)}%")
                 print(f"{'='*70}")
             
             break
@@ -2083,6 +2108,11 @@ def _format_number(value: float, digits: int = 2) -> str:
     if value is None or (isinstance(value, float) and (math.isnan(value) or math.isinf(value))):
         return "--"
     return f"{value:,.{digits}f}"
+
+def _format_metric(value: float, digits: int = 2) -> str:
+    if value is None or (isinstance(value, float) and (math.isnan(value) or math.isinf(value))):
+        return "NA"
+    return f"{value:.{digits}f}"
 
 def _mask_suffix(value: str) -> str:
     if not value:
@@ -2288,9 +2318,27 @@ def _build_webapp_payload(df_results: pd.DataFrame, df_monthly: pd.DataFrame) ->
     return payload
 
 def _write_webapp_json(payload: Dict, output_path: Path) -> None:
+    def _sanitize_jsonable(value: Any) -> Any:
+        if isinstance(value, float):
+            if math.isnan(value) or math.isinf(value):
+                return None
+            return value
+        if isinstance(value, (pd.Timestamp, datetime, date, np.datetime64)):
+            if pd.isna(value):
+                return None
+            return pd.to_datetime(value).strftime("%Y-%m-%d")
+        if value is pd.NaT:
+            return None
+        if isinstance(value, dict):
+            return {k: _sanitize_jsonable(v) for k, v in value.items()}
+        if isinstance(value, list):
+            return [_sanitize_jsonable(v) for v in value]
+        return value
+
     try:
+        safe_payload = _sanitize_jsonable(payload)
         with open(output_path, "w", encoding="utf-8") as f:
-            json.dump(payload, f, indent=2, allow_nan=False)
+            json.dump(safe_payload, f, indent=2, allow_nan=False)
         print(f"  Wrote webapp JSON: {output_path}")
     except Exception as exc:
         print(f"  WARNING: Failed to write webapp JSON ({exc})")
@@ -2915,12 +2963,18 @@ def render_webapp() -> None:
         }
 
         section[data-testid="stSidebar"] {
-          background: rgba(30, 52, 16, 0.25);
+          background: linear-gradient(180deg, #ffffff 0 56px, rgba(30, 52, 16, 0.25) 56px);
           border-right: 1px solid rgba(255,255,255,0.08);
         }
 
         section[data-testid="stSidebar"] .stMarkdown {
           color: var(--text);
+        }
+
+        button[data-testid="collapsedControl"] {
+          opacity: 1 !important;
+          visibility: visible !important;
+          display: inline-flex !important;
         }
 
         .hero-card {
