@@ -3228,7 +3228,7 @@ def render_webapp() -> None:
             out = df_monthly[existing].rename(columns=col_map)
             if "Beginning Inventory" in out.columns:
                 out = out[out["Beginning Inventory"].notna()]
-            st.markdown(_render_reorder_table_html(out, f"{sku_label} {desc_label}"), unsafe_allow_html=True)
+            st.markdown(_render_reorder_table_html(out, f"Reorder Schedule: {sku_label} {desc_label}"), unsafe_allow_html=True)
 
     # Removed metric/segmentation sections below Purchasing Queue per request.
 if __name__ == "__main__":
