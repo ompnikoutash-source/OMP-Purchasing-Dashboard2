@@ -3125,7 +3125,6 @@ def render_webapp() -> None:
         <div class="hero-card">
           <div class="hero-top">
             <div class="pill">{run_meta.get('title','OMP Purchasing Dashboard')}</div>
-            <a class="export-btn" href="#export">Export tools below</a>
           </div>
           <div class="hero-title">{header_title}</div>
           <div class="hero-sub">{vendor_label} (Vendor {vendor_number})</div>
