@@ -2005,10 +2005,10 @@ def run_inventory_planning():
             import traceback
             traceback.print_exc()
     
-    conn.close()
-    
     if not results:
         print("\nNo SKUs processed")
+        if conn is not None:
+            conn.close()
         return
     
     df_results = pd.DataFrame(results)
@@ -2135,6 +2135,8 @@ def run_inventory_planning():
     arrivals_df = pd.DataFrame()
     if conn is not None and not df_results.empty and "sku" in df_results.columns:
         arrivals_df = load_arrivals(conn, df_results["sku"].astype(str).unique().tolist())
+    if conn is not None:
+        conn.close()
     payload = _build_webapp_payload(df_results, df_monthly, arrivals_df)
     _write_webapp_json(payload, WEBAPP_JSON_PATH)
 
