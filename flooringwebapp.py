@@ -67,7 +67,7 @@ warnings.filterwarnings("ignore")
 # ============================================================
 # CONFIGURATION - CHANGE THIS TO PROCESS SPECIFIC SKU OR ALL
 # ============================================================
-FOCUS_SKU = "UNCOAC14"  # Leave blank "" to use SKU list or process ALL SKUs
+FOCUS_SKU = "UNCOAC12"  # Leave blank "" to use SKU list or process ALL SKUs
 USE_GLOBAL_MODEL = True  # Set to True to train a single XGBoost model across ALL SKUs
 FORECAST_SKU_LIST_FILE = "Forecast SKU List.xlsx"  # Excel file with list of SKUs to forecast
 USE_SKU_LIST = True  # Set to True to only process SKUs in the list file
@@ -2783,6 +2783,8 @@ def _prepare_arrivals_df(
     ship_series = df[col_ship] if col_ship else ""
     lt_series = df[col_lt] if col_lt else None
 
+    ship_calc = []
+    due_port_calc = adjust = []
     due_port_calc = []
     due_inv_calc = []
     for idx in range(len(df)):
@@ -2815,9 +2817,37 @@ def _prepare_arrivals_df(
                     due_inv_calc.append(pd.NaT)
             else:
                 due_inv_calc.append(raw_due_inv)
+        ship_calc.append(raw_ship)
 
+    ship_calc = pd.Series(ship_calc)
     due_port_calc = pd.Series(due_port_calc)
     due_inv_calc = pd.Series(due_inv_calc)
+
+    # Enforce chronological order: ship <= due port <= due inventory when dates exist.
+    ship_norm = ship_calc.apply(_normalize_arrival_date)
+    port_norm = due_port_calc.apply(_normalize_arrival_date)
+    inv_norm = due_inv_calc.apply(_normalize_arrival_date)
+    for i in range(len(df)):
+        s = ship_norm.iloc[i]
+        p = port_norm.iloc[i]
+        inv = inv_norm.iloc[i]
+        if pd.isna(s) and pd.isna(p) and pd.isna(inv):
+            continue
+        if pd.isna(s):
+            s = p if not pd.isna(p) else inv
+        if pd.isna(p):
+            p = inv if not pd.isna(inv) else s
+        if pd.isna(inv):
+            inv = p if not pd.isna(p) else s
+        if not pd.isna(s) and not pd.isna(p) and s > p:
+            s = p
+        if not pd.isna(p) and not pd.isna(inv) and p > inv:
+            p = inv
+        if not pd.isna(s) and not pd.isna(inv) and s > inv:
+            s = inv
+        ship_norm.iloc[i] = s
+        port_norm.iloc[i] = p
+        inv_norm.iloc[i] = inv
     out = pd.DataFrame(
         {
             "Item#": df[col_item].astype(str).str.strip() if col_item else "",
@@ -2825,13 +2855,13 @@ def _prepare_arrivals_df(
             "PO#": df[col_po].astype(str).str.strip(),
             "Quantity": df[col_qty] if col_qty else np.nan,
             "Container#": container_series,
-            "Est Ship Date": ship_series.apply(_format_arrival_date) if col_ship else "No Date",
-            "Due to Port": due_port_calc.apply(_format_arrival_value),
-            "Due in Inventory": due_inv_calc.apply(_format_arrival_value),
+            "Est Ship Date": ship_norm.apply(_format_arrival_value),
+            "Due to Port": port_norm.apply(_format_arrival_value),
+            "Due in Inventory": inv_norm.apply(_format_arrival_value),
         }
     )
     if col_due_inv:
-        out["_sort"] = due_inv_calc.apply(_normalize_arrival_date)
+        out["_sort"] = inv_norm
     out = out.sort_values("_sort", na_position="last").drop(columns=["_sort"])
     return out.reset_index(drop=True)
 
