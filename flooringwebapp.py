@@ -2454,6 +2454,36 @@ def _render_queue_table_html(df: pd.DataFrame) -> str:
     </div>
     """
 
+def _render_reorder_table_html(df: pd.DataFrame, title: str) -> str:
+    if df is None or df.empty:
+        return f"""
+        <div class="queue-card">
+          <div class="queue-header">{title}</div>
+          <div class="queue-empty">No reordering data available.</div>
+        </div>
+        """
+    headers = "".join(f"<div>{col}</div>" for col in df.columns)
+    rows = []
+    for _, row in df.iterrows():
+        cells = []
+        for col in df.columns:
+            value = row[col]
+            if isinstance(value, (int, float)):
+                value = _format_number(float(value), 2)
+            elif value is None:
+                value = ""
+            cells.append(f"<div class='text-clip'>{value}</div>")
+        rows.append(f"<div class='queue-row'>{''.join(cells)}</div>")
+    return f"""
+    <div class="queue-card">
+      <div class="queue-header">{title}</div>
+      <div class="queue-table">
+        <div class="queue-row queue-head">{headers}</div>
+        {''.join(rows)}
+      </div>
+    </div>
+    """
+
 def _render_metric_card_html(title: str, value: str, subtitle: Optional[str] = None) -> str:
     subtitle_html = f"<div class='metric-sub'>{subtitle}</div>" if subtitle else ""
     return f"""
@@ -3201,7 +3231,7 @@ def render_webapp() -> None:
         existing = [col for col in col_map if col in df_monthly.columns]
         if existing:
             out = df_monthly[existing].rename(columns=col_map)
-            st.dataframe(out, use_container_width=True, hide_index=True)
+            st.markdown(_render_reorder_table_html(out, f"{sku_label} {desc_label}"), unsafe_allow_html=True)
 
     # Removed metric/segmentation sections below Purchasing Queue per request.
 if __name__ == "__main__":
