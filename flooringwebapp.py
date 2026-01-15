@@ -67,7 +67,7 @@ warnings.filterwarnings("ignore")
 # ============================================================
 # CONFIGURATION - CHANGE THIS TO PROCESS SPECIFIC SKU OR ALL
 # ============================================================
-FOCUS_SKU = "GFBHO9501"  # Leave blank "" to use SKU list or process ALL SKUs
+FOCUS_SKU = "GFBHO9503"  # Leave blank "" to use SKU list or process ALL SKUs
 USE_GLOBAL_MODEL = True  # Set to True to train a single XGBoost model across ALL SKUs
 FORECAST_SKU_LIST_FILE = "Forecast SKU List.xlsx"  # Excel file with list of SKUs to forecast
 USE_SKU_LIST = True  # Set to True to only process SKUs in the list file
