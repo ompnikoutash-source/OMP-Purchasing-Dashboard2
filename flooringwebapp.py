@@ -3171,8 +3171,39 @@ def render_webapp() -> None:
 
     st.markdown(_render_queue_table_html(queue_df), unsafe_allow_html=True)
 
-    # Removed metric/segmentation sections below Purchasing Queue per request.
+    # Monthly detail table under Purchasing Queue
+    detail_item = selected_item or (vendor_items[0] if vendor_items else None)
+    if detail_item:
+        sku_label = detail_item.get("item_number", "")
+        desc_label = detail_item.get("description", "")
+        st.markdown(
+            f"""
+            <div class="queue-card">
+              <div class="queue-header">{sku_label} {desc_label}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        df_monthly = pd.DataFrame(monthly_rows)
+        if not df_monthly.empty and "SKU" in df_monthly.columns:
+            df_monthly = df_monthly[df_monthly["SKU"].astype(str) == str(sku_label)]
+        if not df_monthly.empty and "Month" in df_monthly.columns:
+            df_monthly["Month"] = pd.to_datetime(df_monthly["Month"], errors="coerce")
+            df_monthly = df_monthly.sort_values("Month")
+            df_monthly["Month"] = df_monthly["Month"].dt.strftime("%Y-%m-%d")
+        col_map = {
+            "Month": "Month",
+            "Beginning Inventory": "Beginning Inventory",
+            "Forecast": "Forecast",
+            "Order Quantity": "Reorder Quantity",
+            "Ending Inventory": "Ending Inventory",
+        }
+        existing = [col for col in col_map if col in df_monthly.columns]
+        if existing:
+            out = df_monthly[existing].rename(columns=col_map)
+            st.dataframe(out, use_container_width=True, hide_index=True)
 
+    # Removed metric/segmentation sections below Purchasing Queue per request.
 if __name__ == "__main__":
     if _is_streamlit_runtime():
         render_webapp()
