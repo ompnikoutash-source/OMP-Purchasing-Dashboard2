@@ -2480,9 +2480,9 @@ def _render_reorder_table_html(df: pd.DataFrame, title: str) -> str:
     return f"""
     <div class="queue-card" style="max-width: 880px;">
       <div class="queue-header">
-        <div class="reorder-header" style="--col-count:{col_count};">
+          <div class="reorder-header" style="--col-count:{col_count};">
           <div>{label}:</div>
-          <div class="text-clip">{details.strip()}</div>
+          <div class="reorder-desc">{details.strip()}</div>
         </div>
       </div>
       <div class="queue-table" style="--col-count:{col_count};">
@@ -2981,6 +2981,10 @@ def render_webapp() -> None:
           grid-template-columns: repeat(var(--col-count, 5), minmax(0, 1fr));
           column-gap: 18px;
           align-items: center;
+        }
+
+        .reorder-desc {
+          white-space: normal;
         }
 
         .queue-table {
