@@ -2726,7 +2726,7 @@ def _render_reorder_table_html(df: pd.DataFrame, title: str) -> str:
             cells.append(f"<div class='text-clip'>{value}</div>")
         rows.append(f"<div class='queue-row'>{''.join(cells)}</div>")
     col_count = len(df.columns)
-    label, details = title.split(":", 1) if ":" in title else ("Reorder Schedule", title)
+    label, details = title.split(":", 1) if ":" in title else ("REORDER SCHEDULE", title)
     parts = details.strip().split(" ", 1)
     sku = parts[0] if parts else ""
     desc = parts[1] if len(parts) > 1 else ""
