@@ -60,7 +60,7 @@ warnings.filterwarnings("ignore")
 # ============================================================
 # CONFIGURATION - CHANGE THIS TO PROCESS SPECIFIC SKU OR ALL
 # ============================================================
-FOCUS_SKU = "GFALO9503"  # Leave blank "" to use SKU list or process ALL SKUs
+FOCUS_SKU = "GFALO7501"  # Leave blank "" to use SKU list or process ALL SKUs
 USE_GLOBAL_MODEL = True  # Set to True to train a single XGBoost model across ALL SKUs
 FORECAST_SKU_LIST_FILE = "Forecast SKU List.xlsx"  # Excel file with list of SKUs to forecast
 USE_SKU_LIST = True  # Set to True to only process SKUs in the list file
@@ -3149,9 +3149,13 @@ def render_webapp() -> None:
     vendor_names = sorted({str(item.get("vendor_name", "")).strip() for item in items if item.get("vendor_name")})
     if not vendor_names:
         vendor_names = ["--"]
-    selected_vendor = st.sidebar.selectbox("Vendor name", vendor_names, index=0)
+    vendor_choices = ["All Vendors"] + vendor_names
+    selected_vendor = st.sidebar.selectbox("Vendor name", vendor_choices, index=0)
 
-    vendor_items = [item for item in items if str(item.get("vendor_name", "")).strip() == selected_vendor]
+    if selected_vendor == "All Vendors":
+        vendor_items = items
+    else:
+        vendor_items = [item for item in items if str(item.get("vendor_name", "")).strip() == selected_vendor]
     item_options = ["All items"] + [str(item.get("description", "")) for item in vendor_items]
     selected_desc = st.sidebar.selectbox("Item description", item_options, index=0)
 
@@ -3191,7 +3195,7 @@ def render_webapp() -> None:
 
     metrics_rows = data.get("Inventory_Metrics", [])
     queue_df = _build_queue_df_from_inventory(metrics_rows)
-    if not queue_df.empty:
+    if not queue_df.empty and selected_vendor != "All Vendors":
         queue_df = queue_df[queue_df["Vendor"].astype(str).str.strip() == selected_vendor]
     if queue_df.empty:
         queue_df = _build_queue_df_from_inventory(_demo_webapp_payload().get("Inventory_Metrics", []))
@@ -3203,9 +3207,22 @@ def render_webapp() -> None:
             series = {**series, **_series_from_monthly_rows(monthly_rows, selected_item.get("item_number", ""))}
         forecast_fig = _build_forecast_chart(series)
     else:
-        vendor_series = _series_from_monthly_rows_vendor(monthly_rows, selected_vendor)
-        if vendor_series.get("hist_y") or vendor_series.get("fc_y"):
-            forecast_fig = _build_forecast_chart(vendor_series)
+        if selected_vendor != "All Vendors":
+            vendor_series = _series_from_monthly_rows_vendor(monthly_rows, selected_vendor)
+            if vendor_series.get("hist_y") or vendor_series.get("fc_y"):
+                forecast_fig = _build_forecast_chart(vendor_series)
+            else:
+                series_list = [
+                    {
+                        "label": item.get("item_number", item.get("description", "")),
+                        "series": {
+                            "x": item.get("forecast_series", {}).get("fc_x") or item.get("forecast_series", {}).get("x"),
+                            "y": item.get("forecast_series", {}).get("fc_y") or item.get("forecast_series", {}).get("y"),
+                        },
+                    }
+                    for item in vendor_items
+                ]
+                forecast_fig = _build_forecast_chart_multi(series_list)
         else:
             series_list = [
                 {
@@ -3226,30 +3243,34 @@ def render_webapp() -> None:
     st.markdown(_render_queue_table_html(queue_df), unsafe_allow_html=True)
 
     # Monthly detail table under Purchasing Queue
-    detail_item = selected_item or (vendor_items[0] if vendor_items else None)
-    if detail_item:
-        sku_label = detail_item.get("item_number", "")
-        desc_label = detail_item.get("description", "")
-        df_monthly = pd.DataFrame(monthly_rows)
-        if not df_monthly.empty and "SKU" in df_monthly.columns:
-            df_monthly = df_monthly[df_monthly["SKU"].astype(str) == str(sku_label)]
-        if not df_monthly.empty and "Month" in df_monthly.columns:
-            df_monthly["Month"] = pd.to_datetime(df_monthly["Month"], errors="coerce")
-            df_monthly = df_monthly.sort_values("Month")
-            df_monthly["Month"] = df_monthly["Month"].dt.strftime("%Y-%m-%d")
-        col_map = {
-            "Month": "Month",
-            "Beginning Inventory": "Beginning Inventory",
-            "Forecast": "Forecast",
-            "Order Quantity": "Reorder Quantity",
-            "Ending Inventory": "Ending Inventory",
-        }
-        existing = [col for col in col_map if col in df_monthly.columns]
-        if existing:
-            out = df_monthly[existing].rename(columns=col_map)
-            if "Beginning Inventory" in out.columns:
-                out = out[out["Beginning Inventory"].notna()]
-            st.markdown(_render_reorder_table_html(out, f"Reorder Schedule:   {sku_label} {desc_label}"), unsafe_allow_html=True)
+    detail_items = [selected_item] if selected_item else vendor_items
+    if detail_items:
+        df_monthly_all = pd.DataFrame(monthly_rows)
+        for item in detail_items:
+            if not item:
+                continue
+            sku_label = item.get("item_number", "")
+            desc_label = item.get("description", "")
+            df_monthly = df_monthly_all.copy()
+            if not df_monthly.empty and "SKU" in df_monthly.columns:
+                df_monthly = df_monthly[df_monthly["SKU"].astype(str) == str(sku_label)]
+            if not df_monthly.empty and "Month" in df_monthly.columns:
+                df_monthly["Month"] = pd.to_datetime(df_monthly["Month"], errors="coerce")
+                df_monthly = df_monthly.sort_values("Month")
+                df_monthly["Month"] = df_monthly["Month"].dt.strftime("%Y-%m-%d")
+            col_map = {
+                "Month": "Month",
+                "Beginning Inventory": "Beginning Inventory",
+                "Forecast": "Forecast",
+                "Order Quantity": "Reorder Quantity",
+                "Ending Inventory": "Ending Inventory",
+            }
+            existing = [col for col in col_map if col in df_monthly.columns]
+            if existing:
+                out = df_monthly[existing].rename(columns=col_map)
+                if "Beginning Inventory" in out.columns:
+                    out = out[out["Beginning Inventory"].notna()]
+                st.markdown(_render_reorder_table_html(out, f"Reorder Schedule:   {sku_label} {desc_label}"), unsafe_allow_html=True)
 
     # Removed metric/segmentation sections below Purchasing Queue per request.
 if __name__ == "__main__":
