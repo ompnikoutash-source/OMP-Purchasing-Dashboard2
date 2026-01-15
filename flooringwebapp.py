@@ -2716,7 +2716,6 @@ def _render_arrivals_table_html(df: pd.DataFrame) -> str:
         "PO#": "0.9fr",
         "Quantity": "0.8fr",
         "Container#": "2.6fr",
-        "Est Ship Date": "1fr",
         "Due to Port": "1fr",
         "Due in Inventory": "1fr",
     }
@@ -2750,7 +2749,6 @@ def _prepare_arrivals_df(
     col_due_port = _get_first_column(df, ["DUE_PORT", "due_port", "PLPDAT"])
     col_due_inv = _get_first_column(df, ["DUE_INV", "due_inv", "PLDDAT"])
     col_entry = _get_first_column(df, ["ENTRY_DATE", "entry_date", "PHDOI"])
-    col_ship = _get_first_column(df, ["EST_SHIP_DATE", "est_ship_date", "PHSDAT"])
     col_lt = _get_first_column(df, ["lead_time_days", "LEAD_TIME_DAYS"])
     col_container = _get_first_column(df, ["CONTAINER", "container"])
     if col_container is None:
@@ -2780,7 +2778,6 @@ def _prepare_arrivals_df(
     due_port_series = df[col_due_port] if col_due_port else ""
     due_inv_series = df[col_due_inv] if col_due_inv else ""
     entry_series = df[col_entry] if col_entry else ""
-    ship_series = df[col_ship] if col_ship else ""
     lt_series = df[col_lt] if col_lt else None
 
     ship_calc = []
@@ -2791,7 +2788,7 @@ def _prepare_arrivals_df(
         raw_due_inv = due_inv_series.iloc[idx] if col_due_inv else None
         raw_due_port = due_port_series.iloc[idx] if col_due_port else None
         raw_entry = entry_series.iloc[idx] if col_entry else None
-        raw_ship = ship_series.iloc[idx] if col_ship else None
+        raw_ship = None
         lt_days = lt_series.iloc[idx] if lt_series is not None else None
 
         ship_dt = _normalize_arrival_date(raw_ship)
@@ -2855,7 +2852,6 @@ def _prepare_arrivals_df(
             "PO#": df[col_po].astype(str).str.strip(),
             "Quantity": df[col_qty] if col_qty else np.nan,
             "Container#": container_series,
-            "Est Ship Date": ship_norm.apply(_format_arrival_value),
             "Due to Port": port_norm.apply(_format_arrival_value),
             "Due in Inventory": inv_norm.apply(_format_arrival_value),
         }
@@ -3264,6 +3260,10 @@ def render_webapp() -> None:
           color: var(--text);
         }
 
+        section[data-testid="stSidebar"] label {
+          color: #ffffff !important;
+        }
+
         button[data-testid="collapsedControl"] {
           opacity: 1 !important;
           visibility: visible !important;
@@ -3526,7 +3526,7 @@ def render_webapp() -> None:
     )
 
     with st.sidebar:
-        st.markdown("### Controls")
+        st.markdown("### Item Filters")
 
     items = data.get("items", []) or _demo_webapp_payload().get("items", [])
     if not items:
