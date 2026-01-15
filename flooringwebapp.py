@@ -2905,7 +2905,7 @@ def render_webapp() -> None:
         .hero-top {
           display: flex;
           justify-content: space-between;
-          align-items: center;
+          align-items: flex-start;
           margin-bottom: 10px;
         }
 
@@ -2947,6 +2947,15 @@ def render_webapp() -> None:
           color: #ffffff;
           font-size: 0.9rem;
           margin-top: 6px;
+        }
+
+        .hero-meta {
+          text-align: right;
+          color: #ffffff;
+          font-size: 0.85rem;
+          line-height: 1.35;
+          opacity: 0.92;
+          max-width: 360px;
         }
 
         .build-stamp {
@@ -3183,11 +3192,13 @@ def render_webapp() -> None:
         <div class="hero-card">
           <div class="hero-top">
             <div class="pill">{run_meta.get('title','OMP Purchasing Dashboard')}</div>
+            <div class="hero-meta">
+              <div>{vendor_label} (Vendor {vendor_number})</div>
+              <div>Horizon: {horizon_days} days | Run: {run_stamp}</div>
+              <div>UI build: {UI_BUILD}</div>
+            </div>
           </div>
           <div class="hero-title">{header_title}</div>
-          <div class="hero-sub">{vendor_label} (Vendor {vendor_number})</div>
-          <div class="hero-sub">Horizon: {horizon_days} days | Run: {run_stamp}</div>
-          <div class="build-stamp">UI build: {UI_BUILD}</div>
         </div>
         """,
         unsafe_allow_html=True,
