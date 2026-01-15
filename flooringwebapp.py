@@ -3206,14 +3206,6 @@ def render_webapp() -> None:
     if detail_item:
         sku_label = detail_item.get("item_number", "")
         desc_label = detail_item.get("description", "")
-        st.markdown(
-            f"""
-            <div class="queue-card">
-              <div class="queue-header">{sku_label} {desc_label}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
         df_monthly = pd.DataFrame(monthly_rows)
         if not df_monthly.empty and "SKU" in df_monthly.columns:
             df_monthly = df_monthly[df_monthly["SKU"].astype(str) == str(sku_label)]
@@ -3231,6 +3223,8 @@ def render_webapp() -> None:
         existing = [col for col in col_map if col in df_monthly.columns]
         if existing:
             out = df_monthly[existing].rename(columns=col_map)
+            if "Beginning Inventory" in out.columns:
+                out = out[out["Beginning Inventory"].notna()]
             st.markdown(_render_reorder_table_html(out, f"{sku_label} {desc_label}"), unsafe_allow_html=True)
 
     # Removed metric/segmentation sections below Purchasing Queue per request.
