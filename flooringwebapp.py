@@ -388,6 +388,7 @@ def get_active_skus(conn, single_sku=None, sku_list=None):
           TRIM(M.IMITEM) AS ITEM_NUMBER,
           TRIM(M.IMDESC) AS DESCRIPTION,
           TRIM(M.IMVEND) AS VENDOR_NUMBER,
+          TRIM(V.VMNAME) AS VENDOR_NAME,
           TRIM(X.IMCOLLECT) AS COLLECTION,
           FR.FIRST_RECEIPT_DATE,
           ((COALESCE(INV.QTY_ON_HAND,0) - COALESCE(INV.QTY_COMMITTED,0)) * COALESCE(M.IMFACT, 1)) AS AVAILABLE_SF,
@@ -395,6 +396,7 @@ def get_active_skus(conn, single_sku=None, sku_list=None):
           COALESCE(BO.BO_SF, 0) AS BACKORDER_SF,
           COALESCE(M.IMLT, 0) AS LEAD_TIME_IMLT
         FROM GSFL2K.ITEMMAST M
+        LEFT JOIN GSFL2K.VENDMAST V ON V.VMVEND = M.IMVEND
         LEFT JOIN GSFL2K.ITEMXTRA X ON X.IMXITM = M.IMITEM
         LEFT JOIN FIRSTREC FR ON FR.ITEM_NUMBER = TRIM(M.IMITEM)
         LEFT JOIN LAST_SALE LS ON LS.ITEM_NUMBER = TRIM(M.IMITEM)
@@ -459,6 +461,7 @@ def get_active_skus(conn, single_sku=None, sku_list=None):
           TRIM(M.IMITEM) AS ITEM_NUMBER,
           TRIM(M.IMDESC) AS DESCRIPTION,
           TRIM(M.IMVEND) AS VENDOR_NUMBER,
+          TRIM(V.VMNAME) AS VENDOR_NAME,
           TRIM(X.IMCOLLECT) AS COLLECTION,
           FR.FIRST_RECEIPT_DATE,
           ((COALESCE(INV.QTY_ON_HAND,0) - COALESCE(INV.QTY_COMMITTED,0)) * COALESCE(M.IMFACT, 1)) AS AVAILABLE_SF,
@@ -466,6 +469,7 @@ def get_active_skus(conn, single_sku=None, sku_list=None):
           COALESCE(BO.BO_SF, 0) AS BACKORDER_SF,
           COALESCE(M.IMLT, 0) AS LEAD_TIME_IMLT
         FROM GSFL2K.ITEMMAST M
+        LEFT JOIN GSFL2K.VENDMAST V ON V.VMVEND = M.IMVEND
         LEFT JOIN GSFL2K.ITEMXTRA X ON X.IMXITM = M.IMITEM
         LEFT JOIN FIRSTREC FR ON FR.ITEM_NUMBER = TRIM(M.IMITEM)
         LEFT JOIN LAST_SALE LS ON LS.ITEM_NUMBER = TRIM(M.IMITEM)
@@ -1594,8 +1598,9 @@ def process_sku(conn, sku_row, lead_times_excel, abc_map, global_model=None, glo
         if hist_rows:
             monthly_proj = pd.concat([pd.DataFrame(hist_rows), monthly_proj], ignore_index=True)
 
-    # Add vendor and collection to monthly projections (will be added alongside SKU in final output)
+    # Add vendor fields to monthly projections (will be added alongside SKU in final output)
     monthly_proj['vendor_number'] = sku_row['VENDOR_NUMBER'] if 'VENDOR_NUMBER' in sku_row else ''
+    monthly_proj['vendor_name'] = sku_row['VENDOR_NAME'] if 'VENDOR_NAME' in sku_row else ''
     monthly_proj['collection'] = sku_row['COLLECTION'] if 'COLLECTION' in sku_row else ''
     
     # First reorder month
@@ -1609,6 +1614,7 @@ def process_sku(conn, sku_row, lead_times_excel, abc_map, global_model=None, glo
         'sku': sku,
         'description': sku_row['DESCRIPTION'],
         'vendor_number': sku_row['VENDOR_NUMBER'] if 'VENDOR_NUMBER' in sku_row else '',
+        'vendor_name': sku_row['VENDOR_NAME'] if 'VENDOR_NAME' in sku_row else '',
         'collection': sku_row['COLLECTION'] if 'COLLECTION' in sku_row else '',
         'available_sf': float(sku_row['AVAILABLE_SF']),
         'on_po_sf': float(sku_row['ON_PO_SF']),
@@ -2234,8 +2240,9 @@ def _build_webapp_payload(df_results: pd.DataFrame, df_monthly: pd.DataFrame) ->
             {
                 "item_number": sku,
                 "description": str(row.get("description", "")),
-                "vendor_name": str(row.get("collection", "")),
+                "vendor_name": str(row.get("vendor_name", "")) or str(row.get("collection", "")),
                 "vendor_number": str(row.get("vendor_number", "")),
+                "collection": str(row.get("collection", "")),
                 "available": float(row.get("available_sf", 0.0) or 0.0),
                 "on_po": float(row.get("on_po_sf", 0.0) or 0.0),
                 "backorder": float(row.get("backorder_sf", 0.0) or 0.0),
@@ -2261,8 +2268,9 @@ def _build_webapp_payload(df_results: pd.DataFrame, df_monthly: pd.DataFrame) ->
             {
                 "item_number": str(row.get("sku", "")),
                 "description": str(row.get("description", "")),
-                "vendor_name": str(row.get("collection", "")),
+                "vendor_name": str(row.get("vendor_name", "")) or str(row.get("collection", "")),
                 "vendor_number": str(row.get("vendor_number", "")),
+                "collection": str(row.get("collection", "")),
                 "available": float(row.get("available_sf", 0.0) or 0.0),
                 "on_po": float(row.get("on_po_sf", 0.0) or 0.0),
                 "backorder": float(row.get("backorder_sf", 0.0) or 0.0),
@@ -2410,10 +2418,12 @@ def _build_queue_df_from_inventory(metrics: List[Dict]) -> pd.DataFrame:
     if not metrics:
         return pd.DataFrame()
     df = pd.DataFrame(metrics)
+    if "vendor_name" not in df.columns and "collection" in df.columns:
+        df["vendor_name"] = df["collection"]
     rename_map = {
         "sku": "Item",
         "description": "Description",
-        "collection": "Vendor",
+        "vendor_name": "Vendor",
         "vendor_number": "Vend #",
         "available_sf": "Available",
         "on_po_sf": "On PO",
@@ -2546,6 +2556,7 @@ def _aggregate_items(items: List[Dict]) -> Dict:
         "days_of_cover": days_cover,
         "lead_time_days": lead_time_days,
         "vendor_number": items[0].get("vendor_number", "--"),
+        "vendor_name": items[0].get("vendor_name", "--"),
     }
 
 def _render_demand_graph_html(fig: go.Figure) -> str:
@@ -2636,9 +2647,10 @@ def _series_from_monthly_rows_vendor(rows: List[Dict], vendor: str) -> Dict:
     if not rows:
         return {}
     df = pd.DataFrame(rows)
-    if df.empty or "collection" not in df.columns or "Month" not in df.columns:
+    vendor_col = "vendor_name" if "vendor_name" in df.columns else "collection"
+    if df.empty or vendor_col not in df.columns or "Month" not in df.columns:
         return {}
-    df = df[df["collection"].astype(str) == str(vendor)]
+    df = df[df[vendor_col].astype(str) == str(vendor)]
     if df.empty:
         return {}
     df["Month"] = pd.to_datetime(df["Month"], errors="coerce")
