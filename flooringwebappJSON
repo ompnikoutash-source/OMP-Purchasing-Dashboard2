@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-01-15T12:39:18.770171",
+  "generated_at": "2026-01-15T13:03:53.147126",
   "run_meta": {
     "title": "OMP Purchasing Dashboard",
-    "run_timestamp_local": "2026-01-15 12:39:18",
+    "run_timestamp_local": "2026-01-15 13:03:53",
     "forecast_horizon_days": 365,
     "source": "Lead Times.xlsx:Final"
   },
@@ -235,6 +235,23 @@
   ],
   "arrivals": [
     {
+      "PO_NUMBER": "62536",
+      "ITEM_NUMBER": "UNCOAC14",
+      "DESCRIPTION": "1/4\" ACOUSTIC CORK SHEETS 2x3",
+      "QUANTITY_SF": 88200.0,
+      "VENDOR_NUMBER": "3044",
+      "VENDOR_NAME": "CORKSRIBAS-INDUSTRIA",
+      "COLLECTION": "CORK",
+      "DUE_PORT": null,
+      "DUE_INV": null,
+      "ENTRY_DATE": "2026-01-07",
+      "EST_SHIP_DATE": null,
+      "PTCMT1": "TO SHIP OUT END OF JULY,RIGHT BEFORE AUGUST CLOSURE",
+      "PTCMT2": "",
+      "CONTAINER": "TO SHIP OUT END OF JULY,RIGHT BEFORE AUGUST CLOSURE",
+      "lead_time_days": 105.0
+    },
+    {
       "PO_NUMBER": "61523",
       "ITEM_NUMBER": "UNCOAC14",
       "DESCRIPTION": "1/4\" ACOUSTIC CORK SHEETS 2x3",
@@ -244,37 +261,12 @@
       "COLLECTION": "CORK",
       "DUE_PORT": "2026-02-19",
       "DUE_INV": "2026-03-05",
+      "ENTRY_DATE": "2025-09-02",
+      "EST_SHIP_DATE": "2026-03-05",
       "PTCMT1": "4 WEEK PRODUCTION TIME PER PEDRO",
       "PTCMT2": "SHIP DATE-12/15/2025",
-      "CONTAINER": "4 WEEK PRODUCTION TIME PER PEDRO"
-    },
-    {
-      "PO_NUMBER": "62527",
-      "ITEM_NUMBER": "UNCOAC14",
-      "DESCRIPTION": "1/4\" ACOUSTIC CORK SHEETS 2x3",
-      "QUANTITY_SF": 88200.0,
-      "VENDOR_NUMBER": "3044",
-      "VENDOR_NAME": "CORKSRIBAS-INDUSTRIA",
-      "COLLECTION": "CORK",
-      "DUE_PORT": null,
-      "DUE_INV": null,
-      "PTCMT1": "TO SHIP OUT FIRST WEEK OF MARCH",
-      "PTCMT2": "",
-      "CONTAINER": "TO SHIP OUT FIRST WEEK OF MARCH"
-    },
-    {
-      "PO_NUMBER": "62526",
-      "ITEM_NUMBER": "UNCOAC14",
-      "DESCRIPTION": "1/4\" ACOUSTIC CORK SHEETS 2x3",
-      "QUANTITY_SF": 88200.0,
-      "VENDOR_NUMBER": "3044",
-      "VENDOR_NAME": "CORKSRIBAS-INDUSTRIA",
-      "COLLECTION": "CORK",
-      "DUE_PORT": null,
-      "DUE_INV": null,
-      "PTCMT1": "TO BE PRODUCED AND SHIPPED ASAP",
-      "PTCMT2": "",
-      "CONTAINER": "TO BE PRODUCED AND SHIPPED ASAP"
+      "CONTAINER": "4 WEEK PRODUCTION TIME PER PEDRO",
+      "lead_time_days": 105.0
     },
     {
       "PO_NUMBER": "62530",
@@ -286,9 +278,29 @@
       "COLLECTION": "CORK",
       "DUE_PORT": null,
       "DUE_INV": null,
+      "ENTRY_DATE": "2026-01-07",
+      "EST_SHIP_DATE": null,
       "PTCMT1": "TO SHIP PUT FIRST WEEK OF MAY",
       "PTCMT2": "",
-      "CONTAINER": "TO SHIP PUT FIRST WEEK OF MAY"
+      "CONTAINER": "TO SHIP PUT FIRST WEEK OF MAY",
+      "lead_time_days": 105.0
+    },
+    {
+      "PO_NUMBER": "62526",
+      "ITEM_NUMBER": "UNCOAC14",
+      "DESCRIPTION": "1/4\" ACOUSTIC CORK SHEETS 2x3",
+      "QUANTITY_SF": 88200.0,
+      "VENDOR_NUMBER": "3044",
+      "VENDOR_NAME": "CORKSRIBAS-INDUSTRIA",
+      "COLLECTION": "CORK",
+      "DUE_PORT": null,
+      "DUE_INV": null,
+      "ENTRY_DATE": "2026-01-07",
+      "EST_SHIP_DATE": null,
+      "PTCMT1": "TO BE PRODUCED AND SHIPPED ASAP",
+      "PTCMT2": "",
+      "CONTAINER": "TO BE PRODUCED AND SHIPPED ASAP",
+      "lead_time_days": 105.0
     },
     {
       "PO_NUMBER": "62532",
@@ -300,12 +312,15 @@
       "COLLECTION": "CORK",
       "DUE_PORT": null,
       "DUE_INV": null,
+      "ENTRY_DATE": "2026-01-07",
+      "EST_SHIP_DATE": null,
       "PTCMT1": "TO SHIP OUT FIRST WEEK OF JUNE",
       "PTCMT2": "",
-      "CONTAINER": "TO SHIP OUT FIRST WEEK OF JUNE"
+      "CONTAINER": "TO SHIP OUT FIRST WEEK OF JUNE",
+      "lead_time_days": 105.0
     },
     {
-      "PO_NUMBER": "62536",
+      "PO_NUMBER": "62527",
       "ITEM_NUMBER": "UNCOAC14",
       "DESCRIPTION": "1/4\" ACOUSTIC CORK SHEETS 2x3",
       "QUANTITY_SF": 88200.0,
@@ -314,9 +329,12 @@
       "COLLECTION": "CORK",
       "DUE_PORT": null,
       "DUE_INV": null,
-      "PTCMT1": "TO SHIP OUT END OF JULY,RIGHT BEFORE AUGUST CLOSURE",
+      "ENTRY_DATE": "2026-01-07",
+      "EST_SHIP_DATE": null,
+      "PTCMT1": "TO SHIP OUT FIRST WEEK OF MARCH",
       "PTCMT2": "",
-      "CONTAINER": "TO SHIP OUT END OF JULY,RIGHT BEFORE AUGUST CLOSURE"
+      "CONTAINER": "TO SHIP OUT FIRST WEEK OF MARCH",
+      "lead_time_days": 105.0
     }
   ],
   "queue": [
