@@ -2477,12 +2477,16 @@ def _render_reorder_table_html(df: pd.DataFrame, title: str) -> str:
         rows.append(f"<div class='queue-row'>{''.join(cells)}</div>")
     col_count = len(df.columns)
     label, details = title.split(":", 1) if ":" in title else ("Reorder Schedule", title)
+    parts = details.strip().split(" ", 1)
+    sku = parts[0] if parts else ""
+    desc = parts[1] if len(parts) > 1 else ""
     return f"""
     <div class="queue-card" style="max-width: 880px;">
       <div class="queue-header">
           <div class="reorder-header" style="--col-count:{col_count};">
           <div>{label}:</div>
-          <div class="reorder-desc">{details.strip()}</div>
+          <div class="reorder-sku">{sku}</div>
+          <div class="reorder-desc">{desc}</div>
         </div>
       </div>
       <div class="queue-table" style="--col-count:{col_count};">
