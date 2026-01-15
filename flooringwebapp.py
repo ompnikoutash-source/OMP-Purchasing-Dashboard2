@@ -3177,13 +3177,31 @@ def render_webapp() -> None:
         vendor_items = items
     else:
         vendor_items = [item for item in items if str(item.get("vendor_name", "")).strip() == selected_vendor]
-    item_options = ["All items"] + [str(item.get("description", "")) for item in vendor_items]
+
+    collection_names = sorted({str(item.get("collection", "")).strip() for item in vendor_items if item.get("collection")})
+    if not collection_names:
+        collection_names = ["--"]
+    collection_choices = ["All Collections"] + collection_names
+    selected_collection = st.sidebar.selectbox("Collection", collection_choices, index=0)
+
+    if selected_collection == "All Collections":
+        collection_items = vendor_items
+    else:
+        collection_items = [
+            item for item in vendor_items if str(item.get("collection", "")).strip() == selected_collection
+        ]
+
+    item_options = ["All items"] + [str(item.get("description", "")) for item in collection_items]
     selected_desc = st.sidebar.selectbox("Item description", item_options, index=0)
 
     if selected_desc != "All items":
-        selected_item = next((item for item in vendor_items if str(item.get("description", "")) == selected_desc), vendor_items[0])
+        selected_item = next(
+            (item for item in collection_items if str(item.get("description", "")) == selected_desc),
+            collection_items[0],
+        )
     else:
         selected_item = None
+    vendor_items = collection_items
 
     run_meta = data.get("run_meta", {})
     if selected_item:
@@ -3217,6 +3235,10 @@ def render_webapp() -> None:
     )
 
     metrics_rows = data.get("Inventory_Metrics", [])
+    if selected_collection != "All Collections":
+        metrics_rows = [
+            row for row in metrics_rows if str(row.get("collection", "")).strip() == selected_collection
+        ]
     queue_df = _build_queue_df_from_inventory(metrics_rows)
     if not queue_df.empty and selected_vendor != "All Vendors":
         queue_df = queue_df[queue_df["Vendor"].astype(str).str.strip() == selected_vendor]
@@ -3224,6 +3246,10 @@ def render_webapp() -> None:
         queue_df = _build_queue_df_from_inventory(_demo_webapp_payload().get("Inventory_Metrics", []))
 
     monthly_rows = data.get("Monthly_Projections", [])
+    if selected_collection != "All Collections":
+        monthly_rows = [
+            row for row in monthly_rows if str(row.get("collection", "")).strip() == selected_collection
+        ]
     if selected_item:
         series = selected_item.get("forecast_series", {}) or {}
         if not series.get("hist_y"):
