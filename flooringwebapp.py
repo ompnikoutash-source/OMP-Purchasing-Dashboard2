@@ -3306,7 +3306,7 @@ def render_webapp() -> None:
             if not df_monthly.empty and "Month" in df_monthly.columns:
                 df_monthly["Month"] = pd.to_datetime(df_monthly["Month"], errors="coerce")
                 df_monthly = df_monthly.sort_values("Month")
-                df_monthly["Month"] = df_monthly["Month"].dt.strftime("%Y-%m-%d")
+                df_monthly["Month"] = df_monthly["Month"].dt.strftime("%m/%d/%Y")
             col_map = {
                 "Month": "Month",
                 "Beginning Inventory": "Beginning Inventory",
