@@ -2431,6 +2431,7 @@ def _build_queue_df_from_inventory(metrics: List[Dict]) -> pd.DataFrame:
         "inventory_position": "Inv Position",
         "lead_time_days": "Lead Time (days)",
         "lead_time_mean_demand": "LT Demand",
+        "safety_stock": "Safety Stock",
     }
     cols = [c for c in rename_map.keys() if c in df.columns]
     df = df[cols].rename(columns=rename_map)
@@ -2444,6 +2445,19 @@ def _render_queue_table_html(df: pd.DataFrame) -> str:
           <div class="queue-empty">No items for selected vendor.</div>
         </div>
         """
+    col_weights = {
+        "Item": "0.9fr",
+        "Description": "2.6fr",
+        "Vendor": "1.3fr",
+        "Vend #": "0.6fr",
+        "Available": "1.0fr",
+        "On PO": "0.7fr",
+        "Backorder": "0.7fr",
+        "Inv Position": "0.8fr",
+        "Lead Time (days)": "0.9fr",
+        "LT Demand": "0.9fr",
+        "Safety Stock": "0.9fr",
+    }
     headers = "".join(f"<div>{col}</div>" for col in df.columns)
     rows = []
     for _, row in df.iterrows():
@@ -2455,10 +2469,11 @@ def _render_queue_table_html(df: pd.DataFrame) -> str:
             cells.append(f"<div class='text-clip'>{value}</div>")
         rows.append(f"<div class='queue-row'>{''.join(cells)}</div>")
     col_count = len(df.columns)
+    col_template = " ".join(col_weights.get(col, "1fr") for col in df.columns)
     return f"""
     <div class="queue-card">
       <div class="queue-header">PURCHASING QUEUE</div>
-      <div class="queue-table" style="--col-count:{col_count};">
+      <div class="queue-table" style="--col-count:{col_count}; --col-template:{col_template};">
         <div class="queue-row queue-head">{headers}</div>
         {''.join(rows)}
       </div>
@@ -3021,7 +3036,7 @@ def render_webapp() -> None:
 
         .queue-row {
           display: grid;
-          grid-template-columns: repeat(var(--col-count, 5), minmax(0, 1fr));
+          grid-template-columns: var(--col-template, repeat(var(--col-count, 5), minmax(0, 1fr)));
           column-gap: 18px;
           row-gap: 6px;
           font-size: 0.82rem;
