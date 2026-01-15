@@ -2444,10 +2444,11 @@ def _render_queue_table_html(df: pd.DataFrame) -> str:
                 value = _format_number(float(value), 2)
             cells.append(f"<div class='text-clip'>{value}</div>")
         rows.append(f"<div class='queue-row'>{''.join(cells)}</div>")
+    col_count = len(df.columns)
     return f"""
     <div class="queue-card">
       <div class="queue-header">PURCHASING QUEUE</div>
-      <div class="queue-table">
+      <div class="queue-table" style="--col-count:{col_count};">
         <div class="queue-row queue-head">{headers}</div>
         {''.join(rows)}
       </div>
@@ -2474,10 +2475,11 @@ def _render_reorder_table_html(df: pd.DataFrame, title: str) -> str:
                 value = ""
             cells.append(f"<div class='text-clip'>{value}</div>")
         rows.append(f"<div class='queue-row'>{''.join(cells)}</div>")
+    col_count = len(df.columns)
     return f"""
-    <div class="queue-card">
+    <div class="queue-card" style="max-width: 880px;">
       <div class="queue-header">{title}</div>
-      <div class="queue-table">
+      <div class="queue-table" style="--col-count:{col_count};">
         <div class="queue-row queue-head">{headers}</div>
         {''.join(rows)}
       </div>
@@ -2974,8 +2976,9 @@ def render_webapp() -> None:
 
         .queue-row {
           display: grid;
-          grid-template-columns: 0.9fr 1.5fr 1.2fr 0.7fr 0.9fr 0.8fr 0.9fr 1fr 0.9fr 0.9fr;
-          gap: 10px;
+          grid-template-columns: repeat(var(--col-count, 5), minmax(0, 1fr));
+          column-gap: 18px;
+          row-gap: 6px;
           font-size: 0.82rem;
           padding: 6px 8px;
           border-radius: 10px;
