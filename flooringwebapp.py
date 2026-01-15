@@ -2476,9 +2476,15 @@ def _render_reorder_table_html(df: pd.DataFrame, title: str) -> str:
             cells.append(f"<div class='text-clip'>{value}</div>")
         rows.append(f"<div class='queue-row'>{''.join(cells)}</div>")
     col_count = len(df.columns)
+    label, details = title.split(":", 1) if ":" in title else ("Reorder Schedule", title)
     return f"""
     <div class="queue-card" style="max-width: 880px;">
-      <div class="queue-header"><span class="reorder-label">{title}</span></div>
+      <div class="queue-header">
+        <div class="reorder-header" style="--col-count:{col_count};">
+          <div>{label}:</div>
+          <div class="text-clip">{details.strip()}</div>
+        </div>
+      </div>
       <div class="queue-table" style="--col-count:{col_count};">
         <div class="queue-row queue-head">{headers}</div>
         {''.join(rows)}
@@ -2970,9 +2976,11 @@ def render_webapp() -> None:
           border-radius: 16px 16px 0 0;
         }
 
-        .reorder-label {
-          display: inline-block;
-          padding-left: 22%;
+        .reorder-header {
+          display: grid;
+          grid-template-columns: repeat(var(--col-count, 5), minmax(0, 1fr));
+          column-gap: 18px;
+          align-items: center;
         }
 
         .queue-table {
