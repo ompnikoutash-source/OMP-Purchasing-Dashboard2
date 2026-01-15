@@ -2177,6 +2177,16 @@ def _format_metric(value: float, digits: int = 2) -> str:
         return "NA"
     return f"{value:.{digits}f}"
 
+def _filter_forecast_months(series: pd.Series) -> pd.Series:
+    if series is None or series.empty:
+        return series
+    if not isinstance(series.index, pd.DatetimeIndex):
+        return series
+    current_month_start = pd.Timestamp.today().to_period("M").to_timestamp()
+    next_month_start = current_month_start + pd.offsets.MonthBegin(1)
+    end_exclusive = current_month_start + pd.DateOffset(months=12)
+    return series[(series.index >= next_month_start) & (series.index < end_exclusive)]
+
 def _normalize_arrival_date(value: Any) -> pd.Timestamp:
     try:
         dt = pd.to_datetime(value, errors="coerce")
@@ -2331,6 +2341,10 @@ def _build_webapp_payload(df_results: pd.DataFrame, df_monthly: pd.DataFrame, df
             series = sku_df.groupby(col_month)[value_col].sum().sort_index()
             if series.empty:
                 continue
+            if value_col == col_forecast:
+                series = _filter_forecast_months(series)
+                if series.empty:
+                    continue
             last = series.tail(6)
             series_payload = {
                 "fc_x": [d.strftime("%Y-%m-%d") for d in series.index],
@@ -2343,6 +2357,8 @@ def _build_webapp_payload(df_results: pd.DataFrame, df_monthly: pd.DataFrame, df
                 fc_mask = sku_df[row_type_col].astype(str).str.upper().isin(["FCST", "CATCHUP"])
                 hist_series = sku_df.loc[hist_mask].groupby(col_month)[col_hist].sum().sort_index() if col_hist else None
                 fc_series = sku_df.loc[fc_mask].groupby(col_month)[col_forecast].sum().sort_index() if col_forecast else None
+                if fc_series is not None:
+                    fc_series = _filter_forecast_months(fc_series)
                 if hist_series is not None and not hist_series.empty:
                     series_payload["hist_x"] = [d.strftime("%Y-%m-%d") for d in hist_series.index]
                     series_payload["hist_y"] = [float(v) for v in hist_series.values]
@@ -3032,8 +3048,10 @@ def _series_from_monthly_rows(rows: List[Dict], sku: str) -> Dict:
         series["hist_x"] = [d.strftime("%Y-%m-%d") for d in hist["Month"]]
         series["hist_y"] = [float(v) for v in hist["Historical Demand"]]
     if not fc.empty and "Forecast" in fc.columns:
-        series["fc_x"] = [d.strftime("%Y-%m-%d") for d in fc["Month"]]
-        series["fc_y"] = [float(v) for v in fc["Forecast"]]
+        fc_series = fc.groupby("Month")["Forecast"].sum().sort_index()
+        fc_series = _filter_forecast_months(fc_series)
+        series["fc_x"] = [d.strftime("%Y-%m-%d") for d in fc_series.index]
+        series["fc_y"] = [float(v) for v in fc_series.values]
         series["x"] = series["fc_x"]
         series["y"] = series["fc_y"]
     return series
@@ -3064,6 +3082,7 @@ def _series_from_monthly_rows_vendor(rows: List[Dict], vendor: str) -> Dict:
         series["hist_y"] = [float(v) for v in hist_series.values]
     if not fc.empty and "Forecast" in fc.columns:
         fc_series = fc.groupby("Month")["Forecast"].sum().sort_index()
+        fc_series = _filter_forecast_months(fc_series)
         series["fc_x"] = [d.strftime("%Y-%m-%d") for d in fc_series.index]
         series["fc_y"] = [float(v) for v in fc_series.values]
         series["x"] = series["fc_x"]
