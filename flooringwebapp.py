@@ -2170,7 +2170,10 @@ def _format_metric(value: float, digits: int = 2) -> str:
     return f"{value:.{digits}f}"
 
 def _normalize_arrival_date(value: Any) -> pd.Timestamp:
-    dt = pd.to_datetime(value, errors="coerce")
+    try:
+        dt = pd.to_datetime(value, errors="coerce")
+    except Exception:
+        return pd.NaT
     if pd.isna(dt):
         return pd.NaT
     start = pd.Timestamp("2025-01-01")
@@ -2415,7 +2418,10 @@ def _write_webapp_json(payload: Dict, output_path: Path) -> None:
         if isinstance(value, (pd.Timestamp, datetime, date, np.datetime64)):
             if pd.isna(value):
                 return None
-            return pd.to_datetime(value).strftime("%Y-%m-%d")
+            try:
+                return pd.to_datetime(value).strftime("%Y-%m-%d")
+            except Exception:
+                return None
         if value is pd.NaT:
             return None
         if isinstance(value, dict):
