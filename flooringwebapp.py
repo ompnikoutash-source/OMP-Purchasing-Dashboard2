@@ -2480,7 +2480,10 @@ def _render_reorder_table_html(df: pd.DataFrame, title: str) -> str:
         for col in df.columns:
             value = row[col]
             if isinstance(value, (int, float)):
-                value = _format_number(float(value), 2)
+                if col == "Reorder Quantity" and abs(float(value)) < 1e-9:
+                    value = ""
+                else:
+                    value = _format_number(float(value), 2)
             elif value is None:
                 value = ""
             cells.append(f"<div class='text-clip'>{value}</div>")
