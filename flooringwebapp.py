@@ -2185,7 +2185,7 @@ def _normalize_arrival_date(value: Any) -> pd.Timestamp:
     if pd.isna(dt):
         return pd.NaT
     start = pd.Timestamp("2025-01-01")
-    end = pd.Timestamp.today().normalize()
+    end = pd.Timestamp.today().normalize() + pd.Timedelta(days=730)
     if dt < start or dt > end:
         return pd.NaT
     return dt
@@ -2196,7 +2196,7 @@ def _format_arrival_date(value: Any) -> str:
         return "No Date"
     return dt.strftime("%m/%d/%Y")
 
-def _format_arrival_value(value: Any, label: str) -> str:
+def _format_arrival_value(value: Any, label: str = "No Date") -> str:
     dt = _normalize_arrival_date(value)
     if pd.isna(dt):
         return label
@@ -2826,8 +2826,8 @@ def _prepare_arrivals_df(
             "Quantity": df[col_qty] if col_qty else np.nan,
             "Container#": container_series,
             "Est Ship Date": ship_series.apply(_format_arrival_date) if col_ship else "No Date",
-            "Due to Port": due_port_calc.apply(lambda v: _format_arrival_value(v, "No Ship Date")),
-            "Due in Inventory": due_inv_calc.apply(lambda v: _format_arrival_value(v, "No Ship Date")),
+            "Due to Port": due_port_calc.apply(_format_arrival_value),
+            "Due in Inventory": due_inv_calc.apply(_format_arrival_value),
         }
     )
     if col_due_inv:
