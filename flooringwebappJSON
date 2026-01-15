@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-01-15T13:09:16.523157",
+  "generated_at": "2026-01-15T13:14:36.557612",
   "run_meta": {
     "title": "OMP Purchasing Dashboard",
-    "run_timestamp_local": "2026-01-15 13:09:16",
+    "run_timestamp_local": "2026-01-15 13:14:36",
     "forecast_horizon_days": 365,
     "source": "Lead Times.xlsx:Final"
   },
   "items": [
     {
-      "item_number": "UNCOAC14",
-      "description": "1/4\" ACOUSTIC CORK SHEETS 2x3",
+      "item_number": "UNCOAC12",
+      "description": "1/2\" ACOUSTIC CORK SHEETS 2x3",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "vendor_number": "3044",
       "collection": "CORK",
-      "available": 55212.0,
-      "on_po": 529200.0,
-      "backorder": 1914.0,
-      "inventory_position": 582498.0,
+      "available": 100590.0,
+      "on_po": 396900.0,
+      "backorder": 1602.0,
+      "inventory_position": 495888.0,
       "lead_time_days": 105,
       "lead_time_source": "Excel",
-      "lt_demand": 116127.13310580206,
-      "suggested_order_qty": 123868.94197952219,
+      "lt_demand": 95107.26962457338,
+      "suggested_order_qty": 101447.7542662116,
       "forecast_series": {
         "fc_x": [
           "2026-01-01",
@@ -38,19 +38,19 @@
           "2027-01-01"
         ],
         "fc_y": [
-          22559.27629468065,
-          39478.73351569114,
-          43708.59782094377,
-          42298.643052526226,
-          43708.59782094377,
-          42298.643052526226,
-          43708.59782094377,
-          43708.59782094377,
-          42298.643052526226,
-          43708.59782094377,
-          42298.643052526226,
-          43708.59782094377,
-          14099.54768417541
+          14493.612871769863,
+          25363.822525597272,
+          28081.374939054123,
+          27175.524134568506,
+          28081.374939054123,
+          27175.524134568506,
+          28081.374939054123,
+          28081.374939054123,
+          27175.524134568506,
+          28081.374939054123,
+          27175.524134568506,
+          28081.374939054123,
+          9058.50804485617
         ],
         "x": [
           "2026-01-01",
@@ -68,19 +68,19 @@
           "2027-01-01"
         ],
         "y": [
-          22559.27629468065,
-          39478.73351569114,
-          43708.59782094377,
-          42298.643052526226,
-          43708.59782094377,
-          42298.643052526226,
-          43708.59782094377,
-          43708.59782094377,
-          42298.643052526226,
-          43708.59782094377,
-          42298.643052526226,
-          43708.59782094377,
-          14099.54768417541
+          14493.612871769863,
+          25363.822525597272,
+          28081.374939054123,
+          27175.524134568506,
+          28081.374939054123,
+          27175.524134568506,
+          28081.374939054123,
+          28081.374939054123,
+          27175.524134568506,
+          28081.374939054123,
+          27175.524134568506,
+          28081.374939054123,
+          9058.50804485617
         ],
         "hist_x": [
           "2020-06-01",
@@ -94,7 +94,6 @@
           "2021-02-01",
           "2021-03-01",
           "2021-04-01",
-          "2021-05-01",
           "2021-06-01",
           "2021-07-01",
           "2021-08-01",
@@ -152,93 +151,109 @@
           "2025-12-01"
         ],
         "hist_y": [
-          15696.0,
-          9612.0,
-          3942.0,
-          4416.0,
-          12606.0,
-          20586.0,
-          22842.0,
-          29388.0,
-          25458.0,
-          17196.0,
-          402.0,
-          2610.0,
-          1410.0,
-          10032.0,
-          20058.0,
-          21276.0,
-          34008.0,
-          28434.0,
-          24546.0,
-          42330.0,
-          25392.0,
-          30438.0,
-          28182.0,
-          24390.0,
-          33174.0,
-          42990.0,
-          41844.0,
-          35688.0,
-          62784.0,
-          36750.0,
-          40704.0,
-          30732.0,
-          38382.0,
-          35688.0,
-          33750.0,
-          47550.0,
-          51852.0,
-          34782.0,
-          55722.0,
-          42612.0,
-          46956.0,
-          41076.0,
-          7938.0,
-          42972.0,
-          47910.0,
-          37938.0,
-          41808.0,
-          37782.0,
-          19914.0,
-          41022.0,
-          46056.0,
-          29556.0,
-          49320.0,
-          47046.0,
-          43452.0,
-          45396.0,
-          44862.0,
-          34776.0,
-          55878.0,
-          43836.0,
-          51270.0,
-          47304.0,
-          43524.0,
-          45648.0,
-          51680.0,
-          41940.0,
-          45576.0
+          8610.0,
+          8232.0,
+          3306.0,
+          6204.0,
+          11514.0,
+          19926.0,
+          26844.0,
+          27384.0,
+          17862.0,
+          2856.0,
+          936.0,
+          10404.0,
+          20256.0,
+          33156.0,
+          21420.0,
+          9936.0,
+          11478.0,
+          9120.0,
+          33942.0,
+          22680.0,
+          27264.0,
+          29628.0,
+          32634.0,
+          33210.0,
+          34302.0,
+          27138.0,
+          40098.0,
+          48138.0,
+          30264.0,
+          21102.0,
+          19320.0,
+          22104.0,
+          24786.0,
+          44802.0,
+          38880.0,
+          41424.0,
+          36822.0,
+          24096.0,
+          22464.0,
+          20760.0,
+          37134.0,
+          15522.0,
+          25020.0,
+          37950.0,
+          33396.0,
+          5340.0,
+          11976.0,
+          36966.0,
+          31812.0,
+          48930.0,
+          32988.0,
+          41292.0,
+          25416.0,
+          40368.0,
+          45798.0,
+          33510.0,
+          48828.0,
+          27786.0,
+          47208.0,
+          32478.0,
+          58254.0,
+          52110.0,
+          44358.0,
+          36420.0,
+          33696.0,
+          32466.0
         ]
       },
       "segmentation": {
         "maturity": "C",
         "demand_pattern": "SMOOTH",
-        "adi": 1.0467625899280575,
-        "cv2": 0.3007693330604318,
+        "adi": 1.0391459074733096,
+        "cv2": 0.42408787502722395,
         "first_sales_date": "2020-06-01",
         "history_days": 2405
       },
-      "daily_avg_demand": 1105.972696245734,
-      "days_of_cover": 526.6838882888443
+      "daily_avg_demand": 905.7835202340322,
+      "days_of_cover": 547.4685605583493
     }
   ],
   "arrivals": [
     {
-      "PO_NUMBER": "62536",
-      "ITEM_NUMBER": "UNCOAC14",
-      "DESCRIPTION": "1/4\" ACOUSTIC CORK SHEETS 2x3",
-      "QUANTITY_SF": 88200.0,
+      "PO_NUMBER": "61518",
+      "ITEM_NUMBER": "UNCOAC12",
+      "DESCRIPTION": "1/2\" ACOUSTIC CORK SHEETS 2x3",
+      "QUANTITY_SF": 44100.0,
+      "VENDOR_NUMBER": "3044",
+      "VENDOR_NAME": "CORKSRIBAS-INDUSTRIA",
+      "COLLECTION": "CORK",
+      "DUE_PORT": "2026-01-22",
+      "DUE_INV": "2026-02-05",
+      "ENTRY_DATE": "2025-09-02",
+      "EST_SHIP_DATE": "2026-02-05",
+      "PTCMT1": "4 WEEK PRODUCTION TIME PER PEDRO",
+      "PTCMT2": "SHIP DATE-11/13/2025",
+      "CONTAINER": "4 WEEK PRODUCTION TIME PER PEDRO",
+      "lead_time_days": 105.0
+    },
+    {
+      "PO_NUMBER": "62529",
+      "ITEM_NUMBER": "UNCOAC12",
+      "DESCRIPTION": "1/2\" ACOUSTIC CORK SHEETS 2x3",
+      "QUANTITY_SF": 44100.0,
       "VENDOR_NUMBER": "3044",
       "VENDOR_NAME": "CORKSRIBAS-INDUSTRIA",
       "COLLECTION": "CORK",
@@ -246,16 +261,50 @@
       "DUE_INV": null,
       "ENTRY_DATE": "2026-01-07",
       "EST_SHIP_DATE": null,
-      "PTCMT1": "TO SHIP OUT END OF JULY,RIGHT BEFORE AUGUST CLOSURE",
+      "PTCMT1": "TO SHIP OUT FIRST WEEK OF APRIL",
       "PTCMT2": "",
-      "CONTAINER": "TO SHIP OUT END OF JULY,RIGHT BEFORE AUGUST CLOSURE",
+      "CONTAINER": "TO SHIP OUT FIRST WEEK OF APRIL",
       "lead_time_days": 105.0
     },
     {
-      "PO_NUMBER": "61523",
-      "ITEM_NUMBER": "UNCOAC14",
-      "DESCRIPTION": "1/4\" ACOUSTIC CORK SHEETS 2x3",
-      "QUANTITY_SF": 88200.0,
+      "PO_NUMBER": "61519",
+      "ITEM_NUMBER": "UNCOAC12",
+      "DESCRIPTION": "1/2\" ACOUSTIC CORK SHEETS 2x3",
+      "QUANTITY_SF": 44100.0,
+      "VENDOR_NUMBER": "3044",
+      "VENDOR_NAME": "CORKSRIBAS-INDUSTRIA",
+      "COLLECTION": "CORK",
+      "DUE_PORT": "2026-02-06",
+      "DUE_INV": "2026-02-20",
+      "ENTRY_DATE": "2025-09-02",
+      "EST_SHIP_DATE": "2026-02-20",
+      "PTCMT1": "4 WEEK PRODUCTION TIME PER PERDRO",
+      "PTCMT2": "SHIP DATE-12/08/2025",
+      "CONTAINER": "4 WEEK PRODUCTION TIME PER PERDRO",
+      "lead_time_days": 105.0
+    },
+    {
+      "PO_NUMBER": "62531",
+      "ITEM_NUMBER": "UNCOAC12",
+      "DESCRIPTION": "1/2\" ACOUSTIC CORK SHEETS 2x3",
+      "QUANTITY_SF": 44100.0,
+      "VENDOR_NUMBER": "3044",
+      "VENDOR_NAME": "CORKSRIBAS-INDUSTRIA",
+      "COLLECTION": "CORK",
+      "DUE_PORT": null,
+      "DUE_INV": null,
+      "ENTRY_DATE": "2026-01-07",
+      "EST_SHIP_DATE": null,
+      "PTCMT1": "TO SHIP OUT 2ND WEEK OF MAY",
+      "PTCMT2": "",
+      "CONTAINER": "TO SHIP OUT 2ND WEEK OF MAY",
+      "lead_time_days": 105.0
+    },
+    {
+      "PO_NUMBER": "61520",
+      "ITEM_NUMBER": "UNCOAC12",
+      "DESCRIPTION": "1/2\" ACOUSTIC CORK SHEETS 2x3",
+      "QUANTITY_SF": 44100.0,
       "VENDOR_NUMBER": "3044",
       "VENDOR_NAME": "CORKSRIBAS-INDUSTRIA",
       "COLLECTION": "CORK",
@@ -264,15 +313,15 @@
       "ENTRY_DATE": "2025-09-02",
       "EST_SHIP_DATE": "2026-03-05",
       "PTCMT1": "4 WEEK PRODUCTION TIME PER PEDRO",
-      "PTCMT2": "SHIP DATE-12/15/2025",
+      "PTCMT2": "SHIP DATE-12/31/2025",
       "CONTAINER": "4 WEEK PRODUCTION TIME PER PEDRO",
       "lead_time_days": 105.0
     },
     {
-      "PO_NUMBER": "62530",
-      "ITEM_NUMBER": "UNCOAC14",
-      "DESCRIPTION": "1/4\" ACOUSTIC CORK SHEETS 2x3",
-      "QUANTITY_SF": 88200.0,
+      "PO_NUMBER": "62533",
+      "ITEM_NUMBER": "UNCOAC12",
+      "DESCRIPTION": "1/2\" ACOUSTIC CORK SHEETS 2x3",
+      "QUANTITY_SF": 44100.0,
       "VENDOR_NUMBER": "3044",
       "VENDOR_NAME": "CORKSRIBAS-INDUSTRIA",
       "COLLECTION": "CORK",
@@ -280,33 +329,33 @@
       "DUE_INV": null,
       "ENTRY_DATE": "2026-01-07",
       "EST_SHIP_DATE": null,
-      "PTCMT1": "TO SHIP PUT FIRST WEEK OF MAY",
+      "PTCMT1": "TO SHIP OUT 2ND WEEK OF JUNE",
       "PTCMT2": "",
-      "CONTAINER": "TO SHIP PUT FIRST WEEK OF MAY",
+      "CONTAINER": "TO SHIP OUT 2ND WEEK OF JUNE",
       "lead_time_days": 105.0
     },
     {
-      "PO_NUMBER": "62526",
-      "ITEM_NUMBER": "UNCOAC14",
-      "DESCRIPTION": "1/4\" ACOUSTIC CORK SHEETS 2x3",
-      "QUANTITY_SF": 88200.0,
+      "PO_NUMBER": "61517",
+      "ITEM_NUMBER": "UNCOAC12",
+      "DESCRIPTION": "1/2\" ACOUSTIC CORK SHEETS 2x3",
+      "QUANTITY_SF": 44100.0,
       "VENDOR_NUMBER": "3044",
       "VENDOR_NAME": "CORKSRIBAS-INDUSTRIA",
       "COLLECTION": "CORK",
-      "DUE_PORT": null,
-      "DUE_INV": null,
-      "ENTRY_DATE": "2026-01-07",
-      "EST_SHIP_DATE": null,
-      "PTCMT1": "TO BE PRODUCED AND SHIPPED ASAP",
-      "PTCMT2": "",
-      "CONTAINER": "TO BE PRODUCED AND SHIPPED ASAP",
+      "DUE_PORT": "2026-01-08",
+      "DUE_INV": "2026-01-22",
+      "ENTRY_DATE": "2025-09-02",
+      "EST_SHIP_DATE": "2026-01-22",
+      "PTCMT1": "4 WEEK PRODUCTION TIME PER PEDRO",
+      "PTCMT2": "SHIP DATE-10/20/2025",
+      "CONTAINER": "4 WEEK PRODUCTION TIME PER PEDRO",
       "lead_time_days": 105.0
     },
     {
-      "PO_NUMBER": "62532",
-      "ITEM_NUMBER": "UNCOAC14",
-      "DESCRIPTION": "1/4\" ACOUSTIC CORK SHEETS 2x3",
-      "QUANTITY_SF": 88200.0,
+      "PO_NUMBER": "62534",
+      "ITEM_NUMBER": "UNCOAC12",
+      "DESCRIPTION": "1/2\" ACOUSTIC CORK SHEETS 2x3",
+      "QUANTITY_SF": 44100.0,
       "VENDOR_NUMBER": "3044",
       "VENDOR_NAME": "CORKSRIBAS-INDUSTRIA",
       "COLLECTION": "CORK",
@@ -314,16 +363,16 @@
       "DUE_INV": null,
       "ENTRY_DATE": "2026-01-07",
       "EST_SHIP_DATE": null,
-      "PTCMT1": "TO SHIP OUT FIRST WEEK OF JUNE",
+      "PTCMT1": "TO SHIP OUT FIRST WEEK OF JULY",
       "PTCMT2": "",
-      "CONTAINER": "TO SHIP OUT FIRST WEEK OF JUNE",
+      "CONTAINER": "TO SHIP OUT FIRST WEEK OF JULY",
       "lead_time_days": 105.0
     },
     {
-      "PO_NUMBER": "62527",
-      "ITEM_NUMBER": "UNCOAC14",
-      "DESCRIPTION": "1/4\" ACOUSTIC CORK SHEETS 2x3",
-      "QUANTITY_SF": 88200.0,
+      "PO_NUMBER": "62528",
+      "ITEM_NUMBER": "UNCOAC12",
+      "DESCRIPTION": "1/2\" ACOUSTIC CORK SHEETS 2x3",
+      "QUANTITY_SF": 44100.0,
       "VENDOR_NUMBER": "3044",
       "VENDOR_NAME": "CORKSRIBAS-INDUSTRIA",
       "COLLECTION": "CORK",
@@ -331,25 +380,25 @@
       "DUE_INV": null,
       "ENTRY_DATE": "2026-01-07",
       "EST_SHIP_DATE": null,
-      "PTCMT1": "TO SHIP OUT FIRST WEEK OF MARCH",
+      "PTCMT1": "TO SHIP OUT 2nd WEEK OF MARCH",
       "PTCMT2": "",
-      "CONTAINER": "TO SHIP OUT FIRST WEEK OF MARCH",
+      "CONTAINER": "TO SHIP OUT 2nd WEEK OF MARCH",
       "lead_time_days": 105.0
     }
   ],
   "queue": [
     {
-      "item_number": "UNCOAC14",
-      "description": "1/4\" ACOUSTIC CORK SHEETS 2x3",
+      "item_number": "UNCOAC12",
+      "description": "1/2\" ACOUSTIC CORK SHEETS 2x3",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "vendor_number": "3044",
       "collection": "CORK",
-      "available": 55212.0,
-      "on_po": 529200.0,
-      "backorder": 1914.0,
-      "inventory_position": 582498.0,
+      "available": 100590.0,
+      "on_po": 396900.0,
+      "backorder": 1602.0,
+      "inventory_position": 495888.0,
       "lead_time_days": 105,
-      "lt_demand": 116127.13310580206
+      "lt_demand": 95107.26962457338
     }
   ],
   "sql_sources": [
@@ -357,37 +406,37 @@
   ],
   "Inventory_Metrics": [
     {
-      "sku": "UNCOAC14",
-      "description": "1/4\" ACOUSTIC CORK SHEETS 2x3",
+      "sku": "UNCOAC12",
+      "description": "1/2\" ACOUSTIC CORK SHEETS 2x3",
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "available_sf": 55212.0,
-      "on_po_sf": 529200.0,
-      "backorder_sf": 1914.0,
-      "inventory_position": 582498.0,
+      "available_sf": 100590.0,
+      "on_po_sf": 396900.0,
+      "backorder_sf": 1602.0,
+      "inventory_position": 495888.0,
       "lead_time_days": 105.0,
       "lead_time_source": "Excel",
       "demand_class": "SMOOTH",
-      "adi": 1.0467625899280575,
-      "cv2": 0.3007693330604318,
-      "forecast_method": "SBA",
-      "forecast_wmape": 29.899034232165267,
-      "first_reorder_month": "2026-12-01",
-      "avg_monthly_demand": 33621.5699658703,
-      "avg_weekly_demand": 7741.808873720137,
-      "daily_mean_demand": 1105.972696245734,
-      "weekly_std_demand": 4693.025342724588,
+      "adi": 1.0391459074733096,
+      "cv2": 0.42408787502722395,
+      "forecast_method": "TSB",
+      "forecast_wmape": 30.507955375899986,
+      "first_reorder_month": "None",
+      "avg_monthly_demand": 27535.819015114575,
+      "avg_weekly_demand": 6340.484641638225,
+      "daily_mean_demand": 905.7835202340322,
+      "weekly_std_demand": 4399.685103606103,
       "lead_time_weeks": 15.0,
-      "lead_time_mean_demand": 116127.13310580206,
-      "sd_demand_over_lt": 18176.008995701686,
-      "sd_demand_monthly": 9780.040905338348,
-      "safety_stock": 23293.492783794234,
-      "reorder_point": 139420.6258895963,
-      "reorder_quantity": 123868.94197952219,
+      "lead_time_mean_demand": 95107.26962457338,
+      "sd_demand_over_lt": 17039.907134823294,
+      "sd_demand_monthly": 9168.733842569547,
+      "safety_stock": 21837.5196653674,
+      "reorder_point": 116944.78928994079,
+      "reorder_quantity": 101447.7542662116,
       "sku_abc": "C",
-      "ss_base": 23293.492783794234,
-      "ss_lumpy": 23293.492783794234,
+      "ss_base": 21837.5196653674,
+      "ss_lumpy": 21837.5196653674,
       "ss_uplift_raw": 0.0,
       "ss_uplift_applied_pre_budget": 0.0,
       "ss_uplift_applied": 0.0
@@ -396,8 +445,8 @@
   "Monthly_Projections": [
     {
       "Month": "2020-06-01",
-      "Historical Demand": 15696.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 8610.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -406,12 +455,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2020-07-01",
-      "Historical Demand": 9612.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 8232.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -420,12 +469,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2020-08-01",
-      "Historical Demand": 3942.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 3306.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -434,12 +483,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2020-09-01",
-      "Historical Demand": 4416.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 6204.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -448,12 +497,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2020-10-01",
-      "Historical Demand": 12606.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 11514.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -462,12 +511,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2020-11-01",
-      "Historical Demand": 20586.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 19926.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -476,12 +525,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2020-12-01",
-      "Historical Demand": 22842.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 26844.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -490,12 +539,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2021-01-01",
-      "Historical Demand": 29388.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 27384.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -504,12 +553,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2021-02-01",
-      "Historical Demand": 25458.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 17862.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -518,12 +567,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2021-03-01",
-      "Historical Demand": 17196.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 2856.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -532,12 +581,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2021-04-01",
-      "Historical Demand": 402.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 936.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -546,26 +595,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
-    },
-    {
-      "Month": "2021-05-01",
-      "Historical Demand": 2610.0,
-      "Safety Stock": 23293.492783794234,
-      "Beginning Inventory": null,
-      "Forecast": null,
-      "Order Quantity": null,
-      "Ending Inventory": null,
-      "Row_Type": "HIST",
-      "vendor_number": "3044",
-      "vendor_name": "CORKSRIBAS-INDUSTRIA",
-      "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2021-06-01",
-      "Historical Demand": 1410.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 10404.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -574,12 +609,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2021-07-01",
-      "Historical Demand": 10032.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 20256.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -588,12 +623,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2021-08-01",
-      "Historical Demand": 20058.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 33156.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -602,12 +637,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2021-09-01",
-      "Historical Demand": 21276.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 21420.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -616,12 +651,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2021-10-01",
-      "Historical Demand": 34008.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 9936.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -630,12 +665,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2021-11-01",
-      "Historical Demand": 28434.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 11478.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -644,12 +679,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2021-12-01",
-      "Historical Demand": 24546.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 9120.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -658,12 +693,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2022-01-01",
-      "Historical Demand": 42330.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 33942.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -672,12 +707,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2022-02-01",
-      "Historical Demand": 25392.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 22680.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -686,12 +721,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2022-03-01",
-      "Historical Demand": 30438.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 27264.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -700,12 +735,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2022-04-01",
-      "Historical Demand": 28182.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 29628.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -714,12 +749,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2022-05-01",
-      "Historical Demand": 24390.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 32634.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -728,12 +763,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2022-06-01",
-      "Historical Demand": 33174.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 33210.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -742,12 +777,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2022-07-01",
-      "Historical Demand": 42990.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 34302.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -756,12 +791,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2022-08-01",
-      "Historical Demand": 41844.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 27138.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -770,12 +805,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2022-09-01",
-      "Historical Demand": 35688.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 40098.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -784,12 +819,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2022-10-01",
-      "Historical Demand": 62784.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 48138.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -798,12 +833,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2022-11-01",
-      "Historical Demand": 36750.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 30264.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -812,12 +847,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2022-12-01",
-      "Historical Demand": 40704.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 21102.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -826,12 +861,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2023-01-01",
-      "Historical Demand": 30732.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 19320.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -840,12 +875,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2023-02-01",
-      "Historical Demand": 38382.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 22104.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -854,12 +889,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2023-03-01",
-      "Historical Demand": 35688.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 24786.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -868,12 +903,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2023-04-01",
-      "Historical Demand": 33750.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 44802.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -882,12 +917,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2023-05-01",
-      "Historical Demand": 47550.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 38880.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -896,12 +931,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2023-06-01",
-      "Historical Demand": 51852.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 41424.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -910,12 +945,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2023-07-01",
-      "Historical Demand": 34782.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 36822.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -924,12 +959,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2023-08-01",
-      "Historical Demand": 55722.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 24096.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -938,12 +973,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2023-09-01",
-      "Historical Demand": 42612.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 22464.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -952,12 +987,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2023-10-01",
-      "Historical Demand": 46956.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 20760.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -966,12 +1001,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2023-11-01",
-      "Historical Demand": 41076.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 37134.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -980,12 +1015,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2023-12-01",
-      "Historical Demand": 7938.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 15522.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -994,12 +1029,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2024-01-01",
-      "Historical Demand": 42972.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 25020.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1008,12 +1043,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2024-02-01",
-      "Historical Demand": 47910.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 37950.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1022,12 +1057,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2024-03-01",
-      "Historical Demand": 37938.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 33396.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1036,12 +1071,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2024-04-01",
-      "Historical Demand": 41808.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 5340.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1050,12 +1085,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2024-05-01",
-      "Historical Demand": 37782.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 11976.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1064,12 +1099,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2024-06-01",
-      "Historical Demand": 19914.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 36966.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1078,12 +1113,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2024-07-01",
-      "Historical Demand": 41022.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 31812.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1092,12 +1127,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2024-08-01",
-      "Historical Demand": 46056.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 48930.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1106,12 +1141,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2024-09-01",
-      "Historical Demand": 29556.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 32988.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1120,12 +1155,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2024-10-01",
-      "Historical Demand": 49320.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 41292.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1134,12 +1169,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2024-11-01",
-      "Historical Demand": 47046.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 25416.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1148,12 +1183,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2024-12-01",
-      "Historical Demand": 43452.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 40368.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1162,12 +1197,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2025-01-01",
-      "Historical Demand": 45396.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 45798.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1176,12 +1211,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2025-02-01",
-      "Historical Demand": 44862.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 33510.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1190,12 +1225,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2025-03-01",
-      "Historical Demand": 34776.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 48828.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1204,12 +1239,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2025-04-01",
-      "Historical Demand": 55878.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 27786.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1218,12 +1253,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2025-05-01",
-      "Historical Demand": 43836.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 47208.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1232,12 +1267,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2025-06-01",
-      "Historical Demand": 51270.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 32478.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1246,12 +1281,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2025-07-01",
-      "Historical Demand": 47304.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 58254.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1260,12 +1295,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2025-08-01",
-      "Historical Demand": 43524.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 52110.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1274,12 +1309,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2025-09-01",
-      "Historical Demand": 45648.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 44358.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1288,12 +1323,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2025-10-01",
-      "Historical Demand": 51680.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 36420.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1302,12 +1337,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2025-11-01",
-      "Historical Demand": 41940.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 33696.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1316,12 +1351,12 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2025-12-01",
-      "Historical Demand": 45576.0,
-      "Safety Stock": 23293.492783794234,
+      "Historical Demand": 32466.0,
+      "Safety Stock": 21837.5196653674,
       "Beginning Inventory": null,
       "Forecast": null,
       "Order Quantity": null,
@@ -1330,189 +1365,189 @@
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2026-01-01",
-      "Historical Demand": 19086.0,
-      "Safety Stock": 23293.492783794234,
-      "Beginning Inventory": 582498.0,
-      "Forecast": 22559.27629468065,
+      "Historical Demand": 18516.0,
+      "Safety Stock": 21837.5196653674,
+      "Beginning Inventory": 495888.0,
+      "Forecast": 14493.612871769863,
       "Order Quantity": 0.0,
-      "Ending Inventory": 540852.7237053193,
+      "Ending Inventory": 462878.3871282301,
       "Row_Type": "CATCHUP",
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2026-02-01",
       "Historical Demand": null,
-      "Safety Stock": 23293.492783794234,
-      "Beginning Inventory": 540852.7237053193,
-      "Forecast": 39478.73351569114,
+      "Safety Stock": 21837.5196653674,
+      "Beginning Inventory": 462878.3871282301,
+      "Forecast": 25363.822525597272,
       "Order Quantity": 0.0,
-      "Ending Inventory": 501373.9901896282,
+      "Ending Inventory": 437514.56460263283,
       "Row_Type": "FCST",
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2026-03-01",
       "Historical Demand": null,
-      "Safety Stock": 23293.492783794234,
-      "Beginning Inventory": 501373.9901896282,
-      "Forecast": 43708.59782094377,
+      "Safety Stock": 21837.5196653674,
+      "Beginning Inventory": 437514.56460263283,
+      "Forecast": 28081.374939054123,
       "Order Quantity": 0.0,
-      "Ending Inventory": 457665.39236868446,
+      "Ending Inventory": 409433.1896635787,
       "Row_Type": "FCST",
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2026-04-01",
       "Historical Demand": null,
-      "Safety Stock": 23293.492783794234,
-      "Beginning Inventory": 457665.39236868446,
-      "Forecast": 42298.643052526226,
+      "Safety Stock": 21837.5196653674,
+      "Beginning Inventory": 409433.1896635787,
+      "Forecast": 27175.524134568506,
       "Order Quantity": 0.0,
-      "Ending Inventory": 415366.74931615824,
+      "Ending Inventory": 382257.6655290102,
       "Row_Type": "FCST",
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2026-05-01",
       "Historical Demand": null,
-      "Safety Stock": 23293.492783794234,
-      "Beginning Inventory": 415366.74931615824,
-      "Forecast": 43708.59782094377,
+      "Safety Stock": 21837.5196653674,
+      "Beginning Inventory": 382257.6655290102,
+      "Forecast": 28081.374939054123,
       "Order Quantity": 0.0,
-      "Ending Inventory": 371658.1514952145,
+      "Ending Inventory": 354176.29058995604,
       "Row_Type": "FCST",
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2026-06-01",
       "Historical Demand": null,
-      "Safety Stock": 23293.492783794234,
-      "Beginning Inventory": 371658.1514952145,
-      "Forecast": 42298.643052526226,
+      "Safety Stock": 21837.5196653674,
+      "Beginning Inventory": 354176.29058995604,
+      "Forecast": 27175.524134568506,
       "Order Quantity": 0.0,
-      "Ending Inventory": 329359.50844268827,
+      "Ending Inventory": 327000.7664553875,
       "Row_Type": "FCST",
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2026-07-01",
       "Historical Demand": null,
-      "Safety Stock": 23293.492783794234,
-      "Beginning Inventory": 329359.50844268827,
-      "Forecast": 43708.59782094377,
+      "Safety Stock": 21837.5196653674,
+      "Beginning Inventory": 327000.7664553875,
+      "Forecast": 28081.374939054123,
       "Order Quantity": 0.0,
-      "Ending Inventory": 285650.9106217445,
+      "Ending Inventory": 298919.3915163334,
       "Row_Type": "FCST",
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2026-08-01",
       "Historical Demand": null,
-      "Safety Stock": 23293.492783794234,
-      "Beginning Inventory": 285650.9106217445,
-      "Forecast": 43708.59782094377,
+      "Safety Stock": 21837.5196653674,
+      "Beginning Inventory": 298919.3915163334,
+      "Forecast": 28081.374939054123,
       "Order Quantity": 0.0,
-      "Ending Inventory": 241942.31280080075,
+      "Ending Inventory": 270838.01657727925,
       "Row_Type": "FCST",
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2026-09-01",
       "Historical Demand": null,
-      "Safety Stock": 23293.492783794234,
-      "Beginning Inventory": 241942.31280080075,
-      "Forecast": 42298.643052526226,
+      "Safety Stock": 21837.5196653674,
+      "Beginning Inventory": 270838.01657727925,
+      "Forecast": 27175.524134568506,
       "Order Quantity": 0.0,
-      "Ending Inventory": 199643.66974827452,
+      "Ending Inventory": 243662.49244271073,
       "Row_Type": "FCST",
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2026-10-01",
       "Historical Demand": null,
-      "Safety Stock": 23293.492783794234,
-      "Beginning Inventory": 199643.66974827452,
-      "Forecast": 43708.59782094377,
+      "Safety Stock": 21837.5196653674,
+      "Beginning Inventory": 243662.49244271073,
+      "Forecast": 28081.374939054123,
       "Order Quantity": 0.0,
-      "Ending Inventory": 155935.07192733075,
+      "Ending Inventory": 215581.1175036566,
       "Row_Type": "FCST",
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2026-11-01",
       "Historical Demand": null,
-      "Safety Stock": 23293.492783794234,
-      "Beginning Inventory": 155935.07192733075,
-      "Forecast": 42298.643052526226,
+      "Safety Stock": 21837.5196653674,
+      "Beginning Inventory": 215581.1175036566,
+      "Forecast": 27175.524134568506,
       "Order Quantity": 0.0,
-      "Ending Inventory": 113636.42887480452,
+      "Ending Inventory": 188405.59336908808,
       "Row_Type": "FCST",
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2026-12-01",
       "Historical Demand": null,
-      "Safety Stock": 23293.492783794234,
-      "Beginning Inventory": 113636.42887480452,
-      "Forecast": 43708.59782094377,
-      "Order Quantity": 123868.94197952219,
-      "Ending Inventory": 193796.77303338292,
+      "Safety Stock": 21837.5196653674,
+      "Beginning Inventory": 188405.59336908808,
+      "Forecast": 28081.374939054123,
+      "Order Quantity": 0.0,
+      "Ending Inventory": 160324.21843003394,
       "Row_Type": "FCST",
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     },
     {
       "Month": "2027-01-01",
       "Historical Demand": null,
-      "Safety Stock": 23293.492783794234,
-      "Beginning Inventory": 193796.77303338292,
-      "Forecast": 14099.54768417541,
+      "Safety Stock": 21837.5196653674,
+      "Beginning Inventory": 160324.21843003394,
+      "Forecast": 9058.50804485617,
       "Order Quantity": 0.0,
-      "Ending Inventory": 179697.22534920753,
+      "Ending Inventory": 151265.71038517778,
       "Row_Type": "FCST",
       "vendor_number": "3044",
       "vendor_name": "CORKSRIBAS-INDUSTRIA",
       "collection": "CORK",
-      "SKU": "UNCOAC14"
+      "SKU": "UNCOAC12"
     }
   ]
 }
