@@ -558,10 +558,13 @@ def load_arrivals(conn, sku_list: List[str]) -> pd.DataFrame:
       TRIM(X.IMCOLLECT) AS COLLECTION,
       L.PLPDAT AS DUE_PORT,
       L.PLDDAT AS DUE_INV,
+      H.PHDOI AS ENTRY_DATE,
+      H.PHSDAT AS EST_SHIP_DATE,
       MAX(TRIM(P.PTCMT1)) AS PTCMT1,
       MAX(TRIM(P.PTCMT2)) AS PTCMT2
     FROM GSFL2K.POLINE L
     LEFT JOIN GSFL2K.POTEXT P ON P.PTPO# = L.PLPO#
+    LEFT JOIN GSFL2K.POHEAD H ON H.PHPO# = L.PLPO#
     JOIN GSFL2K.ITEMMAST M ON M.IMITEM = L.PLITEM
     LEFT JOIN GSFL2K.ITEMXTRA X ON X.IMXITM = M.IMITEM
     LEFT JOIN GSFL2K.VENDMAST V ON V.VMVEND = M.IMVEND
@@ -576,7 +579,9 @@ def load_arrivals(conn, sku_list: List[str]) -> pd.DataFrame:
       TRIM(V.VMNAME),
       TRIM(X.IMCOLLECT),
       L.PLPDAT,
-      L.PLDDAT
+      L.PLDDAT,
+      H.PHDOI,
+      H.PHSDAT
     """
     df = pd.read_sql_query(sql, conn)
     df["CONTAINER"] = df["PTCMT1"].fillna("").astype(str).str.strip()
@@ -2135,6 +2140,9 @@ def run_inventory_planning():
     arrivals_df = pd.DataFrame()
     if conn is not None and not df_results.empty and "sku" in df_results.columns:
         arrivals_df = load_arrivals(conn, df_results["sku"].astype(str).unique().tolist())
+        if not arrivals_df.empty:
+            lt_map = df_results[["sku", "lead_time_days"]].rename(columns={"sku": "ITEM_NUMBER"})
+            arrivals_df = arrivals_df.merge(lt_map, on="ITEM_NUMBER", how="left")
     if conn is not None:
         conn.close()
     payload = _build_webapp_payload(df_results, df_monthly, arrivals_df)
@@ -2187,6 +2195,21 @@ def _format_arrival_date(value: Any) -> str:
     if pd.isna(dt):
         return "No Date"
     return dt.strftime("%m/%d/%Y")
+
+def _format_arrival_value(value: Any, label: str) -> str:
+    dt = _normalize_arrival_date(value)
+    if pd.isna(dt):
+        return label
+    return dt.strftime("%m/%d/%Y")
+
+def _add_days_safe(value: Any, days: float) -> pd.Timestamp:
+    base = _normalize_arrival_date(value)
+    if pd.isna(base):
+        return pd.NaT
+    try:
+        return base + pd.Timedelta(days=float(days))
+    except Exception:
+        return pd.NaT
 
 def _mask_suffix(value: str) -> str:
     if not value:
@@ -2692,7 +2715,8 @@ def _render_arrivals_table_html(df: pd.DataFrame) -> str:
         "Description": "1.6fr",
         "PO#": "0.9fr",
         "Quantity": "0.8fr",
-        "Container#": "2.4fr",
+        "Container#": "2.6fr",
+        "Est Ship Date": "1fr",
         "Due to Port": "1fr",
         "Due in Inventory": "1fr",
     }
@@ -2725,6 +2749,9 @@ def _prepare_arrivals_df(
     col_collection = _get_first_column(df, ["COLLECTION", "collection"])
     col_due_port = _get_first_column(df, ["DUE_PORT", "due_port", "PLPDAT"])
     col_due_inv = _get_first_column(df, ["DUE_INV", "due_inv", "PLDDAT"])
+    col_entry = _get_first_column(df, ["ENTRY_DATE", "entry_date", "PHDOI"])
+    col_ship = _get_first_column(df, ["EST_SHIP_DATE", "est_ship_date", "PHSDAT"])
+    col_lt = _get_first_column(df, ["lead_time_days", "LEAD_TIME_DAYS"])
     col_container = _get_first_column(df, ["CONTAINER", "container"])
     if col_container is None:
         c1 = _get_first_column(df, ["PTCMT1", "ptcmt1"])
@@ -2752,6 +2779,45 @@ def _prepare_arrivals_df(
     container_series = df[col_container].fillna("").astype(str).str.strip() if col_container else ""
     due_port_series = df[col_due_port] if col_due_port else ""
     due_inv_series = df[col_due_inv] if col_due_inv else ""
+    entry_series = df[col_entry] if col_entry else ""
+    ship_series = df[col_ship] if col_ship else ""
+    lt_series = df[col_lt] if col_lt else None
+
+    due_port_calc = []
+    due_inv_calc = []
+    for idx in range(len(df)):
+        raw_due_inv = due_inv_series.iloc[idx] if col_due_inv else None
+        raw_due_port = due_port_series.iloc[idx] if col_due_port else None
+        raw_entry = entry_series.iloc[idx] if col_entry else None
+        raw_ship = ship_series.iloc[idx] if col_ship else None
+        lt_days = lt_series.iloc[idx] if lt_series is not None else None
+
+        ship_dt = _normalize_arrival_date(raw_ship)
+        due_port_dt = _normalize_arrival_date(raw_due_port)
+        due_inv_dt = _normalize_arrival_date(raw_due_inv)
+        entry_dt = _normalize_arrival_date(raw_entry)
+        lt_days_val = float(lt_days) if lt_days is not None else None
+
+        if pd.isna(ship_dt) and pd.isna(due_port_dt) and pd.isna(due_inv_dt):
+            due_port_calc.append(pd.NaT)
+            due_inv_calc.append(pd.NaT)
+        elif not pd.isna(ship_dt) and pd.isna(due_port_dt) and pd.isna(due_inv_dt) and lt_days_val is not None:
+            due_port_calc.append(_add_days_safe(ship_dt, max(lt_days_val - 21, 0)))
+            due_inv_calc.append(_add_days_safe(ship_dt, lt_days_val))
+        else:
+            due_port_calc.append(raw_due_port)
+            if pd.isna(due_inv_dt):
+                if not pd.isna(due_port_dt):
+                    due_inv_calc.append(_add_days_safe(due_port_dt, 21))
+                elif not pd.isna(entry_dt) and lt_days_val is not None:
+                    due_inv_calc.append(_add_days_safe(entry_dt, max(lt_days_val - 21, 0)))
+                else:
+                    due_inv_calc.append(pd.NaT)
+            else:
+                due_inv_calc.append(raw_due_inv)
+
+    due_port_calc = pd.Series(due_port_calc)
+    due_inv_calc = pd.Series(due_inv_calc)
     out = pd.DataFrame(
         {
             "Item#": df[col_item].astype(str).str.strip() if col_item else "",
@@ -2759,13 +2825,14 @@ def _prepare_arrivals_df(
             "PO#": df[col_po].astype(str).str.strip(),
             "Quantity": df[col_qty] if col_qty else np.nan,
             "Container#": container_series,
-            "Due to Port": due_port_series.apply(_format_arrival_date) if col_due_port else "No Date",
-            "Due in Inventory": due_inv_series.apply(_format_arrival_date) if col_due_inv else "No Date",
+            "Est Ship Date": ship_series.apply(_format_arrival_date) if col_ship else "No Date",
+            "Due to Port": due_port_calc.apply(lambda v: _format_arrival_value(v, "No Ship Date")),
+            "Due in Inventory": due_inv_calc.apply(lambda v: _format_arrival_value(v, "No Ship Date")),
         }
     )
     if col_due_inv:
-        out["_sort"] = due_inv_series.apply(_normalize_arrival_date)
-        out = out.sort_values("_sort", na_position="last").drop(columns=["_sort"])
+        out["_sort"] = due_inv_calc.apply(_normalize_arrival_date)
+    out = out.sort_values("_sort", na_position="last").drop(columns=["_sort"])
     return out.reset_index(drop=True)
 
 def _render_metric_card_html(title: str, value: str, subtitle: Optional[str] = None) -> str:
