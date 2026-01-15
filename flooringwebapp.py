@@ -2983,7 +2983,7 @@ def _render_demand_graph_html(fig: go.Figure) -> str:
             background: var(--panel-strong);
             border-bottom: 1px solid rgba(255,255,255,0.08);
             padding: 10px 16px;
-            font-size: 0.72rem;
+            font-size: 0.9rem;
             letter-spacing: 0.12em;
             font-weight: 700;
             color: var(--text);
@@ -3275,6 +3275,7 @@ def render_webapp() -> None:
           --blue: #2f6fdd;
           --shadow: 0 12px 30px rgba(0,0,0,0.18);
           --shadow-soft: 0 6px 16px rgba(0,0,0,0.12);
+          --section-header-size: 0.9rem;
         }
 
         html, body, [class*="css"]  {
@@ -3298,6 +3299,10 @@ def render_webapp() -> None:
 
         section[data-testid="stSidebar"] .stMarkdown {
           color: var(--text);
+        }
+
+        section[data-testid="stSidebar"] h3 {
+          font-size: var(--section-header-size) !important;
         }
 
         section[data-testid="stSidebar"] label {
@@ -3398,7 +3403,7 @@ def render_webapp() -> None:
 
         .queue-header {
           padding: 10px 16px;
-          font-size: 0.72rem;
+          font-size: var(--section-header-size);
           letter-spacing: 0.12em;
           font-weight: 700;
           color: #ffffff;
