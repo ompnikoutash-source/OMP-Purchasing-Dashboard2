@@ -67,7 +67,7 @@ warnings.filterwarnings("ignore")
 # ============================================================
 # CONFIGURATION - CHANGE THIS TO PROCESS SPECIFIC SKU OR ALL
 # ============================================================
-FOCUS_SKU = ""  # Leave blank "" to use SKU list or process ALL SKUs
+FOCUS_SKU = "UNCOAC14"  # Leave blank "" to use SKU list or process ALL SKUs
 USE_GLOBAL_MODEL = True  # Set to True to train a single XGBoost model across ALL SKUs
 FORECAST_SKU_LIST_FILE = "Forecast SKU List.xlsx"  # Excel file with list of SKUs to forecast
 USE_SKU_LIST = True  # Set to True to only process SKUs in the list file
@@ -331,6 +331,10 @@ def apply_ss_uplift_scalar(ss_base: float, ss_lumpy: float, sku_abc: str) -> tup
     ss_final = ss_base + uplift_applied
     return ss_final, uplift_raw, uplift_applied
 
+def _build_in_list(values: List[str]) -> str:
+    safe = [str(v).replace("'", "''") for v in values if v]
+    return "'" + "','".join(safe) + "'" if safe else "''"
+
 def get_active_skus(conn, single_sku=None, sku_list=None):
     """
     Get active SKUs based on:
@@ -343,7 +347,7 @@ def get_active_skus(conn, single_sku=None, sku_list=None):
         print(f"  Fetching data for {len(sku_list)} specific SKUs...")
         
         # Create IN clause for the SKU list
-        sku_list_str = "'" + "','".join(sku_list) + "'"
+        sku_list_str = _build_in_list(sku_list)
         
         sql = f"""
         WITH
@@ -536,6 +540,52 @@ def load_sales_history(conn, sku, start_date):
     df = pd.read_sql_query(sql, conn, params=[sku, start_date.strftime("%Y-%m-%d"), hist_end_dt.strftime("%Y-%m-%d")])
     df["SALES_DATE"] = pd.to_datetime(df["SALES_DATE"], errors="coerce")
     df["QTY_SOLD_SF"] = pd.to_numeric(df["QTY_SOLD_SF"], errors="coerce").fillna(0.0)
+    return df
+
+def load_arrivals(conn, sku_list: List[str]) -> pd.DataFrame:
+    """Load open PO arrivals with container notes from POLINE/POTEXT."""
+    if not sku_list:
+        return pd.DataFrame()
+    sku_list_str = _build_in_list(sku_list)
+    sql = f"""
+    SELECT
+      TRIM(L.PLPO#) AS PO_NUMBER,
+      TRIM(L.PLITEM) AS ITEM_NUMBER,
+      TRIM(L.PLDESC) AS DESCRIPTION,
+      COALESCE(L.PLBLUO, 0) AS QUANTITY_SF,
+      TRIM(M.IMVEND) AS VENDOR_NUMBER,
+      TRIM(V.VMNAME) AS VENDOR_NAME,
+      TRIM(X.IMCOLLECT) AS COLLECTION,
+      L.PLPDAT AS DUE_PORT,
+      L.PLDDAT AS DUE_INV,
+      MAX(TRIM(P.PTCMT1)) AS PTCMT1,
+      MAX(TRIM(P.PTCMT2)) AS PTCMT2
+    FROM GSFL2K.POLINE L
+    LEFT JOIN GSFL2K.POTEXT P ON P.PTPO# = L.PLPO#
+    JOIN GSFL2K.ITEMMAST M ON M.IMITEM = L.PLITEM
+    LEFT JOIN GSFL2K.ITEMXTRA X ON X.IMXITM = M.IMITEM
+    LEFT JOIN GSFL2K.VENDMAST V ON V.VMVEND = M.IMVEND
+    WHERE L.PLDELT LIKE '%A%'
+      AND TRIM(L.PLITEM) IN ({sku_list_str})
+    GROUP BY
+      TRIM(L.PLPO#),
+      TRIM(L.PLITEM),
+      TRIM(L.PLDESC),
+      COALESCE(L.PLBLUO, 0),
+      TRIM(M.IMVEND),
+      TRIM(V.VMNAME),
+      TRIM(X.IMCOLLECT),
+      L.PLPDAT,
+      L.PLDDAT
+    """
+    df = pd.read_sql_query(sql, conn)
+    df["CONTAINER"] = df["PTCMT1"].fillna("").astype(str).str.strip()
+    df["CONTAINER"] = np.where(
+        df["CONTAINER"] != "",
+        df["CONTAINER"],
+        df["PTCMT2"].fillna("").astype(str).str.strip(),
+    )
+    df["CONTAINER"] = df["CONTAINER"].replace("", np.nan)
     return df
 
 def build_daily_series(sales_df, start_date):
@@ -2082,7 +2132,10 @@ def run_inventory_planning():
                 print(f"  File path: {output_file}")
                 break
     
-    payload = _build_webapp_payload(df_results, df_monthly)
+    arrivals_df = pd.DataFrame()
+    if conn is not None and not df_results.empty and "sku" in df_results.columns:
+        arrivals_df = load_arrivals(conn, df_results["sku"].astype(str).unique().tolist())
+    payload = _build_webapp_payload(df_results, df_monthly, arrivals_df)
     _write_webapp_json(payload, WEBAPP_JSON_PATH)
 
     if not saved:
@@ -2113,6 +2166,22 @@ def _format_metric(value: float, digits: int = 2) -> str:
     if value is None or (isinstance(value, float) and (math.isnan(value) or math.isinf(value))):
         return "NA"
     return f"{value:.{digits}f}"
+
+def _normalize_arrival_date(value: Any) -> pd.Timestamp:
+    dt = pd.to_datetime(value, errors="coerce")
+    if pd.isna(dt):
+        return pd.NaT
+    start = pd.Timestamp("2025-01-01")
+    end = pd.Timestamp.today().normalize()
+    if dt < start or dt > end:
+        return pd.NaT
+    return dt
+
+def _format_arrival_date(value: Any) -> str:
+    dt = _normalize_arrival_date(value)
+    if pd.isna(dt):
+        return "No Date"
+    return dt.strftime("%m/%d/%Y")
 
 def _mask_suffix(value: str) -> str:
     if not value:
@@ -2168,6 +2237,20 @@ def _demo_webapp_payload() -> Dict:
                 "days_of_cover": 4842.7,
             }
         ],
+        "arrivals": [
+            {
+                "PO_NUMBER": "450123",
+                "ITEM_NUMBER": "GFAL09503",
+                "DESCRIPTION": "EURO OAK 9.5\" DOMA",
+                "QUANTITY_SF": 1200.0,
+                "VENDOR_NAME": "FLO.I.T S.R.L",
+                "VENDOR_NUMBER": "569",
+                "COLLECTION": "ALLORA",
+                "CONTAINER": "CONT-7742",
+                "DUE_PORT": "2025-02-10",
+                "DUE_INV": "2025-03-05",
+            }
+        ],
         "queue": [
             {
                 "item_number": "GFAL09503",
@@ -2187,7 +2270,7 @@ def _demo_webapp_payload() -> Dict:
         ],
     }
 
-def _build_webapp_payload(df_results: pd.DataFrame, df_monthly: pd.DataFrame) -> Dict:
+def _build_webapp_payload(df_results: pd.DataFrame, df_monthly: pd.DataFrame, df_arrivals: Optional[pd.DataFrame] = None) -> Dict:
     payload = _demo_webapp_payload()
     if df_results is None or df_results.empty:
         return payload
@@ -2314,6 +2397,10 @@ def _build_webapp_payload(df_results: pd.DataFrame, df_monthly: pd.DataFrame) ->
     payload["queue"] = queue_rows
     payload["Inventory_Metrics"] = _df_to_records(df_results)
     payload["Monthly_Projections"] = _df_to_records(df_monthly)
+    if df_arrivals is not None and not df_arrivals.empty:
+        payload["arrivals"] = _df_to_records(df_arrivals)
+    else:
+        payload["arrivals"] = []
     payload["generated_at"] = datetime.now().isoformat()
     return payload
 
@@ -2489,7 +2576,7 @@ def _render_queue_table_html(df: pd.DataFrame) -> str:
     if df is None or df.empty:
         return """
         <div class="queue-card">
-          <div class="queue-header">PURCHASING QUEUE</div>
+          <div class="queue-header">INVENTORY AT A GLANCE</div>
           <div class="queue-empty">No items for selected vendor.</div>
         </div>
         """
@@ -2520,7 +2607,7 @@ def _render_queue_table_html(df: pd.DataFrame) -> str:
     col_template = " ".join(col_weights.get(col, "1fr") for col in df.columns)
     return f"""
     <div class="queue-card">
-      <div class="queue-header">PURCHASING QUEUE</div>
+      <div class="queue-header">INVENTORY AT A GLANCE</div>
       <div class="queue-table" style="--col-count:{col_count}; --col-template:{col_template};">
         <div class="queue-row queue-head">{headers}</div>
         {''.join(rows)}
@@ -2571,6 +2658,107 @@ def _render_reorder_table_html(df: pd.DataFrame, title: str) -> str:
       </div>
     </div>
     """
+
+def _render_arrivals_table_html(df: pd.DataFrame) -> str:
+    if df is None or df.empty:
+        return """
+        <div class="queue-card">
+          <div class="queue-header">ARRIVALS</div>
+          <div class="queue-empty">No arrivals found for selection.</div>
+        </div>
+        """
+    headers = "".join(f"<div>{col}</div>" for col in df.columns)
+    rows = []
+    for _, row in df.iterrows():
+        cells = []
+        for col in df.columns:
+            value = row[col]
+            if value is None:
+                value = ""
+            if isinstance(value, (int, float)) and col == "Quantity":
+                value = _format_number(float(value), 2)
+            cells.append(f"<div class='text-clip'>{value}</div>")
+        rows.append(f"<div class='queue-row'>{''.join(cells)}</div>")
+    col_weights = {
+        "Item#": "0.9fr",
+        "Description": "1.6fr",
+        "PO#": "0.9fr",
+        "Quantity": "0.8fr",
+        "Container#": "2.4fr",
+        "Due to Port": "1fr",
+        "Due in Inventory": "1fr",
+    }
+    col_count = len(df.columns)
+    col_template = " ".join(col_weights.get(col, "1fr") for col in df.columns)
+    return f"""
+    <div class="queue-card">
+      <div class="queue-header">ARRIVALS</div>
+      <div class="queue-table" style="--col-count:{col_count}; --col-template:{col_template};">
+        <div class="queue-row queue-head">{headers}</div>
+        {''.join(rows)}
+      </div>
+    </div>
+    """
+
+def _prepare_arrivals_df(
+    arrivals_df: pd.DataFrame,
+    selected_vendor: str,
+    selected_collection: str,
+    sku: Optional[str] = None,
+) -> pd.DataFrame:
+    if arrivals_df is None or arrivals_df.empty:
+        return pd.DataFrame()
+    df = arrivals_df.copy()
+    col_po = _get_first_column(df, ["PO_NUMBER", "po_number", "PO#", "PLPO#"])
+    col_item = _get_first_column(df, ["ITEM_NUMBER", "item_number", "PLITEM", "SKU"])
+    col_desc = _get_first_column(df, ["DESCRIPTION", "description", "PLDESC"])
+    col_qty = _get_first_column(df, ["QUANTITY_SF", "quantity_sf", "PLBLUO"])
+    col_vendor = _get_first_column(df, ["VENDOR_NAME", "vendor_name", "Vendor"])
+    col_collection = _get_first_column(df, ["COLLECTION", "collection"])
+    col_due_port = _get_first_column(df, ["DUE_PORT", "due_port", "PLPDAT"])
+    col_due_inv = _get_first_column(df, ["DUE_INV", "due_inv", "PLDDAT"])
+    col_container = _get_first_column(df, ["CONTAINER", "container"])
+    if col_container is None:
+        c1 = _get_first_column(df, ["PTCMT1", "ptcmt1"])
+        c2 = _get_first_column(df, ["PTCMT2", "ptcmt2"])
+        if c1 or c2:
+            c1_vals = df[c1].fillna("").astype(str).str.strip() if c1 else ""
+            c2_vals = df[c2].fillna("").astype(str).str.strip() if c2 else ""
+            df["CONTAINER"] = np.where(c1_vals != "", c1_vals, c2_vals)
+            col_container = "CONTAINER"
+
+    if col_po is None:
+        return pd.DataFrame()
+
+    if selected_vendor != "All Vendors" and col_vendor:
+        df = df[df[col_vendor].astype(str).str.strip() == selected_vendor]
+    if selected_collection != "All Collections" and col_collection:
+        df = df[df[col_collection].astype(str).str.strip() == selected_collection]
+    if sku and col_item:
+        df = df[df[col_item].astype(str).str.strip() == str(sku)]
+
+    dedupe_cols = [c for c in [col_po, col_item, col_due_port, col_due_inv, col_container] if c]
+    if dedupe_cols:
+        df = df.drop_duplicates(subset=dedupe_cols)
+
+    container_series = df[col_container].fillna("").astype(str).str.strip() if col_container else ""
+    due_port_series = df[col_due_port] if col_due_port else ""
+    due_inv_series = df[col_due_inv] if col_due_inv else ""
+    out = pd.DataFrame(
+        {
+            "Item#": df[col_item].astype(str).str.strip() if col_item else "",
+            "Description": df[col_desc].astype(str).str.strip() if col_desc else "",
+            "PO#": df[col_po].astype(str).str.strip(),
+            "Quantity": df[col_qty] if col_qty else np.nan,
+            "Container#": container_series,
+            "Due to Port": due_port_series.apply(_format_arrival_date) if col_due_port else "No Date",
+            "Due in Inventory": due_inv_series.apply(_format_arrival_date) if col_due_inv else "No Date",
+        }
+    )
+    if col_due_inv:
+        out["_sort"] = due_inv_series.apply(_normalize_arrival_date)
+        out = out.sort_values("_sort", na_position="last").drop(columns=["_sort"])
+    return out.reset_index(drop=True)
 
 def _render_metric_card_html(title: str, value: str, subtitle: Optional[str] = None) -> str:
     subtitle_html = f"<div class='metric-sub'>{subtitle}</div>" if subtitle else ""
@@ -3318,6 +3506,7 @@ def render_webapp() -> None:
         queue_df = _build_queue_df_from_inventory(_demo_webapp_payload().get("Inventory_Metrics", []))
 
     monthly_rows = data.get("Monthly_Projections", [])
+    arrivals_rows = data.get("arrivals", [])
     if selected_collection != "All Collections":
         monthly_rows = [
             row for row in monthly_rows if str(row.get("collection", "")).strip() == selected_collection
@@ -3361,6 +3550,9 @@ def render_webapp() -> None:
     demand_html = _render_demand_graph_html(forecast_fig)
     components.html(demand_html, height=460, scrolling=False)
 
+    arrivals_df_all = pd.DataFrame(arrivals_rows)
+    arrivals_all_out = _prepare_arrivals_df(arrivals_df_all, selected_vendor, selected_collection)
+    st.markdown(_render_arrivals_table_html(arrivals_all_out), unsafe_allow_html=True)
     st.markdown(_render_queue_table_html(queue_df), unsafe_allow_html=True)
 
     # Monthly detail table under Purchasing Queue
@@ -3391,7 +3583,10 @@ def render_webapp() -> None:
                 out = df_monthly[existing].rename(columns=col_map)
                 if "Beginning Inventory" in out.columns:
                     out = out[out["Beginning Inventory"].notna()]
-                st.markdown(_render_reorder_table_html(out, f"Reorder Schedule:   {sku_label} {desc_label}"), unsafe_allow_html=True)
+                st.markdown(
+                    _render_reorder_table_html(out, f"Reorder Schedule:   {sku_label} {desc_label}"),
+                    unsafe_allow_html=True,
+                )
 
     # Removed metric/segmentation sections below Purchasing Queue per request.
 if __name__ == "__main__":
