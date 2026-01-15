@@ -2646,6 +2646,46 @@ def _render_queue_table_html(df: pd.DataFrame) -> str:
     </div>
     """
 
+def _render_reorder_now_table_html(df: pd.DataFrame, month_label: str) -> str:
+    if df is None or df.empty:
+        return f"""
+        <div class="queue-card">
+          <div class="queue-header">REORDER NOW: {month_label}</div>
+          <div class="queue-empty">No reorder quantities for this month.</div>
+        </div>
+        """
+    col_weights = {
+        "Item Number": "1.1fr",
+        "Collection": "1.1fr",
+        "Description": "2.2fr",
+        "Reorder Quantity (SF)": "1.2fr",
+        "Reorder Quantity (Pallets)": "1.2fr",
+        "Reorder Quantity (% of Container)": "1.4fr",
+    }
+    headers = "".join(f"<div>{col}</div>" for col in df.columns)
+    rows = []
+    for _, row in df.iterrows():
+        cells = []
+        for col in df.columns:
+            value = row[col]
+            if isinstance(value, (int, float)) and col == "Reorder Quantity (SF)":
+                value = _format_number(float(value), 2)
+            elif value is None:
+                value = ""
+            cells.append(f"<div class='text-clip'>{value}</div>")
+        rows.append(f"<div class='queue-row'>{''.join(cells)}</div>")
+    col_count = len(df.columns)
+    col_template = " ".join(col_weights.get(col, "1fr") for col in df.columns)
+    return f"""
+    <div class="queue-card">
+      <div class="queue-header">REORDER NOW: {month_label}</div>
+      <div class="queue-table" style="--col-count:{col_count}; --col-template:{col_template};">
+        <div class="queue-row queue-head">{headers}</div>
+        {''.join(rows)}
+      </div>
+    </div>
+    """
+
 def _render_reorder_table_html(df: pd.DataFrame, title: str) -> str:
     if df is None or df.empty:
         return f"""
@@ -3659,6 +3699,48 @@ def render_webapp() -> None:
     arrivals_all_out = _prepare_arrivals_df(arrivals_df_all, selected_vendor, selected_collection)
     st.markdown(_render_arrivals_table_html(arrivals_all_out), unsafe_allow_html=True)
     st.markdown(_render_queue_table_html(queue_df), unsafe_allow_html=True)
+
+    # Reorder Now section (current month, Order Quantity > 0)
+    reorder_now_df = pd.DataFrame()
+    if monthly_rows:
+        df_monthly_all = pd.DataFrame(monthly_rows)
+        if "Month" in df_monthly_all.columns and "Order Quantity" in df_monthly_all.columns:
+            df_monthly_all["Month"] = pd.to_datetime(df_monthly_all["Month"], errors="coerce")
+            current_month = pd.Timestamp.today().to_period("M").to_timestamp()
+            df_current = df_monthly_all[df_monthly_all["Month"] == current_month]
+            df_current = df_current[pd.to_numeric(df_current["Order Quantity"], errors="coerce") > 0]
+            if selected_vendor != "All Vendors" and "vendor_name" in df_current.columns:
+                df_current = df_current[df_current["vendor_name"].astype(str).str.strip() == selected_vendor]
+            if selected_collection != "All Collections" and "collection" in df_current.columns:
+                df_current = df_current[df_current["collection"].astype(str).str.strip() == selected_collection]
+            if selected_item and "SKU" in df_current.columns:
+                df_current = df_current[df_current["SKU"].astype(str) == str(selected_item.get("item_number", ""))]
+
+            if not df_current.empty:
+                reorder_now_df = pd.DataFrame(
+                    {
+                        "Item Number": df_current.get("SKU", ""),
+                        "Collection": df_current.get("collection", ""),
+                        "Description": df_current.get("description", ""),
+                        "Reorder Quantity (SF)": pd.to_numeric(df_current["Order Quantity"], errors="coerce"),
+                        "Reorder Quantity (Pallets)": "",
+                        "Reorder Quantity (% of Container)": "",
+                    }
+                )
+                total_sf = reorder_now_df["Reorder Quantity (SF)"].sum(skipna=True)
+                total_row = {
+                    "Item Number": "Total",
+                    "Collection": "",
+                    "Description": "",
+                    "Reorder Quantity (SF)": total_sf,
+                    "Reorder Quantity (Pallets)": "",
+                    "Reorder Quantity (% of Container)": "",
+                }
+                reorder_now_df = pd.concat(
+                    [reorder_now_df, pd.DataFrame([total_row])], ignore_index=True
+                )
+    month_label = pd.Timestamp.today().strftime("%B %Y")
+    st.markdown(_render_reorder_now_table_html(reorder_now_df, month_label), unsafe_allow_html=True)
 
     # Monthly detail table under Purchasing Queue
     detail_items = [selected_item] if selected_item else vendor_items
