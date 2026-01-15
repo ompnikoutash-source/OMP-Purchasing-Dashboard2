@@ -2478,7 +2478,7 @@ def _render_reorder_table_html(df: pd.DataFrame, title: str) -> str:
     col_count = len(df.columns)
     return f"""
     <div class="queue-card" style="max-width: 880px;">
-      <div class="queue-header">{title}</div>
+      <div class="queue-header"><span class="reorder-label">{title}</span></div>
       <div class="queue-table" style="--col-count:{col_count};">
         <div class="queue-row queue-head">{headers}</div>
         {''.join(rows)}
@@ -2970,6 +2970,11 @@ def render_webapp() -> None:
           border-radius: 16px 16px 0 0;
         }
 
+        .reorder-label {
+          display: inline-block;
+          padding-left: 22%;
+        }
+
         .queue-table {
           padding: 10px 12px 14px 12px;
         }
@@ -3228,7 +3233,7 @@ def render_webapp() -> None:
             out = df_monthly[existing].rename(columns=col_map)
             if "Beginning Inventory" in out.columns:
                 out = out[out["Beginning Inventory"].notna()]
-            st.markdown(_render_reorder_table_html(out, f"Reorder Schedule: {sku_label} {desc_label}"), unsafe_allow_html=True)
+            st.markdown(_render_reorder_table_html(out, f"Reorder Schedule:   {sku_label} {desc_label}"), unsafe_allow_html=True)
 
     # Removed metric/segmentation sections below Purchasing Queue per request.
 if __name__ == "__main__":
