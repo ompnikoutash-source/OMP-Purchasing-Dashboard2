@@ -3364,7 +3364,8 @@ def render_webapp(data: Optional[Dict] = None) -> None:
             st.session_state.active_view = "Carlos"
     st.markdown("</div>", unsafe_allow_html=True)
 
-    if st.session_state.active_view == "Carlos":
+    is_sundries = st.session_state.active_view == "Carlos"
+    if is_sundries:
         data = _load_sundries_payload()
     else:
         data = _load_webapp_payload()
@@ -3722,20 +3723,29 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     else:
         vendor_items = [item for item in items if str(item.get("vendor_name", "")).strip() == selected_vendor]
 
-    collection_names = sorted({str(item.get("collection", "")).strip() for item in vendor_items if item.get("collection")})
-    if not collection_names:
-        collection_names = ["--"]
-    collection_choices = ["All Collections"] + collection_names
-    selected_collection = st.sidebar.selectbox("Collection", collection_choices, index=0)
-
-    if selected_collection == "All Collections":
+    if is_sundries:
+        selected_collection = "All Collections"
         collection_items = vendor_items
     else:
-        collection_items = [
-            item for item in vendor_items if str(item.get("collection", "")).strip() == selected_collection
-        ]
+        collection_names = sorted({str(item.get("collection", "")).strip() for item in vendor_items if item.get("collection")})
+        if not collection_names:
+            collection_names = ["--"]
+        collection_choices = ["All Collections"] + collection_names
+        selected_collection = st.sidebar.selectbox("Collection", collection_choices, index=0)
 
-    item_options = ["All items"] + [str(item.get("description", "")) for item in collection_items]
+        if selected_collection == "All Collections":
+            collection_items = vendor_items
+        else:
+            collection_items = [
+                item for item in vendor_items if str(item.get("collection", "")).strip() == selected_collection
+            ]
+
+    if not collection_items:
+        collection_items = vendor_items
+    item_options = ["All items"] + [
+        (str(item.get("description", "")).strip() or str(item.get("item_number", "")).strip())
+        for item in collection_items
+    ]
     selected_desc = st.sidebar.selectbox("Item description", item_options, index=0)
 
     if selected_desc != "All items":
