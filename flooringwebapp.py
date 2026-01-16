@@ -1461,6 +1461,16 @@ def simulate_monthly_projection(inventory_position, weekly_forecast, reorder_poi
     start_fc_month = (month_start + pd.offsets.MonthBegin(1)).normalize()
     monthly_demand = monthly_demand[monthly_demand['Month'] >= start_fc_month]
     monthly_demand = monthly_demand.sort_values('Month').head(months_ahead)
+    if len(monthly_demand) < months_ahead:
+        avg_month_demand = float(weekly_forecast.mean()) * WEEKS_PER_MONTH if len(weekly_forecast) else 0.0
+        last_month = monthly_demand['Month'].max() if not monthly_demand.empty else (start_fc_month - pd.offsets.MonthBegin(1))
+        extra_months = pd.date_range(
+            last_month + pd.offsets.MonthBegin(1),
+            periods=months_ahead - len(monthly_demand),
+            freq="MS",
+        )
+        extra = pd.DataFrame({"Month": extra_months, "Demand": avg_month_demand})
+        monthly_demand = pd.concat([monthly_demand, extra], ignore_index=True)
 
     projections = []
     inventory_level = inventory_position
