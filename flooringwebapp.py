@@ -67,7 +67,7 @@ warnings.filterwarnings("ignore")
 # ============================================================
 # CONFIGURATION - CHANGE THIS TO PROCESS SPECIFIC SKU OR ALL
 # ============================================================
-FOCUS_SKU = "GFBHO9503"  # Leave blank "" to use SKU list or process ALL SKUs
+FOCUS_SKU = ""  # Leave blank "" to use SKU list or process ALL SKUs
 USE_GLOBAL_MODEL = True  # Set to True to train a single XGBoost model across ALL SKUs
 FORECAST_SKU_LIST_FILE = "Forecast SKU List.xlsx"  # Excel file with list of SKUs to forecast
 USE_SKU_LIST = True  # Set to True to only process SKUs in the list file
@@ -582,6 +582,8 @@ def load_arrivals(conn, sku_list: List[str]) -> pd.DataFrame:
     LEFT JOIN GSFL2K.VENDMAST V ON V.VMVEND = M.IMVEND
     WHERE L.PLDELT LIKE '%A%'
       AND TRIM(L.PLITEM) IN ({sku_list_str})
+      AND TRIM(L.PLPO#) <> ''
+      AND TRIM(L.PLITEM) <> ''
     GROUP BY
       TRIM(L.PLPO#),
       TRIM(L.PLITEM),
@@ -2787,6 +2789,10 @@ def _render_arrivals_table_html(df: pd.DataFrame) -> str:
             value = row[col]
             if value is None:
                 value = ""
+            if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
+                value = ""
+            if isinstance(value, str) and value.strip().lower() in ("nan", "none"):
+                value = ""
             if isinstance(value, (int, float)) and col == "Quantity":
                 value = _format_number(float(value), 2)
             cells.append(f"<div class='text-clip'>{value}</div>")
@@ -2856,6 +2862,7 @@ def _prepare_arrivals_df(
         df = df.drop_duplicates(subset=dedupe_cols)
 
     container_series = df[col_container].fillna("").astype(str).str.strip() if col_container else ""
+    container_series = container_series.replace("nan", "")
     due_port_series = df[col_due_port] if col_due_port else ""
     due_inv_series = df[col_due_inv] if col_due_inv else ""
     entry_series = df[col_entry] if col_entry else ""
@@ -2926,17 +2933,26 @@ def _prepare_arrivals_df(
         ship_norm.iloc[i] = s
         port_norm.iloc[i] = p
         inv_norm.iloc[i] = inv
+    item_series = df[col_item].fillna("").astype(str).str.strip() if col_item else ""
+    desc_series = df[col_desc].fillna("").astype(str).str.strip() if col_desc else ""
+    po_series = df[col_po].fillna("").astype(str).str.strip()
     out = pd.DataFrame(
         {
-            "Item#": df[col_item].astype(str).str.strip() if col_item else "",
-            "Description": df[col_desc].astype(str).str.strip() if col_desc else "",
-            "PO#": df[col_po].astype(str).str.strip(),
+            "Item#": item_series.replace("nan", ""),
+            "Description": desc_series.replace("nan", ""),
+            "PO#": po_series.replace("nan", ""),
             "Quantity": df[col_qty] if col_qty else np.nan,
             "Container#": container_series,
             "Due to Port": port_norm.apply(_format_arrival_value),
             "Due in Inventory": inv_norm.apply(_format_arrival_value),
         }
     )
+    for col in ["Item#", "Description", "PO#", "Container#"]:
+        out[col] = out[col].fillna("").astype(str).str.strip()
+        out[col] = out[col].replace({"nan": "", "None": ""})
+    keep = ~out["Item#"].str.lower().isin(["", "nan", "none"])
+    keep &= ~out["PO#"].str.lower().isin(["", "nan", "none"])
+    out = out[keep]
     if col_due_inv:
         out["_sort"] = inv_norm
     out = out.sort_values("_sort", na_position="last").drop(columns=["_sort"])
