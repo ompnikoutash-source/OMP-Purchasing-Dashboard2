@@ -3354,13 +3354,15 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     if "active_view" not in st.session_state:
         st.session_state.active_view = "Ilsy"
 
-    switch_cols = st.columns([1, 1], gap="large")
+    st.markdown('<div class="toggle-wrap">', unsafe_allow_html=True)
+    switch_cols = st.columns([1, 1], gap="medium")
     with switch_cols[0]:
         if st.button("Ilsy", use_container_width=True):
             st.session_state.active_view = "Ilsy"
     with switch_cols[1]:
         if st.button("Carlos", use_container_width=True):
             st.session_state.active_view = "Carlos"
+    st.markdown("</div>", unsafe_allow_html=True)
 
     if st.session_state.active_view == "Carlos":
         data = _load_sundries_payload()
@@ -3496,6 +3498,24 @@ def render_webapp(data: Optional[Dict] = None) -> None:
           color: #ffffff;
           opacity: 0.8;
           margin-top: 6px;
+        }
+
+        .toggle-wrap {
+          display: flex;
+          gap: 12px;
+          margin-bottom: 14px;
+        }
+
+        .stButton button {
+          background: rgba(0,0,0,0.25) !important;
+          color: #ffffff !important;
+          border: 1px solid rgba(255,255,255,0.25) !important;
+          border-radius: 12px !important;
+          font-weight: 700 !important;
+        }
+
+        .stButton button:focus {
+          box-shadow: none !important;
         }
 
         .queue-card {
