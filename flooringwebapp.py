@@ -2850,6 +2850,15 @@ def _prepare_arrivals_df(
     if col_po is None:
         return pd.DataFrame()
 
+    if col_item:
+        df[col_item] = df[col_item].fillna("").astype(str).str.strip()
+    if col_po:
+        df[col_po] = df[col_po].fillna("").astype(str).str.strip()
+    if col_item and col_po:
+        keep = ~df[col_item].str.lower().isin(["", "nan", "none"])
+        keep &= ~df[col_po].str.lower().isin(["", "nan", "none"])
+        df = df[keep]
+
     if selected_vendor != "All Vendors" and col_vendor:
         df = df[df[col_vendor].astype(str).str.strip() == selected_vendor]
     if selected_collection != "All Collections" and col_collection:
@@ -2869,7 +2878,6 @@ def _prepare_arrivals_df(
     lt_series = df[col_lt] if col_lt else None
 
     ship_calc = []
-    due_port_calc = adjust = []
     due_port_calc = []
     due_inv_calc = []
     for idx in range(len(df)):
@@ -2904,9 +2912,9 @@ def _prepare_arrivals_df(
                 due_inv_calc.append(raw_due_inv)
         ship_calc.append(raw_ship)
 
-    ship_calc = pd.Series(ship_calc)
-    due_port_calc = pd.Series(due_port_calc)
-    due_inv_calc = pd.Series(due_inv_calc)
+    ship_calc = pd.Series(ship_calc, index=df.index)
+    due_port_calc = pd.Series(due_port_calc, index=df.index)
+    due_inv_calc = pd.Series(due_inv_calc, index=df.index)
 
     # Enforce chronological order: ship <= due port <= due inventory when dates exist.
     ship_norm = ship_calc.apply(_normalize_arrival_date)
@@ -2952,7 +2960,7 @@ def _prepare_arrivals_df(
         out[col] = out[col].replace({"nan": "", "None": ""})
     keep = ~out["Item#"].str.lower().isin(["", "nan", "none"])
     keep &= ~out["PO#"].str.lower().isin(["", "nan", "none"])
-    out = out[keep]
+    out = out[keep].reset_index(drop=True)
     if col_due_inv:
         out["_sort"] = inv_norm
     out = out.sort_values("_sort", na_position="last").drop(columns=["_sort"])
