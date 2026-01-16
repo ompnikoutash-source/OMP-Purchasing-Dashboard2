@@ -67,7 +67,7 @@ warnings.filterwarnings("ignore")
 # ============================================================
 # CONFIGURATION - CHANGE THIS TO PROCESS SPECIFIC SKU OR ALL
 # ============================================================
-FOCUS_SKU = ""  # Leave blank "" to use SKU list or process ALL SKUs
+FOCUS_SKU = "GFLEO9501"  # Leave blank "" to use SKU list or process ALL SKUs
 USE_GLOBAL_MODEL = True  # Set to True to train a single XGBoost model across ALL SKUs
 FORECAST_SKU_LIST_FILE = "Forecast SKU List.xlsx"  # Excel file with list of SKUs to forecast
 USE_SKU_LIST = True  # Set to True to only process SKUs in the list file
@@ -2405,8 +2405,13 @@ def _build_webapp_payload(df_results: pd.DataFrame, df_monthly: pd.DataFrame, df
                     series_payload["hist_x"] = [d.strftime("%Y-%m-%d") for d in hist_series.index]
                     series_payload["hist_y"] = [float(v) for v in hist_series.values]
             sku_series[str(sku)] = series_payload
-            first_date = series.index.min()
-            last_date = series.index.max()
+            # Use historical series for first_sales_date if available, otherwise fall back to filtered series
+            if hist_series is not None and not hist_series.empty:
+                first_date = hist_series.index.min()
+                last_date = hist_series.index.max()
+            else:
+                first_date = series.index.min() if not series.empty else pd.NaT
+                last_date = series.index.max() if not series.empty else pd.NaT
             if pd.notna(first_date) and pd.notna(last_date):
                 sku_first_dates[str(sku)] = first_date.strftime("%Y-%m-%d")
                 sku_history_days[str(sku)] = max(0, int((last_date - first_date).days))
@@ -3846,6 +3851,9 @@ def render_webapp() -> None:
             df_monthly = df_monthly_all.copy()
             if not df_monthly.empty and "SKU" in df_monthly.columns:
                 df_monthly = df_monthly[df_monthly["SKU"].astype(str) == str(sku_label)]
+            # Filter out HIST rows - only show CATCHUP and FCST rows with forecast data
+            if not df_monthly.empty and "Row_Type" in df_monthly.columns:
+                df_monthly = df_monthly[df_monthly["Row_Type"].astype(str).str.upper().isin(["FCST", "CATCHUP"])]
             if not df_monthly.empty and "Month" in df_monthly.columns:
                 df_monthly["Month"] = pd.to_datetime(df_monthly["Month"], errors="coerce")
                 df_monthly = df_monthly.sort_values("Month")
