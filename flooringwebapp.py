@@ -3354,7 +3354,7 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     if "active_view" not in st.session_state:
         st.session_state.active_view = "Ilsy"
 
-    st.markdown('<div class="toggle-wrap">', unsafe_allow_html=True)
+    st.markdown('<div class="toggle-wrap toggle-wrap--spaced">', unsafe_allow_html=True)
     switch_cols = st.columns([1, 1], gap="medium")
     with switch_cols[0]:
         if st.button("Ilsy", use_container_width=True):
@@ -3504,6 +3504,10 @@ def render_webapp(data: Optional[Dict] = None) -> None:
           display: flex;
           gap: 12px;
           margin-bottom: 14px;
+        }
+
+        .toggle-wrap--spaced {
+          margin-top: 32px;
         }
 
         .stButton button {
