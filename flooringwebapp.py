@@ -179,26 +179,38 @@ def _connect():
         print(f"  Error: {e}")
         raise
 
-def load_lead_times(xlsx_path: Path) -> Dict[str, float]:
+def load_lead_times(xlsx_path: Path) -> Tuple[Dict[str, float], Dict[str, float], Dict[str, float]]:
     """Load lead times from Excel"""
     print(f"\nLoading lead times from {xlsx_path}...")
     try:
         df = pd.read_excel(xlsx_path, sheet_name="Final", header=0)
-        required_cols = {"Item Number", "FINAL"}
-        if not required_cols.issubset(df.columns):
+        item_col = _get_first_column(df, ["SKU", "Item Number", "ITEM_NUMBER"])
+        lt_col = _get_first_column(df, ["FINAL", "Final", "final"])
+        sf_col = _get_first_column(df, ["SF per Pallet", "SF per pallet", "SF_per_Pallet"])
+        pallet_col = _get_first_column(df, ["Pallets per Container", "Pallets per container", "Pallets_per_Container"])
+        required_cols = {item_col, lt_col}
+        if not item_col or not lt_col:
             print(f"  WARNING: Missing columns in lead time sheet: {required_cols - set(df.columns)}")
-            return {}
-        item_col, lt_col = "Item Number", "FINAL"
+            return {}, {}, {}
+        item_col, lt_col = item_col, lt_col
         df[item_col] = df[item_col].astype(str).str.strip().str.upper()
         df = df[~df[lt_col].astype(str).str.upper().str.contains("DISCONTINUED", na=False)]
         df[lt_col] = pd.to_numeric(df[lt_col], errors="coerce")
         df = df.dropna(subset=[item_col, lt_col])
         lead_times = dict(zip(df[item_col], df[lt_col]))
+        sf_per_pallet = {}
+        pallets_per_container = {}
+        if sf_col and sf_col in df.columns:
+            df[sf_col] = pd.to_numeric(df[sf_col], errors="coerce")
+            sf_per_pallet = dict(zip(df[item_col], df[sf_col]))
+        if pallet_col and pallet_col in df.columns:
+            df[pallet_col] = pd.to_numeric(df[pallet_col], errors="coerce")
+            pallets_per_container = dict(zip(df[item_col], df[pallet_col]))
         print(f"  Loaded {len(lead_times)} lead times")
-        return lead_times
+        return lead_times, sf_per_pallet, pallets_per_container
     except Exception as e:
         print(f"  WARNING: {e}")
-        return {}
+        return {}, {}, {}
 
 def load_forecast_sku_list(xlsx_path: Path) -> set:
     """Load list of SKUs to forecast from Excel file"""
@@ -1679,6 +1691,7 @@ def process_sku(conn, sku_row, lead_times_excel, abc_map, global_model=None, glo
     monthly_proj['vendor_number'] = sku_row['VENDOR_NUMBER'] if 'VENDOR_NUMBER' in sku_row else ''
     monthly_proj['vendor_name'] = sku_row['VENDOR_NAME'] if 'VENDOR_NAME' in sku_row else ''
     monthly_proj['collection'] = sku_row['COLLECTION'] if 'COLLECTION' in sku_row else ''
+    monthly_proj['description'] = sku_row['DESCRIPTION'] if 'DESCRIPTION' in sku_row else ''
     
     # First reorder month
     first_reorder = monthly_proj[pd.to_numeric(monthly_proj['Order Quantity'], errors='coerce') > 0]
@@ -1934,7 +1947,7 @@ def apply_global_inv_cap(df_results, df_monthly, inv_cap_sf):
 
 def run_inventory_planning():
     output_dir = Path(__file__).parent
-    lead_times_excel = load_lead_times(output_dir / LEADTIMES_XLSX)
+    lead_times_excel, sf_per_pallet_map, pallets_per_container_map = load_lead_times(output_dir / LEADTIMES_XLSX)
     
     # Load forecast SKU list if enabled
     forecast_sku_list = None
@@ -2018,6 +2031,13 @@ def run_inventory_planning():
     
     df_results = pd.DataFrame(results)
     df_monthly = pd.concat(all_monthly_projs, ignore_index=True) if all_monthly_projs else pd.DataFrame()
+
+    if not df_results.empty and "sku" in df_results.columns:
+        df_results["sf_per_pallet"] = df_results["sku"].map(sf_per_pallet_map)
+        df_results["pallets_per_container"] = df_results["sku"].map(pallets_per_container_map)
+    if not df_monthly.empty and "SKU" in df_monthly.columns:
+        df_monthly["sf_per_pallet"] = df_monthly["SKU"].map(sf_per_pallet_map)
+        df_monthly["pallets_per_container"] = df_monthly["SKU"].map(pallets_per_container_map)
     
     # APPLY GLOBAL UPLIFT BUDGET if enabled
     if ENABLE_GLOBAL_UPLIFT_BUDGET and uplift_budget is not None and uplift_budget > 0 and not df_results.empty:
@@ -2684,8 +2704,13 @@ def _render_reorder_now_table_html(df: pd.DataFrame, month_label: str) -> str:
         cells = []
         for col in df.columns:
             value = row[col]
-            if isinstance(value, (int, float)) and col == "Reorder Quantity (SF)":
+            if isinstance(value, (int, float)) and col in (
+                "Reorder Quantity (SF)",
+                "Reorder Quantity (Pallets)",
+            ):
                 value = _format_number(float(value), 2)
+            elif isinstance(value, (int, float)) and col == "Reorder Quantity (% of Container)":
+                value = f"{float(value) * 100:.1f}%"
             elif value is None:
                 value = ""
             cells.append(f"<div class='text-clip'>{value}</div>")
@@ -3741,24 +3766,33 @@ def render_webapp() -> None:
                 df_current = df_current[df_current["SKU"].astype(str) == str(selected_item.get("item_number", ""))]
 
             if not df_current.empty:
+                reorder_sf = pd.to_numeric(df_current["Order Quantity"], errors="coerce")
+                sf_per_pallet = pd.to_numeric(df_current.get("sf_per_pallet"), errors="coerce")
+                pallets_per_container = pd.to_numeric(df_current.get("pallets_per_container"), errors="coerce")
+
+                reorder_pallets = reorder_sf / sf_per_pallet.replace(0, np.nan)
+                reorder_pct = reorder_pallets / pallets_per_container.replace(0, np.nan)
+
                 reorder_now_df = pd.DataFrame(
                     {
                         "Item Number": df_current.get("SKU", ""),
                         "Collection": df_current.get("collection", ""),
                         "Description": df_current.get("description", ""),
-                        "Reorder Quantity (SF)": pd.to_numeric(df_current["Order Quantity"], errors="coerce"),
-                        "Reorder Quantity (Pallets)": "",
-                        "Reorder Quantity (% of Container)": "",
+                        "Reorder Quantity (SF)": reorder_sf,
+                        "Reorder Quantity (Pallets)": reorder_pallets,
+                        "Reorder Quantity (% of Container)": reorder_pct,
                     }
                 )
                 total_sf = reorder_now_df["Reorder Quantity (SF)"].sum(skipna=True)
+                total_pallets = reorder_now_df["Reorder Quantity (Pallets)"].sum(skipna=True)
+                total_pct = reorder_now_df["Reorder Quantity (% of Container)"].sum(skipna=True)
                 total_row = {
                     "Item Number": "Total",
                     "Collection": "",
                     "Description": "",
                     "Reorder Quantity (SF)": total_sf,
-                    "Reorder Quantity (Pallets)": "",
-                    "Reorder Quantity (% of Container)": "",
+                    "Reorder Quantity (Pallets)": total_pallets,
+                    "Reorder Quantity (% of Container)": total_pct,
                 }
                 reorder_now_df = pd.concat(
                     [reorder_now_df, pd.DataFrame([total_row])], ignore_index=True
