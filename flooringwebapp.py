@@ -3851,7 +3851,9 @@ def render_webapp() -> None:
             if existing:
                 out = df_monthly[existing].rename(columns=col_map)
                 if "Beginning Inventory" in out.columns:
-                    out = out[out["Beginning Inventory"].notna()]
+                    out["Beginning Inventory"] = pd.to_numeric(out["Beginning Inventory"], errors="coerce").fillna(0.0)
+                if "Ending Inventory" in out.columns:
+                    out["Ending Inventory"] = pd.to_numeric(out["Ending Inventory"], errors="coerce").fillna(0.0)
                 st.markdown(
                     _render_reorder_table_html(out, f"Reorder Schedule:   {sku_label} {desc_label}"),
                     unsafe_allow_html=True,
