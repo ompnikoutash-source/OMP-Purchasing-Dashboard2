@@ -115,6 +115,7 @@ Z_SCORE = stats.norm.ppf(SERVICE_LEVEL) if stats is not None else 1.28
 LEADTIMES_XLSX = "Lead Times.xlsx"
 CUTOFF_DATE = "2020-06-01"
 WEBAPP_JSON_PATH = Path(__file__).resolve().parent / "flooringwebappJSON"
+SUNDRIES_JSON_PATH = Path(__file__).resolve().parent / "sundrieswebappJSON"
 UI_BUILD = "2026-01-14T15:10:00"
 
 def _load_credentials():
@@ -2523,6 +2524,15 @@ def _load_webapp_payload() -> Dict:
             return _demo_webapp_payload()
     return _demo_webapp_payload()
 
+def _load_sundries_payload() -> Dict:
+    if SUNDRIES_JSON_PATH.exists():
+        try:
+            with open(SUNDRIES_JSON_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return _demo_webapp_payload()
+    return _demo_webapp_payload()
+
 def _is_streamlit_runtime() -> bool:
     try:
         from streamlit.runtime.scriptrunner import get_script_run_ctx
@@ -3336,9 +3346,26 @@ def _build_grocery_card_html(title: str, budget: float, actual: float, remaining
     </div>
     """
 
-def render_webapp() -> None:
+def render_webapp(data: Optional[Dict] = None) -> None:
     st.set_page_config(page_title="OMP Purchasing Dashboard", layout="wide")
-    data = _load_webapp_payload()
+    if data is None:
+        data = _load_webapp_payload()
+
+    if "active_view" not in st.session_state:
+        st.session_state.active_view = "Ilsy"
+
+    switch_cols = st.columns([1, 1], gap="large")
+    with switch_cols[0]:
+        if st.button("Ilsy", use_container_width=True):
+            st.session_state.active_view = "Ilsy"
+    with switch_cols[1]:
+        if st.button("Carlos", use_container_width=True):
+            st.session_state.active_view = "Carlos"
+
+    if st.session_state.active_view == "Carlos":
+        data = _load_sundries_payload()
+    else:
+        data = _load_webapp_payload()
 
     st.markdown(
         """
