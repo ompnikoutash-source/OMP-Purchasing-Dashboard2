@@ -834,26 +834,34 @@ def simulate_monthly_projection(inventory_position, weekly_forecast, reorder_poi
     mtd_mask = (sales_df['transaction_date'] >= month_start) & (sales_df['transaction_date'] <= as_of_end)
     mtd_actual = float(sales_df.loc[mtd_mask, 'quantity_shipped'].sum())
     remaining_days = max(0, (month_end - as_of_date).days)
-    remainder_fc = float(weekly_forecast.mean()) * (remaining_days / DAYS_PER_WEEK)
+    # Compute mean weekly forecast, handling NaN/empty cases
+    if len(weekly_forecast) > 0:
+        mean_weekly_fc = float(weekly_forecast.mean())
+        if pd.isna(mean_weekly_fc):
+            mean_weekly_fc = 0.0
+    else:
+        mean_weekly_fc = 0.0
+    remainder_fc = mean_weekly_fc * (remaining_days / DAYS_PER_WEEK)
     total_month_demand = mtd_actual + remainder_fc
-    daily_idx = pd.date_range(weekly_forecast.index[0], weekly_forecast.index[-1] + pd.Timedelta(days=6), freq='D')
-    daily_forecast = pd.Series(index=daily_idx, dtype=float)
-    for week_end, week_demand in weekly_forecast.items():
-        week_start = week_end - pd.Timedelta(days=6)
-        mask = (daily_idx >= week_start) & (daily_idx <= week_end)
-        daily_forecast.loc[mask] = week_demand / DAYS_PER_WEEK
-    df_forecast = pd.DataFrame({'Date': daily_forecast.index, 'Demand': daily_forecast.values})
-    df_forecast['Month'] = pd.to_datetime(df_forecast['Date']).dt.to_period('M').dt.to_timestamp()
-    monthly_demand = df_forecast.groupby('Month')['Demand'].sum().reset_index()
+
+    # Compute monthly forecasts directly from weekly mean
+    # This avoids issues with daily aggregation and date alignment
     start_fc_month = (month_start + pd.offsets.MonthBegin(1)).normalize()
-    monthly_demand = monthly_demand[monthly_demand['Month'] >= start_fc_month]
-    monthly_demand = monthly_demand.sort_values('Month').head(months_ahead)
-    if len(monthly_demand) < months_ahead:
-        avg_month_demand = float(weekly_forecast.mean()) * WEEKS_PER_MONTH if len(weekly_forecast) else 0.0
-        last_month = monthly_demand['Month'].max() if not monthly_demand.empty else (start_fc_month - pd.offsets.MonthBegin(1))
-        extra_months = pd.date_range(last_month + pd.offsets.MonthBegin(1), periods=months_ahead - len(monthly_demand), freq="MS")
-        extra = pd.DataFrame({"Month": extra_months, "Demand": avg_month_demand})
-        monthly_demand = pd.concat([monthly_demand, extra], ignore_index=True)
+    forecast_months = pd.date_range(start_fc_month, periods=months_ahead, freq="MS")
+
+    # Calculate days in each month for accurate monthly demand
+    monthly_demands = []
+    for fc_month in forecast_months:
+        # Get number of days in this month
+        month_end_date = (fc_month + pd.offsets.MonthEnd(0))
+        days_in_month = month_end_date.day
+        # Convert weekly demand to monthly: mean_weekly * (days_in_month / 7)
+        monthly_demand_val = float(mean_weekly_fc * (days_in_month / DAYS_PER_WEEK))
+        monthly_demands.append({'Month': fc_month, 'Demand': monthly_demand_val})
+
+    monthly_demand = pd.DataFrame(monthly_demands)
+    # Ensure Demand column is float type to avoid NaT conversion during iteration
+    monthly_demand['Demand'] = monthly_demand['Demand'].astype(float)
     projections = []
     inventory_level = inventory_position
     beginning_inv = inventory_level
