@@ -1012,6 +1012,12 @@ def process_sku(conn, sku_row: pd.Series, abc_map: Dict[str, str], global_model=
         methods['Random_Forest'] = forecast_random_forest(X_train, y_train_ml, X_val, y_val_ml, future_state, h_future)
         methods['XGBoost'] = forecast_xgboost(X_train, y_train_ml, X_val, y_val_ml, future_state, h_future)
     best_method, weekly_forecast, best_mape = select_best_forecast(methods, pd.Series(y_train), demand_class)
+    hist_nonzero = df_weekly['quantity'][df_weekly['quantity'] > 0]
+    if isinstance(weekly_forecast, np.ndarray) and len(weekly_forecast) and np.allclose(weekly_forecast, 0):
+        if len(hist_nonzero) > 0:
+            fallback = float(hist_nonzero.mean())
+            weekly_forecast = np.full(h_future, fallback)
+            best_method = f"{best_method} (fallback to hist mean)"
     print(f"  Selected Method: {best_method} (wMAPE: {best_mape:.2f}%)")
     reorder_metrics = compute_reorder_metrics(weekly_forecast, lead_time_weeks, demand_class, abc_class, y_train)
     print(f"  Reorder Point: {reorder_metrics['reorder_point']:.0f}, ROQ: {reorder_metrics['reorder_quantity']:.0f}")
