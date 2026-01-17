@@ -736,6 +736,11 @@ def select_best_forecast(methods_dict: Dict, y_train_series: pd.Series, demand_c
         recent_total = float(np.sum(recent_sales))
         h_future = FUTURE_FORECAST_WEEKS
         if recent_total == 0:
+            nonzero = y_train[y_train > 0]
+            if len(nonzero) > 0:
+                fallback = float(np.mean(nonzero))
+                fc_future = np.full(h_future, fallback)
+                return 'HISTORICAL_MEAN', fc_future, 0.0
             fc_future = np.zeros(h_future)
             return 'ZERO_FORECAST', fc_future, 0.0
         if recent_total < 10:
