@@ -3867,11 +3867,22 @@ def render_webapp(data: Optional[Dict] = None) -> None:
 
             if not df_current.empty:
                 reorder_sf = pd.to_numeric(df_current["Order Quantity"], errors="coerce")
-                sf_per_pallet = pd.to_numeric(df_current.get("sf_per_pallet"), errors="coerce")
-                pallets_per_container = pd.to_numeric(df_current.get("pallets_per_container"), errors="coerce")
+                sf_per_pallet_col = df_current.get("sf_per_pallet")
+                pallets_per_container_col = df_current.get("pallets_per_container")
 
-                reorder_pallets = reorder_sf / sf_per_pallet.replace(0, np.nan)
-                reorder_pct = reorder_pallets / pallets_per_container.replace(0, np.nan)
+                # Handle case where columns may not exist
+                if sf_per_pallet_col is not None:
+                    sf_per_pallet = pd.to_numeric(sf_per_pallet_col, errors="coerce").replace(0, np.nan)
+                else:
+                    sf_per_pallet = pd.Series([np.nan] * len(df_current), index=df_current.index)
+
+                if pallets_per_container_col is not None:
+                    pallets_per_container = pd.to_numeric(pallets_per_container_col, errors="coerce").replace(0, np.nan)
+                else:
+                    pallets_per_container = pd.Series([np.nan] * len(df_current), index=df_current.index)
+
+                reorder_pallets = reorder_sf / sf_per_pallet
+                reorder_pct = reorder_pallets / pallets_per_container
 
                 reorder_now_df = pd.DataFrame(
                     {
