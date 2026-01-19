@@ -3864,9 +3864,17 @@ def render_webapp(data: Optional[Dict] = None) -> None:
         metrics_rows = [
             row for row in metrics_rows if str(row.get("collection", "")).strip() == selected_collection
         ]
+    if selected_item:
+        item_id = str(selected_item.get("item_number", "")).strip()
+        if item_id:
+            metrics_rows = [
+                row for row in metrics_rows if str(row.get("item_number", "")).strip() == item_id
+            ]
     queue_df = _build_queue_df_from_inventory(metrics_rows)
     if not queue_df.empty and selected_vendor != "All Vendors":
         queue_df = queue_df[queue_df["Vendor"].astype(str).str.strip() == selected_vendor]
+    if selected_item and not queue_df.empty and "Item" in queue_df.columns:
+        queue_df = queue_df[queue_df["Item"].astype(str).str.strip() == str(selected_item.get("item_number", "")).strip()]
     if queue_df.empty:
         queue_df = _build_queue_df_from_inventory(_demo_webapp_payload().get("Inventory_Metrics", []))
 
@@ -3955,6 +3963,11 @@ def render_webapp(data: Optional[Dict] = None) -> None:
 
     arrivals_df_all = pd.DataFrame(arrivals_rows)
     arrivals_all_out = _prepare_arrivals_df(arrivals_df_all, selected_vendor, selected_collection)
+    if selected_item and not arrivals_all_out.empty and "Item#" in arrivals_all_out.columns:
+        arrivals_all_out = arrivals_all_out[
+            arrivals_all_out["Item#"].astype(str).str.strip()
+            == str(selected_item.get("item_number", "")).strip()
+        ]
     st.markdown(_render_arrivals_table_html(arrivals_all_out), unsafe_allow_html=True)
     st.markdown(_render_queue_table_html(queue_df), unsafe_allow_html=True)
 
