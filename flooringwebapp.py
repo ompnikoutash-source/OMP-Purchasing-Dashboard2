@@ -2604,20 +2604,40 @@ def _build_forecast_chart_multi(series_list: List[Dict]) -> go.Figure:
 
     for idx, item in enumerate(series_list):
         series = item.get("series", {})
-        x_vals = series.get("x") or []
-        y_vals = series.get("y") or []
-        if not x_vals or not y_vals:
-            continue
-        fig.add_trace(
-            go.Scatter(
-                x=x_vals,
-                y=y_vals,
-                mode="lines+markers",
-                line=dict(color=palette[idx % len(palette)], width=3),
-                marker=dict(size=6),
-                name=item.get("label", f"Item {idx+1}"),
+        label = item.get("label", f"Item {idx+1}")
+        color = palette[idx % len(palette)]
+
+        # Plot historical data if available
+        hist_x = series.get("hist_x") or []
+        hist_y = series.get("hist_y") or []
+        if hist_x and hist_y:
+            fig.add_trace(
+                go.Scatter(
+                    x=hist_x,
+                    y=hist_y,
+                    mode="lines+markers",
+                    line=dict(color=color, width=3),
+                    marker=dict(size=6),
+                    name=f"{label} (Historical)",
+                    legendgroup=label,
+                )
             )
-        )
+
+        # Plot forecast data
+        fc_x = series.get("fc_x") or series.get("x") or []
+        fc_y = series.get("fc_y") or series.get("y") or []
+        if fc_x and fc_y:
+            fig.add_trace(
+                go.Scatter(
+                    x=fc_x,
+                    y=fc_y,
+                    mode="lines+markers",
+                    line=dict(color=color, width=3, dash="dash"),
+                    marker=dict(size=6),
+                    name=f"{label} (Forecast)",
+                    legendgroup=label,
+                )
+            )
 
     fig.update_layout(
         margin=dict(l=40, r=24, t=40, b=36),
@@ -3824,23 +3844,35 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                 if vendor_series.get("hist_y") or vendor_series.get("fc_y"):
                     forecast_fig = _build_forecast_chart(vendor_series)
                 else:
-                    series_list = [
-                        {
-                            "label": item.get("item_number", item.get("description", "")),
-                            "series": {
-                                "x": item.get("forecast_series", {}).get("fc_x") or item.get("forecast_series", {}).get("x"),
-                                "y": item.get("forecast_series", {}).get("fc_y") or item.get("forecast_series", {}).get("y"),
-                            },
-                        }
-                        for item in vendor_items
-                    ]
+                    # Fallback: aggregate from item forecast_series with historical data
+                    series_list = []
+                    for item in vendor_items:
+                        sku = item.get("item_number", "")
+                        item_series = _series_from_monthly_rows(monthly_rows, sku)
+                        fallback_series = item.get("forecast_series", {}) or {}
+                        if not item_series.get("hist_y") and fallback_series.get("hist_y"):
+                            item_series["hist_x"] = fallback_series.get("hist_x")
+                            item_series["hist_y"] = fallback_series.get("hist_y")
+                        if not item_series.get("fc_y") and (fallback_series.get("fc_y") or fallback_series.get("y")):
+                            item_series["fc_x"] = fallback_series.get("fc_x") or fallback_series.get("x")
+                            item_series["fc_y"] = fallback_series.get("fc_y") or fallback_series.get("y")
+                    series_list.append({
+                        "label": item.get("item_number", item.get("description", "")),
+                        "series": item_series,
+                    })
                     forecast_fig = _build_forecast_chart_multi(series_list)
             else:
                 series_list = []
                 for item in vendor_items:
-                    series = item.get("forecast_series", {}) or {}
-                    if not series.get("hist_y"):
-                        series = {**series, **_series_from_monthly_rows(monthly_rows, item.get("item_number", ""))}
+                    sku = item.get("item_number", "")
+                    series = _series_from_monthly_rows(monthly_rows, sku)
+                    fallback_series = item.get("forecast_series", {}) or {}
+                    if not series.get("hist_y") and fallback_series.get("hist_y"):
+                        series["hist_x"] = fallback_series.get("hist_x")
+                        series["hist_y"] = fallback_series.get("hist_y")
+                    if not series.get("fc_y") and (fallback_series.get("fc_y") or fallback_series.get("y")):
+                        series["fc_x"] = fallback_series.get("fc_x") or fallback_series.get("x")
+                        series["fc_y"] = fallback_series.get("fc_y") or fallback_series.get("y")
                     series_list.append(
                         {
                             "label": item.get("item_number", item.get("description", "")),
@@ -3849,16 +3881,22 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                     )
                 forecast_fig = _build_forecast_chart_multi(series_list)
         else:
-            series_list = [
-                {
+            # All Vendors selected - show each item with historical data
+            series_list = []
+            for item in vendor_items:
+                sku = item.get("item_number", "")
+                item_series = _series_from_monthly_rows(monthly_rows, sku)
+                fallback_series = item.get("forecast_series", {}) or {}
+                if not item_series.get("hist_y") and fallback_series.get("hist_y"):
+                    item_series["hist_x"] = fallback_series.get("hist_x")
+                    item_series["hist_y"] = fallback_series.get("hist_y")
+                if not item_series.get("fc_y") and (fallback_series.get("fc_y") or fallback_series.get("y")):
+                    item_series["fc_x"] = fallback_series.get("fc_x") or fallback_series.get("x")
+                    item_series["fc_y"] = fallback_series.get("fc_y") or fallback_series.get("y")
+                series_list.append({
                     "label": item.get("item_number", item.get("description", "")),
-                    "series": {
-                        "x": item.get("forecast_series", {}).get("fc_x") or item.get("forecast_series", {}).get("x"),
-                        "y": item.get("forecast_series", {}).get("fc_y") or item.get("forecast_series", {}).get("y"),
-                    },
-                }
-                for item in vendor_items
-            ]
+                    "series": item_series,
+                })
             forecast_fig = _build_forecast_chart_multi(series_list)
 
     fig_html = forecast_fig.to_html(include_plotlyjs="cdn", full_html=False)
