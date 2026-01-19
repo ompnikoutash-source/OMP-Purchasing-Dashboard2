@@ -1020,6 +1020,7 @@ def process_sku(conn, sku_row: pd.Series, abc_map: Dict[str, str], global_model=
         methods['Random_Forest'] = forecast_random_forest(X_train, y_train_ml, X_val, y_val_ml, future_state, h_future)
         methods['XGBoost'] = forecast_xgboost(X_train, y_train_ml, X_val, y_val_ml, future_state, h_future)
     best_method, weekly_forecast, best_mape = select_best_forecast(methods, pd.Series(y_train), demand_class)
+    # Fallback if forecast is all zeros but historical demand exists
     hist_nonzero = df_weekly['quantity'][df_weekly['quantity'] > 0]
     if isinstance(weekly_forecast, np.ndarray) and len(weekly_forecast) and np.allclose(weekly_forecast, 0):
         if len(hist_nonzero) > 0:
@@ -1029,7 +1030,10 @@ def process_sku(conn, sku_row: pd.Series, abc_map: Dict[str, str], global_model=
     print(f"  Selected Method: {best_method} (wMAPE: {best_mape:.2f}%)")
     reorder_metrics = compute_reorder_metrics(weekly_forecast, lead_time_weeks, demand_class, abc_class, y_train)
     print(f"  Reorder Point: {reorder_metrics['reorder_point']:.0f}, ROQ: {reorder_metrics['reorder_quantity']:.0f}")
-    weekly_fc_series = pd.Series(weekly_forecast, index=pd.date_range(df_weekly['week'].max() + pd.Timedelta(days=7), periods=len(weekly_forecast), freq='W'))
+    last_week = df_weekly['week'].max()
+    # Convert to numpy array to avoid index alignment issues when creating new Series
+    weekly_forecast_values = np.asarray(weekly_forecast)
+    weekly_fc_series = pd.Series(weekly_forecast_values, index=pd.date_range(last_week + pd.Timedelta(days=7), periods=len(weekly_forecast_values), freq='W'))
     monthly_proj = simulate_monthly_projection(inventory_position, weekly_fc_series, reorder_metrics['reorder_point'], reorder_metrics['reorder_quantity'], df_sales, AS_OF_DATE, reorder_metrics['safety_stock'], months_ahead=12)
     if not df_sales.empty:
         df_hist = df_sales.copy()
