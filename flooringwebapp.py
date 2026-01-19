@@ -67,7 +67,7 @@ warnings.filterwarnings("ignore")
 # ============================================================
 # CONFIGURATION - CHANGE THIS TO PROCESS SPECIFIC SKU OR ALL
 # ============================================================
-FOCUS_SKU = "GFLEO9501"  # Leave blank "" to use SKU list or process ALL SKUs
+FOCUS_SKU = ""  # Leave blank "" to use SKU list or process ALL SKUs
 USE_GLOBAL_MODEL = True  # Set to True to train a single XGBoost model across ALL SKUs
 FORECAST_SKU_LIST_FILE = "Forecast SKU List.xlsx"  # Excel file with list of SKUs to forecast
 USE_SKU_LIST = True  # Set to True to only process SKUs in the list file
@@ -3867,47 +3867,67 @@ def render_webapp(data: Optional[Dict] = None) -> None:
 
             if not df_current.empty:
                 reorder_sf = pd.to_numeric(df_current["Order Quantity"], errors="coerce")
-                sf_per_pallet_col = df_current.get("sf_per_pallet")
-                pallets_per_container_col = df_current.get("pallets_per_container")
-
-                # Handle case where columns may not exist
-                if sf_per_pallet_col is not None:
-                    sf_per_pallet = pd.to_numeric(sf_per_pallet_col, errors="coerce").replace(0, np.nan)
-                else:
-                    sf_per_pallet = pd.Series([np.nan] * len(df_current), index=df_current.index)
-
-                if pallets_per_container_col is not None:
-                    pallets_per_container = pd.to_numeric(pallets_per_container_col, errors="coerce").replace(0, np.nan)
-                else:
-                    pallets_per_container = pd.Series([np.nan] * len(df_current), index=df_current.index)
-
-                reorder_pallets = reorder_sf / sf_per_pallet
-                reorder_pct = reorder_pallets / pallets_per_container
-
-                reorder_now_df = pd.DataFrame(
-                    {
-                        "Item Number": df_current.get("SKU", ""),
-                        "Collection": df_current.get("collection", ""),
-                        "Description": df_current.get("description", ""),
-                        "Reorder Quantity (SF)": reorder_sf,
-                        "Reorder Quantity (Pallets)": reorder_pallets,
-                        "Reorder Quantity (% of Container)": reorder_pct,
+                if is_sundries:
+                    reorder_now_df = pd.DataFrame(
+                        {
+                            "Item Number": df_current.get("SKU", ""),
+                            "Collection": df_current.get("collection", ""),
+                            "Description": df_current.get("description", ""),
+                            "Reorder Quantity": reorder_sf,
+                        }
+                    )
+                    total_sf = reorder_now_df["Reorder Quantity"].sum(skipna=True)
+                    total_row = {
+                        "Item Number": "Total",
+                        "Collection": "",
+                        "Description": "",
+                        "Reorder Quantity": total_sf,
                     }
-                )
-                total_sf = reorder_now_df["Reorder Quantity (SF)"].sum(skipna=True)
-                total_pallets = reorder_now_df["Reorder Quantity (Pallets)"].sum(skipna=True)
-                total_pct = reorder_now_df["Reorder Quantity (% of Container)"].sum(skipna=True)
-                total_row = {
-                    "Item Number": "Total",
-                    "Collection": "",
-                    "Description": "",
-                    "Reorder Quantity (SF)": total_sf,
-                    "Reorder Quantity (Pallets)": total_pallets,
-                    "Reorder Quantity (% of Container)": total_pct,
-                }
-                reorder_now_df = pd.concat(
-                    [reorder_now_df, pd.DataFrame([total_row])], ignore_index=True
-                )
+                    reorder_now_df = pd.concat(
+                        [reorder_now_df, pd.DataFrame([total_row])], ignore_index=True
+                    )
+                else:
+                    sf_per_pallet_col = df_current.get("sf_per_pallet")
+                    pallets_per_container_col = df_current.get("pallets_per_container")
+
+                    # Handle case where columns may not exist
+                    if sf_per_pallet_col is not None:
+                        sf_per_pallet = pd.to_numeric(sf_per_pallet_col, errors="coerce").replace(0, np.nan)
+                    else:
+                        sf_per_pallet = pd.Series([np.nan] * len(df_current), index=df_current.index)
+
+                    if pallets_per_container_col is not None:
+                        pallets_per_container = pd.to_numeric(pallets_per_container_col, errors="coerce").replace(0, np.nan)
+                    else:
+                        pallets_per_container = pd.Series([np.nan] * len(df_current), index=df_current.index)
+
+                    reorder_pallets = reorder_sf / sf_per_pallet
+                    reorder_pct = reorder_pallets / pallets_per_container
+
+                    reorder_now_df = pd.DataFrame(
+                        {
+                            "Item Number": df_current.get("SKU", ""),
+                            "Collection": df_current.get("collection", ""),
+                            "Description": df_current.get("description", ""),
+                            "Reorder Quantity (SF)": reorder_sf,
+                            "Reorder Quantity (Pallets)": reorder_pallets,
+                            "Reorder Quantity (% of Container)": reorder_pct,
+                        }
+                    )
+                    total_sf = reorder_now_df["Reorder Quantity (SF)"].sum(skipna=True)
+                    total_pallets = reorder_now_df["Reorder Quantity (Pallets)"].sum(skipna=True)
+                    total_pct = reorder_now_df["Reorder Quantity (% of Container)"].sum(skipna=True)
+                    total_row = {
+                        "Item Number": "Total",
+                        "Collection": "",
+                        "Description": "",
+                        "Reorder Quantity (SF)": total_sf,
+                        "Reorder Quantity (Pallets)": total_pallets,
+                        "Reorder Quantity (% of Container)": total_pct,
+                    }
+                    reorder_now_df = pd.concat(
+                        [reorder_now_df, pd.DataFrame([total_row])], ignore_index=True
+                    )
     month_label = pd.Timestamp.today().strftime("%B %Y")
     st.markdown(_render_reorder_now_table_html(reorder_now_df, month_label), unsafe_allow_html=True)
 
