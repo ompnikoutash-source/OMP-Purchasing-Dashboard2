@@ -3808,11 +3808,16 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     horizon_days = run_meta.get("forecast_horizon_days", FUTURE_FORECAST_DAYS)
     run_stamp = run_meta.get("run_timestamp_local", "--")
 
+    title_text = (
+        "OMP Sundries Purchasing Dashboard"
+        if is_sundries
+        else "OMP Engineered Floor Purchasing Dashboard"
+    )
     st.markdown(
         f"""
         <div class="hero-card">
           <div class="hero-top">
-            <div class="pill">{run_meta.get('title','OMP Purchasing Dashboard')}</div>
+            <div class="pill">{title_text}</div>
             <div class="hero-meta">
               <div>{vendor_label} (Vendor {vendor_number})</div>
               <div>Horizon: {horizon_days} days | Run: {run_stamp}</div>
