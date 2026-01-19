@@ -3130,11 +3130,11 @@ def _series_from_monthly_rows(rows: List[Dict], sku: str) -> Dict:
         series["y"] = series["fc_y"]
     return series
 
-def _series_from_monthly_rows_vendor(rows: List[Dict], vendor: str) -> Dict:
+def _series_from_monthly_rows_vendor(rows: List[Dict], vendor: str, key: str = "vendor_name") -> Dict:
     if not rows:
         return {}
     df = pd.DataFrame(rows)
-    vendor_col = "vendor_name" if "vendor_name" in df.columns else "collection"
+    vendor_col = key if key in df.columns else ("vendor_name" if "vendor_name" in df.columns else "collection")
     if df.empty or vendor_col not in df.columns or "Month" not in df.columns:
         return {}
     df = df[df[vendor_col].astype(str) == str(vendor)]
@@ -3758,7 +3758,7 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     vendor_items = collection_items
     aggregate_graphs = st.sidebar.checkbox(
         "Aggregate Graphs",
-        value=True,
+        value=False,
         help="Checked = aggregate demand by vendor. Unchecked = show one line per SKU.",
     )
 
@@ -3818,7 +3818,9 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     else:
         if selected_vendor != "All Vendors":
             if aggregate_graphs:
-                vendor_series = _series_from_monthly_rows_vendor(monthly_rows, selected_vendor)
+                series_key = "collection" if selected_collection != "All Collections" else "vendor_name"
+                series_value = selected_collection if series_key == "collection" else selected_vendor
+                vendor_series = _series_from_monthly_rows_vendor(monthly_rows, series_value, key=series_key)
                 if vendor_series.get("hist_y") or vendor_series.get("fc_y"):
                     forecast_fig = _build_forecast_chart(vendor_series)
                 else:
