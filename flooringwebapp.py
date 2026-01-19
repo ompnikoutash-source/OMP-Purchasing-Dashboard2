@@ -2663,6 +2663,21 @@ def _build_forecast_chart_multi(series_list: List[Dict]) -> go.Figure:
     )
     return fig
 
+def _apply_legend_padding(fig: go.Figure, series_count: int) -> go.Figure:
+    if series_count <= 6:
+        legend_rows = 1
+    else:
+        legend_rows = int(math.ceil(series_count / 6))
+    extra_bottom = max(0, (legend_rows - 1) * 22)
+    base_height = 360
+    base_bottom = 36
+    fig.update_layout(
+        height=base_height + extra_bottom,
+        margin=dict(b=base_bottom + extra_bottom),
+        legend=dict(y=-(0.22 + (legend_rows - 1) * 0.05)),
+    )
+    return fig
+
 def _build_queue_df_from_inventory(metrics: List[Dict]) -> pd.DataFrame:
     if not metrics:
         return pd.DataFrame()
@@ -3774,6 +3789,18 @@ def render_webapp(data: Optional[Dict] = None) -> None:
 
     if not collection_items:
         collection_items = vendor_items
+    item_number_options = ["All items"] + [
+        str(item.get("item_number", "")).strip()
+        for item in collection_items
+        if str(item.get("item_number", "")).strip()
+    ]
+    selected_item_number = st.sidebar.selectbox("Item number", item_number_options, index=0)
+
+    if selected_item_number != "All items":
+        collection_items = [
+            item for item in collection_items if str(item.get("item_number", "")).strip() == selected_item_number
+        ]
+
     item_options = ["All items"] + [
         (str(item.get("description", "")).strip() or str(item.get("item_number", "")).strip())
         for item in collection_items
@@ -3785,6 +3812,8 @@ def render_webapp(data: Optional[Dict] = None) -> None:
             (item for item in collection_items if str(item.get("description", "")) == selected_desc),
             collection_items[0],
         )
+    elif selected_item_number != "All items":
+        selected_item = collection_items[0] if collection_items else None
     else:
         selected_item = None
     vendor_items = collection_items
@@ -3878,6 +3907,7 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                         "series": item_series,
                     })
                     forecast_fig = _build_forecast_chart_multi(series_list)
+                    forecast_fig = _apply_legend_padding(forecast_fig, len(series_list))
             else:
                 series_list = []
                 for item in vendor_items:
@@ -3897,6 +3927,7 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                         }
                     )
                 forecast_fig = _build_forecast_chart_multi(series_list)
+                forecast_fig = _apply_legend_padding(forecast_fig, len(series_list))
         else:
             # All Vendors selected - show each item with historical data
             series_list = []
@@ -3915,10 +3946,12 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                     "series": item_series,
                 })
             forecast_fig = _build_forecast_chart_multi(series_list)
+            forecast_fig = _apply_legend_padding(forecast_fig, len(series_list))
 
     fig_html = forecast_fig.to_html(include_plotlyjs="cdn", full_html=False)
     demand_html = _render_demand_graph_html(forecast_fig)
-    components.html(demand_html, height=460, scrolling=False)
+    fig_height = int(getattr(forecast_fig.layout, "height", 360) or 360)
+    components.html(demand_html, height=fig_height + 120, scrolling=False)
 
     arrivals_df_all = pd.DataFrame(arrivals_rows)
     arrivals_all_out = _prepare_arrivals_df(arrivals_df_all, selected_vendor, selected_collection)
