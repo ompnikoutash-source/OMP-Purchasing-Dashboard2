@@ -3756,6 +3756,11 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     else:
         selected_item = None
     vendor_items = collection_items
+    aggregate_graphs = st.sidebar.checkbox(
+        "Aggregate Graphs",
+        value=True,
+        help="Checked = aggregate demand by vendor. Unchecked = show one line per SKU.",
+    )
 
     run_meta = data.get("run_meta", {})
     if selected_item:
@@ -3812,20 +3817,34 @@ def render_webapp(data: Optional[Dict] = None) -> None:
         forecast_fig = _build_forecast_chart(series)
     else:
         if selected_vendor != "All Vendors":
-            vendor_series = _series_from_monthly_rows_vendor(monthly_rows, selected_vendor)
-            if vendor_series.get("hist_y") or vendor_series.get("fc_y"):
-                forecast_fig = _build_forecast_chart(vendor_series)
+            if aggregate_graphs:
+                vendor_series = _series_from_monthly_rows_vendor(monthly_rows, selected_vendor)
+                if vendor_series.get("hist_y") or vendor_series.get("fc_y"):
+                    forecast_fig = _build_forecast_chart(vendor_series)
+                else:
+                    series_list = [
+                        {
+                            "label": item.get("item_number", item.get("description", "")),
+                            "series": {
+                                "x": item.get("forecast_series", {}).get("fc_x") or item.get("forecast_series", {}).get("x"),
+                                "y": item.get("forecast_series", {}).get("fc_y") or item.get("forecast_series", {}).get("y"),
+                            },
+                        }
+                        for item in vendor_items
+                    ]
+                    forecast_fig = _build_forecast_chart_multi(series_list)
             else:
-                series_list = [
-                    {
-                        "label": item.get("item_number", item.get("description", "")),
-                        "series": {
-                            "x": item.get("forecast_series", {}).get("fc_x") or item.get("forecast_series", {}).get("x"),
-                            "y": item.get("forecast_series", {}).get("fc_y") or item.get("forecast_series", {}).get("y"),
-                        },
-                    }
-                    for item in vendor_items
-                ]
+                series_list = []
+                for item in vendor_items:
+                    series = item.get("forecast_series", {}) or {}
+                    if not series.get("hist_y"):
+                        series = {**series, **_series_from_monthly_rows(monthly_rows, item.get("item_number", ""))}
+                    series_list.append(
+                        {
+                            "label": item.get("item_number", item.get("description", "")),
+                            "series": series,
+                        }
+                    )
                 forecast_fig = _build_forecast_chart_multi(series_list)
         else:
             series_list = [
