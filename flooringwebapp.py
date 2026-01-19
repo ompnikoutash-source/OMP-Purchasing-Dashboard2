@@ -3442,6 +3442,10 @@ def render_webapp(data: Optional[Dict] = None) -> None:
           color: #ffffff !important;
         }
 
+        section[data-testid="stSidebar"] .stCheckbox label span {
+          color: #ffffff !important;
+        }
+
         button[data-testid="collapsedControl"] {
           opacity: 1 !important;
           visibility: visible !important;
