@@ -642,6 +642,36 @@ def build_weekly_series(sales_df, start_date):
     weekly_series.index.name = "WEEK_END"
     return weekly_series.astype(float)
 
+def cap_outliers(series: pd.Series, n_mad: float = 4.0) -> pd.Series:
+    """Cap extreme outliers using median and MAD (robust to outliers).
+
+    Uses median and Median Absolute Deviation (MAD) instead of mean/std
+    because mean/std are themselves heavily influenced by outliers.
+    MAD is converted to a standard deviation equivalent using the
+    normal distribution scale factor (1.4826).
+
+    Args:
+        series: Time series of demand values
+        n_mad: Number of MAD-scaled deviations for the threshold (default 4.0)
+
+    Returns:
+        Series with outliers capped at median + n_mad * (1.4826 * MAD)
+    """
+    if series.empty:
+        return series
+    median = series.median()
+    mad = np.median(np.abs(series - median))
+    # Convert MAD to std-equivalent (for normal distribution, std ~ 1.4826 * MAD)
+    std_est = 1.4826 * mad
+    if std_est == 0:
+        return series
+    upper_bound = median + n_mad * std_est
+    capped = series.clip(upper=upper_bound)
+    n_capped = (series > upper_bound).sum()
+    if n_capped > 0:
+        print(f"    Capped {n_capped} outlier(s) exceeding {upper_bound:,.0f} (median + {n_mad} MAD)")
+    return capped
+
 def wmape(y_true, y_pred):
     """Calculate wMAPE"""
     denom = float(np.sum(np.abs(y_true)))
@@ -1208,10 +1238,13 @@ def build_global_training_data(conn, sku_master, cutoff_date):
         # Load sales from first sale month forward
         sales_df = load_sales_history(conn, sku, first_sale_month)
         y_historical = build_daily_series(sales_df, first_sale_month)
-        
+
         if y_historical is None or len(y_historical) < 100:
             continue
-        
+
+        # Cap extreme outliers before using for model training
+        y_historical = cap_outliers(y_historical, n_mad=4.0)
+
         # Assign SKU encoding
         sku_encodings[sku] = len(sku_encodings)
         sku_id = sku_encodings[sku]
@@ -1578,10 +1611,13 @@ def process_sku(conn, sku_row, lead_times_excel, abc_map, global_model=None, glo
     # Step 2: Load sales from first sale month forward and aggregate to WEEKLY
     sales_df = load_sales_history(conn, sku, start_date)
     y_historical_weekly = build_weekly_series(sales_df, start_date)
-    
+
     if y_historical_weekly is None or len(y_historical_weekly) < 20:
         print(f"  SKIPPED: Insufficient data (need at least 20 weeks)")
         return None
+
+    # Cap extreme outliers (e.g., data entry errors) before forecasting
+    y_historical_weekly = cap_outliers(y_historical_weekly, n_mad=4.0)
     
     # Calculate statistics
     total_weeks = len(y_historical_weekly)
@@ -2769,8 +2805,10 @@ def _render_reorder_now_table_html(df: pd.DataFrame, month_label: str) -> str:
             if isinstance(value, (int, float)) and col in (
                 "Reorder Quantity (SF)",
                 "Reorder Quantity (Pallets)",
+                "Reorder Quantity",
             ):
-                value = _format_number(float(value), 2)
+                # Round up to next whole number
+                value = _format_number(math.ceil(float(value)), 0)
             elif isinstance(value, (int, float)) and col == "Reorder Quantity (% of Container)":
                 value = f"{float(value) * 100:.1f}%"
             elif value is None:
