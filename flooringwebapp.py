@@ -3975,24 +3975,50 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                 forecast_fig = _build_forecast_chart_multi(series_list)
                 forecast_fig = _apply_legend_padding(forecast_fig, len(series_list))
         else:
-            # All Vendors selected - show each item with historical data
-            series_list = []
-            for item in vendor_items:
-                sku = item.get("item_number", "")
-                item_series = _series_from_monthly_rows(monthly_rows, sku)
-                fallback_series = item.get("forecast_series", {}) or {}
-                if not item_series.get("hist_y") and fallback_series.get("hist_y"):
-                    item_series["hist_x"] = fallback_series.get("hist_x")
-                    item_series["hist_y"] = fallback_series.get("hist_y")
-                if not item_series.get("fc_y") and (fallback_series.get("fc_y") or fallback_series.get("y")):
-                    item_series["fc_x"] = fallback_series.get("fc_x") or fallback_series.get("x")
-                    item_series["fc_y"] = fallback_series.get("fc_y") or fallback_series.get("y")
-                series_list.append({
-                    "label": item.get("item_number", item.get("description", "")),
-                    "series": item_series,
-                })
-            forecast_fig = _build_forecast_chart_multi(series_list)
-            forecast_fig = _apply_legend_padding(forecast_fig, len(series_list))
+            # All Vendors selected
+            if aggregate_graphs and selected_collection != "All Collections":
+                # Aggregate by collection when only collection is selected
+                collection_series = _series_from_monthly_rows_vendor(monthly_rows, selected_collection, key="collection")
+                if collection_series.get("hist_y") or collection_series.get("fc_y"):
+                    forecast_fig = _build_forecast_chart(collection_series)
+                else:
+                    # Fallback: aggregate from item forecast_series
+                    series_list = []
+                    for item in vendor_items:
+                        sku = item.get("item_number", "")
+                        item_series = _series_from_monthly_rows(monthly_rows, sku)
+                        fallback_series = item.get("forecast_series", {}) or {}
+                        if not item_series.get("hist_y") and fallback_series.get("hist_y"):
+                            item_series["hist_x"] = fallback_series.get("hist_x")
+                            item_series["hist_y"] = fallback_series.get("hist_y")
+                        if not item_series.get("fc_y") and (fallback_series.get("fc_y") or fallback_series.get("y")):
+                            item_series["fc_x"] = fallback_series.get("fc_x") or fallback_series.get("x")
+                            item_series["fc_y"] = fallback_series.get("fc_y") or fallback_series.get("y")
+                        series_list.append({
+                            "label": item.get("item_number", item.get("description", "")),
+                            "series": item_series,
+                        })
+                    forecast_fig = _build_forecast_chart_multi(series_list)
+                    forecast_fig = _apply_legend_padding(forecast_fig, len(series_list))
+            else:
+                # Show each item with historical data
+                series_list = []
+                for item in vendor_items:
+                    sku = item.get("item_number", "")
+                    item_series = _series_from_monthly_rows(monthly_rows, sku)
+                    fallback_series = item.get("forecast_series", {}) or {}
+                    if not item_series.get("hist_y") and fallback_series.get("hist_y"):
+                        item_series["hist_x"] = fallback_series.get("hist_x")
+                        item_series["hist_y"] = fallback_series.get("hist_y")
+                    if not item_series.get("fc_y") and (fallback_series.get("fc_y") or fallback_series.get("y")):
+                        item_series["fc_x"] = fallback_series.get("fc_x") or fallback_series.get("x")
+                        item_series["fc_y"] = fallback_series.get("fc_y") or fallback_series.get("y")
+                    series_list.append({
+                        "label": item.get("item_number", item.get("description", "")),
+                        "series": item_series,
+                    })
+                forecast_fig = _build_forecast_chart_multi(series_list)
+                forecast_fig = _apply_legend_padding(forecast_fig, len(series_list))
 
     fig_html = forecast_fig.to_html(include_plotlyjs="cdn", full_html=False)
     demand_html = _render_demand_graph_html(forecast_fig)
