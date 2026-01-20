@@ -41,7 +41,7 @@ os.environ['LOKY_MAX_CPU_COUNT'] = '4'
 # ============================================================
 # CONFIGURATION
 # ============================================================
-FOCUS_SKU = "ADBOA38910"  # Leave blank "" to process all SKUs in the Sundries List
+FOCUS_SKU = ""  # Leave blank "" to process all SKUs in the Sundries List
 USE_GLOBAL_MODEL = True
 SUNDRIES_LIST_FILE = "Sundries List.xlsx"
 WEBAPP_JSON_PATH = Path(__file__).resolve().parent / "sundrieswebappJSON"
@@ -510,6 +510,36 @@ def wmape(y_true, y_pred):
     if denom == 0:
         return 0.0 if np.sum(np.abs(y_pred)) == 0 else 1000.0
     return float(np.sum(np.abs(y_true - y_pred)) / denom) * 100
+
+def cap_outliers(series: pd.Series, n_mad: float = 4.0) -> pd.Series:
+    """Cap extreme outliers using median and MAD (robust to outliers).
+
+    Uses median and Median Absolute Deviation (MAD) instead of mean/std
+    because mean/std are themselves heavily influenced by outliers.
+    MAD is converted to a standard deviation equivalent using the
+    normal distribution scale factor (1.4826).
+
+    Args:
+        series: Time series of demand values
+        n_mad: Number of MAD-scaled deviations for the threshold (default 4.0)
+
+    Returns:
+        Series with outliers capped at median + n_mad * (1.4826 * MAD)
+    """
+    if series.empty:
+        return series
+    median = series.median()
+    mad = np.median(np.abs(series - median))
+    # Convert MAD to std-equivalent (for normal distribution, std ~ 1.4826 * MAD)
+    std_est = 1.4826 * mad
+    if std_est == 0:
+        return series
+    upper_bound = median + n_mad * std_est
+    capped = series.clip(upper=upper_bound)
+    n_capped = (series > upper_bound).sum()
+    if n_capped > 0:
+        print(f"    Capped {n_capped} outlier(s) exceeding {upper_bound:,.0f} (median + {n_mad} MAD)")
+    return capped
 
 def forecast_holt_damped(y_train, y_val, h_future):
     try:
@@ -1000,6 +1030,9 @@ def process_sku(conn, sku_row: pd.Series, abc_map: Dict[str, str], global_model=
     if len(df_weekly) < 8:
         print(f"  Insufficient weekly data ({len(df_weekly)} weeks)")
         return None
+
+    # Cap extreme outliers (e.g., data entry errors) before forecasting
+    df_weekly['quantity'] = cap_outliers(df_weekly['quantity'], n_mad=4.0)
     demand_class, adi, cv2 = classify_demand_pattern(df_weekly)
     print(f"  Demand Pattern: {demand_class} (ADI={adi:.2f}, CV2={cv2:.2f})")
     abc_class = abc_map.get(sku, 'C')
