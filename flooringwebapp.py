@@ -3819,6 +3819,29 @@ def render_webapp(data: Optional[Dict] = None) -> None:
           font-size: 0.85rem;
         }
 
+        div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) {
+          background: var(--panel-strong);
+          border-radius: 16px;
+          padding: 0 12px 14px 12px;
+          margin-bottom: 18px;
+          border: 1px solid rgba(255,255,255,0.08);
+          box-shadow: var(--shadow);
+        }
+
+        div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) .queue-header {
+          margin: 0 -12px 10px -12px;
+        }
+
+        div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) .stMarkdown {
+          margin-bottom: 4px;
+        }
+
+        div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) div[data-testid="stTextInput"],
+        div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) div[data-testid="stNumberInput"],
+        div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) div[data-testid="stSelectbox"] {
+          margin-bottom: 6px;
+        }
+
         .text-clip {
           white-space: nowrap;
           overflow: hidden;
@@ -4383,61 +4406,64 @@ def render_webapp(data: Optional[Dict] = None) -> None:
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         )
 
-    st.markdown("### OPTIMIZER")
     vendor_options = [""] + _load_strip_vendor_list()
-    cols = st.columns([1.4] + [1.0] * 9, gap="small")
+    optimizer_container = st.container()
+    with optimizer_container:
+        st.markdown('<div class="optimizer-anchor"></div>', unsafe_allow_html=True)
+        st.markdown('<div class="queue-header">OPTIMIZER</div>', unsafe_allow_html=True)
+        cols = st.columns([1.4] + [1.0] * 9, gap="small")
 
-    with cols[0]:
-        st.markdown("SKU")
-        st.text_input("SKU", key="optimizer_sku", label_visibility="collapsed")
-        st.markdown("Description")
-        st.text_input("Description", key="optimizer_description", label_visibility="collapsed")
-        st.markdown("Quantity Needed")
-        st.number_input(
-            "Quantity Needed",
-            min_value=0.0,
-            step=1.0,
-            format="%.2f",
-            key="optimizer_qty_needed",
-            label_visibility="collapsed",
-        )
+        with cols[0]:
+            st.markdown("SKU")
+            st.text_input("SKU", key="optimizer_sku", label_visibility="collapsed")
+            st.markdown("Description")
+            st.text_input("Description", key="optimizer_description", label_visibility="collapsed")
+            st.markdown("Quantity Needed")
+            st.number_input(
+                "Quantity Needed",
+                min_value=0.0,
+                step=1.0,
+                format="%.2f",
+                key="optimizer_qty_needed",
+                label_visibility="collapsed",
+            )
 
-    for idx in range(1, 10):
-        with cols[idx]:
-            st.markdown(f"Vendor {idx}")
-            st.selectbox(
-                f"Vendor {idx}",
-                vendor_options,
-                key=f"optimizer_vendor_{idx}",
-                label_visibility="collapsed",
-            )
-            st.markdown(f"Price {idx}")
-            st.number_input(
-                f"Price {idx}",
-                min_value=0.0,
-                step=0.01,
-                format="%.2f",
-                key=f"optimizer_price_{idx}",
-                label_visibility="collapsed",
-            )
-            st.markdown(f"Freight {idx}")
-            st.number_input(
-                f"Freight {idx}",
-                min_value=0.0,
-                step=0.01,
-                format="%.2f",
-                key=f"optimizer_freight_{idx}",
-                label_visibility="collapsed",
-            )
-            st.markdown(f"Fees {idx}")
-            st.number_input(
-                f"Fees {idx}",
-                min_value=0.0,
-                step=0.01,
-                format="%.2f",
-                key=f"optimizer_fees_{idx}",
-                label_visibility="collapsed",
-            )
+        for idx in range(1, 10):
+            with cols[idx]:
+                st.markdown(f"Vendor {idx}")
+                st.selectbox(
+                    f"Vendor {idx}",
+                    vendor_options,
+                    key=f"optimizer_vendor_{idx}",
+                    label_visibility="collapsed",
+                )
+                st.markdown(f"Price {idx}")
+                st.number_input(
+                    f"Price {idx}",
+                    min_value=0.0,
+                    step=0.01,
+                    format="%.2f",
+                    key=f"optimizer_price_{idx}",
+                    label_visibility="collapsed",
+                )
+                st.markdown(f"Freight {idx}")
+                st.number_input(
+                    f"Freight {idx}",
+                    min_value=0.0,
+                    step=0.01,
+                    format="%.2f",
+                    key=f"optimizer_freight_{idx}",
+                    label_visibility="collapsed",
+                )
+                st.markdown(f"Fees {idx}")
+                st.number_input(
+                    f"Fees {idx}",
+                    min_value=0.0,
+                    step=0.01,
+                    format="%.2f",
+                    key=f"optimizer_fees_{idx}",
+                    label_visibility="collapsed",
+                )
 
     # Monthly detail table under Purchasing Queue
     detail_items = [selected_item] if selected_item else vendor_items
