@@ -4413,19 +4413,6 @@ def render_webapp(data: Optional[Dict] = None) -> None:
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         )
 
-    def _optimizer_mark_include(key_suffix: str) -> None:
-        include_key = f"optimizer_include_{key_suffix}"
-        any_filled = False
-        for idx in range(1, 10):
-            vendor_val = st.session_state.get(f"optimizer_vendor_{key_suffix}_{idx}", "")
-            price_val = st.session_state.get(f"optimizer_price_{key_suffix}_{idx}", "")
-            freight_val = st.session_state.get(f"optimizer_freight_{key_suffix}_{idx}", "")
-            fees_val = st.session_state.get(f"optimizer_fees_{key_suffix}_{idx}", "")
-            if str(vendor_val).strip() or str(price_val).strip() or str(freight_val).strip() or str(fees_val).strip():
-                any_filled = True
-                break
-        st.session_state[include_key] = any_filled
-
     vendor_options = _load_strip_vendor_list()
     if not vendor_options:
         vendor_options = [""]
@@ -4478,74 +4465,55 @@ def render_webapp(data: Optional[Dict] = None) -> None:
         st.markdown('<div class="queue-header">OPTIMIZER</div>', unsafe_allow_html=True)
 
         if optimizer_rows:
-            total_rows = len(optimizer_rows)
-            for row_idx, row in enumerate(optimizer_rows, start=1):
-                key_suffix = "".join(ch if ch.isalnum() else "_" for ch in row["sku"]) or str(row_idx)
-                cols = st.columns([1.4] + [1.0] * 9, gap="small")
-                with cols[0]:
-                    st.text_input(
-                        "SKU",
-                        key=f"optimizer_sku_{key_suffix}",
-                        value=row["sku"],
-                        label_visibility="collapsed",
-                    )
-                    st.text_input(
-                        "Description",
-                        key=f"optimizer_description_{key_suffix}",
-                        value=row["description"],
-                        label_visibility="collapsed",
-                    )
-                    st.text_input(
-                        "Quantity Needed",
-                        key=f"optimizer_qty_needed_{key_suffix}",
-                        value=row["quantity"],
-                        label_visibility="collapsed",
-                    )
-                    include_key = f"optimizer_include_{key_suffix}"
-                    if include_key not in st.session_state:
-                        st.session_state[include_key] = False
-                    st.checkbox(
-                        "Include",
-                        key=include_key,
-                    )
+            # Build DataFrame for data_editor - much more efficient than individual widgets
+            optimizer_df_data = []
+            for row in optimizer_rows:
+                row_data = {
+                    "Include": False,
+                    "SKU": row["sku"],
+                    "Description": row["description"],
+                    "Qty Needed": row["quantity"],
+                }
+                # Add vendor columns
                 for idx in range(1, 10):
-                    with cols[idx]:
-                        st.selectbox(
-                            f"Vendor {idx}",
-                            vendor_options,
-                            key=f"optimizer_vendor_{key_suffix}_{idx}",
-                            index=None if vendor_options != [""] else 0,
-                            placeholder=f"Vendor {idx}",
-                            label_visibility="collapsed",
-                            on_change=_optimizer_mark_include,
-                            args=(key_suffix,),
-                        )
-                        st.text_input(
-                            f"Price {idx}",
-                            key=f"optimizer_price_{key_suffix}_{idx}",
-                            placeholder=f"Price {idx}",
-                            label_visibility="collapsed",
-                            on_change=_optimizer_mark_include,
-                            args=(key_suffix,),
-                        )
-                        st.text_input(
-                            f"Freight {idx}",
-                            key=f"optimizer_freight_{key_suffix}_{idx}",
-                            placeholder=f"Freight {idx}",
-                            label_visibility="collapsed",
-                            on_change=_optimizer_mark_include,
-                            args=(key_suffix,),
-                        )
-                        st.text_input(
-                            f"Fees {idx}",
-                            key=f"optimizer_fees_{key_suffix}_{idx}",
-                            placeholder=f"Fees {idx}",
-                            label_visibility="collapsed",
-                            on_change=_optimizer_mark_include,
-                            args=(key_suffix,),
-                        )
-                if row_idx < total_rows:
-                    st.markdown('<div class="optimizer-separator"></div>', unsafe_allow_html=True)
+                    row_data[f"Vendor {idx}"] = ""
+                    row_data[f"Price {idx}"] = ""
+                    row_data[f"Freight {idx}"] = ""
+                    row_data[f"Fees {idx}"] = ""
+                optimizer_df_data.append(row_data)
+
+            optimizer_df = pd.DataFrame(optimizer_df_data)
+
+            # Configure column types for data_editor
+            column_config = {
+                "Include": st.column_config.CheckboxColumn("Include", default=False, width="small"),
+                "SKU": st.column_config.TextColumn("SKU", width="medium", disabled=True),
+                "Description": st.column_config.TextColumn("Description", width="large", disabled=True),
+                "Qty Needed": st.column_config.TextColumn("Qty Needed", width="small", disabled=True),
+            }
+            # Add vendor column configs
+            for idx in range(1, 10):
+                column_config[f"Vendor {idx}"] = st.column_config.SelectboxColumn(
+                    f"Vendor {idx}",
+                    options=vendor_options if vendor_options != [""] else None,
+                    width="small",
+                )
+                column_config[f"Price {idx}"] = st.column_config.NumberColumn(f"Price {idx}", width="small", format="%.2f")
+                column_config[f"Freight {idx}"] = st.column_config.NumberColumn(f"Freight {idx}", width="small", format="%.2f")
+                column_config[f"Fees {idx}"] = st.column_config.NumberColumn(f"Fees {idx}", width="small", format="%.2f")
+
+            # Use data_editor for efficient tabular editing
+            edited_optimizer_df = st.data_editor(
+                optimizer_df,
+                column_config=column_config,
+                use_container_width=True,
+                hide_index=True,
+                num_rows="fixed",
+                key="optimizer_data_editor",
+            )
+
+            # Store edited data in session state for downstream use
+            st.session_state["optimizer_edited_data"] = edited_optimizer_df
         else:
             st.markdown('<div class="queue-empty">No reorder quantities for this month.</div>', unsafe_allow_html=True)
 
