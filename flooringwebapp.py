@@ -3819,6 +3819,13 @@ def render_webapp(data: Optional[Dict] = None) -> None:
           font-size: 0.85rem;
         }
 
+        .optimizer-separator {
+          height: 4px;
+          background: #000000;
+          border-radius: 999px;
+          margin: 8px 4px 10px 4px;
+        }
+
         div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) .stMarkdown {
           margin-bottom: 4px;
         }
@@ -4433,6 +4440,7 @@ def render_webapp(data: Optional[Dict] = None) -> None:
         st.markdown('<div class="queue-header">OPTIMIZER</div>', unsafe_allow_html=True)
 
         if optimizer_rows:
+            total_rows = len(optimizer_rows)
             for row_idx, row in enumerate(optimizer_rows, start=1):
                 key_suffix = "".join(ch if ch.isalnum() else "_" for ch in row["sku"]) or str(row_idx)
                 cols = st.columns([1.4] + [1.0] * 9, gap="small")
@@ -4483,6 +4491,8 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                             placeholder=f"Fees {idx}",
                             label_visibility="collapsed",
                         )
+                if row_idx < total_rows:
+                    st.markdown('<div class="optimizer-separator"></div>', unsafe_allow_html=True)
         else:
             st.markdown('<div class="queue-empty">No reorder quantities for this month.</div>', unsafe_allow_html=True)
 
