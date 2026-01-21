@@ -4193,6 +4193,7 @@ def render_webapp(data: Optional[Dict] = None) -> None:
 
     # Reorder Now section (current month, Order Quantity > 0)
     reorder_now_df = pd.DataFrame()
+    optimizer_source_df = pd.DataFrame()
     if monthly_rows:
         df_monthly_all = pd.DataFrame(monthly_rows)
         if "Month" in df_monthly_all.columns and "Order Quantity" in df_monthly_all.columns:
@@ -4208,6 +4209,7 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                 df_current = df_current[df_current["SKU"].astype(str) == str(selected_item.get("item_number", ""))]
 
             if not df_current.empty:
+                optimizer_source_df = df_current.copy()
                 reorder_sf = pd.to_numeric(df_current["Order Quantity"], errors="coerce")
                 if is_sundries:
                     reorder_now_df = pd.DataFrame(
@@ -4397,21 +4399,11 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     if not vendor_options:
         vendor_options = [""]
     optimizer_rows = []
-    if not reorder_now_df.empty:
-        source_rows = reorder_now_df[reorder_now_df["Item Number"] != "Total"].copy()
-        for _, row in source_rows.iterrows():
-            sku = str(row.get("Item Number", "")).strip()
-            desc = str(row.get("Description", "")).strip()
-            qty_value = None
-            for col in (
-                "Quantity Needed",
-                "Reorder Quantity (SF)",
-                "Reorder Quantity",
-                "Reorder Quantity (Pallets)",
-            ):
-                if col in source_rows.columns:
-                    qty_value = row.get(col)
-                    break
+    if not optimizer_source_df.empty:
+        for _, row in optimizer_source_df.iterrows():
+            sku = str(row.get("SKU", "")).strip()
+            desc = str(row.get("description", "")).strip()
+            qty_value = row.get("Order Quantity")
             qty_text = ""
             if isinstance(qty_value, (int, float)) and not pd.isna(qty_value):
                 qty_text = _format_number(float(qty_value), 2)
