@@ -3284,12 +3284,16 @@ def _series_from_monthly_rows_vendor(rows: List[Dict], vendor: str, key: str = "
     if not rows:
         return {}
     df = pd.DataFrame(rows)
-    vendor_col = key if key in df.columns else ("vendor_name" if "vendor_name" in df.columns else "collection")
-    if df.empty or vendor_col not in df.columns or "Month" not in df.columns:
+    if "Month" not in df.columns:
         return {}
-    df = df[df[vendor_col].astype(str) == str(vendor)]
-    if df.empty:
-        return {}
+    # If key is None, aggregate all rows (no filtering)
+    if key is not None:
+        vendor_col = key if key in df.columns else ("vendor_name" if "vendor_name" in df.columns else "collection")
+        if df.empty or vendor_col not in df.columns:
+            return {}
+        df = df[df[vendor_col].astype(str) == str(vendor)]
+        if df.empty:
+            return {}
     df["Month"] = pd.to_datetime(df["Month"], errors="coerce")
     df = df[df["Month"].notna()]
     if df.empty:
@@ -4060,9 +4064,13 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                 forecast_fig = _apply_legend_padding(forecast_fig, len(series_list))
         else:
             # All Vendors selected
-            if aggregate_graphs and selected_collection != "All Collections":
-                # Aggregate by collection when only collection is selected
-                collection_series = _series_from_monthly_rows_vendor(monthly_rows, selected_collection, key="collection")
+            if aggregate_graphs:
+                if selected_collection != "All Collections":
+                    # Aggregate by collection when only collection is selected
+                    collection_series = _series_from_monthly_rows_vendor(monthly_rows, selected_collection, key="collection")
+                else:
+                    # Aggregate all items (for Veronica tab with All Vendors / All Collections)
+                    collection_series = _series_from_monthly_rows_vendor(monthly_rows, None, key=None)
                 if collection_series.get("hist_y") or collection_series.get("fc_y"):
                     forecast_fig = _build_forecast_chart(collection_series)
                 else:
