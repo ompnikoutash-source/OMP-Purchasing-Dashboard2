@@ -3819,19 +3819,6 @@ def render_webapp(data: Optional[Dict] = None) -> None:
           font-size: 0.85rem;
         }
 
-        div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) {
-          background: var(--panel-strong);
-          border-radius: 16px;
-          padding: 0 12px 14px 12px;
-          margin-bottom: 18px;
-          border: 1px solid rgba(255,255,255,0.08);
-          box-shadow: var(--shadow);
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) .queue-header {
-          margin: 0 -12px 10px -12px;
-        }
-
         div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) .stMarkdown {
           margin-bottom: 4px;
         }
