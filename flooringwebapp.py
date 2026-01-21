@@ -4502,10 +4502,11 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                         label_visibility="collapsed",
                     )
                     include_key = f"optimizer_include_{key_suffix}"
+                    if include_key not in st.session_state:
+                        st.session_state[include_key] = False
                     st.checkbox(
                         "Include",
                         key=include_key,
-                        value=st.session_state.get(include_key, False),
                     )
                 for idx in range(1, 10):
                     with cols[idx]:
