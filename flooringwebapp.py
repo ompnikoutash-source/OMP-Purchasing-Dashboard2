@@ -4396,60 +4396,92 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     vendor_options = _load_strip_vendor_list()
     if not vendor_options:
         vendor_options = [""]
+    optimizer_rows = []
+    if not reorder_now_df.empty:
+        source_rows = reorder_now_df[reorder_now_df["Item Number"] != "Total"].copy()
+        for _, row in source_rows.iterrows():
+            sku = str(row.get("Item Number", "")).strip()
+            desc = str(row.get("Description", "")).strip()
+            qty_value = None
+            for col in (
+                "Quantity Needed",
+                "Reorder Quantity (SF)",
+                "Reorder Quantity",
+                "Reorder Quantity (Pallets)",
+            ):
+                if col in source_rows.columns:
+                    qty_value = row.get(col)
+                    break
+            qty_text = ""
+            if isinstance(qty_value, (int, float)) and not pd.isna(qty_value):
+                qty_text = _format_number(float(qty_value), 2)
+            elif isinstance(qty_value, str):
+                qty_text = qty_value
+            optimizer_rows.append(
+                {
+                    "sku": sku,
+                    "description": desc,
+                    "quantity": qty_text,
+                }
+            )
+
     optimizer_container = st.container()
     with optimizer_container:
         st.markdown('<div class="optimizer-anchor"></div>', unsafe_allow_html=True)
         st.markdown('<div class="queue-header">OPTIMIZER</div>', unsafe_allow_html=True)
-        cols = st.columns([1.4] + [1.0] * 9, gap="small")
 
-        with cols[0]:
-            st.text_input(
-                "SKU",
-                key="optimizer_sku",
-                placeholder="SKU",
-                label_visibility="collapsed",
-            )
-            st.text_input(
-                "Description",
-                key="optimizer_description",
-                placeholder="Description",
-                label_visibility="collapsed",
-            )
-            st.text_input(
-                "Quantity Needed",
-                key="optimizer_qty_needed",
-                placeholder="Quantity Needed",
-                label_visibility="collapsed",
-            )
-
-        for idx in range(1, 10):
-            with cols[idx]:
-                st.selectbox(
-                    f"Vendor {idx}",
-                    vendor_options,
-                    key=f"optimizer_vendor_{idx}",
-                    index=None if vendor_options != [""] else 0,
-                    placeholder=f"Vendor {idx}",
-                    label_visibility="collapsed",
-                )
-                st.text_input(
-                    f"Price {idx}",
-                    key=f"optimizer_price_{idx}",
-                    placeholder=f"Price {idx}",
-                    label_visibility="collapsed",
-                )
-                st.text_input(
-                    f"Freight {idx}",
-                    key=f"optimizer_freight_{idx}",
-                    placeholder=f"Freight {idx}",
-                    label_visibility="collapsed",
-                )
-                st.text_input(
-                    f"Fees {idx}",
-                    key=f"optimizer_fees_{idx}",
-                    placeholder=f"Fees {idx}",
-                    label_visibility="collapsed",
-                )
+        if optimizer_rows:
+            for row_idx, row in enumerate(optimizer_rows, start=1):
+                cols = st.columns([1.4] + [1.0] * 9, gap="small")
+                with cols[0]:
+                    st.text_input(
+                        "SKU",
+                        key=f"optimizer_sku_{row_idx}",
+                        value=row["sku"],
+                        label_visibility="collapsed",
+                    )
+                    st.text_input(
+                        "Description",
+                        key=f"optimizer_description_{row_idx}",
+                        value=row["description"],
+                        label_visibility="collapsed",
+                    )
+                    st.text_input(
+                        "Quantity Needed",
+                        key=f"optimizer_qty_needed_{row_idx}",
+                        value=row["quantity"],
+                        label_visibility="collapsed",
+                    )
+                for idx in range(1, 10):
+                    with cols[idx]:
+                        st.selectbox(
+                            f"Vendor {idx}",
+                            vendor_options,
+                            key=f"optimizer_vendor_{row_idx}_{idx}",
+                            index=None if vendor_options != [""] else 0,
+                            placeholder=f"Vendor {idx}",
+                            label_visibility="collapsed",
+                        )
+                        st.text_input(
+                            f"Price {idx}",
+                            key=f"optimizer_price_{row_idx}_{idx}",
+                            placeholder=f"Price {idx}",
+                            label_visibility="collapsed",
+                        )
+                        st.text_input(
+                            f"Freight {idx}",
+                            key=f"optimizer_freight_{row_idx}_{idx}",
+                            placeholder=f"Freight {idx}",
+                            label_visibility="collapsed",
+                        )
+                        st.text_input(
+                            f"Fees {idx}",
+                            key=f"optimizer_fees_{row_idx}_{idx}",
+                            placeholder=f"Fees {idx}",
+                            label_visibility="collapsed",
+                        )
+        else:
+            st.markdown('<div class="queue-empty">No reorder quantities for this month.</div>', unsafe_allow_html=True)
 
     # Monthly detail table under Purchasing Queue
     detail_items = [selected_item] if selected_item else vendor_items
