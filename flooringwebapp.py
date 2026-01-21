@@ -116,6 +116,7 @@ LEADTIMES_XLSX = "Lead Times.xlsx"
 CUTOFF_DATE = "2020-06-01"
 WEBAPP_JSON_PATH = Path(__file__).resolve().parent / "flooringwebappJSON"
 SUNDRIES_JSON_PATH = Path(__file__).resolve().parent / "sundrieswebappJSON"
+STRIP_SKU_LIST_FILE = "StripSKUList.xlsx"
 UI_BUILD = "2026-01-14T15:10:00"
 
 def _load_credentials():
@@ -2569,6 +2570,59 @@ def _load_sundries_payload() -> Dict:
             return _demo_webapp_payload()
     return _demo_webapp_payload()
 
+def _load_strip_sku_list() -> set:
+    """Load list of SKUs for Veronica tab from StripSKUList.xlsx"""
+    strip_path = Path(__file__).resolve().parent / STRIP_SKU_LIST_FILE
+    if not strip_path.exists():
+        return set()
+    try:
+        df = pd.read_excel(strip_path, header=0)
+        if df.shape[0] == 0:
+            return set()
+        sku_col = df.columns[0]
+        df[sku_col] = df[sku_col].astype(str).str.strip().str.upper()
+        sku_list = set(df[sku_col].dropna())
+        sku_list = {sku for sku in sku_list if sku and sku != 'NAN' and len(sku) > 0}
+        return sku_list
+    except Exception:
+        return set()
+
+def _load_veronica_payload() -> Dict:
+    """Load flooring data filtered to only items in StripSKUList.xlsx"""
+    data = _load_webapp_payload()
+    strip_skus = _load_strip_sku_list()
+    if not strip_skus:
+        return data
+    # Filter items to only those in the strip SKU list
+    items = data.get("items", [])
+    filtered_items = [
+        item for item in items
+        if str(item.get("item_number", "")).strip().upper() in strip_skus
+    ]
+    data["items"] = filtered_items
+    # Filter Inventory_Metrics
+    metrics = data.get("Inventory_Metrics", [])
+    filtered_metrics = [
+        row for row in metrics
+        if str(row.get("item_number", "") or row.get("sku", "")).strip().upper() in strip_skus
+    ]
+    data["Inventory_Metrics"] = filtered_metrics
+    # Filter Monthly_Projections
+    monthly = data.get("Monthly_Projections", [])
+    filtered_monthly = [
+        row for row in monthly
+        if str(row.get("SKU", "")).strip().upper() in strip_skus
+    ]
+    data["Monthly_Projections"] = filtered_monthly
+    # Filter arrivals
+    arrivals = data.get("arrivals", [])
+    filtered_arrivals = [
+        row for row in arrivals
+        if str(row.get("ITEM_NUMBER", "")).strip().upper() in strip_skus
+    ]
+    data["arrivals"] = filtered_arrivals
+    return data
+
 def _is_streamlit_runtime() -> bool:
     try:
         from streamlit.runtime.scriptrunner import get_script_run_ctx
@@ -3428,18 +3482,24 @@ def render_webapp(data: Optional[Dict] = None) -> None:
         st.session_state.active_view = "Ilsy"
 
     st.markdown('<div class="toggle-wrap toggle-wrap--spaced">', unsafe_allow_html=True)
-    switch_cols = st.columns([1, 1], gap="medium")
+    switch_cols = st.columns([1, 1, 1], gap="medium")
     with switch_cols[0]:
         if st.button("Ilsy", use_container_width=True):
             st.session_state.active_view = "Ilsy"
     with switch_cols[1]:
+        if st.button("Veronica", use_container_width=True):
+            st.session_state.active_view = "Veronica"
+    with switch_cols[2]:
         if st.button("Carlos", use_container_width=True):
             st.session_state.active_view = "Carlos"
     st.markdown("</div>", unsafe_allow_html=True)
 
     is_sundries = st.session_state.active_view == "Carlos"
+    is_veronica = st.session_state.active_view == "Veronica"
     if is_sundries:
         data = _load_sundries_payload()
+    elif is_veronica:
+        data = _load_veronica_payload()
     else:
         data = _load_webapp_payload()
 
@@ -3875,11 +3935,12 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     horizon_days = run_meta.get("forecast_horizon_days", FUTURE_FORECAST_DAYS)
     run_stamp = run_meta.get("run_timestamp_local", "--")
 
-    title_text = (
-        "OMP Sundries Purchasing Dashboard"
-        if is_sundries
-        else "OMP Engineered Floor Purchasing Dashboard"
-    )
+    if is_sundries:
+        title_text = "OMP Sundries Purchasing Dashboard"
+    elif is_veronica:
+        title_text = "OMP Strip Flooring Purchasing Dashboard"
+    else:
+        title_text = "OMP Engineered Floor Purchasing Dashboard"
     st.markdown(
         f"""
         <div class="hero-card">
