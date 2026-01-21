@@ -4491,12 +4491,14 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                 "Description": st.column_config.TextColumn("Description", width="large", disabled=True),
                 "Qty Needed": st.column_config.TextColumn("Qty Needed", width="small", disabled=True),
             }
-            # Add vendor column configs
+            # Add vendor column configs - ensure we have valid options for dropdown
+            dropdown_options = vendor_options if vendor_options and vendor_options != [""] else ["No vendors available"]
             for idx in range(1, 10):
                 column_config[f"Vendor {idx}"] = st.column_config.SelectboxColumn(
                     f"Vendor {idx}",
-                    options=vendor_options if vendor_options != [""] else None,
+                    options=dropdown_options,
                     width="small",
+                    required=False,
                 )
                 column_config[f"Price {idx}"] = st.column_config.NumberColumn(f"Price {idx}", width="small", format="%.2f")
                 column_config[f"Freight {idx}"] = st.column_config.NumberColumn(f"Freight {idx}", width="small", format="%.2f")
