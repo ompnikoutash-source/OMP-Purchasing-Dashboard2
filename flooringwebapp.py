@@ -264,7 +264,7 @@ def load_trailing_12m_volume(conn, sku_list=None) -> pd.DataFrame:
     sql = f"""
     SELECT
         TRIM(L.SLITEM) AS ITEM_NUMBER,
-        SUM(COALESCE(L.SLBLUO,0)) AS VOL_12M
+        SUM(COALESCE(L.SLBLUS,0)) AS VOL_12M
     FROM GSFL2K.SHLINE L
     JOIN GSFL2K.SHHEAD H
       ON H.SHCO = L.SLCO AND H.SHLOC = L.SLLOC AND H.SHORD# = L.SLORD# AND H.SHINV# = L.SLINV#
@@ -380,7 +380,7 @@ def get_active_skus(conn, single_sku=None, sku_list=None):
           JOIN GSFL2K.SHHEAD H
             ON H.SHCO = L.SLCO AND H.SHLOC = L.SLLOC AND H.SHORD# = L.SLORD# AND H.SHINV# = L.SLINV#
           WHERE L.SLUM2 LIKE '%SF%'
-            AND COALESCE(L.SLBLUO,0) > 0
+            AND COALESCE(L.SLBLUS,0) > 0
             AND TRIM(L.SLITEM) IN ({sku_list_str})
           GROUP BY TRIM(L.SLITEM)
         ),
@@ -451,7 +451,7 @@ def get_active_skus(conn, single_sku=None, sku_list=None):
           FROM GSFL2K.SHLINE L
           JOIN GSFL2K.SHHEAD H ON H.SHCO = L.SLCO AND H.SHLOC = L.SLLOC AND H.SHORD# = L.SLORD# AND H.SHINV# = L.SLINV#
           WHERE L.SLUM2 LIKE '%SF%'
-            AND COALESCE(L.SLBLUO,0) > 0
+            AND COALESCE(L.SLBLUS,0) > 0
           GROUP BY TRIM(L.SLITEM)
         ),
         FIRSTREC AS (
@@ -542,7 +542,7 @@ def load_sales_history(conn, sku, start_date):
     hist_end_dt = first_of_month + pd.offsets.MonthBegin(1)
     
     sql = """
-    SELECT H.SHIDAT AS SALES_DATE, SUM(COALESCE(L.SLBLUO,0)) AS QTY_SOLD_SF
+    SELECT H.SHIDAT AS SALES_DATE, SUM(COALESCE(L.SLBLUS,0)) AS QTY_SOLD_SF
     FROM GSFL2K.SHLINE L
     JOIN GSFL2K.SHHEAD H ON H.SHCO = L.SLCO AND H.SHLOC = L.SLLOC AND H.SHORD# = L.SLORD# AND H.SHINV# = L.SLINV#
     WHERE L.SLUM2 LIKE '%SF%'
@@ -2631,6 +2631,30 @@ def _load_strip_sku_details() -> Dict[str, Dict]:
     except Exception:
         return {}
 
+def _load_strip_vendor_list() -> List[str]:
+    """Load vendor names from StripSKUList.xlsx (for email tab)."""
+    strip_path = Path(__file__).resolve().parent / STRIP_SKU_LIST_FILE
+    if not strip_path.exists():
+        return []
+    try:
+        df = pd.read_excel(strip_path, sheet_name="for email", header=0)
+        if df.shape[0] == 0:
+            return []
+        vendor_col = _get_first_column(df, ["Vendor Name", "Vendor", "VendorName"])
+        if not vendor_col:
+            return []
+        vendors = (
+            df[vendor_col]
+            .astype(str)
+            .str.strip()
+            .replace("nan", "")
+            .replace("None", "")
+        )
+        vendors = sorted({v for v in vendors if v})
+        return vendors
+    except Exception:
+        return []
+
 def _load_veronica_payload() -> Dict:
     """Load flooring data filtered to only items in StripSKUList.xlsx"""
     original_data = _load_webapp_payload()
@@ -4307,14 +4331,14 @@ def render_webapp(data: Optional[Dict] = None) -> None:
 
             # Define column widths
             col_widths = {
-                "Item Number": 15,
+                "Item Number": 20,
                 "Thickness": 10,
                 "Width": 8,
                 "Species": 15,
                 "Grade/Cut": 15,
                 "Edge": 12,
-                "Bundles": 8,
-                "Quantity Needed": 15,
+                "Bundles": 10,
+                "Quantity Needed": 20,
                 "Price": 8,
                 "Freight": 8,
                 "Additional Charges": 18,
@@ -4358,6 +4382,62 @@ def render_webapp(data: Optional[Dict] = None) -> None:
             file_name=f"reorder_now_{file_date}.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         )
+
+    st.markdown("### OPTIMIZER")
+    vendor_options = [""] + _load_strip_vendor_list()
+    cols = st.columns([1.4] + [1.0] * 9, gap="small")
+
+    with cols[0]:
+        st.markdown("SKU")
+        st.text_input("SKU", key="optimizer_sku", label_visibility="collapsed")
+        st.markdown("Description")
+        st.text_input("Description", key="optimizer_description", label_visibility="collapsed")
+        st.markdown("Quantity Needed")
+        st.number_input(
+            "Quantity Needed",
+            min_value=0.0,
+            step=1.0,
+            format="%.2f",
+            key="optimizer_qty_needed",
+            label_visibility="collapsed",
+        )
+
+    for idx in range(1, 10):
+        with cols[idx]:
+            st.markdown(f"Vendor {idx}")
+            st.selectbox(
+                f"Vendor {idx}",
+                vendor_options,
+                key=f"optimizer_vendor_{idx}",
+                label_visibility="collapsed",
+            )
+            st.markdown(f"Price {idx}")
+            st.number_input(
+                f"Price {idx}",
+                min_value=0.0,
+                step=0.01,
+                format="%.2f",
+                key=f"optimizer_price_{idx}",
+                label_visibility="collapsed",
+            )
+            st.markdown(f"Freight {idx}")
+            st.number_input(
+                f"Freight {idx}",
+                min_value=0.0,
+                step=0.01,
+                format="%.2f",
+                key=f"optimizer_freight_{idx}",
+                label_visibility="collapsed",
+            )
+            st.markdown(f"Fees {idx}")
+            st.number_input(
+                f"Fees {idx}",
+                min_value=0.0,
+                step=0.01,
+                format="%.2f",
+                key=f"optimizer_fees_{idx}",
+                label_visibility="collapsed",
+            )
 
     # Monthly detail table under Purchasing Queue
     detail_items = [selected_item] if selected_item else vendor_items
