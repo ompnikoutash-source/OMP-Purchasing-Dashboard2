@@ -2602,6 +2602,34 @@ def _load_strip_sku_list() -> set:
     except Exception:
         return set()
 
+def _load_strip_sku_details() -> Dict[str, Dict]:
+    """Load SKU details (Thickness, Width, Species, Grade/Cut, Edge, Bundles) from StripSKUList.xlsx"""
+    strip_path = Path(__file__).resolve().parent / STRIP_SKU_LIST_FILE
+    if not strip_path.exists():
+        return {}
+    try:
+        df = pd.read_excel(strip_path, sheet_name="Who Produces", header=0)
+        if df.shape[0] == 0:
+            return {}
+        # Normalize the Item Number column
+        df["Item Number"] = df["Item Number"].astype(str).str.strip().str.upper()
+        # Build a dict mapping SKU -> details
+        details = {}
+        for _, row in df.iterrows():
+            sku = row["Item Number"]
+            if sku and sku != 'NAN':
+                details[sku] = {
+                    "Thickness": str(row.get("Thickness", "")) if pd.notna(row.get("Thickness")) else "",
+                    "Width": str(row.get("Width", "")) if pd.notna(row.get("Width")) else "",
+                    "Species": str(row.get("Species", "")) if pd.notna(row.get("Species")) else "",
+                    "Grade/Cut": str(row.get("Grade/Cut", "")) if pd.notna(row.get("Grade/Cut")) else "",
+                    "Edge": str(row.get("Edge", "")) if pd.notna(row.get("Edge")) else "",
+                    "Bundles": str(row.get("Bundles", "")) if pd.notna(row.get("Bundles")) else "",
+                }
+        return details
+    except Exception:
+        return {}
+
 def _load_veronica_payload() -> Dict:
     """Load flooring data filtered to only items in StripSKUList.xlsx"""
     original_data = _load_webapp_payload()
@@ -2877,6 +2905,7 @@ def _render_reorder_now_table_html(df: pd.DataFrame, month_label: str) -> str:
                 "Reorder Quantity (SF)",
                 "Reorder Quantity (Pallets)",
                 "Reorder Quantity",
+                "Quantity Needed",
             ):
                 # Round up to next whole number, handle NaN
                 if pd.isna(value):
@@ -4160,6 +4189,51 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                         "Collection": "",
                         "Description": "",
                         "Reorder Quantity": total_sf,
+                    }
+                    reorder_now_df = pd.concat(
+                        [reorder_now_df, pd.DataFrame([total_row])], ignore_index=True
+                    )
+                elif is_veronica:
+                    # Load Strip SKU details for Veronica tab
+                    strip_details = _load_strip_sku_details()
+                    item_numbers = df_current.get("SKU", pd.Series()).astype(str).str.strip().str.upper()
+
+                    # Get details for each item
+                    thickness_list = [strip_details.get(sku, {}).get("Thickness", "") for sku in item_numbers]
+                    width_list = [strip_details.get(sku, {}).get("Width", "") for sku in item_numbers]
+                    species_list = [strip_details.get(sku, {}).get("Species", "") for sku in item_numbers]
+                    grade_cut_list = [strip_details.get(sku, {}).get("Grade/Cut", "") for sku in item_numbers]
+                    edge_list = [strip_details.get(sku, {}).get("Edge", "") for sku in item_numbers]
+                    bundles_list = [strip_details.get(sku, {}).get("Bundles", "") for sku in item_numbers]
+
+                    reorder_now_df = pd.DataFrame(
+                        {
+                            "Item Number": df_current.get("SKU", ""),
+                            "Thickness": thickness_list,
+                            "Width": width_list,
+                            "Species": species_list,
+                            "Grade/Cut": grade_cut_list,
+                            "Edge": edge_list,
+                            "Bundles": bundles_list,
+                            "Quantity Needed": reorder_sf,
+                            "Price": "",
+                            "Freight": "",
+                            "Additional Charges": "",
+                        }
+                    )
+                    total_qty = reorder_now_df["Quantity Needed"].sum(skipna=True)
+                    total_row = {
+                        "Item Number": "Total",
+                        "Thickness": "",
+                        "Width": "",
+                        "Species": "",
+                        "Grade/Cut": "",
+                        "Edge": "",
+                        "Bundles": "",
+                        "Quantity Needed": total_qty,
+                        "Price": "",
+                        "Freight": "",
+                        "Additional Charges": "",
                     }
                     reorder_now_df = pd.concat(
                         [reorder_now_df, pd.DataFrame([total_row])], ignore_index=True
