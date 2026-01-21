@@ -4482,6 +4482,11 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                         value=row["quantity"],
                         label_visibility="collapsed",
                     )
+                    st.checkbox(
+                        "Include",
+                        key=f"optimizer_include_{key_suffix}",
+                        value=True,
+                    )
                 for idx in range(1, 10):
                     with cols[idx]:
                         st.selectbox(
