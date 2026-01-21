@@ -2620,6 +2620,7 @@ def _load_strip_sku_details() -> Dict[str, Dict]:
             sku = row["Item Number"]
             if sku and sku != 'NAN':
                 details[sku] = {
+                    "Description": str(row.get("Description", "")) if pd.notna(row.get("Description")) else "",
                     "Thickness": str(row.get("Thickness", "")) if pd.notna(row.get("Thickness")) else "",
                     "Width": str(row.get("Width", "")) if pd.notna(row.get("Width")) else "",
                     "Species": str(row.get("Species", "")) if pd.notna(row.get("Species")) else "",
@@ -3830,6 +3831,10 @@ def render_webapp(data: Optional[Dict] = None) -> None:
           margin-bottom: 4px;
         }
 
+        div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) input[aria-label="Description"] {
+          font-size: 0.72rem;
+        }
+
         div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) div[data-testid="stTextInput"],
         div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) div[data-testid="stNumberInput"],
         div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) div[data-testid="stSelectbox"] {
@@ -4406,11 +4411,25 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     if not vendor_options:
         vendor_options = [""]
     optimizer_rows = []
+    strip_details = _load_strip_sku_details() if is_veronica else {}
     if not reorder_now_df.empty:
         source_rows = reorder_now_df[reorder_now_df["Item Number"] != "Total"].copy()
         for _, row in source_rows.iterrows():
             sku = str(row.get("Item Number", "")).strip()
             desc = str(row.get("Description", "")).strip()
+            if not desc and is_veronica:
+                desc = strip_details.get(sku, {}).get("Description", "")
+            if not desc and is_veronica:
+                desc_parts = []
+                for col in ("Thickness", "Width", "Species", "Grade/Cut", "Edge", "Bundles"):
+                    val = row.get(col)
+                    if val is None:
+                        continue
+                    text = str(val).strip()
+                    if text and text.lower() not in ("nan", "none"):
+                        desc_parts.append(text)
+                if desc_parts:
+                    desc = " / ".join(desc_parts)
             qty_value = None
             for col in (
                 "Quantity Needed",
