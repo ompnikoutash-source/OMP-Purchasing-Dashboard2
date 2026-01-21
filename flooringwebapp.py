@@ -4286,12 +4286,70 @@ def render_webapp(data: Optional[Dict] = None) -> None:
 
     # Export Reorder Now to Excel button
     if not reorder_now_df.empty:
+        from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
+        from openpyxl.utils import get_column_letter
+
         # Create Excel file in memory
         excel_buffer = io.BytesIO()
-        # Remove the Total row for export (optional - keep if you want it)
+        # Remove the Total row for export
         export_df = reorder_now_df[reorder_now_df["Item Number"] != "Total"].copy()
+
+        # Round up Quantity Needed to next decimal point (1 decimal place)
+        if "Quantity Needed" in export_df.columns:
+            export_df["Quantity Needed"] = export_df["Quantity Needed"].apply(
+                lambda x: math.ceil(x * 10) / 10 if pd.notna(x) else x
+            )
+
         with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
             export_df.to_excel(writer, sheet_name='Reorder Now', index=False)
+            workbook = writer.book
+            worksheet = writer.sheets['Reorder Now']
+
+            # Define column widths
+            col_widths = {
+                "Item Number": 15,
+                "Thickness": 10,
+                "Width": 8,
+                "Species": 15,
+                "Grade/Cut": 15,
+                "Edge": 12,
+                "Bundles": 8,
+                "Quantity Needed": 15,
+                "Price": 8,
+                "Freight": 8,
+                "Additional Charges": 18,
+            }
+
+            # Define styles
+            thin_border = Border(
+                left=Side(style='thin'),
+                right=Side(style='thin'),
+                top=Side(style='thin'),
+                bottom=Side(style='thin')
+            )
+            # Header: dark blue text, light blue fill (60% lighter)
+            header_font = Font(bold=True, color="1F4E79")  # Dark blue text
+            header_fill = PatternFill(start_color="BDD7EE", end_color="BDD7EE", fill_type="solid")  # Light blue fill
+
+            # Apply column widths
+            for col_idx, col_name in enumerate(export_df.columns, start=1):
+                col_letter = get_column_letter(col_idx)
+                width = col_widths.get(col_name, 12)
+                worksheet.column_dimensions[col_letter].width = width
+
+            # Apply header formatting (row 1)
+            for col_idx in range(1, len(export_df.columns) + 1):
+                cell = worksheet.cell(row=1, column=col_idx)
+                cell.font = header_font
+                cell.fill = header_fill
+                cell.border = thin_border
+
+            # Apply borders to all data cells
+            for row_idx in range(2, len(export_df) + 2):
+                for col_idx in range(1, len(export_df.columns) + 1):
+                    cell = worksheet.cell(row=row_idx, column=col_idx)
+                    cell.border = thin_border
+
         excel_buffer.seek(0)
         file_date = pd.Timestamp.today().strftime("%Y-%m-%d")
         st.download_button(
