@@ -10,6 +10,7 @@ Fixed Issues:
 
 from __future__ import annotations
 import copy
+import io
 import json
 import math, os, warnings
 from datetime import date, datetime
@@ -4282,6 +4283,23 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                     )
     month_label = pd.Timestamp.today().strftime("%B %Y")
     st.markdown(_render_reorder_now_table_html(reorder_now_df, month_label), unsafe_allow_html=True)
+
+    # Export Reorder Now to Excel button
+    if not reorder_now_df.empty:
+        # Create Excel file in memory
+        excel_buffer = io.BytesIO()
+        # Remove the Total row for export (optional - keep if you want it)
+        export_df = reorder_now_df[reorder_now_df["Item Number"] != "Total"].copy()
+        with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
+            export_df.to_excel(writer, sheet_name='Reorder Now', index=False)
+        excel_buffer.seek(0)
+        file_date = pd.Timestamp.today().strftime("%Y-%m-%d")
+        st.download_button(
+            label="Export Reorder Now to Excel",
+            data=excel_buffer,
+            file_name=f"reorder_now_{file_date}.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
 
     # Monthly detail table under Purchasing Queue
     detail_items = [selected_item] if selected_item else vendor_items
