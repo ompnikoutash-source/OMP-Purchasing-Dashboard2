@@ -4399,11 +4399,21 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     if not vendor_options:
         vendor_options = [""]
     optimizer_rows = []
-    if not optimizer_source_df.empty:
-        for _, row in optimizer_source_df.iterrows():
-            sku = str(row.get("SKU", "")).strip()
-            desc = str(row.get("description", "")).strip()
-            qty_value = row.get("Order Quantity")
+    if not reorder_now_df.empty:
+        source_rows = reorder_now_df[reorder_now_df["Item Number"] != "Total"].copy()
+        for _, row in source_rows.iterrows():
+            sku = str(row.get("Item Number", "")).strip()
+            desc = str(row.get("Description", "")).strip()
+            qty_value = None
+            for col in (
+                "Quantity Needed",
+                "Reorder Quantity (SF)",
+                "Reorder Quantity",
+                "Reorder Quantity (Pallets)",
+            ):
+                if col in source_rows.columns:
+                    qty_value = row.get(col)
+                    break
             qty_text = ""
             if isinstance(qty_value, (int, float)) and not pd.isna(qty_value):
                 qty_text = _format_number(float(qty_value), 2)
@@ -4424,23 +4434,24 @@ def render_webapp(data: Optional[Dict] = None) -> None:
 
         if optimizer_rows:
             for row_idx, row in enumerate(optimizer_rows, start=1):
+                key_suffix = "".join(ch if ch.isalnum() else "_" for ch in row["sku"]) or str(row_idx)
                 cols = st.columns([1.4] + [1.0] * 9, gap="small")
                 with cols[0]:
                     st.text_input(
                         "SKU",
-                        key=f"optimizer_sku_{row_idx}",
+                        key=f"optimizer_sku_{key_suffix}",
                         value=row["sku"],
                         label_visibility="collapsed",
                     )
                     st.text_input(
                         "Description",
-                        key=f"optimizer_description_{row_idx}",
+                        key=f"optimizer_description_{key_suffix}",
                         value=row["description"],
                         label_visibility="collapsed",
                     )
                     st.text_input(
                         "Quantity Needed",
-                        key=f"optimizer_qty_needed_{row_idx}",
+                        key=f"optimizer_qty_needed_{key_suffix}",
                         value=row["quantity"],
                         label_visibility="collapsed",
                     )
@@ -4449,26 +4460,26 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                         st.selectbox(
                             f"Vendor {idx}",
                             vendor_options,
-                            key=f"optimizer_vendor_{row_idx}_{idx}",
+                            key=f"optimizer_vendor_{key_suffix}_{idx}",
                             index=None if vendor_options != [""] else 0,
                             placeholder=f"Vendor {idx}",
                             label_visibility="collapsed",
                         )
                         st.text_input(
                             f"Price {idx}",
-                            key=f"optimizer_price_{row_idx}_{idx}",
+                            key=f"optimizer_price_{key_suffix}_{idx}",
                             placeholder=f"Price {idx}",
                             label_visibility="collapsed",
                         )
                         st.text_input(
                             f"Freight {idx}",
-                            key=f"optimizer_freight_{row_idx}_{idx}",
+                            key=f"optimizer_freight_{key_suffix}_{idx}",
                             placeholder=f"Freight {idx}",
                             label_visibility="collapsed",
                         )
                         st.text_input(
                             f"Fees {idx}",
-                            key=f"optimizer_fees_{row_idx}_{idx}",
+                            key=f"optimizer_fees_{key_suffix}_{idx}",
                             placeholder=f"Fees {idx}",
                             label_visibility="collapsed",
                         )
