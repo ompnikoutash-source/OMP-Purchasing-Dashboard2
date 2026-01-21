@@ -4413,6 +4413,19 @@ def render_webapp(data: Optional[Dict] = None) -> None:
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         )
 
+    def _optimizer_mark_include(key_suffix: str) -> None:
+        include_key = f"optimizer_include_{key_suffix}"
+        any_filled = False
+        for idx in range(1, 10):
+            vendor_val = st.session_state.get(f"optimizer_vendor_{key_suffix}_{idx}", "")
+            price_val = st.session_state.get(f"optimizer_price_{key_suffix}_{idx}", "")
+            freight_val = st.session_state.get(f"optimizer_freight_{key_suffix}_{idx}", "")
+            fees_val = st.session_state.get(f"optimizer_fees_{key_suffix}_{idx}", "")
+            if str(vendor_val).strip() or str(price_val).strip() or str(freight_val).strip() or str(fees_val).strip():
+                any_filled = True
+                break
+        st.session_state[include_key] = any_filled
+
     vendor_options = _load_strip_vendor_list()
     if not vendor_options:
         vendor_options = [""]
@@ -4503,39 +4516,33 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                             index=None if vendor_options != [""] else 0,
                             placeholder=f"Vendor {idx}",
                             label_visibility="collapsed",
+                            on_change=_optimizer_mark_include,
+                            args=(key_suffix,),
                         )
                         st.text_input(
                             f"Price {idx}",
                             key=f"optimizer_price_{key_suffix}_{idx}",
                             placeholder=f"Price {idx}",
                             label_visibility="collapsed",
+                            on_change=_optimizer_mark_include,
+                            args=(key_suffix,),
                         )
                         st.text_input(
                             f"Freight {idx}",
                             key=f"optimizer_freight_{key_suffix}_{idx}",
                             placeholder=f"Freight {idx}",
                             label_visibility="collapsed",
+                            on_change=_optimizer_mark_include,
+                            args=(key_suffix,),
                         )
                         st.text_input(
                             f"Fees {idx}",
                             key=f"optimizer_fees_{key_suffix}_{idx}",
                             placeholder=f"Fees {idx}",
                             label_visibility="collapsed",
+                            on_change=_optimizer_mark_include,
+                            args=(key_suffix,),
                         )
-                any_filled = False
-                for idx in range(1, 10):
-                    vendor_val = st.session_state.get(f"optimizer_vendor_{key_suffix}_{idx}", "")
-                    price_val = st.session_state.get(f"optimizer_price_{key_suffix}_{idx}", "")
-                    freight_val = st.session_state.get(f"optimizer_freight_{key_suffix}_{idx}", "")
-                    fees_val = st.session_state.get(f"optimizer_fees_{key_suffix}_{idx}", "")
-                    if str(vendor_val).strip():
-                        any_filled = True
-                        break
-                    if str(price_val).strip() or str(freight_val).strip() or str(fees_val).strip():
-                        any_filled = True
-                        break
-                if any_filled:
-                    st.session_state[include_key] = True
                 if row_idx < total_rows:
                     st.markdown('<div class="optimizer-separator"></div>', unsafe_allow_html=True)
         else:
