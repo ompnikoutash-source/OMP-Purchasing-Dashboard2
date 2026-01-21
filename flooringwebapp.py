@@ -2878,11 +2878,17 @@ def _render_reorder_now_table_html(df: pd.DataFrame, month_label: str) -> str:
                 "Reorder Quantity (Pallets)",
                 "Reorder Quantity",
             ):
-                # Round up to next whole number
-                value = _format_number(math.ceil(float(value)), 0)
+                # Round up to next whole number, handle NaN
+                if pd.isna(value):
+                    value = ""
+                else:
+                    value = _format_number(math.ceil(float(value)), 0)
             elif isinstance(value, (int, float)) and col == "Reorder Quantity (% of Container)":
-                value = f"{float(value) * 100:.1f}%"
-            elif value is None:
+                if pd.isna(value):
+                    value = ""
+                else:
+                    value = f"{float(value) * 100:.1f}%"
+            elif value is None or (isinstance(value, float) and pd.isna(value)):
                 value = ""
             cells.append(f"<div class='text-clip'>{value}</div>")
         rows.append(f"<div class='queue-row'>{''.join(cells)}</div>")
