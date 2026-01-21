@@ -9,6 +9,7 @@ Fixed Issues:
 """
 
 from __future__ import annotations
+import copy
 import json
 import math, os, warnings
 from datetime import date, datetime
@@ -660,17 +661,24 @@ def cap_outliers(series: pd.Series, n_mad: float = 4.0) -> pd.Series:
     """
     if series.empty:
         return series
-    median = series.median()
-    mad = np.median(np.abs(series - median))
-    # Convert MAD to std-equivalent (for normal distribution, std ~ 1.4826 * MAD)
-    std_est = 1.4826 * mad
-    if std_est == 0:
-        return series
-    upper_bound = median + n_mad * std_est
+    non_zero = series[series > 0]
+    ref = non_zero if len(non_zero) >= 3 else series
+    median = ref.median()
+    mad = np.median(np.abs(ref - median))
+    if mad == 0:
+        upper_bound = ref.quantile(0.95)
+        if not np.isfinite(upper_bound) or upper_bound <= 0:
+            return series
+        reason = "p95 of non-zero demand"
+    else:
+        # Convert MAD to std-equivalent (for normal distribution, std ~ 1.4826 * MAD)
+        std_est = 1.4826 * mad
+        upper_bound = median + n_mad * std_est
+        reason = f"median + {n_mad} MAD"
     capped = series.clip(upper=upper_bound)
     n_capped = (series > upper_bound).sum()
     if n_capped > 0:
-        print(f"    Capped {n_capped} outlier(s) exceeding {upper_bound:,.0f} (median + {n_mad} MAD)")
+        print(f"    Capped {n_capped} outlier(s) exceeding {upper_bound:,.0f} ({reason})")
     return capped
 
 def wmape(y_true, y_pred):
@@ -1722,6 +1730,12 @@ def process_sku(conn, sku_row, lead_times_excel, abc_map, global_model=None, glo
         df_hist['Month'] = pd.to_datetime(df_hist['SALES_DATE']).dt.to_period('M').dt.to_timestamp()
         df_hist = df_hist.groupby('Month', as_index=False)['QTY_SOLD_SF'].sum().sort_values('Month')
         df_hist = df_hist[df_hist['Month'] < as_of_date.replace(day=1)]
+        if not df_hist.empty:
+            hist_series = df_hist.set_index('Month')['QTY_SOLD_SF']
+            hist_capped = cap_outliers(hist_series, n_mad=4.0)
+            if not np.allclose(hist_series.values, hist_capped.values, equal_nan=True):
+                print(f"  Historical monthly outliers capped for {sku}")
+            df_hist['QTY_SOLD_SF'] = hist_capped.values
         hist_rows = []
         for _, r in df_hist.iterrows():
             hist_rows.append({
@@ -2576,10 +2590,11 @@ def _load_strip_sku_list() -> set:
     if not strip_path.exists():
         return set()
     try:
-        df = pd.read_excel(strip_path, header=0)
+        # SKUs are in the "Who Produces" sheet, first column, starting at row 2 (skip header)
+        df = pd.read_excel(strip_path, sheet_name="Who Produces", header=0)
         if df.shape[0] == 0:
             return set()
-        sku_col = df.columns[0]
+        sku_col = df.columns[0]  # "Item Number" column
         df[sku_col] = df[sku_col].astype(str).str.strip().str.upper()
         sku_list = set(df[sku_col].dropna())
         sku_list = {sku for sku in sku_list if sku and sku != 'NAN' and len(sku) > 0}
@@ -2589,10 +2604,12 @@ def _load_strip_sku_list() -> set:
 
 def _load_veronica_payload() -> Dict:
     """Load flooring data filtered to only items in StripSKUList.xlsx"""
-    data = _load_webapp_payload()
+    original_data = _load_webapp_payload()
     strip_skus = _load_strip_sku_list()
     if not strip_skus:
-        return data
+        return original_data
+    # Make a deep copy to avoid mutating the original data
+    data = copy.deepcopy(original_data)
     # Filter items to only those in the strip SKU list
     items = data.get("items", [])
     filtered_items = [
