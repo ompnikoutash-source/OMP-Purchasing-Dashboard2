@@ -4393,7 +4393,9 @@ def render_webapp(data: Optional[Dict] = None) -> None:
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         )
 
-    vendor_options = [""] + _load_strip_vendor_list()
+    vendor_options = _load_strip_vendor_list()
+    if not vendor_options:
+        vendor_options = [""]
     optimizer_container = st.container()
     with optimizer_container:
         st.markdown('<div class="optimizer-anchor"></div>', unsafe_allow_html=True)
@@ -4401,54 +4403,51 @@ def render_webapp(data: Optional[Dict] = None) -> None:
         cols = st.columns([1.4] + [1.0] * 9, gap="small")
 
         with cols[0]:
-            st.markdown("SKU")
-            st.text_input("SKU", key="optimizer_sku", label_visibility="collapsed")
-            st.markdown("Description")
-            st.text_input("Description", key="optimizer_description", label_visibility="collapsed")
-            st.markdown("Quantity Needed")
-            st.number_input(
+            st.text_input(
+                "SKU",
+                key="optimizer_sku",
+                placeholder="SKU",
+                label_visibility="collapsed",
+            )
+            st.text_input(
+                "Description",
+                key="optimizer_description",
+                placeholder="Description",
+                label_visibility="collapsed",
+            )
+            st.text_input(
                 "Quantity Needed",
-                min_value=0.0,
-                step=1.0,
-                format="%.2f",
                 key="optimizer_qty_needed",
+                placeholder="Quantity Needed",
                 label_visibility="collapsed",
             )
 
         for idx in range(1, 10):
             with cols[idx]:
-                st.markdown(f"Vendor {idx}")
                 st.selectbox(
                     f"Vendor {idx}",
                     vendor_options,
                     key=f"optimizer_vendor_{idx}",
+                    index=None if vendor_options != [""] else 0,
+                    placeholder=f"Vendor {idx}",
                     label_visibility="collapsed",
                 )
-                st.markdown(f"Price {idx}")
-                st.number_input(
+                st.text_input(
                     f"Price {idx}",
-                    min_value=0.0,
-                    step=0.01,
-                    format="%.2f",
                     key=f"optimizer_price_{idx}",
+                    placeholder=f"Price {idx}",
                     label_visibility="collapsed",
                 )
-                st.markdown(f"Freight {idx}")
-                st.number_input(
+                st.text_input(
                     f"Freight {idx}",
-                    min_value=0.0,
-                    step=0.01,
-                    format="%.2f",
                     key=f"optimizer_freight_{idx}",
+                    placeholder=f"Freight {idx}",
                     label_visibility="collapsed",
                 )
-                st.markdown(f"Fees {idx}")
-                st.number_input(
+                st.text_input(
                     f"Fees {idx}",
-                    min_value=0.0,
-                    step=0.01,
-                    format="%.2f",
                     key=f"optimizer_fees_{idx}",
+                    placeholder=f"Fees {idx}",
                     label_visibility="collapsed",
                 )
 
