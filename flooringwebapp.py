@@ -3835,6 +3835,12 @@ def render_webapp(data: Optional[Dict] = None) -> None:
           font-size: 0.72rem;
         }
 
+        div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) div[data-testid="stCheckbox"] label {
+          color: #ffffff;
+          font-size: 0.92rem;
+          font-weight: 600;
+        }
+
         div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) div[data-testid="stTextInput"],
         div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) div[data-testid="stNumberInput"],
         div[data-testid="stVerticalBlock"]:has(.optimizer-anchor) div[data-testid="stSelectbox"] {
@@ -4482,10 +4488,11 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                         value=row["quantity"],
                         label_visibility="collapsed",
                     )
+                    include_key = f"optimizer_include_{key_suffix}"
                     st.checkbox(
                         "Include",
-                        key=f"optimizer_include_{key_suffix}",
-                        value=True,
+                        key=include_key,
+                        value=st.session_state.get(include_key, False),
                     )
                 for idx in range(1, 10):
                     with cols[idx]:
@@ -4515,6 +4522,20 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                             placeholder=f"Fees {idx}",
                             label_visibility="collapsed",
                         )
+                any_filled = False
+                for idx in range(1, 10):
+                    vendor_val = st.session_state.get(f"optimizer_vendor_{key_suffix}_{idx}", "")
+                    price_val = st.session_state.get(f"optimizer_price_{key_suffix}_{idx}", "")
+                    freight_val = st.session_state.get(f"optimizer_freight_{key_suffix}_{idx}", "")
+                    fees_val = st.session_state.get(f"optimizer_fees_{key_suffix}_{idx}", "")
+                    if str(vendor_val).strip():
+                        any_filled = True
+                        break
+                    if str(price_val).strip() or str(freight_val).strip() or str(fees_val).strip():
+                        any_filled = True
+                        break
+                if any_filled:
+                    st.session_state[include_key] = True
                 if row_idx < total_rows:
                     st.markdown('<div class="optimizer-separator"></div>', unsafe_allow_html=True)
         else:
