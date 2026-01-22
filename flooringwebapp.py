@@ -2675,6 +2675,210 @@ def _load_strip_vendor_list() -> List[str]:
     except Exception:
         return []
 
+
+def _load_who_produces() -> Dict[str, List[str]]:
+    """
+    Load 'Who Produces' sheet from StripSKUList.xlsx.
+    Returns a dict mapping SKU -> list of vendor names that can produce it.
+    """
+    strip_path = Path(__file__).resolve().parent / STRIP_SKU_LIST_FILE
+    if not strip_path.exists():
+        return {}
+    try:
+        df = pd.read_excel(strip_path, sheet_name="Who Produces", header=0)
+        vendor_cols = ["Indiana", "Dayspring", "Mullican", "Macon", "Anthony", "Orillia", "Lebanon", "Merrick"]
+        result = {}
+        for _, row in df.iterrows():
+            sku = str(row.get("Item Number", "")).strip().upper()
+            if not sku:
+                continue
+            vendors = []
+            for vcol in vendor_cols:
+                val = row.get(vcol)
+                if pd.notna(val) and str(val).strip():
+                    vendors.append(vcol)
+            if vendors:
+                result[sku] = vendors
+        return result
+    except Exception:
+        return {}
+
+
+def _load_margins() -> Dict[str, Dict]:
+    """
+    Load 'Margins' sheet from StripSKUList.xlsx.
+    Returns a dict mapping SKU -> {"sale_price": float, "margin": float}
+    The margin represents the current landed cost margin for items in inventory.
+    """
+    strip_path = Path(__file__).resolve().parent / STRIP_SKU_LIST_FILE
+    if not strip_path.exists():
+        return {}
+    try:
+        df = pd.read_excel(strip_path, sheet_name="Margins", header=0)
+        result = {}
+        for _, row in df.iterrows():
+            sku = str(row.get("ITEM NUMBER", "")).strip().upper()
+            if not sku:
+                continue
+            sale_price = float(row.get("SALE PRICE", 0)) if pd.notna(row.get("SALE PRICE")) else 0.0
+            margin = float(row.get("MARGIN", 0)) if pd.notna(row.get("MARGIN")) else 0.0
+            result[sku] = {"sale_price": sale_price, "margin": margin}
+        return result
+    except Exception:
+        return {}
+
+
+def _calculate_optimal_vendor_mix(
+    edited_df: pd.DataFrame,
+    margins_data: Dict[str, Dict],
+    vendor_names: List[str],
+) -> Dict:
+    """
+    Calculate the optimal vendor mix based on lowest total landed cost.
+
+    Returns a dict with:
+    - "optimal_assignments": dict of SKU -> chosen vendor name
+    - "total_cost": total landed cost
+    - "item_costs": dict of SKU -> {"vendor": str, "price": float, "freight_share": float, "landed_cost": float, "qty": float}
+    - "margin_alerts": list of dicts with margin comparison warnings
+    - "errors": list of error messages
+    """
+    result = {
+        "optimal_assignments": {},
+        "total_cost": 0.0,
+        "item_costs": {},
+        "margin_alerts": [],
+        "errors": [],
+    }
+
+    # Extract freight costs from the first row (SKU="Freight")
+    freight_costs = {}  # vendor -> freight cost for full container
+    freight_row = edited_df[edited_df["SKU"] == "Freight"]
+    if not freight_row.empty:
+        for vname in vendor_names:
+            val = freight_row.iloc[0].get(vname)
+            if pd.notna(val) and val != "" and val != 0:
+                try:
+                    freight_costs[vname] = float(val)
+                except (ValueError, TypeError):
+                    pass
+
+    # Get included items (exclude Freight row)
+    item_rows = edited_df[(edited_df["SKU"] != "Freight") & (edited_df["Include"] == True)]
+
+    if item_rows.empty:
+        result["errors"].append("No items selected (Include checkbox not checked)")
+        return result
+
+    # For each vendor, calculate total SF included to determine freight share per SF
+    vendor_total_sf = {v: 0.0 for v in vendor_names}
+    vendor_items = {v: [] for v in vendor_names}
+
+    # First pass: identify which items have valid prices from which vendors
+    item_prices = {}  # sku -> {vendor: price}
+    for _, row in item_rows.iterrows():
+        sku = str(row["SKU"]).strip().upper()
+        qty_str = str(row.get("Qty Needed", "")).replace(",", "").strip()
+        try:
+            qty = float(qty_str) if qty_str else 0.0
+        except ValueError:
+            qty = 0.0
+
+        if qty <= 0:
+            continue
+
+        item_prices[sku] = {"qty": qty, "vendors": {}}
+
+        # Accept any vendor that has a price entered by the user
+        for vname in vendor_names:
+            val = row.get(vname)
+            if pd.notna(val) and val != "" and val != 0:
+                try:
+                    price = float(val)
+                    if price > 0:
+                        item_prices[sku]["vendors"][vname] = price
+                except (ValueError, TypeError):
+                    pass
+
+    if not item_prices:
+        result["errors"].append("No valid items with quantities found")
+        return result
+
+    # Calculate total SF per vendor for freight allocation
+    # We need to try each possible vendor assignment to find optimal
+    # For simplicity, we'll use a greedy approach: assign each item to lowest landed cost vendor
+
+    # First, calculate freight per SF for each vendor (assuming all items go to that vendor)
+    total_sf_all = sum(ip["qty"] for ip in item_prices.values())
+
+    # For each item, calculate landed cost from each vendor and pick the lowest
+    for sku, data in item_prices.items():
+        qty = data["qty"]
+        best_vendor = None
+        best_landed_cost = float("inf")
+        best_price = 0.0
+        best_freight_share = 0.0
+
+        for vendor, price in data["vendors"].items():
+            freight = freight_costs.get(vendor, 0.0)
+            if freight > 0 and total_sf_all > 0:
+                # Freight per SF = container freight / total SF in order
+                freight_per_sf = freight / total_sf_all
+            else:
+                # Freight baked into price or no freight
+                freight_per_sf = 0.0
+
+            landed_cost = price + freight_per_sf
+
+            if landed_cost < best_landed_cost:
+                best_landed_cost = landed_cost
+                best_vendor = vendor
+                best_price = price
+                best_freight_share = freight_per_sf
+
+        if best_vendor:
+            result["optimal_assignments"][sku] = best_vendor
+            result["item_costs"][sku] = {
+                "vendor": best_vendor,
+                "price": best_price,
+                "freight_share": best_freight_share,
+                "landed_cost": best_landed_cost,
+                "qty": qty,
+            }
+            result["total_cost"] += best_landed_cost * qty
+
+            # Check margin alert
+            margin_info = margins_data.get(sku, {})
+            if margin_info:
+                sale_price = margin_info.get("sale_price", 0)
+                current_margin = margin_info.get("margin", 0)
+
+                if sale_price > 0:
+                    # Current landed cost = sale_price * (1 - margin)
+                    current_landed_cost = sale_price * (1 - current_margin)
+
+                    # Calculate proposed margin
+                    proposed_margin = 1 - (best_landed_cost / sale_price) if sale_price > 0 else 0
+
+                    # Check if margin difference exceeds 5%
+                    margin_diff = proposed_margin - current_margin
+                    if abs(margin_diff) > 0.05:
+                        result["margin_alerts"].append({
+                            "sku": sku,
+                            "vendor": best_vendor,
+                            "sale_price": sale_price,
+                            "current_margin": current_margin,
+                            "proposed_margin": proposed_margin,
+                            "current_landed_cost": current_landed_cost,
+                            "proposed_landed_cost": best_landed_cost,
+                            "margin_diff": margin_diff,
+                        })
+        else:
+            result["errors"].append(f"No valid vendor found for {sku}")
+
+    return result
+
+
 def _load_veronica_payload() -> Dict:
     """Load flooring data filtered to only items in StripSKUList.xlsx"""
     original_data = _load_webapp_payload()
@@ -4954,6 +5158,14 @@ def render_webapp(data: Optional[Dict] = None) -> None:
             num_rows = len(optimizer_df)
             calculated_height = (num_rows * 35) + 35 + 10
 
+            # Load margins data for landed cost comparison
+            margins_data = _load_margins()
+
+            # Centered "Optimize" button above the data editor
+            col1, col2, col3 = st.columns([1, 1, 1])
+            with col2:
+                optimize_clicked = st.button("🔍 Optimize Vendor Mix", key="optimize_vendor_mix_btn", width='stretch')
+
             # Use data_editor for efficient tabular editing with auto-fit height
             edited_optimizer_df = st.data_editor(
                 optimizer_df,
@@ -4967,6 +5179,64 @@ def render_webapp(data: Optional[Dict] = None) -> None:
 
             # Store edited data in session state for downstream use
             st.session_state["optimizer_edited_data"] = edited_optimizer_df
+
+            # Run optimization when button clicked
+            if optimize_clicked:
+                optimization_result = _calculate_optimal_vendor_mix(
+                    edited_optimizer_df,
+                    margins_data,
+                    vendor_names,
+                )
+
+                # Display errors if any
+                if optimization_result["errors"]:
+                    for err in optimization_result["errors"]:
+                        st.error(f"⚠️ {err}")
+
+                # Display optimal vendor assignments
+                if optimization_result["optimal_assignments"]:
+                    st.markdown("### Optimal Vendor Mix")
+
+                    # Build results table
+                    results_data = []
+                    for sku, cost_info in optimization_result["item_costs"].items():
+                        results_data.append({
+                            "SKU": sku,
+                            "Recommended Vendor": cost_info["vendor"],
+                            "Material Price": f"${cost_info['price']:.2f}",
+                            "Freight/SF": f"${cost_info['freight_share']:.4f}" if cost_info['freight_share'] > 0 else "Included",
+                            "Landed Cost": f"${cost_info['landed_cost']:.2f}",
+                            "Qty (SF)": f"{cost_info['qty']:,.0f}",
+                            "Total Cost": f"${cost_info['landed_cost'] * cost_info['qty']:,.2f}",
+                        })
+
+                    if results_data:
+                        results_df = pd.DataFrame(results_data)
+                        st.dataframe(results_df, use_container_width=True, hide_index=True)
+
+                        # Show total cost
+                        st.markdown(f"**Total Order Cost: ${optimization_result['total_cost']:,.2f}**")
+
+                # Display margin alerts
+                if optimization_result["margin_alerts"]:
+                    st.markdown("### ⚠️ Margin Alerts")
+                    st.markdown("The following items have proposed landed costs that differ significantly from current inventory:")
+
+                    for alert in optimization_result["margin_alerts"]:
+                        diff_pct = alert["margin_diff"] * 100
+                        direction = "higher" if diff_pct > 0 else "lower"
+                        color = "green" if diff_pct > 0 else "red"
+
+                        st.markdown(f"""
+<div style="border: 2px solid {color}; padding: 10px; margin: 5px 0; border-radius: 5px;">
+<strong>{alert['sku']}</strong> from <strong>{alert['vendor']}</strong><br>
+Sale Price: ${alert['sale_price']:.2f}<br>
+Current Landed Cost: ${alert['current_landed_cost']:.2f} (Margin: {alert['current_margin']*100:.1f}%)<br>
+Proposed Landed Cost: ${alert['proposed_landed_cost']:.2f} (Margin: {alert['proposed_margin']*100:.1f}%)<br>
+<strong style="color: {color};">Margin is {abs(diff_pct):.1f}% {direction} than current inventory</strong>
+</div>
+""", unsafe_allow_html=True)
+
         else:
             st.markdown('<div class="queue-empty">No reorder quantities for this month.</div>', unsafe_allow_html=True)
 
