@@ -5195,7 +5195,7 @@ def render_webapp(data: Optional[Dict] = None) -> None:
 
                 # Display optimal vendor assignments
                 if optimization_result["optimal_assignments"]:
-                    st.markdown("### Optimal Vendor Mix")
+                    st.markdown('<h3 style="color: white;">Optimal Vendor Mix</h3>', unsafe_allow_html=True)
 
                     # Build results table
                     results_data = []
