@@ -121,6 +121,25 @@ SUNDRIES_JSON_PATH = Path(__file__).resolve().parent / "sundrieswebappJSON"
 STRIP_SKU_LIST_FILE = "StripSKUList.xlsx"
 UI_BUILD = "2026-01-14T15:10:00"
 
+# ============================================================
+# SKU CONSOLIDATION GROUPS
+# These SKUs represent the same product from different vendors
+# Combined view shows aggregated inventory with shortest lead time
+# ============================================================
+SKU_CONSOLIDATION_GROUPS = {
+    "RH112QOSNB*": ["RH112QOSNB-15", "RH112QOSNB-24"],
+    "RH112QRSNB*": ["RH112QRSNB-15", "RH112QRSNB-24"],
+    "RH2QOSNB*": ["RH2QOSNB", "RH2QOSNB-20", "RH2QOSNB-24"],
+    "RH2QRSNB*": ["RH2QRSNB", "RH2QRSNB-20", "RH2QRSNB-24"],
+}
+
+# Build reverse lookup: individual SKU -> consolidated SKU name
+SKU_TO_CONSOLIDATED = {}
+for consolidated_name, member_skus in SKU_CONSOLIDATION_GROUPS.items():
+    for sku in member_skus:
+        SKU_TO_CONSOLIDATED[sku.upper()] = consolidated_name
+
+
 def _load_credentials():
     print("  Loading credentials...")
     
@@ -2840,6 +2859,348 @@ def _apply_legend_padding(fig: go.Figure, series_count: int) -> go.Figure:
     )
     return fig
 
+
+# ============================================================
+# SKU CONSOLIDATION FUNCTIONS
+# ============================================================
+
+def _consolidate_inventory_metrics(metrics: List[Dict]) -> List[Dict]:
+    """
+    Consolidate inventory metrics for SKU groups.
+
+    For consolidated SKUs:
+    - available_sf: sum of all member SKUs
+    - on_po_sf: sum of all member SKUs
+    - backorder_sf: sum of all member SKUs
+    - inventory_position: sum of all member SKUs
+    - lead_time_days: minimum (shortest) of all member SKUs
+    - lead_time_mean_demand: sum of all member SKUs' forecasted demand
+    - safety_stock: sum of all member SKUs
+
+    Returns original metrics plus new consolidated rows.
+    Individual member SKUs are removed from the list.
+    """
+    if not metrics:
+        return metrics
+
+    # Build lookup by SKU
+    sku_to_row = {}
+    for row in metrics:
+        sku = str(row.get("sku", row.get("item_number", ""))).strip().upper()
+        if sku:
+            sku_to_row[sku] = row
+
+    # Track which SKUs are part of consolidation groups
+    consolidated_skus = set()
+    consolidated_rows = []
+
+    for consolidated_name, member_skus in SKU_CONSOLIDATION_GROUPS.items():
+        # Find all member rows that exist in the data
+        member_rows = []
+        for member_sku in member_skus:
+            member_sku_upper = member_sku.upper()
+            if member_sku_upper in sku_to_row:
+                member_rows.append(sku_to_row[member_sku_upper])
+                consolidated_skus.add(member_sku_upper)
+
+        if not member_rows:
+            continue
+
+        # Aggregate the metrics
+        total_available = sum(float(r.get("available_sf", 0) or 0) for r in member_rows)
+        total_on_po = sum(float(r.get("on_po_sf", 0) or 0) for r in member_rows)
+        total_backorder = sum(float(r.get("backorder_sf", 0) or 0) for r in member_rows)
+        total_inv_position = sum(float(r.get("inventory_position", 0) or 0) for r in member_rows)
+        min_lead_time = min(float(r.get("lead_time_days", 999) or 999) for r in member_rows)
+        total_lt_demand = sum(float(r.get("lead_time_mean_demand", 0) or 0) for r in member_rows)
+        total_safety_stock = sum(float(r.get("safety_stock", 0) or 0) for r in member_rows)
+
+        # Use first member's vendor info and description as base
+        base_row = member_rows[0]
+
+        consolidated_row = {
+            "sku": consolidated_name,
+            "item_number": consolidated_name,
+            "description": base_row.get("description", ""),
+            "vendor_name": base_row.get("vendor_name", ""),
+            "vendor_number": base_row.get("vendor_number", ""),
+            "collection": base_row.get("collection", ""),
+            "available_sf": total_available,
+            "on_po_sf": total_on_po,
+            "backorder_sf": total_backorder,
+            "inventory_position": total_inv_position,
+            "lead_time_days": min_lead_time if min_lead_time < 999 else 0,
+            "lead_time_mean_demand": total_lt_demand,
+            "safety_stock": total_safety_stock,
+            "_is_consolidated": True,
+            "_member_skus": member_skus,
+        }
+        consolidated_rows.append(consolidated_row)
+
+    # Build result: non-consolidated SKUs + consolidated rows
+    result = []
+    for row in metrics:
+        sku = str(row.get("sku", row.get("item_number", ""))).strip().upper()
+        if sku not in consolidated_skus:
+            result.append(row)
+
+    result.extend(consolidated_rows)
+    return result
+
+
+def _consolidate_monthly_projections(monthly_rows: List[Dict]) -> List[Dict]:
+    """
+    Consolidate monthly projection rows for SKU groups.
+
+    For each month:
+    - Forecast: sum of all member SKUs
+    - Beginning Inventory: sum of all member SKUs
+    - Ending Inventory: sum of all member SKUs
+    - Order Quantity: sum of all member SKUs
+
+    Returns original rows plus new consolidated rows.
+    Individual member SKUs are removed from the list.
+    """
+    if not monthly_rows:
+        return monthly_rows
+
+    # Build lookup by SKU + Month
+    sku_month_rows = {}
+    for row in monthly_rows:
+        sku = str(row.get("SKU", row.get("sku", ""))).strip().upper()
+        month = row.get("Month", "")
+        key = (sku, str(month))
+        if key not in sku_month_rows:
+            sku_month_rows[key] = []
+        sku_month_rows[key].append(row)
+
+    # Get unique months
+    all_months = set()
+    for row in monthly_rows:
+        month = row.get("Month", "")
+        if month:
+            all_months.add(str(month))
+
+    # Track which SKUs are part of consolidation groups
+    consolidated_skus = set()
+    consolidated_rows = []
+
+    for consolidated_name, member_skus in SKU_CONSOLIDATION_GROUPS.items():
+        member_skus_upper = [s.upper() for s in member_skus]
+
+        # Check if any member exists in data
+        has_members = any(
+            (sku, month) in sku_month_rows
+            for sku in member_skus_upper
+            for month in all_months
+        )
+
+        if not has_members:
+            continue
+
+        for sku in member_skus_upper:
+            consolidated_skus.add(sku)
+
+        # For each month, aggregate the member SKUs
+        for month in all_months:
+            member_month_rows = []
+            for member_sku in member_skus_upper:
+                key = (member_sku, month)
+                if key in sku_month_rows:
+                    member_month_rows.extend(sku_month_rows[key])
+
+            if not member_month_rows:
+                continue
+
+            # Aggregate numeric columns
+            total_forecast = sum(float(r.get("Forecast", 0) or 0) for r in member_month_rows)
+            total_begin_inv = sum(float(r.get("Beginning Inventory", 0) or 0) for r in member_month_rows)
+            total_end_inv = sum(float(r.get("Ending Inventory", 0) or 0) for r in member_month_rows)
+            total_order_qty = sum(float(r.get("Order Quantity", 0) or 0) for r in member_month_rows)
+
+            # Use first member's metadata as base
+            base_row = member_month_rows[0]
+
+            consolidated_row = {
+                "SKU": consolidated_name,
+                "sku": consolidated_name,
+                "Month": base_row.get("Month"),
+                "Row_Type": base_row.get("Row_Type", "FCST"),
+                "Forecast": total_forecast,
+                "Beginning Inventory": total_begin_inv,
+                "Ending Inventory": total_end_inv,
+                "Order Quantity": total_order_qty,
+                "vendor_name": base_row.get("vendor_name", ""),
+                "collection": base_row.get("collection", ""),
+                "_is_consolidated": True,
+            }
+            consolidated_rows.append(consolidated_row)
+
+    # Build result: non-consolidated SKU rows + consolidated rows
+    result = []
+    for row in monthly_rows:
+        sku = str(row.get("SKU", row.get("sku", ""))).strip().upper()
+        if sku not in consolidated_skus:
+            result.append(row)
+
+    result.extend(consolidated_rows)
+    return result
+
+
+def _consolidate_arrivals(arrivals_rows: List[Dict]) -> List[Dict]:
+    """
+    Consolidate arrival rows for SKU groups.
+
+    Arrivals are shown with consolidated SKU name but individual PO details preserved.
+    """
+    if not arrivals_rows:
+        return arrivals_rows
+
+    result = []
+    for row in arrivals_rows:
+        sku = str(row.get("ITEM_NUMBER", row.get("item_number", ""))).strip().upper()
+
+        if sku in SKU_TO_CONSOLIDATED:
+            # Create a copy with consolidated SKU name
+            new_row = dict(row)
+            consolidated_name = SKU_TO_CONSOLIDATED[sku]
+            new_row["ITEM_NUMBER"] = consolidated_name
+            new_row["item_number"] = consolidated_name
+            new_row["_original_sku"] = sku
+            result.append(new_row)
+        else:
+            result.append(row)
+
+    return result
+
+
+def _consolidate_items_list(items: List[Dict]) -> List[Dict]:
+    """
+    Consolidate the items list for sidebar/dropdowns.
+
+    Creates consolidated item entries while removing individual member SKUs.
+    """
+    if not items:
+        return items
+
+    # Build lookup by SKU
+    sku_to_item = {}
+    for item in items:
+        sku = str(item.get("item_number", "")).strip().upper()
+        if sku:
+            sku_to_item[sku] = item
+
+    # Track which SKUs are part of consolidation groups
+    consolidated_skus = set()
+    consolidated_items = []
+
+    for consolidated_name, member_skus in SKU_CONSOLIDATION_GROUPS.items():
+        # Find all member items that exist
+        member_items = []
+        for member_sku in member_skus:
+            member_sku_upper = member_sku.upper()
+            if member_sku_upper in sku_to_item:
+                member_items.append(sku_to_item[member_sku_upper])
+                consolidated_skus.add(member_sku_upper)
+
+        if not member_items:
+            continue
+
+        # Aggregate inventory metrics
+        total_available = sum(float(i.get("available_sf", 0) or 0) for i in member_items)
+        total_on_po = sum(float(i.get("on_po_sf", 0) or 0) for i in member_items)
+        total_backorder = sum(float(i.get("backorder_sf", 0) or 0) for i in member_items)
+        total_inv_position = sum(float(i.get("inventory_position", 0) or 0) for i in member_items)
+        min_lead_time = min(float(i.get("lead_time_days", 999) or 999) for i in member_items)
+
+        # Aggregate forecast series
+        combined_series = _consolidate_forecast_series([i.get("forecast_series", {}) for i in member_items])
+
+        # Use first member's metadata as base
+        base_item = member_items[0]
+
+        consolidated_item = {
+            "item_number": consolidated_name,
+            "description": base_item.get("description", ""),
+            "vendor_name": base_item.get("vendor_name", ""),
+            "vendor_number": base_item.get("vendor_number", ""),
+            "collection": base_item.get("collection", ""),
+            "available_sf": total_available,
+            "on_po_sf": total_on_po,
+            "backorder_sf": total_backorder,
+            "inventory_position": total_inv_position,
+            "lead_time_days": min_lead_time if min_lead_time < 999 else 0,
+            "forecast_series": combined_series,
+            "_is_consolidated": True,
+            "_member_skus": member_skus,
+        }
+        consolidated_items.append(consolidated_item)
+
+    # Build result: non-consolidated items + consolidated items
+    result = []
+    for item in items:
+        sku = str(item.get("item_number", "")).strip().upper()
+        if sku not in consolidated_skus:
+            result.append(item)
+
+    result.extend(consolidated_items)
+    return result
+
+
+def _consolidate_forecast_series(series_list: List[Dict]) -> Dict:
+    """
+    Combine multiple forecast series into one by summing values at each date.
+
+    Returns a combined series with summed historical and forecast values.
+    """
+    if not series_list:
+        return {}
+
+    # Filter out empty series
+    valid_series = [s for s in series_list if s and (s.get("hist_y") or s.get("fc_y"))]
+
+    if not valid_series:
+        return {}
+
+    if len(valid_series) == 1:
+        return valid_series[0]
+
+    # Combine historical data
+    hist_combined = {}
+    for series in valid_series:
+        hist_x = series.get("hist_x", [])
+        hist_y = series.get("hist_y", [])
+        for x, y in zip(hist_x or [], hist_y or []):
+            if x not in hist_combined:
+                hist_combined[x] = 0.0
+            hist_combined[x] += float(y or 0)
+
+    # Combine forecast data
+    fc_combined = {}
+    for series in valid_series:
+        fc_x = series.get("fc_x", series.get("x", []))
+        fc_y = series.get("fc_y", series.get("y", []))
+        for x, y in zip(fc_x or [], fc_y or []):
+            if x not in fc_combined:
+                fc_combined[x] = 0.0
+            fc_combined[x] += float(y or 0)
+
+    # Sort and build result
+    result = {}
+
+    if hist_combined:
+        sorted_hist = sorted(hist_combined.items())
+        result["hist_x"] = [x for x, y in sorted_hist]
+        result["hist_y"] = [y for x, y in sorted_hist]
+
+    if fc_combined:
+        sorted_fc = sorted(fc_combined.items())
+        result["fc_x"] = [x for x, y in sorted_fc]
+        result["fc_y"] = [y for x, y in sorted_fc]
+
+    return result
+
+
 def _build_queue_df_from_inventory(metrics: List[Dict]) -> pd.DataFrame:
     if not metrics:
         return pd.DataFrame()
@@ -4039,6 +4400,9 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     if not items:
         items = _demo_webapp_payload().get("items", [])
 
+    # Apply SKU consolidation to items list
+    items = _consolidate_items_list(items)
+
     vendor_names = sorted({str(item.get("vendor_name", "")).strip() for item in items if item.get("vendor_name")})
     if not vendor_names:
         vendor_names = ["--"]
@@ -4141,6 +4505,8 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     )
 
     metrics_rows = data.get("Inventory_Metrics", [])
+    # Apply SKU consolidation to inventory metrics
+    metrics_rows = _consolidate_inventory_metrics(metrics_rows)
     if selected_collection != "All Collections":
         metrics_rows = [
             row for row in metrics_rows if str(row.get("collection", "")).strip() == selected_collection
