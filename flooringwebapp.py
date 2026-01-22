@@ -3925,13 +3925,13 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     st.markdown('<div class="toggle-wrap toggle-wrap--spaced">', unsafe_allow_html=True)
     switch_cols = st.columns([1, 1, 1], gap="medium")
     with switch_cols[0]:
-        if st.button("Ilsy", use_container_width=True):
+        if st.button("Ilsy", width='stretch'):
             st.session_state.active_view = "Ilsy"
     with switch_cols[1]:
-        if st.button("Veronica", use_container_width=True):
+        if st.button("Veronica", width='stretch'):
             st.session_state.active_view = "Veronica"
     with switch_cols[2]:
-        if st.button("Carlos", use_container_width=True):
+        if st.button("Carlos", width='stretch'):
             st.session_state.active_view = "Carlos"
     st.markdown("</div>", unsafe_allow_html=True)
 
@@ -4958,7 +4958,7 @@ def render_webapp(data: Optional[Dict] = None) -> None:
             edited_optimizer_df = st.data_editor(
                 optimizer_df,
                 column_config=column_config,
-                use_container_width=True,
+                width='stretch',
                 hide_index=True,
                 num_rows="fixed",
                 key="optimizer_data_editor",
