@@ -4487,8 +4487,8 @@ def render_webapp(data: Optional[Dict] = None) -> None:
             # Configure column types for data_editor
             column_config = {
                 "Include": st.column_config.CheckboxColumn("Include", default=False, width="small"),
-                "SKU": st.column_config.TextColumn("SKU", width="medium", disabled=True),
-                "Description": st.column_config.TextColumn("Description", width="large", disabled=True),
+                "SKU": st.column_config.TextColumn("SKU", width="small", disabled=True),
+                "Description": st.column_config.TextColumn("Description", width="medium", disabled=True),
                 "Qty Needed": st.column_config.TextColumn("Qty Needed", width="small", disabled=True),
             }
             # Add vendor column configs - ensure we have valid options for dropdown
@@ -4497,11 +4497,11 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                 column_config[f"Vendor {idx}"] = st.column_config.SelectboxColumn(
                     f"Vendor {idx}",
                     options=dropdown_options,
-                    width="small",
+                    width="medium",
                     required=False,
                 )
-                column_config[f"Price {idx}"] = st.column_config.NumberColumn(f"Price {idx}", width="small", format="%.2f")
-                column_config[f"Freight {idx}"] = st.column_config.NumberColumn(f"Freight {idx}", width="small", format="%.2f")
+                column_config[f"Price {idx}"] = st.column_config.NumberColumn(f"Price {idx}", width="medium", format="%.2f")
+                column_config[f"Freight {idx}"] = st.column_config.NumberColumn(f"Freight {idx}", width="medium", format="%.2f")
                 column_config[f"Fees {idx}"] = st.column_config.NumberColumn(f"Fees {idx}", width="small", format="%.2f")
 
             # Use data_editor for efficient tabular editing
