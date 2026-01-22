@@ -4909,6 +4909,9 @@ def render_webapp(data: Optional[Dict] = None) -> None:
             # Build DataFrame for data_editor - much more efficient than individual widgets
             optimizer_df_data = []
 
+            # Named vendor columns
+            vendor_names = ["Indiana", "Dayspring", "Mullican", "Macon", "Anthony", "Orillia", "Lebanon", "Merrick"]
+
             # First row is always "Freight" (for freight cost entry)
             freight_row = {
                 "Include": False,
@@ -4916,9 +4919,8 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                 "Description": "",
                 "Qty Needed": "",
             }
-            for idx in range(1, 10):
-                freight_row[f"Vendor {idx}"] = ""
-                freight_row[f"Price {idx}"] = ""
+            for vname in vendor_names:
+                freight_row[vname] = ""
             optimizer_df_data.append(freight_row)
 
             # Add item rows
@@ -4929,10 +4931,9 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                     "Description": row["description"],
                     "Qty Needed": row["quantity"],
                 }
-                # Add vendor columns (Vendor and Price only, no Freight/Fees)
-                for idx in range(1, 10):
-                    row_data[f"Vendor {idx}"] = ""
-                    row_data[f"Price {idx}"] = ""
+                # Add vendor columns (named vendors)
+                for vname in vendor_names:
+                    row_data[vname] = ""
                 optimizer_df_data.append(row_data)
 
             optimizer_df = pd.DataFrame(optimizer_df_data)
@@ -4944,16 +4945,9 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                 "Description": st.column_config.TextColumn("Description", width="large", disabled=True),
                 "Qty Needed": st.column_config.TextColumn("Qty Needed", width="small", disabled=True),
             }
-            # Add vendor column configs - ensure we have valid options for dropdown
-            dropdown_options = vendor_options if vendor_options and vendor_options != [""] else ["No vendors available"]
-            for idx in range(1, 10):
-                column_config[f"Vendor {idx}"] = st.column_config.SelectboxColumn(
-                    f"Vendor {idx}",
-                    options=dropdown_options,
-                    width="medium",
-                    required=False,
-                )
-                column_config[f"Price {idx}"] = st.column_config.NumberColumn(f"Price {idx}", width="small", format="%.2f")
+            # Add vendor column configs with named columns
+            for vname in vendor_names:
+                column_config[vname] = st.column_config.NumberColumn(vname, width="small", format="%.2f")
 
             # Calculate height based on number of rows (35px per row + 35px header + 10px padding)
             # +1 for the Freight row
