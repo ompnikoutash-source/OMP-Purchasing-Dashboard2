@@ -264,7 +264,7 @@ def load_trailing_12m_volume(conn, sku_list=None) -> pd.DataFrame:
     sql = f"""
     SELECT
         TRIM(L.SLITEM) AS ITEM_NUMBER,
-        SUM(COALESCE(L.SLBLUS,0)) AS VOL_12M
+        SUM(COALESCE(L.SLBLUO,0)) AS VOL_12M
     FROM GSFL2K.SHLINE L
     JOIN GSFL2K.SHHEAD H
       ON H.SHCO = L.SLCO AND H.SHLOC = L.SLLOC AND H.SHORD# = L.SLORD# AND H.SHINV# = L.SLINV#
@@ -380,7 +380,7 @@ def get_active_skus(conn, single_sku=None, sku_list=None):
           JOIN GSFL2K.SHHEAD H
             ON H.SHCO = L.SLCO AND H.SHLOC = L.SLLOC AND H.SHORD# = L.SLORD# AND H.SHINV# = L.SLINV#
           WHERE L.SLUM2 LIKE '%SF%'
-            AND COALESCE(L.SLBLUS,0) > 0
+            AND COALESCE(L.SLBLUO,0) > 0
             AND TRIM(L.SLITEM) IN ({sku_list_str})
           GROUP BY TRIM(L.SLITEM)
         ),
@@ -451,7 +451,7 @@ def get_active_skus(conn, single_sku=None, sku_list=None):
           FROM GSFL2K.SHLINE L
           JOIN GSFL2K.SHHEAD H ON H.SHCO = L.SLCO AND H.SHLOC = L.SLLOC AND H.SHORD# = L.SLORD# AND H.SHINV# = L.SLINV#
           WHERE L.SLUM2 LIKE '%SF%'
-            AND COALESCE(L.SLBLUS,0) > 0
+            AND COALESCE(L.SLBLUO,0) > 0
           GROUP BY TRIM(L.SLITEM)
         ),
         FIRSTREC AS (
@@ -542,7 +542,7 @@ def load_sales_history(conn, sku, start_date):
     hist_end_dt = first_of_month + pd.offsets.MonthBegin(1)
     
     sql = """
-    SELECT H.SHIDAT AS SALES_DATE, SUM(COALESCE(L.SLBLUS,0)) AS QTY_SOLD_SF
+    SELECT H.SHIDAT AS SALES_DATE, SUM(COALESCE(L.SLBLUO,0)) AS QTY_SOLD_SF
     FROM GSFL2K.SHLINE L
     JOIN GSFL2K.SHHEAD H ON H.SHCO = L.SLCO AND H.SHLOC = L.SLLOC AND H.SHORD# = L.SLORD# AND H.SHINV# = L.SLINV#
     WHERE L.SLUM2 LIKE '%SF%'
