@@ -4945,7 +4945,11 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                 column_config[f"Freight {idx}"] = st.column_config.NumberColumn(f"Freight {idx}", width="small", format="%.2f")
                 column_config[f"Fees {idx}"] = st.column_config.NumberColumn(f"Fees {idx}", width="small", format="%.2f")
 
-            # Use data_editor for efficient tabular editing
+            # Calculate height based on number of rows (35px per row + 35px header + 10px padding)
+            num_rows = len(optimizer_df)
+            calculated_height = (num_rows * 35) + 35 + 10
+
+            # Use data_editor for efficient tabular editing with auto-fit height
             edited_optimizer_df = st.data_editor(
                 optimizer_df,
                 column_config=column_config,
@@ -4953,6 +4957,7 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                 hide_index=True,
                 num_rows="fixed",
                 key="optimizer_data_editor",
+                height=calculated_height,
             )
 
             # Store edited data in session state for downstream use
