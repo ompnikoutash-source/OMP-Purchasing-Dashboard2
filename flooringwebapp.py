@@ -2739,7 +2739,7 @@ def _build_forecast_chart(series: Dict) -> go.Figure:
         font=dict(color="rgba(255,255,255,0.88)", family="Manrope, sans-serif"),
         showlegend=bool(hist_vals),
         legend=dict(font=dict(color="#ffffff"), orientation="h", x=0.5, y=-0.05, bgcolor="rgba(0,0,0,0)", xanchor="center", yanchor="top"),
-        height=1440,
+        height=1008,
     )
     fig.update_xaxes(
         showgrid=True,
@@ -2806,7 +2806,7 @@ def _build_forecast_chart_multi(series_list: List[Dict]) -> go.Figure:
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="rgba(255,255,255,0.88)", family="Manrope, sans-serif"),
         showlegend=True,
-        height=1440,
+        height=1008,
         legend=dict(orientation="h", x=0.5, y=-0.05, xanchor="center", yanchor="top", font=dict(color="#ffffff")),
     )
     fig.update_xaxes(
@@ -2827,7 +2827,7 @@ def _build_forecast_chart_multi(series_list: List[Dict]) -> go.Figure:
 def _apply_legend_padding(fig: go.Figure, series_count: int) -> go.Figure:
     # Fixed height graph - legend will be in a scrollable container via CSS
     fig.update_layout(
-        height=1440,
+        height=1008,
         margin=dict(l=40, r=24, t=40, b=80),
         legend=dict(
             orientation="h",
@@ -4269,9 +4269,9 @@ def render_webapp(data: Optional[Dict] = None) -> None:
 
     fig_html = forecast_fig.to_html(include_plotlyjs="cdn", full_html=False)
     demand_html = _render_demand_graph_html(forecast_fig)
-    # Fixed height for demand graph - 1560px total (1440 graph + 120 for legend area)
+    # Fixed height for demand graph - 1128px total (1008 graph + 120 for legend area)
     with st.expander("DEMAND", expanded=True):
-        components.html(demand_html, height=1560, scrolling=False)
+        components.html(demand_html, height=1128, scrolling=False)
 
     arrivals_df_all = pd.DataFrame(arrivals_rows)
     arrivals_all_out = _prepare_arrivals_df(arrivals_df_all, selected_vendor, selected_collection)
