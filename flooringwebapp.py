@@ -3989,6 +3989,32 @@ def render_webapp(data: Optional[Dict] = None) -> None:
           color: #000000 !important;
         }
 
+        /* Expander styling to match card headers */
+        div[data-testid="stExpander"] {
+          background: var(--panel);
+          border-radius: 18px;
+          border: 1px solid var(--panel-border);
+          box-shadow: var(--shadow-soft);
+          margin-bottom: 14px;
+        }
+
+        div[data-testid="stExpander"] summary {
+          font-size: 0.72rem;
+          letter-spacing: 0.12em;
+          color: #ffffff;
+          text-transform: uppercase;
+          font-weight: 700;
+          padding: 14px 16px;
+        }
+
+        div[data-testid="stExpander"] summary:hover {
+          color: #aaaaaa;
+        }
+
+        div[data-testid="stExpander"] > div[data-testid="stExpanderDetails"] {
+          padding: 0 16px 14px 16px;
+        }
+
         </style>
         """,
         unsafe_allow_html=True,
@@ -4232,7 +4258,8 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     fig_html = forecast_fig.to_html(include_plotlyjs="cdn", full_html=False)
     demand_html = _render_demand_graph_html(forecast_fig)
     fig_height = int(getattr(forecast_fig.layout, "height", 360) or 360)
-    components.html(demand_html, height=fig_height + 120, scrolling=False)
+    with st.expander("DEMAND", expanded=True):
+        components.html(demand_html, height=fig_height + 120, scrolling=False)
 
     arrivals_df_all = pd.DataFrame(arrivals_rows)
     arrivals_all_out = _prepare_arrivals_df(arrivals_df_all, selected_vendor, selected_collection)
@@ -4241,8 +4268,10 @@ def render_webapp(data: Optional[Dict] = None) -> None:
             arrivals_all_out["Item#"].astype(str).str.strip()
             == str(selected_item.get("item_number", "")).strip()
         ]
-    st.markdown(_render_arrivals_table_html(arrivals_all_out), unsafe_allow_html=True)
-    st.markdown(_render_queue_table_html(queue_df), unsafe_allow_html=True)
+    with st.expander("ARRIVALS", expanded=True):
+        st.markdown(_render_arrivals_table_html(arrivals_all_out), unsafe_allow_html=True)
+    with st.expander("INVENTORY AT A GLANCE", expanded=True):
+        st.markdown(_render_queue_table_html(queue_df), unsafe_allow_html=True)
 
     # Reorder Now section (current month, Order Quantity > 0)
     reorder_now_df = pd.DataFrame()
@@ -4371,82 +4400,83 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                         [reorder_now_df, pd.DataFrame([total_row])], ignore_index=True
                     )
     month_label = pd.Timestamp.today().strftime("%B %Y")
-    st.markdown(_render_reorder_now_table_html(reorder_now_df, month_label), unsafe_allow_html=True)
+    with st.expander(f"REORDER NOW: {month_label}", expanded=True):
+        st.markdown(_render_reorder_now_table_html(reorder_now_df, month_label), unsafe_allow_html=True)
 
-    # Export Reorder Now to Excel button
-    if not reorder_now_df.empty:
-        from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
-        from openpyxl.utils import get_column_letter
+        # Export Reorder Now to Excel button
+        if not reorder_now_df.empty:
+            from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
+            from openpyxl.utils import get_column_letter
 
-        # Create Excel file in memory
-        excel_buffer = io.BytesIO()
-        # Remove the Total row for export
-        export_df = reorder_now_df[reorder_now_df["Item Number"] != "Total"].copy()
+            # Create Excel file in memory
+            excel_buffer = io.BytesIO()
+            # Remove the Total row for export
+            export_df = reorder_now_df[reorder_now_df["Item Number"] != "Total"].copy()
 
-        # Round up Quantity Needed to next decimal point (1 decimal place)
-        if "Quantity Needed" in export_df.columns:
-            export_df["Quantity Needed"] = export_df["Quantity Needed"].apply(
-                lambda x: math.ceil(x * 10) / 10 if pd.notna(x) else x
-            )
+            # Round up Quantity Needed to next decimal point (1 decimal place)
+            if "Quantity Needed" in export_df.columns:
+                export_df["Quantity Needed"] = export_df["Quantity Needed"].apply(
+                    lambda x: math.ceil(x * 10) / 10 if pd.notna(x) else x
+                )
 
-        with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
-            export_df.to_excel(writer, sheet_name='Reorder Now', index=False)
-            workbook = writer.book
-            worksheet = writer.sheets['Reorder Now']
+            with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
+                export_df.to_excel(writer, sheet_name='Reorder Now', index=False)
+                workbook = writer.book
+                worksheet = writer.sheets['Reorder Now']
 
-            # Define column widths
-            col_widths = {
-                "Item Number": 20,
-                "Thickness": 10,
-                "Width": 8,
-                "Species": 15,
-                "Grade/Cut": 15,
-                "Edge": 12,
-                "Bundles": 10,
-                "Quantity Needed": 20,
-                "Price": 8,
-                "Freight": 8,
-                "Additional Charges": 18,
-            }
+                # Define column widths
+                col_widths = {
+                    "Item Number": 20,
+                    "Thickness": 10,
+                    "Width": 8,
+                    "Species": 15,
+                    "Grade/Cut": 15,
+                    "Edge": 12,
+                    "Bundles": 10,
+                    "Quantity Needed": 20,
+                    "Price": 8,
+                    "Freight": 8,
+                    "Additional Charges": 18,
+                }
 
-            # Define styles
-            thin_border = Border(
-                left=Side(style='thin'),
-                right=Side(style='thin'),
-                top=Side(style='thin'),
-                bottom=Side(style='thin')
-            )
-            # Header: dark blue text, light blue fill (60% lighter)
-            header_font = Font(bold=True, color="1F4E79")  # Dark blue text
-            header_fill = PatternFill(start_color="BDD7EE", end_color="BDD7EE", fill_type="solid")  # Light blue fill
+                # Define styles
+                thin_border = Border(
+                    left=Side(style='thin'),
+                    right=Side(style='thin'),
+                    top=Side(style='thin'),
+                    bottom=Side(style='thin')
+                )
+                # Header: dark blue text, light blue fill (60% lighter)
+                header_font = Font(bold=True, color="1F4E79")  # Dark blue text
+                header_fill = PatternFill(start_color="BDD7EE", end_color="BDD7EE", fill_type="solid")  # Light blue fill
 
-            # Apply column widths
-            for col_idx, col_name in enumerate(export_df.columns, start=1):
-                col_letter = get_column_letter(col_idx)
-                width = col_widths.get(col_name, 12)
-                worksheet.column_dimensions[col_letter].width = width
+                # Apply column widths
+                for col_idx, col_name in enumerate(export_df.columns, start=1):
+                    col_letter = get_column_letter(col_idx)
+                    width = col_widths.get(col_name, 12)
+                    worksheet.column_dimensions[col_letter].width = width
 
-            # Apply header formatting (row 1)
-            for col_idx in range(1, len(export_df.columns) + 1):
-                cell = worksheet.cell(row=1, column=col_idx)
-                cell.font = header_font
-                cell.fill = header_fill
-                cell.border = thin_border
-
-            # Apply borders to all data cells
-            for row_idx in range(2, len(export_df) + 2):
+                # Apply header formatting (row 1)
                 for col_idx in range(1, len(export_df.columns) + 1):
-                    cell = worksheet.cell(row=row_idx, column=col_idx)
+                    cell = worksheet.cell(row=1, column=col_idx)
+                    cell.font = header_font
+                    cell.fill = header_fill
                     cell.border = thin_border
 
-        excel_buffer.seek(0)
-        file_date = pd.Timestamp.today().strftime("%Y-%m-%d")
-        st.download_button(
-            label="Export Reorder Now to Excel",
-            data=excel_buffer,
-            file_name=f"reorder_now_{file_date}.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        )
+                # Apply borders to all data cells
+                for row_idx in range(2, len(export_df) + 2):
+                    for col_idx in range(1, len(export_df.columns) + 1):
+                        cell = worksheet.cell(row=row_idx, column=col_idx)
+                        cell.border = thin_border
+
+            excel_buffer.seek(0)
+            file_date = pd.Timestamp.today().strftime("%Y-%m-%d")
+            st.download_button(
+                label="Export Reorder Now to Excel",
+                data=excel_buffer,
+                file_name=f"reorder_now_{file_date}.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            )
 
     vendor_options = _load_strip_vendor_list()
     if not vendor_options:
@@ -4494,10 +4524,8 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                 }
             )
 
-    optimizer_container = st.container()
-    with optimizer_container:
+    with st.expander("OPTIMIZER", expanded=True):
         st.markdown('<div class="optimizer-anchor"></div>', unsafe_allow_html=True)
-        st.markdown('<div class="queue-header">OPTIMIZER</div>', unsafe_allow_html=True)
 
         if optimizer_rows:
             # Build DataFrame for data_editor - much more efficient than individual widgets
@@ -4557,40 +4585,41 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     # Monthly detail table under Purchasing Queue
     detail_items = [selected_item] if selected_item else vendor_items
     if detail_items:
-        df_monthly_all = pd.DataFrame(monthly_rows)
-        for item in detail_items:
-            if not item:
-                continue
-            sku_label = item.get("item_number", "")
-            desc_label = item.get("description", "")
-            df_monthly = df_monthly_all.copy()
-            if not df_monthly.empty and "SKU" in df_monthly.columns:
-                df_monthly = df_monthly[df_monthly["SKU"].astype(str) == str(sku_label)]
-            # Filter out HIST rows - only show CATCHUP and FCST rows with forecast data
-            if not df_monthly.empty and "Row_Type" in df_monthly.columns:
-                df_monthly = df_monthly[df_monthly["Row_Type"].astype(str).str.upper().isin(["FCST", "CATCHUP"])]
-            if not df_monthly.empty and "Month" in df_monthly.columns:
-                df_monthly["Month"] = pd.to_datetime(df_monthly["Month"], errors="coerce")
-                df_monthly = df_monthly.sort_values("Month")
-                df_monthly["Month"] = df_monthly["Month"].dt.strftime("%m/%d/%Y")
-            col_map = {
-                "Month": "Month",
-                "Beginning Inventory": "Beginning Inventory",
-                "Forecast": "Forecast",
-                "Order Quantity": "Reorder Quantity",
-                "Ending Inventory": "Ending Inventory",
-            }
-            existing = [col for col in col_map if col in df_monthly.columns]
-            if existing:
-                out = df_monthly[existing].rename(columns=col_map)
-                if "Beginning Inventory" in out.columns:
-                    out["Beginning Inventory"] = pd.to_numeric(out["Beginning Inventory"], errors="coerce").fillna(0.0)
-                if "Ending Inventory" in out.columns:
-                    out["Ending Inventory"] = pd.to_numeric(out["Ending Inventory"], errors="coerce").fillna(0.0)
-                st.markdown(
-                    _render_reorder_table_html(out, f"Reorder Schedule:   {sku_label} {desc_label}"),
-                    unsafe_allow_html=True,
-                )
+        with st.expander("REORDER SCHEDULE", expanded=True):
+            df_monthly_all = pd.DataFrame(monthly_rows)
+            for item in detail_items:
+                if not item:
+                    continue
+                sku_label = item.get("item_number", "")
+                desc_label = item.get("description", "")
+                df_monthly = df_monthly_all.copy()
+                if not df_monthly.empty and "SKU" in df_monthly.columns:
+                    df_monthly = df_monthly[df_monthly["SKU"].astype(str) == str(sku_label)]
+                # Filter out HIST rows - only show CATCHUP and FCST rows with forecast data
+                if not df_monthly.empty and "Row_Type" in df_monthly.columns:
+                    df_monthly = df_monthly[df_monthly["Row_Type"].astype(str).str.upper().isin(["FCST", "CATCHUP"])]
+                if not df_monthly.empty and "Month" in df_monthly.columns:
+                    df_monthly["Month"] = pd.to_datetime(df_monthly["Month"], errors="coerce")
+                    df_monthly = df_monthly.sort_values("Month")
+                    df_monthly["Month"] = df_monthly["Month"].dt.strftime("%m/%d/%Y")
+                col_map = {
+                    "Month": "Month",
+                    "Beginning Inventory": "Beginning Inventory",
+                    "Forecast": "Forecast",
+                    "Order Quantity": "Reorder Quantity",
+                    "Ending Inventory": "Ending Inventory",
+                }
+                existing = [col for col in col_map if col in df_monthly.columns]
+                if existing:
+                    out = df_monthly[existing].rename(columns=col_map)
+                    if "Beginning Inventory" in out.columns:
+                        out["Beginning Inventory"] = pd.to_numeric(out["Beginning Inventory"], errors="coerce").fillna(0.0)
+                    if "Ending Inventory" in out.columns:
+                        out["Ending Inventory"] = pd.to_numeric(out["Ending Inventory"], errors="coerce").fillna(0.0)
+                    st.markdown(
+                        _render_reorder_table_html(out, f"Reorder Schedule:   {sku_label} {desc_label}"),
+                        unsafe_allow_html=True,
+                    )
 
     # Removed metric/segmentation sections below Purchasing Queue per request.
 if __name__ == "__main__":
