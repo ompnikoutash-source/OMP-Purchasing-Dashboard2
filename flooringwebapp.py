@@ -3954,24 +3954,39 @@ def render_webapp(data: Optional[Dict] = None) -> None:
           padding-right: 0;
         }
 
-        /* Data editor dropdown text color fix */
-        div[data-testid="stDataEditor"] select,
-        div[data-testid="stDataEditor"] option,
-        div[data-testid="stDataEditor"] [role="listbox"],
-        div[data-testid="stDataEditor"] [role="option"],
-        div[data-testid="stDataEditor"] .glideDataEditor select,
-        div[data-testid="stDataEditor"] .gdg-style select {
+        /* Data editor dropdown text color fix - Glide Data Grid */
+        #portal,
+        #portal div,
+        #portal span,
+        .dvn-scroller,
+        .dvn-scroller div,
+        .dvn-scroller span,
+        .click-outside-ignore,
+        .click-outside-ignore div,
+        .click-outside-ignore span,
+        [data-testid="portal"],
+        [data-testid="portal"] div,
+        [data-testid="portal"] span {
+          color: #000000 !important;
+        }
+
+        /* Dropdown menu container */
+        #portal .dvn-scroller {
+          background-color: #ffffff !important;
+        }
+
+        /* Individual dropdown options */
+        .dvn-scroller > div,
+        #portal > div > div {
           color: #000000 !important;
           background-color: #ffffff !important;
         }
 
-        /* Target the cell editor dropdown in data_editor */
-        .gdg-style [data-testid="portal"] select,
-        .gdg-style [data-testid="portal"] option,
-        [data-testid="stDataEditorCellEditingPortal"] select,
-        [data-testid="stDataEditorCellEditingPortal"] option {
+        /* Hover state for dropdown options */
+        .dvn-scroller > div:hover,
+        #portal > div > div:hover {
+          background-color: #e0e0e0 !important;
           color: #000000 !important;
-          background-color: #ffffff !important;
         }
 
         </style>
