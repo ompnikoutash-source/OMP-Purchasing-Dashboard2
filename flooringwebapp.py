@@ -3954,6 +3954,26 @@ def render_webapp(data: Optional[Dict] = None) -> None:
           padding-right: 0;
         }
 
+        /* Data editor dropdown text color fix */
+        div[data-testid="stDataEditor"] select,
+        div[data-testid="stDataEditor"] option,
+        div[data-testid="stDataEditor"] [role="listbox"],
+        div[data-testid="stDataEditor"] [role="option"],
+        div[data-testid="stDataEditor"] .glideDataEditor select,
+        div[data-testid="stDataEditor"] .gdg-style select {
+          color: #000000 !important;
+          background-color: #ffffff !important;
+        }
+
+        /* Target the cell editor dropdown in data_editor */
+        .gdg-style [data-testid="portal"] select,
+        .gdg-style [data-testid="portal"] option,
+        [data-testid="stDataEditorCellEditingPortal"] select,
+        [data-testid="stDataEditorCellEditingPortal"] option {
+          color: #000000 !important;
+          background-color: #ffffff !important;
+        }
+
         </style>
         """,
         unsafe_allow_html=True,
