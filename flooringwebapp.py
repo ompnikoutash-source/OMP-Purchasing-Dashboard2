@@ -2866,7 +2866,6 @@ def _render_queue_table_html(df: pd.DataFrame) -> str:
     if df is None or df.empty:
         return """
         <div class="queue-card">
-          <div class="queue-header">INVENTORY AT A GLANCE</div>
           <div class="queue-empty">No items for selected vendor.</div>
         </div>
         """
@@ -2897,7 +2896,6 @@ def _render_queue_table_html(df: pd.DataFrame) -> str:
     col_template = " ".join(col_weights.get(col, "1fr") for col in df.columns)
     return f"""
     <div class="queue-card">
-      <div class="queue-header">INVENTORY AT A GLANCE</div>
       <div class="queue-table" style="--col-count:{col_count}; --col-template:{col_template};">
         <div class="queue-row queue-head">{headers}</div>
         {''.join(rows)}
@@ -2909,7 +2907,6 @@ def _render_reorder_now_table_html(df: pd.DataFrame, month_label: str) -> str:
     if df is None or df.empty:
         return f"""
         <div class="queue-card">
-          <div class="queue-header">REORDER NOW: {month_label}</div>
           <div class="queue-empty">No reorder quantities for this month.</div>
         </div>
         """
@@ -2951,7 +2948,6 @@ def _render_reorder_now_table_html(df: pd.DataFrame, month_label: str) -> str:
     col_template = " ".join(col_weights.get(col, "1fr") for col in df.columns)
     return f"""
     <div class="queue-card">
-      <div class="queue-header">REORDER NOW: {month_label}</div>
       <div class="queue-table" style="--col-count:{col_count}; --col-template:{col_template};">
         <div class="queue-row queue-head">{headers}</div>
         {''.join(rows)}
@@ -2963,7 +2959,6 @@ def _render_reorder_table_html(df: pd.DataFrame, title: str) -> str:
     if df is None or df.empty:
         return f"""
         <div class="queue-card">
-          <div class="queue-header">{title}</div>
           <div class="queue-empty">No reordering data available.</div>
         </div>
         """
@@ -2983,7 +2978,8 @@ def _render_reorder_table_html(df: pd.DataFrame, title: str) -> str:
             cells.append(f"<div class='text-clip'>{value}</div>")
         rows.append(f"<div class='queue-row'>{''.join(cells)}</div>")
     col_count = len(df.columns)
-    label, details = title.split(":", 1) if ":" in title else ("REORDER SCHEDULE", title)
+    # Extract SKU and description from title (format: "Reorder Schedule:   SKU Description")
+    label, details = title.split(":", 1) if ":" in title else ("", title)
     parts = details.strip().split(" ", 1)
     sku = parts[0] if parts else ""
     desc = parts[1] if len(parts) > 1 else ""
@@ -2991,7 +2987,6 @@ def _render_reorder_table_html(df: pd.DataFrame, title: str) -> str:
     <div class="queue-card" style="max-width: 880px;">
       <div class="queue-header">
           <div class="reorder-header" style="--col-count:{col_count};">
-          <div>{label}:</div>
           <div class="reorder-sku">{sku}</div>
           <div class="reorder-desc">{desc}</div>
         </div>
@@ -3007,7 +3002,6 @@ def _render_arrivals_table_html(df: pd.DataFrame) -> str:
     if df is None or df.empty:
         return """
         <div class="queue-card">
-          <div class="queue-header">ARRIVALS</div>
           <div class="queue-empty">No arrivals found for selection.</div>
         </div>
         """
@@ -3040,7 +3034,6 @@ def _render_arrivals_table_html(df: pd.DataFrame) -> str:
     col_template = " ".join(col_weights.get(col, "1fr") for col in df.columns)
     return f"""
     <div class="queue-card">
-      <div class="queue-header">ARRIVALS</div>
       <div class="queue-table" style="--col-count:{col_count}; --col-template:{col_template};">
         <div class="queue-row queue-head">{headers}</div>
         {''.join(rows)}
@@ -3295,7 +3288,6 @@ def _render_demand_graph_html(fig: go.Figure) -> str:
       </head>
       <body>
         <div class="demand-card">
-          <div class="demand-header">DEMAND GRAPH</div>
           <div class="demand-body">
             {fig_html}
           </div>
