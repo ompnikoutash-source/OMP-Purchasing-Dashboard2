@@ -5215,12 +5215,12 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                         st.dataframe(results_df, use_container_width=True, hide_index=True)
 
                         # Show total cost
-                        st.markdown(f"**Total Order Cost: ${optimization_result['total_cost']:,.2f}**")
+                        st.markdown(f'<p style="color: white;"><strong>Total Order Cost: ${optimization_result["total_cost"]:,.2f}</strong></p>', unsafe_allow_html=True)
 
                 # Display margin alerts
                 if optimization_result["margin_alerts"]:
-                    st.markdown("### ⚠️ Margin Alerts")
-                    st.markdown("The following items have proposed landed costs that differ significantly from current inventory:")
+                    st.markdown('<h3 style="color: white;">⚠️ Margin Alerts</h3>', unsafe_allow_html=True)
+                    st.markdown('<p style="color: white;">The following items have proposed landed costs that differ significantly from current inventory:</p>', unsafe_allow_html=True)
 
                     for alert in optimization_result["margin_alerts"]:
                         diff_pct = alert["margin_diff"] * 100
