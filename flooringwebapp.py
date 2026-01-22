@@ -2825,17 +2825,18 @@ def _build_forecast_chart_multi(series_list: List[Dict]) -> go.Figure:
     return fig
 
 def _apply_legend_padding(fig: go.Figure, series_count: int) -> go.Figure:
-    if series_count <= 6:
-        legend_rows = 1
-    else:
-        legend_rows = int(math.ceil(series_count / 6))
-    extra_bottom = max(0, (legend_rows - 1) * 22)
-    base_height = 360
-    base_bottom = 36
+    # Fixed height graph - legend will be in a scrollable container via CSS
     fig.update_layout(
-        height=base_height + extra_bottom,
-        margin=dict(b=base_bottom + extra_bottom),
-        legend=dict(y=-(0.22 + (legend_rows - 1) * 0.05)),
+        height=360,
+        margin=dict(l=40, r=24, t=40, b=80),
+        legend=dict(
+            orientation="h",
+            x=0.5,
+            y=-0.25,
+            xanchor="center",
+            yanchor="top",
+            font=dict(color="#ffffff", size=10),
+        ),
     )
     return fig
 
@@ -3266,23 +3267,31 @@ def _render_demand_graph_html(fig: go.Figure) -> str:
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid rgba(255,255,255,0.08);
-          }}
-          .demand-header {{
-            background: var(--panel-strong);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            padding: 10px 16px;
-            font-size: 0.9rem;
-            letter-spacing: 0.12em;
-            font-weight: 700;
-            color: var(--text);
-            text-transform: uppercase;
+            max-height: 460px;
           }}
           .demand-body {{
             background: var(--panel);
             padding: 12px 16px 8px 16px;
+            max-height: 450px;
+            overflow-y: auto;
           }}
           .demand-body .plotly-graph-div {{
             margin: 0 !important;
+          }}
+          /* Scrollbar styling */
+          .demand-body::-webkit-scrollbar {{
+            width: 8px;
+          }}
+          .demand-body::-webkit-scrollbar-track {{
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+          }}
+          .demand-body::-webkit-scrollbar-thumb {{
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+          }}
+          .demand-body::-webkit-scrollbar-thumb:hover {{
+            background: rgba(255,255,255,0.3);
           }}
         </style>
       </head>
@@ -4263,9 +4272,9 @@ def render_webapp(data: Optional[Dict] = None) -> None:
 
     fig_html = forecast_fig.to_html(include_plotlyjs="cdn", full_html=False)
     demand_html = _render_demand_graph_html(forecast_fig)
-    fig_height = int(getattr(forecast_fig.layout, "height", 360) or 360)
+    # Fixed height for demand graph - 480px total (360 graph + 120 for legend area)
     with st.expander("DEMAND", expanded=True):
-        components.html(demand_html, height=fig_height + 120, scrolling=False)
+        components.html(demand_html, height=480, scrolling=True)
 
     arrivals_df_all = pd.DataFrame(arrivals_rows)
     arrivals_all_out = _prepare_arrivals_df(arrivals_df_all, selected_vendor, selected_collection)
