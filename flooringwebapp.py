@@ -94,11 +94,11 @@ ABC_MOI_CAPS = {
 # ============================================================
 ABC_BREAK_A = 0.70   # top 70% of cumulative volume
 ABC_BREAK_B = 0.80   # next 20% (70% -> 90%)
-SS_UPLIFT_SCALAR = {"A": 1.0, "B": 0.35, "C": 0.00}  # Reduced from 1.00/0.35/0.00
+SS_UPLIFT_SCALAR = {"A": 0.8, "B": 0.35, "C": 0.15}  # Adjusted to allow lumpy C items some buffer
 
 # Lumpy buffer uses percentile demand instead of max demand 95 90 85 default
 LUMPY_PCTL_NONZERO = {"A": 0.95, "B": 0.90, "C": 0.85}
-LUMPY_LT_BUFFER_FRAC = 0.10  # 50% of percentile demand over lead time
+LUMPY_LT_BUFFER_FRAC = 0.20  # 20% of percentile demand over lead time (was 0.10)
 
 # Optional global clamp: cap total uplift as % of trailing-12-month volume
 ENABLE_GLOBAL_UPLIFT_BUDGET = True
