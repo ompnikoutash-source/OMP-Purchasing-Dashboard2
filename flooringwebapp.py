@@ -4908,6 +4908,20 @@ def render_webapp(data: Optional[Dict] = None) -> None:
         if optimizer_rows:
             # Build DataFrame for data_editor - much more efficient than individual widgets
             optimizer_df_data = []
+
+            # First row is always "Freight" (for freight cost entry)
+            freight_row = {
+                "Include": False,
+                "SKU": "Freight",
+                "Description": "",
+                "Qty Needed": "",
+            }
+            for idx in range(1, 10):
+                freight_row[f"Vendor {idx}"] = ""
+                freight_row[f"Price {idx}"] = ""
+            optimizer_df_data.append(freight_row)
+
+            # Add item rows
             for row in optimizer_rows:
                 row_data = {
                     "Include": False,
@@ -4915,12 +4929,10 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                     "Description": row["description"],
                     "Qty Needed": row["quantity"],
                 }
-                # Add vendor columns
+                # Add vendor columns (Vendor and Price only, no Freight/Fees)
                 for idx in range(1, 10):
                     row_data[f"Vendor {idx}"] = ""
                     row_data[f"Price {idx}"] = ""
-                    row_data[f"Freight {idx}"] = ""
-                    row_data[f"Fees {idx}"] = ""
                 optimizer_df_data.append(row_data)
 
             optimizer_df = pd.DataFrame(optimizer_df_data)
@@ -4942,10 +4954,9 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                     required=False,
                 )
                 column_config[f"Price {idx}"] = st.column_config.NumberColumn(f"Price {idx}", width="small", format="%.2f")
-                column_config[f"Freight {idx}"] = st.column_config.NumberColumn(f"Freight {idx}", width="small", format="%.2f")
-                column_config[f"Fees {idx}"] = st.column_config.NumberColumn(f"Fees {idx}", width="small", format="%.2f")
 
             # Calculate height based on number of rows (35px per row + 35px header + 10px padding)
+            # +1 for the Freight row
             num_rows = len(optimizer_df)
             calculated_height = (num_rows * 35) + 35 + 10
 
