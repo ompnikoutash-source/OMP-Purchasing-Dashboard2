@@ -3991,28 +3991,42 @@ def render_webapp(data: Optional[Dict] = None) -> None:
 
         /* Expander styling to match card headers */
         div[data-testid="stExpander"] {
-          background: var(--panel);
-          border-radius: 18px;
-          border: 1px solid var(--panel-border);
-          box-shadow: var(--shadow-soft);
+          background: var(--panel) !important;
+          border-radius: 18px !important;
+          border: 1px solid var(--panel-border) !important;
+          box-shadow: var(--shadow-soft) !important;
           margin-bottom: 14px;
+        }
+
+        div[data-testid="stExpander"] > details {
+          background: var(--panel) !important;
+          border: none !important;
+          border-radius: 18px !important;
         }
 
         div[data-testid="stExpander"] summary {
           font-size: 0.72rem;
           letter-spacing: 0.12em;
-          color: #ffffff;
+          color: #ffffff !important;
           text-transform: uppercase;
           font-weight: 700;
           padding: 14px 16px;
+          background: var(--panel) !important;
+          border-radius: 18px !important;
         }
 
         div[data-testid="stExpander"] summary:hover {
-          color: #aaaaaa;
+          color: #cccccc !important;
+        }
+
+        div[data-testid="stExpander"] summary svg {
+          fill: #ffffff !important;
+          stroke: #ffffff !important;
         }
 
         div[data-testid="stExpander"] > div[data-testid="stExpanderDetails"] {
           padding: 0 16px 14px 16px;
+          background: var(--panel) !important;
         }
 
         </style>
