@@ -5228,7 +5228,7 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                         color = "green" if diff_pct > 0 else "red"
 
                         st.markdown(f"""
-<div style="border: 2px solid {color}; padding: 10px; margin: 5px 0; border-radius: 5px;">
+<div style="border: 2px solid {color}; padding: 10px; margin: 5px 0; border-radius: 5px; color: white;">
 <strong>{alert['sku']}</strong> from <strong>{alert['vendor']}</strong><br>
 Sale Price: ${alert['sale_price']:.2f}<br>
 Current Landed Cost: ${alert['current_landed_cost']:.2f} (Margin: {alert['current_margin']*100:.1f}%)<br>
