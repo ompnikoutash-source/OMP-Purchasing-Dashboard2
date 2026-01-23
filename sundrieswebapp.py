@@ -194,7 +194,7 @@ def fetch_last_sale_dates_for_skus(conn, sku_list: set, chunk_size: int = 800, a
             JOIN GSFL2K.SHHEAD H ON H.SHCO = L.SLCO AND H.SHLOC = L.SLLOC AND H.SHORD# = L.SLORD# AND H.SHINV# = L.SLINV#
             WHERE TRIM(L.SLITEM) IN ({in_list})
               AND L.SLUM2 NOT LIKE '%SF%'
-              AND COALESCE(L.SLBLUO, 0) > 0
+              AND COALESCE(L.SLBLUo, 0) > 0
               AND H.SHCUST NOT LIKE '%TRANSFER%'
               AND H.SHCUST NOT LIKE '%OMP000%'
               AND H.SHCUST NOT LIKE '%INV000%'
