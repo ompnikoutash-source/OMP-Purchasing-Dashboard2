@@ -118,7 +118,9 @@ LEADTIMES_XLSX = "Lead Times.xlsx"
 CUTOFF_DATE = "2020-06-01"
 WEBAPP_JSON_PATH = Path(__file__).resolve().parent / "flooringwebappJSON"
 SUNDRIES_JSON_PATH = Path(__file__).resolve().parent / "sundrieswebappJSON"
+MOULDING_JSON_PATH = Path(__file__).resolve().parent / "mouldingwebappJSON"
 STRIP_SKU_LIST_FILE = "StripSKUList.xlsx"
+MOULDING_SKU_LIST_FILE = "MouldingSKUList.xlsx"
 UI_BUILD = "2026-01-14T15:10:00"
 
 # ============================================================
@@ -2604,6 +2606,18 @@ def _load_sundries_payload() -> Dict:
             return _demo_webapp_payload()
     return _demo_webapp_payload()
 
+
+def _load_moulding_payload() -> Dict:
+    """Load moulding data for Dilan tab from mouldingwebappJSON."""
+    if MOULDING_JSON_PATH.exists():
+        try:
+            with open(MOULDING_JSON_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return _demo_webapp_payload()
+    return _demo_webapp_payload()
+
+
 def _load_strip_sku_list() -> set:
     """Load list of SKUs for Veronica tab from StripSKUList.xlsx"""
     strip_path = Path(__file__).resolve().parent / STRIP_SKU_LIST_FILE
@@ -4127,7 +4141,7 @@ def render_webapp(data: Optional[Dict] = None) -> None:
         st.session_state.active_view = "Ilsy"
 
     st.markdown('<div class="toggle-wrap toggle-wrap--spaced">', unsafe_allow_html=True)
-    switch_cols = st.columns([1, 1, 1], gap="medium")
+    switch_cols = st.columns([1, 1, 1, 1], gap="medium")
     with switch_cols[0]:
         if st.button("Ilsy", width='stretch'):
             st.session_state.active_view = "Ilsy"
@@ -4137,14 +4151,20 @@ def render_webapp(data: Optional[Dict] = None) -> None:
     with switch_cols[2]:
         if st.button("Carlos", width='stretch'):
             st.session_state.active_view = "Carlos"
+    with switch_cols[3]:
+        if st.button("Dilan", width='stretch'):
+            st.session_state.active_view = "Dilan"
     st.markdown("</div>", unsafe_allow_html=True)
 
     is_sundries = st.session_state.active_view == "Carlos"
     is_veronica = st.session_state.active_view == "Veronica"
+    is_moulding = st.session_state.active_view == "Dilan"
     if is_sundries:
         data = _load_sundries_payload()
     elif is_veronica:
         data = _load_veronica_payload()
+    elif is_moulding:
+        data = _load_moulding_payload()
     else:
         data = _load_webapp_payload()
 
@@ -5060,174 +5080,176 @@ def render_webapp(data: Optional[Dict] = None) -> None:
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             )
 
-    vendor_options = _load_strip_vendor_list()
-    if not vendor_options:
-        vendor_options = [""]
-    optimizer_rows = []
-    strip_details = _load_strip_sku_details() if is_veronica else {}
-    if not reorder_now_df.empty:
-        source_rows = reorder_now_df[reorder_now_df["Item Number"] != "Total"].copy()
-        for _, row in source_rows.iterrows():
-            sku = str(row.get("Item Number", "")).strip()
-            desc = str(row.get("Description", "")).strip()
-            if not desc and is_veronica:
-                desc = strip_details.get(sku, {}).get("Description", "")
-            if not desc and is_veronica:
-                desc_parts = []
-                for col in ("Thickness", "Width", "Species", "Grade/Cut", "Edge", "Bundles"):
-                    val = row.get(col)
-                    if val is None:
-                        continue
-                    text = str(val).strip()
-                    if text and text.lower() not in ("nan", "none"):
-                        desc_parts.append(text)
-                if desc_parts:
-                    desc = " / ".join(desc_parts)
-            qty_value = None
-            for col in (
-                "Quantity Needed",
-                "Reorder Quantity (SF)",
-                "Reorder Quantity",
-                "Reorder Quantity (Pallets)",
-            ):
-                if col in source_rows.columns:
-                    qty_value = row.get(col)
-                    break
-            qty_text = ""
-            if isinstance(qty_value, (int, float)) and not pd.isna(qty_value):
-                qty_text = _format_number(float(qty_value), 2)
-            elif isinstance(qty_value, str):
-                qty_text = qty_value
-            optimizer_rows.append(
-                {
-                    "sku": sku,
-                    "description": desc,
-                    "quantity": qty_text,
-                }
-            )
-
-    with st.expander("OPTIMIZER", expanded=True):
-        st.markdown('<div class="optimizer-anchor"></div>', unsafe_allow_html=True)
-
-        if optimizer_rows:
-            # Build DataFrame for data_editor - much more efficient than individual widgets
-            optimizer_df_data = []
-
-            # Named vendor columns
-            vendor_names = ["Indiana", "Dayspring", "Mullican", "Macon", "Anthony", "Orillia", "Lebanon", "Merrick"]
-
-            # First row is always "Freight" (for freight cost entry)
-            freight_row = {
-                "Include": False,
-                "SKU": "Freight",
-                "Description": "",
-                "Qty Needed": "",
-            }
-            for vname in vendor_names:
-                freight_row[vname] = ""
-            optimizer_df_data.append(freight_row)
-
-            # Add item rows
-            for row in optimizer_rows:
-                row_data = {
-                    "Include": False,
-                    "SKU": row["sku"],
-                    "Description": row["description"],
-                    "Qty Needed": row["quantity"],
-                }
-                # Add vendor columns (named vendors)
-                for vname in vendor_names:
-                    row_data[vname] = ""
-                optimizer_df_data.append(row_data)
-
-            optimizer_df = pd.DataFrame(optimizer_df_data)
-
-            # Configure column types for data_editor
-            column_config = {
-                "Include": st.column_config.CheckboxColumn("Include", default=False, width="small"),
-                "SKU": st.column_config.TextColumn("SKU", width="medium", disabled=True),
-                "Description": st.column_config.TextColumn("Description", width="large", disabled=True),
-                "Qty Needed": st.column_config.TextColumn("Qty Needed", width="small", disabled=True),
-            }
-            # Add vendor column configs with named columns
-            for vname in vendor_names:
-                column_config[vname] = st.column_config.NumberColumn(vname, width="small", format="%.2f")
-
-            # Calculate height based on number of rows (35px per row + 35px header + 10px padding)
-            # +1 for the Freight row
-            num_rows = len(optimizer_df)
-            calculated_height = (num_rows * 35) + 35 + 10
-
-            # Load margins data for landed cost comparison
-            margins_data = _load_margins()
-
-            # Centered "Optimize" button above the data editor
-            col1, col2, col3 = st.columns([1, 1, 1])
-            with col2:
-                optimize_clicked = st.button("🔍 Optimize Vendor Mix", key="optimize_vendor_mix_btn", width='stretch')
-
-            # Use data_editor for efficient tabular editing with auto-fit height
-            edited_optimizer_df = st.data_editor(
-                optimizer_df,
-                column_config=column_config,
-                width='stretch',
-                hide_index=True,
-                num_rows="fixed",
-                key="optimizer_data_editor",
-                height=calculated_height,
-            )
-
-            # Store edited data in session state for downstream use
-            st.session_state["optimizer_edited_data"] = edited_optimizer_df
-
-            # Run optimization when button clicked
-            if optimize_clicked:
-                optimization_result = _calculate_optimal_vendor_mix(
-                    edited_optimizer_df,
-                    margins_data,
-                    vendor_names,
+    # OPTIMIZER section - only show for Veronica (Strip) tab
+    if is_veronica:
+        vendor_options = _load_strip_vendor_list()
+        if not vendor_options:
+            vendor_options = [""]
+        optimizer_rows = []
+        strip_details = _load_strip_sku_details()
+        if not reorder_now_df.empty:
+            source_rows = reorder_now_df[reorder_now_df["Item Number"] != "Total"].copy()
+            for _, row in source_rows.iterrows():
+                sku = str(row.get("Item Number", "")).strip()
+                desc = str(row.get("Description", "")).strip()
+                if not desc:
+                    desc = strip_details.get(sku, {}).get("Description", "")
+                if not desc:
+                    desc_parts = []
+                    for col in ("Thickness", "Width", "Species", "Grade/Cut", "Edge", "Bundles"):
+                        val = row.get(col)
+                        if val is None:
+                            continue
+                        text = str(val).strip()
+                        if text and text.lower() not in ("nan", "none"):
+                            desc_parts.append(text)
+                    if desc_parts:
+                        desc = " / ".join(desc_parts)
+                qty_value = None
+                for col in (
+                    "Quantity Needed",
+                    "Reorder Quantity (SF)",
+                    "Reorder Quantity",
+                    "Reorder Quantity (Pallets)",
+                ):
+                    if col in source_rows.columns:
+                        qty_value = row.get(col)
+                        break
+                qty_text = ""
+                if isinstance(qty_value, (int, float)) and not pd.isna(qty_value):
+                    qty_text = _format_number(float(qty_value), 2)
+                elif isinstance(qty_value, str):
+                    qty_text = qty_value
+                optimizer_rows.append(
+                    {
+                        "sku": sku,
+                        "description": desc,
+                        "quantity": qty_text,
+                    }
                 )
 
-                # Display errors if any
-                if optimization_result["errors"]:
-                    for err in optimization_result["errors"]:
-                        st.error(f"⚠️ {err}")
+        with st.expander("OPTIMIZER", expanded=True):
+            st.markdown('<div class="optimizer-anchor"></div>', unsafe_allow_html=True)
 
-                # Display optimal vendor assignments
-                if optimization_result["optimal_assignments"]:
-                    st.markdown('<h3 style="color: white;">Optimal Vendor Mix</h3>', unsafe_allow_html=True)
+            if optimizer_rows:
+                # Build DataFrame for data_editor - much more efficient than individual widgets
+                optimizer_df_data = []
 
-                    # Build results table
-                    results_data = []
-                    for sku, cost_info in optimization_result["item_costs"].items():
-                        results_data.append({
-                            "SKU": sku,
-                            "Recommended Vendor": cost_info["vendor"],
-                            "Material Price": f"${cost_info['price']:.2f}",
-                            "Freight/SF": f"${cost_info['freight_share']:.4f}" if cost_info['freight_share'] > 0 else "Included",
-                            "Landed Cost": f"${cost_info['landed_cost']:.2f}",
-                            "Qty (SF)": f"{cost_info['qty']:,.0f}",
-                            "Total Cost": f"${cost_info['landed_cost'] * cost_info['qty']:,.2f}",
-                        })
+                # Named vendor columns
+                vendor_names = ["Indiana", "Dayspring", "Mullican", "Macon", "Anthony", "Orillia", "Lebanon", "Merrick"]
 
-                    if results_data:
-                        results_df = pd.DataFrame(results_data)
-                        st.dataframe(results_df, use_container_width=True, hide_index=True)
+                # First row is always "Freight" (for freight cost entry)
+                freight_row = {
+                    "Include": False,
+                    "SKU": "Freight",
+                    "Description": "",
+                    "Qty Needed": "",
+                }
+                for vname in vendor_names:
+                    freight_row[vname] = ""
+                optimizer_df_data.append(freight_row)
 
-                        # Show total cost
-                        st.markdown(f'<p style="color: white;"><strong>Total Order Cost: ${optimization_result["total_cost"]:,.2f}</strong></p>', unsafe_allow_html=True)
+                # Add item rows
+                for row in optimizer_rows:
+                    row_data = {
+                        "Include": False,
+                        "SKU": row["sku"],
+                        "Description": row["description"],
+                        "Qty Needed": row["quantity"],
+                    }
+                    # Add vendor columns (named vendors)
+                    for vname in vendor_names:
+                        row_data[vname] = ""
+                    optimizer_df_data.append(row_data)
 
-                # Display margin alerts
-                if optimization_result["margin_alerts"]:
-                    st.markdown('<h3 style="color: white;">⚠️ Margin Alerts</h3>', unsafe_allow_html=True)
-                    st.markdown('<p style="color: white;">The following items have proposed landed costs that differ significantly from current inventory:</p>', unsafe_allow_html=True)
+                optimizer_df = pd.DataFrame(optimizer_df_data)
 
-                    for alert in optimization_result["margin_alerts"]:
-                        diff_pct = alert["margin_diff"] * 100
-                        direction = "higher" if diff_pct > 0 else "lower"
-                        color = "green" if diff_pct > 0 else "red"
+                # Configure column types for data_editor
+                column_config = {
+                    "Include": st.column_config.CheckboxColumn("Include", default=False, width="small"),
+                    "SKU": st.column_config.TextColumn("SKU", width="medium", disabled=True),
+                    "Description": st.column_config.TextColumn("Description", width="large", disabled=True),
+                    "Qty Needed": st.column_config.TextColumn("Qty Needed", width="small", disabled=True),
+                }
+                # Add vendor column configs with named columns
+                for vname in vendor_names:
+                    column_config[vname] = st.column_config.NumberColumn(vname, width="small", format="%.2f")
 
-                        st.markdown(f"""
+                # Calculate height based on number of rows (35px per row + 35px header + 10px padding)
+                # +1 for the Freight row
+                num_rows = len(optimizer_df)
+                calculated_height = (num_rows * 35) + 35 + 10
+
+                # Load margins data for landed cost comparison
+                margins_data = _load_margins()
+
+                # Centered "Optimize" button above the data editor
+                col1, col2, col3 = st.columns([1, 1, 1])
+                with col2:
+                    optimize_clicked = st.button("🔍 Optimize Vendor Mix", key="optimize_vendor_mix_btn", width='stretch')
+
+                # Use data_editor for efficient tabular editing with auto-fit height
+                edited_optimizer_df = st.data_editor(
+                    optimizer_df,
+                    column_config=column_config,
+                    width='stretch',
+                    hide_index=True,
+                    num_rows="fixed",
+                    key="optimizer_data_editor",
+                    height=calculated_height,
+                )
+
+                # Store edited data in session state for downstream use
+                st.session_state["optimizer_edited_data"] = edited_optimizer_df
+
+                # Run optimization when button clicked
+                if optimize_clicked:
+                    optimization_result = _calculate_optimal_vendor_mix(
+                        edited_optimizer_df,
+                        margins_data,
+                        vendor_names,
+                    )
+
+                    # Display errors if any
+                    if optimization_result["errors"]:
+                        for err in optimization_result["errors"]:
+                            st.error(f"⚠️ {err}")
+
+                    # Display optimal vendor assignments
+                    if optimization_result["optimal_assignments"]:
+                        st.markdown('<h3 style="color: white;">Optimal Vendor Mix</h3>', unsafe_allow_html=True)
+
+                        # Build results table
+                        results_data = []
+                        for sku, cost_info in optimization_result["item_costs"].items():
+                            results_data.append({
+                                "SKU": sku,
+                                "Recommended Vendor": cost_info["vendor"],
+                                "Material Price": f"${cost_info['price']:.2f}",
+                                "Freight/SF": f"${cost_info['freight_share']:.4f}" if cost_info['freight_share'] > 0 else "Included",
+                                "Landed Cost": f"${cost_info['landed_cost']:.2f}",
+                                "Qty (SF)": f"{cost_info['qty']:,.0f}",
+                                "Total Cost": f"${cost_info['landed_cost'] * cost_info['qty']:,.2f}",
+                            })
+
+                        if results_data:
+                            results_df = pd.DataFrame(results_data)
+                            st.dataframe(results_df, use_container_width=True, hide_index=True)
+
+                            # Show total cost
+                            st.markdown(f'<p style="color: white;"><strong>Total Order Cost: ${optimization_result["total_cost"]:,.2f}</strong></p>', unsafe_allow_html=True)
+
+                    # Display margin alerts
+                    if optimization_result["margin_alerts"]:
+                        st.markdown('<h3 style="color: white;">⚠️ Margin Alerts</h3>', unsafe_allow_html=True)
+                        st.markdown('<p style="color: white;">The following items have proposed landed costs that differ significantly from current inventory:</p>', unsafe_allow_html=True)
+
+                        for alert in optimization_result["margin_alerts"]:
+                            diff_pct = alert["margin_diff"] * 100
+                            direction = "higher" if diff_pct > 0 else "lower"
+                            color = "green" if diff_pct > 0 else "red"
+
+                            st.markdown(f"""
 <div style="border: 2px solid {color}; padding: 10px; margin: 5px 0; border-radius: 5px; color: white;">
 <strong>{alert['sku']}</strong> from <strong>{alert['vendor']}</strong><br>
 Sale Price: ${alert['sale_price']:.2f}<br>
@@ -5237,8 +5259,8 @@ Proposed Landed Cost: ${alert['proposed_landed_cost']:.2f} (Margin: {alert['prop
 </div>
 """, unsafe_allow_html=True)
 
-        else:
-            st.markdown('<div class="queue-empty">No reorder quantities for this month.</div>', unsafe_allow_html=True)
+            else:
+                st.markdown('<div class="queue-empty">No reorder quantities for this month.</div>', unsafe_allow_html=True)
 
     # Monthly detail table under Purchasing Queue
     detail_items = [selected_item] if selected_item else vendor_items
