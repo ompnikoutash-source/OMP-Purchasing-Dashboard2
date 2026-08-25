@@ -1,0 +1,28 @@
+# Forecast progress tracking (transient state)
+.sundries_forecast_progress.json
+.moulding_forecast_progress.json
+.flooring_forecast_progress.json
+
+# Python
+__pycache__/
+*.pyc
+
+# Secrets
+OMP_secrets.py
+
+# Route optimizer
+geocode_cache.db
+dispatch_routes_*.xlsx
+dispatch_routes_*.html
+
+# Vendor quote tracking (local persistent store, back up separately)
+vendor_quotes.db
+
+# Forecast accuracy history (derived from git history + Gartman, fully
+# reproducible via agents/forecast_history_extractor.py -- not source)
+agents/forecast_history.db
+agents/forecast_history.db-wal
+agents/forecast_history.db-shm
+
+# Scheduled-task run logs (generated, grow without bound -- not source)
+*.log
