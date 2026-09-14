@@ -1,7 +1,7 @@
 {
   "run_meta": {
     "title": "OMP Sundries Purchasing Dashboard",
-    "run_timestamp_local": "2026-09-14 10:26:50",
+    "run_timestamp_local": "2026-09-14 11:32:53",
     "forecast_horizon_days": 365,
     "source": "DB-driven: non-SF items with sales in last 365 days"
   },
@@ -4693,8 +4693,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 352.0,
-      "available": 352.0,
+      "inventory_position": 351.0,
+      "available": 351.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 14.0,
@@ -5027,8 +5027,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 1467.0,
-      "available": 330.0,
+      "inventory_position": 1461.0,
+      "available": 324.0,
       "on_order": 1200.0,
       "backorder": 63.0,
       "lead_time_days": 21.0,
@@ -6363,8 +6363,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 1257.0,
-      "available": 1257.0,
+      "inventory_position": 1256.0,
+      "available": 1256.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 26.0,
@@ -6864,10 +6864,10 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 183.0,
-      "available": 89.0,
+      "inventory_position": 189.0,
+      "available": 93.0,
       "on_order": 96.0,
-      "backorder": 2.0,
+      "backorder": 0.0,
       "lead_time_days": 35.0,
       "lead_time_source": "Lead Times.xlsx:Final",
       "safety_stock": 0.0,
@@ -8033,8 +8033,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 445.0,
-      "available": 229.0,
+      "inventory_position": 444.0,
+      "available": 228.0,
       "on_order": 240.0,
       "backorder": 24.0,
       "lead_time_days": 28.0,
@@ -8200,8 +8200,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 918.0,
-      "available": 921.0,
+      "inventory_position": 911.0,
+      "available": 914.0,
       "on_order": 0.0,
       "backorder": 3.0,
       "lead_time_days": 28.0,
@@ -10037,8 +10037,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 187.0,
-      "available": 187.0,
+      "inventory_position": 175.0,
+      "available": 175.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 24.0,
@@ -10872,8 +10872,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 221.0,
-      "available": 221.0,
+      "inventory_position": 217.0,
+      "available": 217.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 24.0,
@@ -12208,8 +12208,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 223.0,
-      "available": 224.0,
+      "inventory_position": 222.0,
+      "available": 223.0,
       "on_order": 0.0,
       "backorder": 1.0,
       "lead_time_days": 21.0,
@@ -13878,8 +13878,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 810.0,
-      "available": 810.0,
+      "inventory_position": 808.0,
+      "available": 808.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 21.0,
@@ -15715,8 +15715,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 88.0,
-      "available": 88.0,
+      "inventory_position": 86.0,
+      "available": 86.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 21.0,
@@ -20725,8 +20725,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 165.0,
-      "available": 145.0,
+      "inventory_position": 163.0,
+      "available": 143.0,
       "on_order": 20.0,
       "backorder": 0.0,
       "lead_time_days": 14.0,
@@ -30745,8 +30745,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 4076.0,
-      "available": 3276.0,
+      "inventory_position": 4051.0,
+      "available": 3251.0,
       "on_order": 800.0,
       "backorder": 0.0,
       "lead_time_days": 14.0,
@@ -33918,8 +33918,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 506.0,
-      "available": 506.0,
+      "inventory_position": 504.0,
+      "available": 504.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 14.0,
@@ -40932,8 +40932,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 540.0,
-      "available": 321.0,
+      "inventory_position": 539.0,
+      "available": 320.0,
       "on_order": 219.0,
       "backorder": 0.0,
       "lead_time_days": 40.0,
@@ -53123,8 +53123,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 95.0,
-      "available": 95.0,
+      "inventory_position": 94.0,
+      "available": 94.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 24.0,
@@ -53290,8 +53290,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 179.0,
-      "available": 180.0,
+      "inventory_position": 174.0,
+      "available": 175.0,
       "on_order": 0.0,
       "backorder": 1.0,
       "lead_time_days": 24.0,
@@ -72161,8 +72161,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 188.0,
-      "available": 183.0,
+      "inventory_position": 186.0,
+      "available": 181.0,
       "on_order": 5.0,
       "backorder": 0.0,
       "lead_time_days": 7.0,
@@ -72662,8 +72662,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 153.0,
-      "available": 133.0,
+      "inventory_position": 151.0,
+      "available": 131.0,
       "on_order": 20.0,
       "backorder": 0.0,
       "lead_time_days": 7.0,
@@ -75668,8 +75668,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 958.0,
-      "available": 958.0,
+      "inventory_position": 953.0,
+      "available": 953.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 21.0,
@@ -75835,8 +75835,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 705.0,
-      "available": 705.0,
+      "inventory_position": 700.0,
+      "available": 700.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 21.0,
@@ -80511,8 +80511,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 160.0,
-      "available": 160.0,
+      "inventory_position": 159.0,
+      "available": 159.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 19.0,
@@ -81847,8 +81847,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 75.0,
-      "available": 75.0,
+      "inventory_position": 72.0,
+      "available": 72.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 19.0,
@@ -82181,8 +82181,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 134.0,
-      "available": 106.0,
+      "inventory_position": 133.0,
+      "available": 105.0,
       "on_order": 28.0,
       "backorder": 0.0,
       "lead_time_days": 19.0,
@@ -82849,8 +82849,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 276.0,
-      "available": 276.0,
+      "inventory_position": 275.0,
+      "available": 275.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 19.0,
@@ -83684,8 +83684,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 125.0,
-      "available": 105.0,
+      "inventory_position": 124.0,
+      "available": 104.0,
       "on_order": 20.0,
       "backorder": 0.0,
       "lead_time_days": 19.0,
@@ -86189,8 +86189,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 301.0,
-      "available": 301.0,
+      "inventory_position": 299.0,
+      "available": 299.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 14.0,
@@ -88694,8 +88694,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 2773.0,
-      "available": 1153.0,
+      "inventory_position": 2753.0,
+      "available": 1133.0,
       "on_order": 1632.0,
       "backorder": 12.0,
       "lead_time_days": 21.0,
@@ -89863,8 +89863,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 464.0,
-      "available": 464.0,
+      "inventory_position": 463.0,
+      "available": 463.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 21.0,
@@ -91032,8 +91032,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 252.0,
-      "available": 252.0,
+      "inventory_position": 250.0,
+      "available": 250.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 8.0,
@@ -111408,8 +111408,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 352.0,
-      "available": 352.0,
+      "inventory_position": 351.0,
+      "available": 351.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 14.0,
@@ -111742,8 +111742,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 1467.0,
-      "available": 330.0,
+      "inventory_position": 1461.0,
+      "available": 324.0,
       "on_order": 1200.0,
       "backorder": 63.0,
       "lead_time_days": 21.0,
@@ -113078,8 +113078,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 1257.0,
-      "available": 1257.0,
+      "inventory_position": 1256.0,
+      "available": 1256.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 26.0,
@@ -113579,10 +113579,10 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 183.0,
-      "available": 89.0,
+      "inventory_position": 189.0,
+      "available": 93.0,
       "on_order": 96.0,
-      "backorder": 2.0,
+      "backorder": 0.0,
       "lead_time_days": 35.0,
       "lead_time_source": "Lead Times.xlsx:Final",
       "safety_stock": 0.0,
@@ -114748,8 +114748,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 445.0,
-      "available": 229.0,
+      "inventory_position": 444.0,
+      "available": 228.0,
       "on_order": 240.0,
       "backorder": 24.0,
       "lead_time_days": 28.0,
@@ -114915,8 +114915,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 918.0,
-      "available": 921.0,
+      "inventory_position": 911.0,
+      "available": 914.0,
       "on_order": 0.0,
       "backorder": 3.0,
       "lead_time_days": 28.0,
@@ -116752,8 +116752,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 187.0,
-      "available": 187.0,
+      "inventory_position": 175.0,
+      "available": 175.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 24.0,
@@ -117587,8 +117587,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 221.0,
-      "available": 221.0,
+      "inventory_position": 217.0,
+      "available": 217.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 24.0,
@@ -118923,8 +118923,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 223.0,
-      "available": 224.0,
+      "inventory_position": 222.0,
+      "available": 223.0,
       "on_order": 0.0,
       "backorder": 1.0,
       "lead_time_days": 21.0,
@@ -120593,8 +120593,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 810.0,
-      "available": 810.0,
+      "inventory_position": 808.0,
+      "available": 808.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 21.0,
@@ -122430,8 +122430,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 88.0,
-      "available": 88.0,
+      "inventory_position": 86.0,
+      "available": 86.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 21.0,
@@ -127440,8 +127440,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 165.0,
-      "available": 145.0,
+      "inventory_position": 163.0,
+      "available": 143.0,
       "on_order": 20.0,
       "backorder": 0.0,
       "lead_time_days": 14.0,
@@ -137460,8 +137460,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 4076.0,
-      "available": 3276.0,
+      "inventory_position": 4051.0,
+      "available": 3251.0,
       "on_order": 800.0,
       "backorder": 0.0,
       "lead_time_days": 14.0,
@@ -140633,8 +140633,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 506.0,
-      "available": 506.0,
+      "inventory_position": 504.0,
+      "available": 504.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 14.0,
@@ -147647,8 +147647,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 540.0,
-      "available": 321.0,
+      "inventory_position": 539.0,
+      "available": 320.0,
       "on_order": 219.0,
       "backorder": 0.0,
       "lead_time_days": 40.0,
@@ -159838,8 +159838,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 95.0,
-      "available": 95.0,
+      "inventory_position": 94.0,
+      "available": 94.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 24.0,
@@ -160005,8 +160005,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 179.0,
-      "available": 180.0,
+      "inventory_position": 174.0,
+      "available": 175.0,
       "on_order": 0.0,
       "backorder": 1.0,
       "lead_time_days": 24.0,
@@ -178876,8 +178876,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 188.0,
-      "available": 183.0,
+      "inventory_position": 186.0,
+      "available": 181.0,
       "on_order": 5.0,
       "backorder": 0.0,
       "lead_time_days": 7.0,
@@ -179377,8 +179377,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 153.0,
-      "available": 133.0,
+      "inventory_position": 151.0,
+      "available": 131.0,
       "on_order": 20.0,
       "backorder": 0.0,
       "lead_time_days": 7.0,
@@ -182383,8 +182383,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 958.0,
-      "available": 958.0,
+      "inventory_position": 953.0,
+      "available": 953.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 21.0,
@@ -182550,8 +182550,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 705.0,
-      "available": 705.0,
+      "inventory_position": 700.0,
+      "available": 700.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 21.0,
@@ -187226,8 +187226,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 160.0,
-      "available": 160.0,
+      "inventory_position": 159.0,
+      "available": 159.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 19.0,
@@ -188562,8 +188562,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 75.0,
-      "available": 75.0,
+      "inventory_position": 72.0,
+      "available": 72.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 19.0,
@@ -188896,8 +188896,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 134.0,
-      "available": 106.0,
+      "inventory_position": 133.0,
+      "available": 105.0,
       "on_order": 28.0,
       "backorder": 0.0,
       "lead_time_days": 19.0,
@@ -189564,8 +189564,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 276.0,
-      "available": 276.0,
+      "inventory_position": 275.0,
+      "available": 275.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 19.0,
@@ -190399,8 +190399,8 @@
       "abc_class": "C",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 125.0,
-      "available": 105.0,
+      "inventory_position": 124.0,
+      "available": 104.0,
       "on_order": 20.0,
       "backorder": 0.0,
       "lead_time_days": 19.0,
@@ -192904,8 +192904,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 301.0,
-      "available": 301.0,
+      "inventory_position": 299.0,
+      "available": 299.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 14.0,
@@ -195409,8 +195409,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 2773.0,
-      "available": 1153.0,
+      "inventory_position": 2753.0,
+      "available": 1133.0,
       "on_order": 1632.0,
       "backorder": 12.0,
       "lead_time_days": 21.0,
@@ -196578,8 +196578,8 @@
       "abc_class": "A",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 464.0,
-      "available": 464.0,
+      "inventory_position": 463.0,
+      "available": 463.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 21.0,
@@ -197747,8 +197747,8 @@
       "abc_class": "B",
       "demand_class": "MOVING_AVG",
       "forecast_method": "MAVG_30_90_365",
-      "inventory_position": 252.0,
-      "available": 252.0,
+      "inventory_position": 250.0,
+      "available": 250.0,
       "on_order": 0.0,
       "backorder": 0.0,
       "lead_time_days": 8.0,
@@ -216011,10 +216011,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 352.0,
+      "Beginning Inventory": 351.0,
       "Forecast": 41.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 311.0
+      "Ending Inventory": 310.0
     },
     {
       "vendor_number": "272",
@@ -216026,10 +216026,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 311.0,
+      "Beginning Inventory": 310.0,
       "Forecast": 41.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 270.0
+      "Ending Inventory": 269.0
     },
     {
       "vendor_number": "272",
@@ -216041,10 +216041,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 270.0,
+      "Beginning Inventory": 269.0,
       "Forecast": 41.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 229.0
+      "Ending Inventory": 228.0
     },
     {
       "vendor_number": "272",
@@ -216191,10 +216191,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 1467.0,
+      "Beginning Inventory": 1461.0,
       "Forecast": 380.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 1087.0
+      "Ending Inventory": 1081.0
     },
     {
       "vendor_number": "218",
@@ -216206,10 +216206,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 1087.0,
+      "Beginning Inventory": 1081.0,
       "Forecast": 380.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 707.0
+      "Ending Inventory": 701.0
     },
     {
       "vendor_number": "218",
@@ -216221,10 +216221,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 707.0,
+      "Beginning Inventory": 701.0,
       "Forecast": 380.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 327.0
+      "Ending Inventory": 321.0
     },
     {
       "vendor_number": "218",
@@ -216911,10 +216911,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 1257.0,
+      "Beginning Inventory": 1256.0,
       "Forecast": 319.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 937.3
+      "Ending Inventory": 936.3
     },
     {
       "vendor_number": "10013",
@@ -216926,10 +216926,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 937.3,
+      "Beginning Inventory": 936.3,
       "Forecast": 319.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 617.7
+      "Ending Inventory": 616.7
     },
     {
       "vendor_number": "10013",
@@ -216941,10 +216941,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 617.7,
+      "Beginning Inventory": 616.7,
       "Forecast": 319.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 298.0
+      "Ending Inventory": 297.0
     },
     {
       "vendor_number": "422",
@@ -217181,10 +217181,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 183.0,
+      "Beginning Inventory": 189.0,
       "Forecast": 121.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 61.3
+      "Ending Inventory": 67.3
     },
     {
       "vendor_number": "1102",
@@ -217196,9 +217196,9 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 61.3,
+      "Beginning Inventory": 67.3,
       "Forecast": 121.7,
-      "Order Quantity": 425.3,
+      "Order Quantity": 419.3,
       "Ending Inventory": 365.0
     },
     {
@@ -217811,10 +217811,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 445.0,
+      "Beginning Inventory": 444.0,
       "Forecast": 182.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 262.7
+      "Ending Inventory": 261.7
     },
     {
       "vendor_number": "422",
@@ -217826,10 +217826,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 262.7,
+      "Beginning Inventory": 261.7,
       "Forecast": 182.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 80.3
+      "Ending Inventory": 79.3
     },
     {
       "vendor_number": "422",
@@ -217841,9 +217841,9 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 80.3,
+      "Beginning Inventory": 79.3,
       "Forecast": 182.3,
-      "Order Quantity": 636.8,
+      "Order Quantity": 637.8,
       "Ending Inventory": 534.8
     },
     {
@@ -217901,10 +217901,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 918.0,
+      "Beginning Inventory": 911.0,
       "Forecast": 450.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 467.7
+      "Ending Inventory": 460.7
     },
     {
       "vendor_number": "422",
@@ -217916,10 +217916,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 467.7,
+      "Beginning Inventory": 460.7,
       "Forecast": 450.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 17.3
+      "Ending Inventory": 10.3
     },
     {
       "vendor_number": "422",
@@ -217931,9 +217931,9 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 17.3,
+      "Beginning Inventory": 10.3,
       "Forecast": 450.3,
-      "Order Quantity": 1754.0,
+      "Order Quantity": 1761.0,
       "Ending Inventory": 1321.0
     },
     {
@@ -218891,10 +218891,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 187.0,
+      "Beginning Inventory": 175.0,
       "Forecast": 58.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 128.7
+      "Ending Inventory": 116.7
     },
     {
       "vendor_number": "1234",
@@ -218906,10 +218906,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 128.7,
+      "Beginning Inventory": 116.7,
       "Forecast": 58.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 70.3
+      "Ending Inventory": 58.3
     },
     {
       "vendor_number": "1234",
@@ -218921,10 +218921,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 70.3,
+      "Beginning Inventory": 58.3,
       "Forecast": 58.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 12.0
+      "Ending Inventory": 0.0
     },
     {
       "vendor_number": "1234",
@@ -219341,10 +219341,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 221.0,
+      "Beginning Inventory": 217.0,
       "Forecast": 92.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 128.7
+      "Ending Inventory": 124.7
     },
     {
       "vendor_number": "1234",
@@ -219356,10 +219356,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 128.7,
+      "Beginning Inventory": 124.7,
       "Forecast": 92.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 36.3
+      "Ending Inventory": 32.3
     },
     {
       "vendor_number": "1234",
@@ -219371,9 +219371,9 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 36.3,
+      "Beginning Inventory": 32.3,
       "Forecast": 92.3,
-      "Order Quantity": 314.5,
+      "Order Quantity": 318.5,
       "Ending Inventory": 258.5
     },
     {
@@ -220061,10 +220061,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 223.0,
+      "Beginning Inventory": 222.0,
       "Forecast": 95.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 127.3
+      "Ending Inventory": 126.3
     },
     {
       "vendor_number": "438",
@@ -220076,10 +220076,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 127.3,
+      "Beginning Inventory": 126.3,
       "Forecast": 95.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 31.7
+      "Ending Inventory": 30.7
     },
     {
       "vendor_number": "438",
@@ -220091,9 +220091,9 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 31.7,
+      "Beginning Inventory": 30.7,
       "Forecast": 95.7,
-      "Order Quantity": 322.3,
+      "Order Quantity": 323.3,
       "Ending Inventory": 258.3
     },
     {
@@ -220961,10 +220961,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 810.0,
+      "Beginning Inventory": 808.0,
       "Forecast": 259.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 550.7
+      "Ending Inventory": 548.7
     },
     {
       "vendor_number": "438",
@@ -220976,10 +220976,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 550.7,
+      "Beginning Inventory": 548.7,
       "Forecast": 259.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 291.3
+      "Ending Inventory": 289.3
     },
     {
       "vendor_number": "438",
@@ -220991,10 +220991,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 291.3,
+      "Beginning Inventory": 289.3,
       "Forecast": 259.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 32.0
+      "Ending Inventory": 30.0
     },
     {
       "vendor_number": "438",
@@ -221951,10 +221951,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 88.0,
+      "Beginning Inventory": 86.0,
       "Forecast": 17.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 70.3
+      "Ending Inventory": 68.3
     },
     {
       "vendor_number": "1441",
@@ -221966,10 +221966,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 70.3,
+      "Beginning Inventory": 68.3,
       "Forecast": 17.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 52.7
+      "Ending Inventory": 50.7
     },
     {
       "vendor_number": "1441",
@@ -221981,10 +221981,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 52.7,
+      "Beginning Inventory": 50.7,
       "Forecast": 17.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 35.0
+      "Ending Inventory": 33.0
     },
     {
       "vendor_number": "1441",
@@ -224651,10 +224651,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 165.0,
+      "Beginning Inventory": 163.0,
       "Forecast": 4.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 161.0
+      "Ending Inventory": 159.0
     },
     {
       "vendor_number": "3",
@@ -224666,10 +224666,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 161.0,
+      "Beginning Inventory": 159.0,
       "Forecast": 4.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 157.0
+      "Ending Inventory": 155.0
     },
     {
       "vendor_number": "3",
@@ -224681,10 +224681,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 157.0,
+      "Beginning Inventory": 155.0,
       "Forecast": 4.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 153.0
+      "Ending Inventory": 151.0
     },
     {
       "vendor_number": "3",
@@ -230051,10 +230051,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 4076.0,
+      "Beginning Inventory": 4051.0,
       "Forecast": 1253.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 2822.7
+      "Ending Inventory": 2797.7
     },
     {
       "vendor_number": "3",
@@ -230066,10 +230066,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 2822.7,
+      "Beginning Inventory": 2797.7,
       "Forecast": 1253.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 1569.3
+      "Ending Inventory": 1544.3
     },
     {
       "vendor_number": "3",
@@ -230081,10 +230081,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 1569.3,
+      "Beginning Inventory": 1544.3,
       "Forecast": 1253.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 316.0
+      "Ending Inventory": 291.0
     },
     {
       "vendor_number": "3",
@@ -231761,10 +231761,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 506.0,
+      "Beginning Inventory": 504.0,
       "Forecast": 86.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 419.3
+      "Ending Inventory": 417.3
     },
     {
       "vendor_number": "1623",
@@ -231776,10 +231776,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 419.3,
+      "Beginning Inventory": 417.3,
       "Forecast": 86.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 332.7
+      "Ending Inventory": 330.7
     },
     {
       "vendor_number": "1623",
@@ -231791,10 +231791,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 332.7,
+      "Beginning Inventory": 330.7,
       "Forecast": 86.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 246.0
+      "Ending Inventory": 244.0
     },
     {
       "vendor_number": "1623",
@@ -235541,10 +235541,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 540.0,
+      "Beginning Inventory": 539.0,
       "Forecast": 133.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 407.0
+      "Ending Inventory": 406.0
     },
     {
       "vendor_number": "1449",
@@ -235556,10 +235556,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 407.0,
+      "Beginning Inventory": 406.0,
       "Forecast": 133.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 274.0
+      "Ending Inventory": 273.0
     },
     {
       "vendor_number": "1449",
@@ -235571,10 +235571,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 274.0,
+      "Beginning Inventory": 273.0,
       "Forecast": 133.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 141.0
+      "Ending Inventory": 140.0
     },
     {
       "vendor_number": "1449",
@@ -242111,10 +242111,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 95.0,
+      "Beginning Inventory": 94.0,
       "Forecast": 28.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 67.0
+      "Ending Inventory": 66.0
     },
     {
       "vendor_number": "1234",
@@ -242126,10 +242126,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 67.0,
+      "Beginning Inventory": 66.0,
       "Forecast": 28.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 39.0
+      "Ending Inventory": 38.0
     },
     {
       "vendor_number": "1234",
@@ -242141,10 +242141,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 39.0,
+      "Beginning Inventory": 38.0,
       "Forecast": 28.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 11.0
+      "Ending Inventory": 10.0
     },
     {
       "vendor_number": "1234",
@@ -242201,10 +242201,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 179.0,
+      "Beginning Inventory": 174.0,
       "Forecast": 42.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 137.0
+      "Ending Inventory": 132.0
     },
     {
       "vendor_number": "1234",
@@ -242216,10 +242216,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 137.0,
+      "Beginning Inventory": 132.0,
       "Forecast": 42.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 95.0
+      "Ending Inventory": 90.0
     },
     {
       "vendor_number": "1234",
@@ -242231,10 +242231,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 95.0,
+      "Beginning Inventory": 90.0,
       "Forecast": 42.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 53.0
+      "Ending Inventory": 48.0
     },
     {
       "vendor_number": "1234",
@@ -252371,10 +252371,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 188.0,
+      "Beginning Inventory": 186.0,
       "Forecast": 59.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 129.0
+      "Ending Inventory": 127.0
     },
     {
       "vendor_number": "101",
@@ -252386,10 +252386,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 129.0,
+      "Beginning Inventory": 127.0,
       "Forecast": 59.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 70.0
+      "Ending Inventory": 68.0
     },
     {
       "vendor_number": "101",
@@ -252401,10 +252401,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 70.0,
+      "Beginning Inventory": 68.0,
       "Forecast": 59.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 11.0
+      "Ending Inventory": 9.0
     },
     {
       "vendor_number": "101",
@@ -252641,10 +252641,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 153.0,
+      "Beginning Inventory": 151.0,
       "Forecast": 52.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 100.3
+      "Ending Inventory": 98.3
     },
     {
       "vendor_number": "101",
@@ -252656,10 +252656,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 100.3,
+      "Beginning Inventory": 98.3,
       "Forecast": 52.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 47.7
+      "Ending Inventory": 45.7
     },
     {
       "vendor_number": "101",
@@ -252671,7 +252671,7 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 47.7,
+      "Beginning Inventory": 45.7,
       "Forecast": 52.7,
       "Order Quantity": NaN,
       "Ending Inventory": 0.0
@@ -254261,10 +254261,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 958.0,
+      "Beginning Inventory": 953.0,
       "Forecast": 156.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 802.0
+      "Ending Inventory": 797.0
     },
     {
       "vendor_number": "1929",
@@ -254276,10 +254276,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 802.0,
+      "Beginning Inventory": 797.0,
       "Forecast": 156.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 646.0
+      "Ending Inventory": 641.0
     },
     {
       "vendor_number": "1929",
@@ -254291,10 +254291,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 646.0,
+      "Beginning Inventory": 641.0,
       "Forecast": 156.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 490.0
+      "Ending Inventory": 485.0
     },
     {
       "vendor_number": "1929",
@@ -254351,10 +254351,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 705.0,
+      "Beginning Inventory": 700.0,
       "Forecast": 120.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 585.0
+      "Ending Inventory": 580.0
     },
     {
       "vendor_number": "1929",
@@ -254366,10 +254366,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 585.0,
+      "Beginning Inventory": 580.0,
       "Forecast": 120.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 465.0
+      "Ending Inventory": 460.0
     },
     {
       "vendor_number": "1929",
@@ -254381,10 +254381,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 465.0,
+      "Beginning Inventory": 460.0,
       "Forecast": 120.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 345.0
+      "Ending Inventory": 340.0
     },
     {
       "vendor_number": "2321",
@@ -256871,10 +256871,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 160.0,
+      "Beginning Inventory": 159.0,
       "Forecast": 37.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 122.3
+      "Ending Inventory": 121.3
     },
     {
       "vendor_number": "1917",
@@ -256886,10 +256886,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 122.3,
+      "Beginning Inventory": 121.3,
       "Forecast": 37.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 84.7
+      "Ending Inventory": 83.7
     },
     {
       "vendor_number": "1917",
@@ -256901,10 +256901,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 84.7,
+      "Beginning Inventory": 83.7,
       "Forecast": 37.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 47.0
+      "Ending Inventory": 46.0
     },
     {
       "vendor_number": "1917",
@@ -257591,10 +257591,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 75.0,
+      "Beginning Inventory": 72.0,
       "Forecast": 22.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 52.3
+      "Ending Inventory": 49.3
     },
     {
       "vendor_number": "1917",
@@ -257606,10 +257606,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 52.3,
+      "Beginning Inventory": 49.3,
       "Forecast": 22.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 29.7
+      "Ending Inventory": 26.7
     },
     {
       "vendor_number": "1917",
@@ -257621,10 +257621,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 29.7,
+      "Beginning Inventory": 26.7,
       "Forecast": 22.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 7.0
+      "Ending Inventory": 4.0
     },
     {
       "vendor_number": "1917",
@@ -257771,10 +257771,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 134.0,
+      "Beginning Inventory": 133.0,
       "Forecast": 43.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 91.0
+      "Ending Inventory": 90.0
     },
     {
       "vendor_number": "1917",
@@ -257786,10 +257786,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 91.0,
+      "Beginning Inventory": 90.0,
       "Forecast": 43.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 48.0
+      "Ending Inventory": 47.0
     },
     {
       "vendor_number": "1917",
@@ -257801,10 +257801,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 48.0,
+      "Beginning Inventory": 47.0,
       "Forecast": 43.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 5.0
+      "Ending Inventory": 4.0
     },
     {
       "vendor_number": "1917",
@@ -258131,10 +258131,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 276.0,
+      "Beginning Inventory": 275.0,
       "Forecast": 49.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 227.0
+      "Ending Inventory": 226.0
     },
     {
       "vendor_number": "1917",
@@ -258146,10 +258146,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 227.0,
+      "Beginning Inventory": 226.0,
       "Forecast": 49.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 178.0
+      "Ending Inventory": 177.0
     },
     {
       "vendor_number": "1917",
@@ -258161,10 +258161,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 178.0,
+      "Beginning Inventory": 177.0,
       "Forecast": 49.0,
       "Order Quantity": NaN,
-      "Ending Inventory": 129.0
+      "Ending Inventory": 128.0
     },
     {
       "vendor_number": "1917",
@@ -258581,10 +258581,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 125.0,
+      "Beginning Inventory": 124.0,
       "Forecast": 28.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 96.3
+      "Ending Inventory": 95.3
     },
     {
       "vendor_number": "1917",
@@ -258596,10 +258596,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 96.3,
+      "Beginning Inventory": 95.3,
       "Forecast": 28.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 67.7
+      "Ending Inventory": 66.7
     },
     {
       "vendor_number": "1917",
@@ -258611,10 +258611,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 67.7,
+      "Beginning Inventory": 66.7,
       "Forecast": 28.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 39.0
+      "Ending Inventory": 38.0
     },
     {
       "vendor_number": "1917",
@@ -259931,10 +259931,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 301.0,
+      "Beginning Inventory": 299.0,
       "Forecast": 170.3,
       "Order Quantity": NaN,
-      "Ending Inventory": 130.7
+      "Ending Inventory": 128.7
     },
     {
       "vendor_number": "3",
@@ -259946,7 +259946,7 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 130.7,
+      "Beginning Inventory": 128.7,
       "Forecast": 170.3,
       "Order Quantity": NaN,
       "Ending Inventory": 0.0
@@ -261281,10 +261281,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 2773.0,
+      "Beginning Inventory": 2753.0,
       "Forecast": 1753.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 1019.3
+      "Ending Inventory": 999.3
     },
     {
       "vendor_number": "218",
@@ -261296,9 +261296,9 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 1019.3,
+      "Beginning Inventory": 999.3,
       "Forecast": 1753.7,
-      "Order Quantity": 5469.2,
+      "Order Quantity": 5489.2,
       "Ending Inventory": 4734.9
     },
     {
@@ -261911,10 +261911,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 464.0,
+      "Beginning Inventory": 463.0,
       "Forecast": 181.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 282.3
+      "Ending Inventory": 281.3
     },
     {
       "vendor_number": "1377",
@@ -261926,10 +261926,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 282.3,
+      "Beginning Inventory": 281.3,
       "Forecast": 181.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 100.7
+      "Ending Inventory": 99.7
     },
     {
       "vendor_number": "1377",
@@ -261941,9 +261941,9 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 100.7,
+      "Beginning Inventory": 99.7,
       "Forecast": 181.7,
-      "Order Quantity": 571.5,
+      "Order Quantity": 572.5,
       "Ending Inventory": 490.5
     },
     {
@@ -262541,10 +262541,10 @@
       "Month": "2026-09-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 252.0,
+      "Beginning Inventory": 250.0,
       "Forecast": 58.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 193.3
+      "Ending Inventory": 191.3
     },
     {
       "vendor_number": "766",
@@ -262556,10 +262556,10 @@
       "Month": "2026-10-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 193.3,
+      "Beginning Inventory": 191.3,
       "Forecast": 58.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 134.7
+      "Ending Inventory": 132.7
     },
     {
       "vendor_number": "766",
@@ -262571,10 +262571,10 @@
       "Month": "2026-11-01",
       "Historical Demand": NaN,
       "Safety Stock": 0.0,
-      "Beginning Inventory": 134.7,
+      "Beginning Inventory": 132.7,
       "Forecast": 58.7,
       "Order Quantity": NaN,
-      "Ending Inventory": 76.0
+      "Ending Inventory": 74.0
     },
     {
       "vendor_number": "1441",
