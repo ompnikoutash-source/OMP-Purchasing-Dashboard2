@@ -1,0 +1,867 @@
+[
+  {
+    "dataset": "sundries",
+    "sku": "ARWP3121",
+    "severity": "medium",
+    "issue_id": "default_lead_time_used",
+    "issue_description": "Inferred lead time appears to be default fallback.",
+    "method": "XGBOOST",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0251,
+      "weekly_recent_mean": 0.4615,
+      "weekly_recent_sum_26w": 12.0,
+      "safety_stock": 0.4358,
+      "reorder_point": 0.5469,
+      "order_up_to_level": 0.6545,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 10,
+      "lead_time_source": "",
+      "inferred_lead_time_days": 31.0
+    },
+    "recommendation": "Backfill lead time per vendor/SKU tier and reduce hard default usage.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:525",
+      "mouldingwebapp_refactored.py:527",
+      "flooringwebapp.py:1796"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FIBOW1553",
+    "severity": "medium",
+    "issue_id": "default_lead_time_used",
+    "issue_description": "Inferred lead time appears to be default fallback.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 5.0442,
+      "weekly_recent_mean": 5.0385,
+      "weekly_recent_sum_26w": 131.0,
+      "safety_stock": 8.1169,
+      "reorder_point": 29.0141,
+      "order_up_to_level": 52.5308,
+      "on_order": 99.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "lead_time_source": "",
+      "inferred_lead_time_days": 29.0
+    },
+    "recommendation": "Backfill lead time per vendor/SKU tier and reduce hard default usage.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:525",
+      "mouldingwebapp_refactored.py:527",
+      "flooringwebapp.py:1796"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FIBOW1948",
+    "severity": "medium",
+    "issue_id": "default_lead_time_used",
+    "issue_description": "Inferred lead time appears to be default fallback.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 3.3971,
+      "weekly_recent_mean": 3.4231,
+      "weekly_recent_sum_26w": 89.0,
+      "safety_stock": 15.3259,
+      "reorder_point": 29.3997,
+      "order_up_to_level": 40.7428,
+      "on_order": 18.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "lead_time_source": "",
+      "inferred_lead_time_days": 29.0
+    },
+    "recommendation": "Backfill lead time per vendor/SKU tier and reduce hard default usage.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:525",
+      "mouldingwebapp_refactored.py:527",
+      "flooringwebapp.py:1796"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FIBOW51153",
+    "severity": "medium",
+    "issue_id": "default_lead_time_used",
+    "issue_description": "Inferred lead time appears to be default fallback.",
+    "method": "PROPHET",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 3.0632,
+      "weekly_recent_mean": 2.4615,
+      "weekly_recent_sum_26w": 64.0,
+      "safety_stock": 13.226,
+      "reorder_point": 25.9166,
+      "order_up_to_level": 33.4562,
+      "on_order": 42.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "lead_time_source": "",
+      "inferred_lead_time_days": 29.0
+    },
+    "recommendation": "Backfill lead time per vendor/SKU tier and reduce hard default usage.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:525",
+      "mouldingwebapp_refactored.py:527",
+      "flooringwebapp.py:1796"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FIHAW6202G",
+    "severity": "medium",
+    "issue_id": "default_lead_time_used",
+    "issue_description": "Inferred lead time appears to be default fallback.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "SMOOTH",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 6.4172,
+      "weekly_recent_mean": 6.6538,
+      "weekly_recent_sum_26w": 173.0,
+      "safety_stock": 11.3884,
+      "reorder_point": 37.9741,
+      "order_up_to_level": 70.3319,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "lead_time_source": "",
+      "inferred_lead_time_days": 29.0
+    },
+    "recommendation": "Backfill lead time per vendor/SKU tier and reduce hard default usage.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:525",
+      "mouldingwebapp_refactored.py:527",
+      "flooringwebapp.py:1796"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FPWWFLT424B",
+    "severity": "medium",
+    "issue_id": "weekly_monthly_mismatch",
+    "issue_description": "Weekly and monthly forecast totals disagree materially.",
+    "method": "XGBOOST",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0031,
+      "weekly_recent_mean": 0.0769,
+      "weekly_recent_sum_26w": 2.0,
+      "safety_stock": 0.0539,
+      "reorder_point": 0.0584,
+      "order_up_to_level": 0.0717,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 14,
+      "sum_weekly_fc": 0.1614,
+      "sum_monthly_fc": 0.12,
+      "monthly_to_weekly_ratio": 0.7434
+    },
+    "recommendation": "Standardize weekly->monthly conversion to one pathway and one calendar basis.",
+    "likely_code_locations": [
+      "core/inventory.py:224",
+      "flooringwebapp.py:1748"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "HTDRSG1",
+    "severity": "medium",
+    "issue_id": "weekly_monthly_mismatch",
+    "issue_description": "Weekly and monthly forecast totals disagree materially.",
+    "method": "PROPHET",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0014,
+      "weekly_recent_mean": 0.0385,
+      "weekly_recent_sum_26w": 1.0,
+      "safety_stock": 0.0239,
+      "reorder_point": 0.0263,
+      "order_up_to_level": 0.0322,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 25,
+      "sum_weekly_fc": 0.0716,
+      "sum_monthly_fc": 0.12,
+      "monthly_to_weekly_ratio": 1.6761
+    },
+    "recommendation": "Standardize weekly->monthly conversion to one pathway and one calendar basis.",
+    "likely_code_locations": [
+      "core/inventory.py:224",
+      "flooringwebapp.py:1748"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "SBCH498B15",
+    "severity": "medium",
+    "issue_id": "weekly_monthly_mismatch",
+    "issue_description": "Weekly and monthly forecast totals disagree materially.",
+    "method": "PROPHET",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0012,
+      "weekly_recent_mean": 0.0385,
+      "weekly_recent_sum_26w": 1.0,
+      "safety_stock": 0.0205,
+      "reorder_point": 0.0217,
+      "order_up_to_level": 0.0267,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 12,
+      "sum_weekly_fc": 0.0614,
+      "sum_monthly_fc": 0.11,
+      "monthly_to_weekly_ratio": 1.7919
+    },
+    "recommendation": "Standardize weekly->monthly conversion to one pathway and one calendar basis.",
+    "likely_code_locations": [
+      "core/inventory.py:224",
+      "flooringwebapp.py:1748"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "STGCSTAIN",
+    "severity": "high",
+    "issue_id": "on_order_duplicate_risk",
+    "issue_description": "On-order exists and catch-up order is still suggested for low-demand SKU.",
+    "method": "RECENT_AVG",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.2692,
+      "weekly_recent_mean": 0.2692,
+      "weekly_recent_sum_26w": 7.0,
+      "safety_stock": 3.2857,
+      "reorder_point": 3.8626,
+      "order_up_to_level": 5.0165,
+      "on_order": 1.0,
+      "catchup_order_qty": 11.02,
+      "trailing_zero_weeks": 4
+    },
+    "recommendation": "Include inbound PO due quantity in reorder trigger simulation to avoid duplicate orders.",
+    "likely_code_locations": [
+      "core/inventory.py:95",
+      "flooringwebapp.py:1816"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "SWP161",
+    "severity": "medium",
+    "issue_id": "default_lead_time_used",
+    "issue_description": "Inferred lead time appears to be default fallback.",
+    "method": "XGBOOST",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0079,
+      "weekly_recent_mean": 0.0385,
+      "weekly_recent_sum_26w": 1.0,
+      "safety_stock": 0.1371,
+      "reorder_point": 0.172,
+      "order_up_to_level": 0.2059,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 15,
+      "lead_time_source": "",
+      "inferred_lead_time_days": 31.0
+    },
+    "recommendation": "Backfill lead time per vendor/SKU tier and reduce hard default usage.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:525",
+      "mouldingwebapp_refactored.py:527",
+      "flooringwebapp.py:1796"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOBT58O",
+    "severity": "medium",
+    "issue_id": "default_lead_time_used",
+    "issue_description": "Inferred lead time appears to be default fallback.",
+    "method": "SBA",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 16.9876,
+      "weekly_recent_mean": 21.8867,
+      "weekly_recent_sum_26w": 569.0535,
+      "safety_stock": 35.8006,
+      "reorder_point": 106.1779,
+      "order_up_to_level": 194.2456,
+      "on_order": 200.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "lead_time_source": "",
+      "inferred_lead_time_days": 29.0
+    },
+    "recommendation": "Backfill lead time per vendor/SKU tier and reduce hard default usage.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:525",
+      "mouldingwebapp_refactored.py:527",
+      "flooringwebapp.py:1796"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MORIM",
+    "severity": "medium",
+    "issue_id": "default_lead_time_used",
+    "issue_description": "Inferred lead time appears to be default fallback.",
+    "method": "PROPHET",
+    "demand_class": "LUMPY",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 39.275,
+      "weekly_recent_mean": 41.8335,
+      "weekly_recent_sum_26w": 1087.672,
+      "safety_stock": 422.0546,
+      "reorder_point": 584.7655,
+      "order_up_to_level": 1157.3905,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "lead_time_source": "",
+      "inferred_lead_time_days": 29.0
+    },
+    "recommendation": "Backfill lead time per vendor/SKU tier and reduce hard default usage.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:525",
+      "mouldingwebapp_refactored.py:527",
+      "flooringwebapp.py:1796"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GFBHO9510",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 21.1489,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 20.9858,
+      "reorder_point": 98.3018,
+      "order_up_to_level": 180.45,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GFBHO9511",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 21.1489,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 20.9858,
+      "reorder_point": 98.3018,
+      "order_up_to_level": 180.45,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GHNPPHO5207-L",
+    "severity": "medium",
+    "issue_id": "weekly_monthly_mismatch",
+    "issue_description": "Weekly and monthly forecast totals disagree materially.",
+    "method": "XGBoost (Local)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 131.8036,
+      "weekly_recent_mean": 203.9433,
+      "weekly_recent_sum_26w": 3670.98,
+      "safety_stock": 213.1787,
+      "reorder_point": 512.8505,
+      "order_up_to_level": 837.495,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "sum_weekly_fc": 1449.84,
+      "sum_monthly_fc": 2704.4615,
+      "monthly_to_weekly_ratio": 1.8654
+    },
+    "recommendation": "Standardize weekly->monthly conversion to one pathway and one calendar basis.",
+    "likely_code_locations": [
+      "core/inventory.py:224",
+      "flooringwebapp.py:1748"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GHNPPHO5207-R",
+    "severity": "medium",
+    "issue_id": "weekly_monthly_mismatch",
+    "issue_description": "Weekly and monthly forecast totals disagree materially.",
+    "method": "XGBoost (Local)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 131.8036,
+      "weekly_recent_mean": 203.9433,
+      "weekly_recent_sum_26w": 3670.98,
+      "safety_stock": 213.1787,
+      "reorder_point": 512.8505,
+      "order_up_to_level": 837.495,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "sum_weekly_fc": 1449.84,
+      "sum_monthly_fc": 2704.4615,
+      "monthly_to_weekly_ratio": 1.8654
+    },
+    "recommendation": "Standardize weekly->monthly conversion to one pathway and one calendar basis.",
+    "likely_code_locations": [
+      "core/inventory.py:224",
+      "flooringwebapp.py:1748"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVVN907",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "SARIMA(0,1,1) + drift_cap",
+    "demand_class": "LUMPY",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 10475.8857,
+      "weekly_recent_mean": 4102.384,
+      "weekly_recent_sum_26w": 82047.68,
+      "safety_stock": 9886.605,
+      "reorder_point": 21259.2221,
+      "order_up_to_level": 33665.7135,
+      "on_order": 0.0,
+      "catchup_order_qty": 12406.4914,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": 2.5536
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCAS3102",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 21.6605,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 12.6851,
+      "reorder_point": 17.6342,
+      "order_up_to_level": 27.5325,
+      "on_order": 0.0,
+      "catchup_order_qty": 9.8982,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCAS3105",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 21.6605,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 12.6851,
+      "reorder_point": 17.6342,
+      "order_up_to_level": 27.5325,
+      "on_order": 0.0,
+      "catchup_order_qty": 9.8982,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCAS3106",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 21.6605,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 12.6851,
+      "reorder_point": 17.6342,
+      "order_up_to_level": 27.5325,
+      "on_order": 0.0,
+      "catchup_order_qty": 9.8982,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCAS3109",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 21.6605,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 12.6851,
+      "reorder_point": 17.6342,
+      "order_up_to_level": 27.5325,
+      "on_order": 0.0,
+      "catchup_order_qty": 9.8982,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCAS3115",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 21.6605,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 12.6851,
+      "reorder_point": 17.6342,
+      "order_up_to_level": 27.5325,
+      "on_order": 0.0,
+      "catchup_order_qty": 9.8982,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCAS3211",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 1537.8924,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 900.6434,
+      "reorder_point": 1252.0312,
+      "order_up_to_level": 1954.807,
+      "on_order": 0.0,
+      "catchup_order_qty": 702.7757,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCAS3212",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 21.6605,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 12.6851,
+      "reorder_point": 17.6342,
+      "order_up_to_level": 27.5325,
+      "on_order": 0.0,
+      "catchup_order_qty": 9.8982,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCDN8701",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 252.6898,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 147.984,
+      "reorder_point": 205.7202,
+      "order_up_to_level": 321.1927,
+      "on_order": 0.0,
+      "catchup_order_qty": 115.4725,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCDN8707",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 25.269,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 14.7984,
+      "reorder_point": 20.572,
+      "order_up_to_level": 32.1193,
+      "on_order": 0.0,
+      "catchup_order_qty": 11.5472,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCDN8708",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 25.269,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 14.7984,
+      "reorder_point": 20.572,
+      "order_up_to_level": 32.1193,
+      "on_order": 0.0,
+      "catchup_order_qty": 11.5472,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCDN8709",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 264.9676,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 132.978,
+      "reorder_point": 193.5196,
+      "order_up_to_level": 314.6027,
+      "on_order": 0.0,
+      "catchup_order_qty": 121.0831,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCDN8710",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 3183.8917,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 1864.5979,
+      "reorder_point": 2592.0747,
+      "order_up_to_level": 4047.0282,
+      "on_order": 0.0,
+      "catchup_order_qty": 1454.9535,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCDN8712",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 25.269,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 14.7984,
+      "reorder_point": 20.572,
+      "order_up_to_level": 32.1193,
+      "on_order": 0.0,
+      "catchup_order_qty": 11.5472,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  }
+]

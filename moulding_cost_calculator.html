@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moulding True Cost Calculator — Old Master Products</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;font-size:13px;background:#eef2f7;color:#1a2a3a;min-height:100vh}
+
+/* ── Header ── */
+.page-header{background:linear-gradient(135deg,#1b3a5c 0%,#2d5f8a 100%);color:white;padding:16px 28px;display:flex;justify-content:space-between;align-items:center}
+.page-header h1{font-size:1.35rem;font-weight:800;letter-spacing:.01em}
+.page-header .subtitle{font-size:.75rem;opacity:.7;margin-top:3px}
+#save_indicator{font-size:.7rem;color:rgba(255,255,255,.55)}
+
+/* ── Sticky bar ── */
+.sticky-bar{position:sticky;top:0;z-index:200;background:#162e4a;color:white;padding:7px 28px;display:flex;gap:0;align-items:stretch;box-shadow:0 2px 10px rgba(0,0,0,.35)}
+.sbar-item{padding:4px 22px;border-right:1px solid rgba(255,255,255,.15);text-align:center;min-width:160px}
+.sbar-item:last-child{border-right:none}
+.sbar-item .sl{font-size:.63rem;opacity:.65;text-transform:uppercase;letter-spacing:.06em}
+.sbar-item .sv{font-size:1rem;font-weight:800;font-variant-numeric:tabular-nums}
+
+/* ── Content wrapper ── */
+.wrap{max-width:1260px;margin:0 auto;padding:14px 20px 40px}
+
+/* ── Volume section (always open) ── */
+.vol-panel{background:white;border-radius:6px;box-shadow:0 1px 5px rgba(0,0,0,.09);margin-bottom:10px;overflow:hidden}
+.panel-hdr{background:linear-gradient(90deg,#1b3a5c,#2d5f8a);color:white;padding:9px 16px;font-weight:700;font-size:.8rem;letter-spacing:.06em;display:flex;justify-content:space-between;align-items:center}
+.panel-hdr .phsub{font-size:.8rem;font-weight:700;font-variant-numeric:tabular-nums}
+.panel-hdr.clickable{cursor:pointer;user-select:none}
+.panel-hdr.clickable:hover{background:linear-gradient(90deg,#16304e,#255277)}
+.panel-hdr .chevron{font-size:.7rem;opacity:.7;margin-left:8px}
+.panel-body{padding:14px 18px}
+.panel-body.hidden{display:none}
+
+/* ── Subsection header ── */
+.sub-hdr{background:#e6eef7;color:#1b3a5c;padding:5px 10px;border-left:4px solid #2d5f8a;font-weight:700;font-size:.75rem;border-radius:0 3px 3px 0;margin:12px 0 6px}
+.sub-hdr:first-child{margin-top:0}
+
+/* ── Input grid ── */
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px 18px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px 18px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 18px}
+
+/* ── Field ── */
+.f{display:flex;flex-direction:column;gap:2px;margin-bottom:4px}
+.f label{font-size:.69rem;color:#4a6080;font-weight:600;line-height:1.25}
+.f input[type=number]{width:100%;padding:5px 8px;border:1px solid #c0d4e8;border-radius:3px;font-size:.82rem;font-family:'Segoe UI',monospace;color:#1a2a3a;background:#fafcff;transition:border-color .15s,box-shadow .15s}
+.f input[type=number]:focus{outline:none;border-color:#2d5f8a;background:white;box-shadow:0 0 0 2px rgba(45,95,138,.18)}
+.f .un{font-size:.64rem;color:#8aaabf;margin-top:1px}
+.f.span2{grid-column:span 2}
+
+/* ── Subtotal bar ── */
+.sub-total{background:#d8e8f6;border-left:5px solid #1b3a5c;padding:7px 14px;margin-top:10px;border-radius:0 3px 3px 0;display:flex;justify-content:space-between;font-weight:700;font-size:.84rem;color:#1b3a5c}
+
+/* ── Section divider ── */
+.sdiv{height:1px;background:#e0ecf8;margin:10px 0}
+
+/* ── Note ── */
+.note{font-size:.68rem;color:#7090b0;font-style:italic;margin:3px 0 8px}
+
+/* ── Results ── */
+.results-wrap{background:white;border-radius:6px;box-shadow:0 2px 10px rgba(0,0,0,.1);margin-top:16px;overflow:hidden}
+.results-hdr{background:#1b3a5c;color:white;padding:13px 20px;font-size:.95rem;font-weight:800;letter-spacing:.04em}
+.results-body{padding:20px}
+.res-section-title{font-size:.72rem;font-weight:700;color:#1b3a5c;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid #2d5f8a}
+
+/* Metric cards */
+.metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.mc{background:#f4f9fd;border:1px solid #c0d4e8;border-radius:6px;padding:14px 16px;text-align:center}
+.mc.primary{background:#1b3a5c;border-color:#1b3a5c;color:white}
+.mc .ml{font-size:.65rem;color:#6080a0;text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:5px}
+.mc.primary .ml{color:rgba(255,255,255,.65)}
+.mc .mv{font-size:1.3rem;font-weight:800;color:#1b3a5c;font-variant-numeric:tabular-nums}
+.mc.primary .mv{color:white}
+.mc .ms{font-size:.65rem;color:#8090a8;margin-top:3px}
+
+/* Make vs Buy */
+.mvb-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;background:#f4f9fd;border:1px solid #c0d4e8;border-radius:6px;padding:14px 16px;margin-bottom:18px;align-items:end}
+.mvb-item .mvl{font-size:.68rem;color:#5070a0;font-weight:600;margin-bottom:4px}
+.mvb-item .mvv{font-size:.95rem;font-weight:700;color:#1b3a5c;font-variant-numeric:tabular-nums}
+.mvb-item .mvd{font-size:.7rem;margin-top:3px}
+.green{color:#1a8040;font-weight:700}
+.red{color:#c0392b;font-weight:700}
+
+/* Break-even */
+.be-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;background:#f4f9fd;border:1px solid #c0d4e8;border-radius:6px;padding:14px 16px;margin-bottom:18px;align-items:end}
+.be-item .bel{font-size:.68rem;color:#5070a0;font-weight:600;margin-bottom:4px}
+.be-item .bev{font-size:.95rem;font-weight:700;color:#1b3a5c;font-variant-numeric:tabular-nums}
+.be-item .bed{font-size:.7rem;margin-top:3px}
+
+/* Breakdown table */
+table.bdown{width:100%;border-collapse:collapse;font-size:.78rem;margin:10px 0 18px}
+table.bdown th{background:#1b3a5c;color:white;padding:7px 12px;text-align:left;font-weight:600;font-size:.68rem;text-transform:uppercase;letter-spacing:.05em}
+table.bdown th:not(:first-child){text-align:right}
+table.bdown td{padding:6px 12px;border-bottom:1px solid #e6eef8;font-variant-numeric:tabular-nums}
+table.bdown td:not(:first-child){text-align:right}
+table.bdown tr:nth-child(even) td{background:#f4f9fd}
+table.bdown tr.trow td{background:#1b3a5c;color:white;font-weight:700;border:none}
+table.bdown tr:not(.trow):hover td{background:#e4f0fc}
+
+/* Charts row */
+.charts-row{display:grid;grid-template-columns:55% 43%;gap:18px;margin-top:6px}
+.chart-box{background:#f8fbff;border:1px solid #d0e4f4;border-radius:6px;padding:14px}
+.chart-box h3{font-size:.72rem;color:#1b3a5c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+
+@media(max-width:900px){
+  .g3,.g4,.metrics-row,.be-row{grid-template-columns:repeat(2,1fr)}
+  .charts-row,.mvb-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <h1>Moulding Department — True Cost Model</h1>
+    <div class="subtitle">All inputs are monthly. Replace placeholder defaults with actuals. Values are saved automatically in your browser.</div>
+  </div>
+  <div id="save_indicator">Inputs auto-saved</div>
+</div>
+
+<div class="sticky-bar">
+  <div class="sbar-item"><div class="sl">Total Monthly Cost</div><div class="sv" id="bar_total">—</div></div>
+  <div class="sbar-item"><div class="sl">True Cost / LF (all-in)</div><div class="sv" id="bar_lf">—</div></div>
+  <div class="sbar-item"><div class="sl">Cost / LF (excl. opportunity)</div><div class="sv" id="bar_lf_ex">—</div></div>
+  <div class="sbar-item"><div class="sl">vs. Purchased</div><div class="sv" id="bar_mvb">—</div></div>
+</div>
+
+<div class="wrap">
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 0 — PRODUCTION VOLUME BASIS (always open)
+════════════════════════════════════════════════════════ -->
+<div class="vol-panel">
+  <div class="panel-hdr">SECTION 0 — PRODUCTION VOLUME BASIS</div>
+  <div class="panel-body">
+    <div class="g4">
+      <div class="f"><label>Target sellable output (LF/month)</label><input type="number" id="s0_lf" value="5000" min="0" step="100"><div class="un">linear feet you actually ship/sell</div></div>
+      <div class="f"><label>Distinct SKU formulas run per month</label><input type="number" id="s0_sku" value="15" min="0" step="1"></div>
+      <div class="f"><label>Production runs (round-trips) per month</label><input type="number" id="s0_runs" value="8" min="0" step="1"><div class="un">each run = Van Nuys → Gardena → Van Nuys</div></div>
+      <div class="f"><label>Rework rate (% of production LF)</label><input type="number" id="s0_rework" value="8" min="0" max="100" step="0.5"><div class="un">fail QC → return to Gardena</div></div>
+    </div>
+    <div class="g4" style="margin-top:6px">
+      <div class="f"><label>Write-off rate (% of production LF)</label><input type="number" id="s0_writeoff" value="2" min="0" max="100" step="0.5"><div class="un">unrecoverable — fully scrapped</div></div>
+    </div>
+    <div id="vol_stats" class="note" style="margin-top:8px">Gross LF processed: — &nbsp;|&nbsp; Rework LF: — &nbsp;|&nbsp; Write-off LF: —</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 1 — DIRECT LABOR
+════════════════════════════════════════════════════════ -->
+<div class="vol-panel">
+  <div class="panel-hdr clickable" onclick="toggle('s1')">
+    <span>SECTION 1 — DIRECT LABOR</span>
+    <span><span id="subtotal_s1" class="phsub">$0.00</span> <span class="chevron" id="chev_s1">▼</span></span>
+  </div>
+  <div class="panel-body hidden" id="body_s1">
+
+    <div class="sub-hdr">1.1 — Gardena Production Workers</div>
+    <div class="g3">
+      <div class="f"><label>Number of production workers</label><input type="number" id="s1_prod_workers" value="3" min="0" step="1"></div>
+      <div class="f"><label>Average hourly wage — production ($)</label><input type="number" id="s1_prod_wage" value="20.00" min="0" step="0.50"><div class="un">$ / hour</div></div>
+      <div class="f"><label>Hours per worker per week</label><input type="number" id="s1_prod_hrs" value="40" min="0" step="1"></div>
+    </div>
+
+    <div class="sub-hdr">1.2 — Supervisor / Floor Lead (Gardena)</div>
+    <div class="g3">
+      <div class="f"><label>Supervisor hours per week</label><input type="number" id="s1_sup_hrs" value="20" min="0" step="1"></div>
+      <div class="f"><label>Supervisor hourly rate ($)</label><input type="number" id="s1_sup_wage" value="28.00" min="0" step="0.50"><div class="un">$ / hour</div></div>
+    </div>
+
+    <div class="sub-hdr">1.3 — Artisan: Color Formula Development</div>
+    <div class="g3">
+      <div class="f"><label>Artisan hours per formula / color match</label><input type="number" id="s1_artisan_hrs" value="2.0" min="0" step="0.25"></div>
+      <div class="f"><label>Artisan hourly rate ($)</label><input type="number" id="s1_artisan_rate" value="65.00" min="0" step="1.00"><div class="un">$ / hour</div></div>
+      <div class="f"><label>Additional revision sessions per month</label><input type="number" id="s1_artisan_revisions" value="3" min="0" step="1"><div class="un">batches needing a formula tweak</div></div>
+    </div>
+
+    <div class="sub-hdr">1.4 — QC Inspection (Van Nuys)</div>
+    <div class="g3">
+      <div class="f"><label>QC inspector hours per month</label><input type="number" id="s1_qc_hrs" value="40" min="0" step="1"></div>
+      <div class="f"><label>QC inspector hourly rate ($)</label><input type="number" id="s1_qc_wage" value="22.00" min="0" step="0.50"><div class="un">$ / hour</div></div>
+    </div>
+
+    <div class="sub-hdr">1.5 — Receiving &amp; Put-Away (Van Nuys, moulding only)</div>
+    <div class="g3">
+      <div class="f"><label>Receiving / put-away hours per month</label><input type="number" id="s1_recv_hrs" value="20" min="0" step="1"></div>
+      <div class="f"><label>Receiving labor hourly rate ($)</label><input type="number" id="s1_recv_wage" value="19.00" min="0" step="0.50"><div class="un">$ / hour</div></div>
+    </div>
+
+    <div class="sub-hdr">1.6 — Rework Labor (Gardena: re-sand, re-stain, re-finish)</div>
+    <div class="g3">
+      <div class="f"><label>Marginal rework labor ($ / LF re-processed)</label><input type="number" id="s1_rework_labor_lf" value="0.35" min="0" step="0.01"><div class="un">incremental cost; base production is already in 1.1</div></div>
+    </div>
+
+    <div class="sub-total"><span>Section 1 — Direct Labor</span><span id="subtotal_s1_footer">$0.00 / month</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 2 — RAW & PROCESS MATERIALS
+════════════════════════════════════════════════════════ -->
+<div class="vol-panel">
+  <div class="panel-hdr clickable" onclick="toggle('s2')">
+    <span>SECTION 2 — RAW &amp; PROCESS MATERIALS</span>
+    <span><span id="subtotal_s2" class="phsub">$0.00</span> <span class="chevron" id="chev_s2">▼</span></span>
+  </div>
+  <div class="panel-body hidden" id="body_s2">
+    <p class="note">Per-LF rates apply to <strong>gross LF processed</strong> (sellable + rework + write-off) — see Section 0.</p>
+
+    <div class="sub-hdr">2.1 — Per-Linear-Foot Costs</div>
+    <div class="g3">
+      <div class="f"><label>Raw moulding profile ($ / LF)</label><input type="number" id="s2_raw" value="0.45" min="0" step="0.01"></div>
+      <div class="f"><label>Stain / dye ($ / LF)</label><input type="number" id="s2_stain" value="0.08" min="0" step="0.01"></div>
+      <div class="f"><label>Sealer / primer coat ($ / LF)</label><input type="number" id="s2_sealer" value="0.05" min="0" step="0.01"></div>
+      <div class="f"><label>Topcoat / finish ($ / LF)</label><input type="number" id="s2_topcoat" value="0.07" min="0" step="0.01"></div>
+      <div class="f"><label>Abrasives / sandpaper ($ / LF)</label><input type="number" id="s2_abrasive" value="0.03" min="0" step="0.005"></div>
+      <div class="f"><label>Consumables — rags, tape, applicators ($ / LF)</label><input type="number" id="s2_consumable" value="0.02" min="0" step="0.005"></div>
+    </div>
+
+    <div class="sub-hdr">2.2 — Formula Run Costs (per SKU / per run)</div>
+    <div class="g3">
+      <div class="f"><label>Tints &amp; pigments per formula run ($)</label><input type="number" id="s2_tint" value="15.00" min="0" step="1.00"></div>
+      <div class="f"><label>Test-piece material per formula ($)</label><input type="number" id="s2_test_piece" value="8.00" min="0" step="1.00"></div>
+    </div>
+
+    <div class="sub-total"><span>Section 2 — Raw &amp; Process Materials</span><span id="subtotal_s2_footer">$0.00 / month</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 3 — PACKAGING & TRANSFER MATERIALS
+════════════════════════════════════════════════════════ -->
+<div class="vol-panel">
+  <div class="panel-hdr clickable" onclick="toggle('s3')">
+    <span>SECTION 3 — PACKAGING &amp; TRANSFER MATERIALS</span>
+    <span><span id="subtotal_s3" class="phsub">$0.00</span> <span class="chevron" id="chev_s3">▼</span></span>
+  </div>
+  <div class="panel-body hidden" id="body_s3">
+    <div class="g3">
+      <div class="f"><label>Packaging — corner guards, wrap, straps ($ / LF shipped)</label><input type="number" id="s3_pkg_lf" value="0.04" min="0" step="0.005"></div>
+      <div class="f"><label>Bundle labels &amp; barcodes per production run ($)</label><input type="number" id="s3_label" value="3.00" min="0" step="0.50"></div>
+      <div class="f"><label>Van lining / protective materials per run ($)</label><input type="number" id="s3_van_lining" value="5.00" min="0" step="0.50"></div>
+      <div class="f"><label>Re-packaging for rework returns ($ / LF re-packaged)</label><input type="number" id="s3_rework_pkg" value="0.02" min="0" step="0.005"></div>
+    </div>
+    <div class="sub-total"><span>Section 3 — Packaging &amp; Transfer</span><span id="subtotal_s3_footer">$0.00 / month</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 4 — TRANSPORTATION
+════════════════════════════════════════════════════════ -->
+<div class="vol-panel">
+  <div class="panel-hdr clickable" onclick="toggle('s4')">
+    <span>SECTION 4 — TRANSPORTATION  (Van Nuys ↔ Gardena)</span>
+    <span><span id="subtotal_s4" class="phsub">$0.00</span> <span class="chevron" id="chev_s4">▼</span></span>
+  </div>
+  <div class="panel-body hidden" id="body_s4">
+
+    <div class="sub-hdr">4.1 — Variable Per-Run Costs</div>
+    <div class="g3">
+      <div class="f"><label>Distance one-way Van Nuys → Gardena (miles)</label><input type="number" id="s4_distance" value="17" min="0" step="0.5"></div>
+      <div class="f"><label>Vehicle fuel efficiency (MPG)</label><input type="number" id="s4_mpg" value="14" min="1" step="0.5"></div>
+      <div class="f"><label>Fuel price ($ / gallon)</label><input type="number" id="s4_fuel_price" value="4.80" min="0" step="0.05"></div>
+      <div class="f"><label>Driver hourly rate — transport ($)</label><input type="number" id="s4_driver_rate" value="20.00" min="0" step="0.50"></div>
+      <div class="f"><label>Drive time one-way (hours)</label><input type="number" id="s4_drive_time" value="0.75" min="0" step="0.25"></div>
+      <div class="f"><label>Extra round-trips per month for rework returns</label><input type="number" id="s4_rework_runs" value="2" min="0" step="0.5"></div>
+    </div>
+
+    <div class="sub-hdr">4.2 — Fixed Vehicle Ownership (pro-rated monthly)</div>
+    <div class="g4">
+      <div class="f"><label>Vehicle insurance ($ / month)</label><input type="number" id="s4_insurance" value="180" min="0" step="5"></div>
+      <div class="f"><label>Vehicle depreciation ($ / month)</label><input type="number" id="s4_depreciation" value="250" min="0" step="10"></div>
+      <div class="f"><label>Maintenance reserve ($ / month)</label><input type="number" id="s4_maintenance" value="120" min="0" step="10"></div>
+      <div class="f"><label>Registration &amp; licensing ($ / month)</label><input type="number" id="s4_registration" value="25" min="0" step="5"></div>
+    </div>
+
+    <div class="sub-total"><span>Section 4 — Transportation</span><span id="subtotal_s4_footer">$0.00 / month</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 5 — FACILITY: GARDENA
+════════════════════════════════════════════════════════ -->
+<div class="vol-panel">
+  <div class="panel-hdr clickable" onclick="toggle('s5')">
+    <span>SECTION 5 — FACILITY: GARDENA PRODUCTION SPACE</span>
+    <span><span id="subtotal_s5" class="phsub">$0.00</span> <span class="chevron" id="chev_s5">▼</span></span>
+  </div>
+  <div class="panel-body hidden" id="body_s5">
+    <div class="g3">
+      <div class="f"><label>Monthly rent — Gardena production space ($)</label><input type="number" id="s5_rent" value="3500" min="0" step="50"></div>
+      <div class="f"><label>Electricity — machinery (sprayers, sanders, compressor) ($)</label><input type="number" id="s5_elec_mach" value="400" min="0" step="10"></div>
+      <div class="f"><label>Electricity — lighting &amp; HVAC / ventilation ($)</label><input type="number" id="s5_elec_light" value="150" min="0" step="10"></div>
+      <div class="f"><label>Gas / propane — heated drying room ($)</label><input type="number" id="s5_gas" value="80" min="0" step="5"></div>
+      <div class="f"><label>Facility maintenance reserve ($ / month)</label><input type="number" id="s5_maintenance" value="100" min="0" step="10"></div>
+      <div class="f"><label>Waste disposal — solvent-contaminated materials ($)</label><input type="number" id="s5_waste" value="120" min="0" step="10"></div>
+    </div>
+    <div class="sub-total"><span>Section 5 — Facility: Gardena</span><span id="subtotal_s5_footer">$0.00 / month</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 6 — FACILITY: VAN NUYS SPACE
+════════════════════════════════════════════════════════ -->
+<div class="vol-panel">
+  <div class="panel-hdr clickable" onclick="toggle('s6')">
+    <span>SECTION 6 — FACILITY: VAN NUYS SPACE  (moulding-allocated sq ft)</span>
+    <span><span id="subtotal_s6" class="phsub">$0.00</span> <span class="chevron" id="chev_s6">▼</span></span>
+  </div>
+  <div class="panel-body hidden" id="body_s6">
+    <div class="g3">
+      <div class="f"><label>Facility cost per sq ft / month ($)</label><input type="number" id="s6_cost_sqft" value="1.20" min="0" step="0.05"><div class="un">blended rate for Van Nuys location</div></div>
+      <div class="f"><label>Raw moulding inventory storage (sq ft)</label><input type="number" id="s6_raw_sqft" value="300" min="0" step="10"></div>
+      <div class="f"><label>Drying / acclimation staging area (sq ft)</label><input type="number" id="s6_drying_sqft" value="200" min="0" step="10"><div class="un">space during drying hold after QC</div></div>
+      <div class="f"><label>Finished moulding warehouse storage (sq ft)</label><input type="number" id="s6_finished_sqft" value="400" min="0" step="10"></div>
+      <div class="f"><label>QC inspection area (sq ft)</label><input type="number" id="s6_qc_sqft" value="100" min="0" step="10"></div>
+    </div>
+    <div id="s6_stats" class="note" style="margin-top:6px">Total moulding sq ft at Van Nuys: —</div>
+    <div class="sub-total"><span>Section 6 — Van Nuys Space</span><span id="subtotal_s6_footer">$0.00 / month</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 7 — MACHINERY & EQUIPMENT
+════════════════════════════════════════════════════════ -->
+<div class="vol-panel">
+  <div class="panel-hdr clickable" onclick="toggle('s7')">
+    <span>SECTION 7 — MACHINERY &amp; EQUIPMENT</span>
+    <span><span id="subtotal_s7" class="phsub">$0.00</span> <span class="chevron" id="chev_s7">▼</span></span>
+  </div>
+  <div class="panel-body hidden" id="body_s7">
+    <div class="g4">
+      <div class="f"><label>Equipment depreciation — all production machinery ($ / month)</label><input type="number" id="s7_depreciation" value="350" min="0" step="10"></div>
+      <div class="f"><label>Equipment maintenance reserve ($ / month)</label><input type="number" id="s7_maintenance" value="150" min="0" step="10"></div>
+      <div class="f"><label>Consumable tooling — tips, nozzles, hoses ($ / month)</label><input type="number" id="s7_tips" value="60" min="0" step="5"></div>
+      <div class="f"><label>Spray booth filter replacement ($ / month)</label><input type="number" id="s7_filters" value="45" min="0" step="5"></div>
+    </div>
+    <div class="sub-total"><span>Section 7 — Machinery &amp; Equipment</span><span id="subtotal_s7_footer">$0.00 / month</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 8 — QUALITY CONTROL & DEFECTS
+════════════════════════════════════════════════════════ -->
+<div class="vol-panel">
+  <div class="panel-hdr clickable" onclick="toggle('s8')">
+    <span>SECTION 8 — QUALITY CONTROL &amp; DEFECTS</span>
+    <span><span id="subtotal_s8" class="phsub">$0.00</span> <span class="chevron" id="chev_s8">▼</span></span>
+  </div>
+  <div class="panel-body hidden" id="body_s8">
+    <div class="g3">
+      <div class="f"><label>QC supplies — swatches, test materials ($ / month)</label><input type="number" id="s8_supplies" value="50" min="0" step="5"></div>
+      <div class="f"><label>Write-off handling cost ($ / LF scrapped)</label><input type="number" id="s8_writeoff_handling" value="0.15" min="0" step="0.01"><div class="un">labor to segregate &amp; dispose unrecoverable pieces</div></div>
+      <div class="f"><label>Customer return rate (% of shipped LF)</label><input type="number" id="s8_return_pct" value="1.0" min="0" max="10" step="0.1"></div>
+      <div class="f"><label>Replacement + re-delivery cost per returned LF ($)</label><input type="number" id="s8_return_cost" value="1.50" min="0" step="0.05"><div class="un">re-production + re-packaging + re-delivery</div></div>
+      <div class="f"><label>Color-variance discount cost ($ / month)</label><input type="number" id="s8_discount" value="75" min="0" step="5"><div class="un">revenue given back on slightly-off batches customer accepts</div></div>
+    </div>
+    <div class="sub-total"><span>Section 8 — QC &amp; Defects</span><span id="subtotal_s8_footer">$0.00 / month</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 9 — COMPLIANCE & REGULATORY
+════════════════════════════════════════════════════════ -->
+<div class="vol-panel">
+  <div class="panel-hdr clickable" onclick="toggle('s9')">
+    <span>SECTION 9 — COMPLIANCE &amp; REGULATORY  (California / SCAQMD)</span>
+    <span><span id="subtotal_s9" class="phsub">$0.00</span> <span class="chevron" id="chev_s9">▼</span></span>
+  </div>
+  <div class="panel-body hidden" id="body_s9">
+    <div class="g3">
+      <div class="f"><label>SCAQMD VOC permit fees ($ / month)</label><input type="number" id="s9_aqmd" value="80" min="0" step="5"></div>
+      <div class="f"><label>Hazardous waste disposal — solvents ($ / month)</label><input type="number" id="s9_hazwaste" value="150" min="0" step="10"></div>
+      <div class="f"><label>PPE &amp; safety supplies ($ / month)</label><input type="number" id="s9_ppe" value="60" min="0" step="5"></div>
+      <div class="f"><label>Workers' comp uplift — production classification ($ / month)</label><input type="number" id="s9_wc" value="200" min="0" step="10"><div class="un">delta above standard warehouse WC rate</div></div>
+      <div class="f"><label>Fire code compliance — inspections, equipment ($ / month)</label><input type="number" id="s9_fire" value="30" min="0" step="5"></div>
+      <div class="f"><label>Compliance reporting labor (hours / month)</label><input type="number" id="s9_comp_hrs" value="3" min="0" step="0.5"></div>
+      <div class="f"><label>Compliance admin hourly rate ($)</label><input type="number" id="s9_comp_rate" value="25" min="0" step="0.5"></div>
+    </div>
+    <div class="sub-total"><span>Section 9 — Compliance &amp; Regulatory</span><span id="subtotal_s9_footer">$0.00 / month</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 10 — INVENTORY CARRYING COSTS
+════════════════════════════════════════════════════════ -->
+<div class="vol-panel">
+  <div class="panel-hdr clickable" onclick="toggle('s10')">
+    <span>SECTION 10 — INVENTORY CARRYING COSTS</span>
+    <span><span id="subtotal_s10" class="phsub">$0.00</span> <span class="chevron" id="chev_s10">▼</span></span>
+  </div>
+  <div class="panel-body hidden" id="body_s10">
+    <div class="g3">
+      <div class="f"><label>Average raw moulding inventory value ($)</label><input type="number" id="s10_raw_inv" value="8000" min="0" step="500"></div>
+      <div class="f"><label>Average WIP value — in transit / in production ($)</label><input type="number" id="s10_wip" value="3000" min="0" step="250"></div>
+      <div class="f"><label>Average finished moulding inventory value ($)</label><input type="number" id="s10_finished" value="12000" min="0" step="500"></div>
+      <div class="f"><label>Cost of capital (annual %)</label><input type="number" id="s10_capital" value="8.0" min="0" max="50" step="0.5"><div class="un">applies to all inventory tiers</div></div>
+      <div class="f"><label>Inventory shrinkage &amp; damage rate (annual %)</label><input type="number" id="s10_shrinkage" value="2.0" min="0" max="20" step="0.1"></div>
+      <div class="f"><label>Obsolescence write-down — finished goods (annual %)</label><input type="number" id="s10_obsolescence" value="3.0" min="0" max="20" step="0.1"><div class="un">discontinued SKUs, mismatched color lots</div></div>
+    </div>
+    <div id="s10_stats" class="note" style="margin-top:6px">Total inventory at risk: —</div>
+    <div class="sub-total"><span>Section 10 — Inventory Carrying</span><span id="subtotal_s10_footer">$0.00 / month</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 11 — INDIRECT & ADMINISTRATIVE
+════════════════════════════════════════════════════════ -->
+<div class="vol-panel">
+  <div class="panel-hdr clickable" onclick="toggle('s11')">
+    <span>SECTION 11 — INDIRECT &amp; ADMINISTRATIVE</span>
+    <span><span id="subtotal_s11" class="phsub">$0.00</span> <span class="chevron" id="chev_s11">▼</span></span>
+  </div>
+  <div class="panel-body hidden" id="body_s11">
+    <div class="g3">
+      <div class="f"><label>Purchasing / procurement hours per month</label><input type="number" id="s11_purchasing_hrs" value="8" min="0" step="0.5"></div>
+      <div class="f"><label>Purchasing hourly rate ($)</label><input type="number" id="s11_purchasing_rate" value="24.00" min="0" step="0.5"></div>
+      <div class="f"><label>Order management hours per month</label><input type="number" id="s11_order_hrs" value="10" min="0" step="0.5"></div>
+      <div class="f"><label>Order management hourly rate ($)</label><input type="number" id="s11_order_rate" value="22.00" min="0" step="0.5"></div>
+      <div class="f"><label>Management oversight hours per month</label><input type="number" id="s11_mgmt_hrs" value="15" min="0" step="0.5"></div>
+      <div class="f"><label>Management hourly rate ($)</label><input type="number" id="s11_mgmt_rate" value="45.00" min="0" step="1.0"></div>
+      <div class="f"><label>Inventory management hours per month</label><input type="number" id="s11_inv_hrs" value="6" min="0" step="0.5"></div>
+      <div class="f"><label>Inventory management hourly rate ($)</label><input type="number" id="s11_inv_rate" value="22.00" min="0" step="0.5"></div>
+      <div class="f"><label>ERP / software allocation ($ / month)</label><input type="number" id="s11_software" value="75" min="0" step="5"></div>
+    </div>
+    <div class="sub-total"><span>Section 11 — Admin &amp; Indirect</span><span id="subtotal_s11_footer">$0.00 / month</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 12 — SALES & CUSTOMER RELATIONSHIP
+════════════════════════════════════════════════════════ -->
+<div class="vol-panel">
+  <div class="panel-hdr clickable" onclick="toggle('s12')">
+    <span>SECTION 12 — SALES &amp; CUSTOMER RELATIONSHIP</span>
+    <span><span id="subtotal_s12" class="phsub">$0.00</span> <span class="chevron" id="chev_s12">▼</span></span>
+  </div>
+  <div class="panel-body hidden" id="body_s12">
+    <div class="g3">
+      <div class="f"><label>Sample production cost ($ / month)</label><input type="number" id="s12_samples" value="150" min="0" step="10"><div class="un">free samples to show customers color matches</div></div>
+      <div class="f"><label>Custom moulding quoting / sales labor (hours / month)</label><input type="number" id="s12_sales_hrs" value="8" min="0" step="0.5"></div>
+      <div class="f"><label>Sales staff hourly rate ($)</label><input type="number" id="s12_sales_rate" value="25.00" min="0" step="0.5"></div>
+      <div class="f"><label>Customer service for moulding issues (hours / month)</label><input type="number" id="s12_cs_hrs" value="6" min="0" step="0.5"></div>
+      <div class="f"><label>Customer service hourly rate ($)</label><input type="number" id="s12_cs_rate" value="20.00" min="0" step="0.5"></div>
+      <div class="f"><label>Rush order premiums — overtime, expediting ($ / month)</label><input type="number" id="s12_rush" value="100" min="0" step="10"><div class="un">extra cost when rush disrupts normal schedule</div></div>
+      <div class="f"><label>ETA miss cost — estimated lost margin per month ($)</label><input type="number" id="s12_eta_miss" value="200" min="0" step="25"><div class="un">partial credits, lost reorders from late deliveries</div></div>
+    </div>
+    <div class="sub-total"><span>Section 12 — Sales &amp; Customer Relations</span><span id="subtotal_s12_footer">$0.00 / month</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 13 — OPPORTUNITY COSTS
+════════════════════════════════════════════════════════ -->
+<div class="vol-panel">
+  <div class="panel-hdr clickable" onclick="toggle('s13')">
+    <span>SECTION 13 — OPPORTUNITY COSTS</span>
+    <span><span id="subtotal_s13" class="phsub">$0.00</span> <span class="chevron" id="chev_s13">▼</span></span>
+  </div>
+  <div class="panel-body hidden" id="body_s13">
+    <p class="note"><strong>Opportunity costs are real economic costs even though they do not appear in your P&amp;L.</strong> They represent value foregone by committing resources to moulding. Include when evaluating whether the department pays its own way.</p>
+    <div class="g3">
+      <div class="f"><label>Gardena space opportunity — sub-lease / alt-use value ($ / month)</label><input type="number" id="s13_gardena_space" value="1000" min="0" step="50"></div>
+      <div class="f"><label>Van Nuys moulding space opportunity ($ / month)</label><input type="number" id="s13_vn_space" value="500" min="0" step="25"></div>
+      <div class="f"><label>Management time opportunity ($ / month)</label><input type="number" id="s13_mgmt" value="500" min="0" step="50"><div class="un">value of owner/manager hours if redirected to core flooring</div></div>
+      <div class="f"><label>Van / truck opportunity — other deliveries displaced ($ / month)</label><input type="number" id="s13_van" value="200" min="0" step="25"></div>
+      <div class="f"><label>Complexity cost — broader SKU range, safety-stock premium ($ / month)</label><input type="number" id="s13_complexity" value="150" min="0" step="25"></div>
+    </div>
+    <div class="sub-total"><span>Section 13 — Opportunity Costs</span><span id="subtotal_s13_footer">$0.00 / month</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     RESULTS DASHBOARD
+════════════════════════════════════════════════════════ -->
+<div class="results-wrap">
+  <div class="results-hdr">RESULTS — TRUE COST SUMMARY</div>
+  <div class="results-body">
+
+    <!-- Key metrics -->
+    <div class="metrics-row">
+      <div class="mc primary">
+        <div class="ml">Total Monthly Cost</div>
+        <div class="mv" id="res_total">—</div>
+      </div>
+      <div class="mc primary">
+        <div class="ml">True Cost / Linear Foot (all-in)</div>
+        <div class="mv" id="res_lf_allin">—</div>
+      </div>
+      <div class="mc">
+        <div class="ml">Cost / LF (excl. opportunity costs)</div>
+        <div class="mv" id="res_lf_ex">—</div>
+        <div class="ms">for P&amp;L comparison</div>
+      </div>
+      <div class="mc">
+        <div class="ml">Monthly Production Volume</div>
+        <div class="mv" id="res_volume">—</div>
+      </div>
+    </div>
+
+    <div class="sdiv"></div>
+
+    <!-- Make vs Buy -->
+    <div class="res-section-title">Make vs. Buy Comparison</div>
+    <div class="mvb-row">
+      <div class="mvb-item">
+        <div class="mvl">Purchased finished moulding — market price ($ / LF)</div>
+        <div class="f" style="margin:0"><input type="number" id="mvb_price" value="1.80" min="0" step="0.05" style="max-width:160px;font-size:.9rem;font-weight:700"></div>
+        <div style="font-size:.67rem;color:#7090b0;margin-top:3px">what you'd pay a vendor for finished, color-matched moulding</div>
+      </div>
+      <div class="mvb-item">
+        <div class="mvl">All-in cost vs. purchased (per LF)</div>
+        <div class="mvv" id="mvb_allin">—</div>
+        <div class="mvd" id="mvb_delta_lf">—</div>
+      </div>
+      <div class="mvb-item">
+        <div class="mvl">Monthly cost delta (all-in)</div>
+        <div class="mvv" id="mvb_delta_mo">—</div>
+        <div class="mvd" id="mvb_delta_mo_label">vs. outsourcing the entire volume</div>
+      </div>
+    </div>
+
+    <div class="sdiv"></div>
+
+    <!-- Break-even -->
+    <div class="res-section-title">Selling Price &amp; Margin Analysis</div>
+    <div class="be-row">
+      <div class="be-item">
+        <div class="bel">Target gross margin (%)</div>
+        <div class="f" style="margin:0"><input type="number" id="be_margin" value="35" min="0" max="100" step="1" style="max-width:120px;font-size:.9rem;font-weight:700"></div>
+      </div>
+      <div class="be-item">
+        <div class="bel">Required sell price at target margin</div>
+        <div class="bev" id="be_required">—</div>
+      </div>
+      <div class="be-item">
+        <div class="bel">Current average selling price ($ / LF)</div>
+        <div class="f" style="margin:0"><input type="number" id="be_sell" value="2.50" min="0" step="0.05" style="max-width:120px;font-size:.9rem;font-weight:700"></div>
+      </div>
+      <div class="be-item">
+        <div class="bel">Actual gross margin at current price</div>
+        <div class="bev" id="be_actual_margin">—</div>
+        <div class="bed" id="be_margin_delta">—</div>
+      </div>
+    </div>
+
+    <div class="sdiv"></div>
+
+    <!-- Breakdown table -->
+    <div class="res-section-title">Cost Breakdown by Category</div>
+    <table class="bdown">
+      <thead>
+        <tr><th>Category</th><th>Monthly Cost ($)</th><th>Cost / LF ($)</th><th>% of Total</th></tr>
+      </thead>
+      <tbody id="breakdown_body"></tbody>
+    </table>
+
+    <!-- Charts -->
+    <div class="res-section-title" style="margin-top:6px">Visual Breakdown</div>
+    <div class="charts-row">
+      <div class="chart-box">
+        <h3>Monthly Cost by Category</h3>
+        <canvas id="barChart" height="340"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>Cost Distribution</h3>
+        <canvas id="pieChart" height="340"></canvas>
+      </div>
+    </div>
+
+    <div style="font-size:.65rem;color:#9090a8;margin-top:18px">
+      All figures are monthly. Placeholder defaults are illustrative — replace with actuals before using for decisions.
+      Values are stored in your browser's localStorage and persist between sessions.
+    </div>
+
+  </div>
+</div>
+</div><!-- /wrap -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+"use strict";
+
+const WEEKS = 4.333;
+const SECTION_IDS = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12','s13'];
+const CAT_NAMES = [
+  '1. Direct Labor','2. Materials','3. Packaging','4. Transportation',
+  '5. Gardena Facility','6. Van Nuys Space','7. Equipment',
+  '8. QC & Defects','9. Compliance','10. Inventory Carrying',
+  '11. Admin','12. Sales & CX','13. Opportunity'
+];
+const CAT_NAMES_LONG = [
+  '1. Direct Labor','2. Raw & Process Materials','3. Packaging & Transfer',
+  '4. Transportation','5. Facility — Gardena','6. Facility — Van Nuys',
+  '7. Machinery & Equipment','8. QC & Defects','9. Compliance & Regulatory',
+  '10. Inventory Carrying','11. Admin & Indirect','12. Sales & Customer Relations',
+  '13. Opportunity Costs'
+];
+
+function n(id){ return parseFloat(document.getElementById(id).value)||0; }
+function fmt(v,d=2){ return '$'+v.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+function fmtLF(v){ return '$'+v.toFixed(4); }
+function pct(v){ return v.toFixed(1)+'%'; }
+
+// ── Chart init ──────────────────────────────────────────────────────────────
+let barChart, pieChart;
+const PALETTE = [
+  '#1b3a5c','#2d5f8a','#3a7ab0','#4a95cc','#6ab0de',
+  '#88c4e8','#a8d8f0','#c5e8f8','#2a6040','#3a8055',
+  '#4a9c6a','#6ab880','#8acc95'
+];
+
+function initCharts(){
+  const barCtx = document.getElementById('barChart').getContext('2d');
+  const pieCtx = document.getElementById('pieChart').getContext('2d');
+
+  barChart = new Chart(barCtx, {
+    type:'bar',
+    data:{ labels:[], datasets:[{ data:[], backgroundColor:'#2d5f8a', borderRadius:3 }] },
+    options:{
+      indexAxis:'y',
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>fmt(c.parsed.x)}} },
+      scales:{
+        x:{ ticks:{callback:v=>'$'+v.toLocaleString()}, grid:{color:'#e8eef8'} },
+        y:{ ticks:{font:{size:10}} }
+      },
+      responsive:true, maintainAspectRatio:false
+    }
+  });
+
+  pieChart = new Chart(pieCtx, {
+    type:'doughnut',
+    data:{ labels:[], datasets:[{ data:[], backgroundColor:PALETTE, borderWidth:1, borderColor:'white' }] },
+    options:{
+      plugins:{ legend:{ position:'right', labels:{font:{size:10},boxWidth:12,padding:8} },
+                tooltip:{callbacks:{label:c=>c.label+': '+fmt(c.parsed)}} },
+      responsive:true, maintainAspectRatio:false
+    }
+  });
+}
+
+function updateCharts(sums){
+  const paired = CAT_NAMES.map((name,i)=>({name,val:sums[i]})).sort((a,b)=>b.val-a.val);
+  barChart.data.labels = paired.map(p=>p.name);
+  barChart.data.datasets[0].data = paired.map(p=>p.val);
+  barChart.data.datasets[0].backgroundColor = PALETTE.slice(0,paired.length);
+  barChart.update();
+  pieChart.data.labels = paired.map(p=>p.name);
+  pieChart.data.datasets[0].data = paired.map(p=>p.val);
+  pieChart.update();
+}
+
+// ── Main calculation ─────────────────────────────────────────────────────────
+function calc(){
+  // S0
+  const lf       = n('s0_lf');
+  const sku      = n('s0_sku');
+  const runs     = n('s0_runs');
+  const rwPct    = n('s0_rework')/100;
+  const woPct    = n('s0_writeoff')/100;
+  const rwLF     = lf * rwPct;
+  const woLF     = lf * woPct;
+  const grossLF  = lf * (1 + rwPct + woPct);
+
+  document.getElementById('vol_stats').textContent =
+    `Gross LF processed: ${grossLF.toLocaleString('en-US',{maximumFractionDigits:0})} LF  |  Rework LF: ${rwLF.toLocaleString('en-US',{maximumFractionDigits:0})} LF  |  Write-off LF: ${woLF.toLocaleString('en-US',{maximumFractionDigits:0})} LF`;
+
+  // S1: Direct Labor
+  const s1 =
+    n('s1_prod_workers') * n('s1_prod_wage') * n('s1_prod_hrs') * WEEKS
+    + n('s1_sup_wage') * n('s1_sup_hrs') * WEEKS
+    + n('s1_artisan_rate') * (n('s1_artisan_hrs') * sku + n('s1_artisan_hrs') * n('s1_artisan_revisions'))
+    + n('s1_qc_hrs') * n('s1_qc_wage')
+    + n('s1_recv_hrs') * n('s1_recv_wage')
+    + rwLF * n('s1_rework_labor_lf');
+
+  // S2: Materials
+  const perLF = n('s2_raw')+n('s2_stain')+n('s2_sealer')+n('s2_topcoat')+n('s2_abrasive')+n('s2_consumable');
+  const s2 = perLF * grossLF + (n('s2_tint')+n('s2_test_piece')) * sku;
+
+  // S3: Packaging
+  const s3 = n('s3_pkg_lf')*lf + n('s3_label')*runs + n('s3_van_lining')*runs + n('s3_rework_pkg')*rwLF;
+
+  // S4: Transportation
+  const totalRuns = runs + n('s4_rework_runs');
+  const fuel = (n('s4_distance')*2*totalRuns / Math.max(n('s4_mpg'),0.01)) * n('s4_fuel_price');
+  const driverTrans = n('s4_driver_rate') * n('s4_drive_time') * 2 * totalRuns;
+  const vehFixed = n('s4_insurance')+n('s4_depreciation')+n('s4_maintenance')+n('s4_registration');
+  const s4 = fuel + driverTrans + vehFixed;
+
+  // S5: Gardena facility
+  const s5 = n('s5_rent')+n('s5_elec_mach')+n('s5_elec_light')+n('s5_gas')+n('s5_maintenance')+n('s5_waste');
+
+  // S6: Van Nuys space
+  const vnSqft = n('s6_raw_sqft')+n('s6_drying_sqft')+n('s6_finished_sqft')+n('s6_qc_sqft');
+  const s6 = vnSqft * n('s6_cost_sqft');
+  document.getElementById('s6_stats').textContent = `Total moulding sq ft at Van Nuys: ${vnSqft.toLocaleString('en-US',{maximumFractionDigits:0})} sq ft`;
+
+  // S7: Equipment
+  const s7 = n('s7_depreciation')+n('s7_maintenance')+n('s7_tips')+n('s7_filters');
+
+  // S8: QC & Defects
+  const shippedLF = lf * (1 - woPct);
+  const s8 = n('s8_supplies') + woLF*n('s8_writeoff_handling') + shippedLF*(n('s8_return_pct')/100)*n('s8_return_cost') + n('s8_discount');
+
+  // S9: Compliance
+  const s9 = n('s9_aqmd')+n('s9_hazwaste')+n('s9_ppe')+n('s9_wc')+n('s9_fire')+n('s9_comp_hrs')*n('s9_comp_rate');
+
+  // S10: Inventory carrying
+  const totalInv = n('s10_raw_inv')+n('s10_wip')+n('s10_finished');
+  const s10 = totalInv*(n('s10_capital')/100/12) + totalInv*(n('s10_shrinkage')/100/12) + n('s10_finished')*(n('s10_obsolescence')/100/12);
+  document.getElementById('s10_stats').textContent = `Total inventory at risk: ${fmt(totalInv,0)}`;
+
+  // S11: Admin
+  const s11 = n('s11_purchasing_hrs')*n('s11_purchasing_rate') + n('s11_order_hrs')*n('s11_order_rate') + n('s11_mgmt_hrs')*n('s11_mgmt_rate') + n('s11_inv_hrs')*n('s11_inv_rate') + n('s11_software');
+
+  // S12: Sales
+  const s12 = n('s12_samples') + n('s12_sales_hrs')*n('s12_sales_rate') + n('s12_cs_hrs')*n('s12_cs_rate') + n('s12_rush') + n('s12_eta_miss');
+
+  // S13: Opportunity
+  const s13 = n('s13_gardena_space')+n('s13_vn_space')+n('s13_mgmt')+n('s13_van')+n('s13_complexity');
+
+  const sums   = [s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13];
+  const total  = sums.reduce((a,b)=>a+b,0);
+  const cpLF   = lf>0 ? total/lf : 0;
+  const cpLFex = lf>0 ? (total-s13)/lf : 0;
+
+  // Update section subtotals in header + footer
+  SECTION_IDS.forEach((id,i)=>{
+    const hdr = document.getElementById('subtotal_'+id);
+    const ftr = document.getElementById('subtotal_'+id+'_footer');
+    const label = fmt(sums[i]);
+    if(hdr) hdr.textContent = label;
+    if(ftr) ftr.textContent = label+' / month';
+  });
+
+  // Sticky bar
+  document.getElementById('bar_total').textContent = fmt(total);
+  document.getElementById('bar_lf').textContent    = fmtLF(cpLF);
+  document.getElementById('bar_lf_ex').textContent = fmtLF(cpLFex);
+
+  // Results metrics
+  document.getElementById('res_total').textContent    = fmt(total);
+  document.getElementById('res_lf_allin').textContent = fmtLF(cpLF);
+  document.getElementById('res_lf_ex').textContent    = fmtLF(cpLFex);
+  document.getElementById('res_volume').textContent   = lf.toLocaleString('en-US',{maximumFractionDigits:0})+' LF';
+
+  // Make vs Buy
+  const purchased = n('mvb_price');
+  const deltaLF   = cpLF - purchased;
+  const deltaMonth = deltaLF * lf;
+  document.getElementById('mvb_allin').textContent    = fmtLF(cpLF)+' / LF';
+  document.getElementById('mvb_delta_lf').textContent = (deltaLF>=0?'+':'')+deltaLF.toFixed(4)+' / LF vs. purchased';
+  document.getElementById('mvb_delta_lf').className   = 'mvd '+(deltaLF>0?'red':'green');
+  document.getElementById('mvb_delta_mo').textContent = fmt(Math.abs(deltaMonth),0)+' / mo '+(deltaMonth>0?'MORE than buying':'LESS than buying');
+  document.getElementById('mvb_delta_mo').className   = 'mvv '+(deltaMonth>0?'red':'green');
+  document.getElementById('bar_mvb').textContent      = (deltaLF>=0?'+':'')+fmtLF(deltaLF)+' / LF';
+
+  // Break-even
+  const tgtMargin = n('be_margin')/100;
+  const reqPrice  = tgtMargin<1 && lf>0 ? cpLF/(1-tgtMargin) : 0;
+  const sellPrice = n('be_sell');
+  const actMargin = sellPrice>0 ? (sellPrice-cpLF)/sellPrice*100 : 0;
+  const mDelta    = actMargin - n('be_margin');
+  document.getElementById('be_required').textContent      = fmtLF(reqPrice)+' / LF';
+  document.getElementById('be_actual_margin').textContent = pct(actMargin);
+  document.getElementById('be_margin_delta').textContent  = (mDelta>=0?'+':'')+mDelta.toFixed(1)+' pp vs. target';
+  document.getElementById('be_margin_delta').className    = 'bed '+(mDelta>=0?'green':'red');
+
+  // Breakdown table
+  const rows = CAT_NAMES_LONG.map((name,i)=>({name,val:sums[i]})).sort((a,b)=>b.val-a.val);
+  document.getElementById('breakdown_body').innerHTML =
+    rows.map(r=>`<tr>
+      <td>${r.name}</td>
+      <td>${fmt(r.val)}</td>
+      <td>${lf>0?fmtLF(r.val/lf):'—'}</td>
+      <td>${total>0?pct(r.val/total*100):'—'}</td>
+    </tr>`).join('') +
+    `<tr class="trow">
+      <td>TOTAL</td>
+      <td>${fmt(total)}</td>
+      <td>${fmtLF(cpLF)}</td>
+      <td>100.0%</td>
+    </tr>`;
+
+  updateCharts(sums);
+}
+
+// ── Collapse / expand ────────────────────────────────────────────────────────
+function toggle(id){
+  const body  = document.getElementById('body_'+id);
+  const chev  = document.getElementById('chev_'+id);
+  const open  = body.classList.toggle('hidden') ? false : true;
+  if(chev) chev.textContent = open ? '▲' : '▼';
+}
+
+// ── LocalStorage persistence ─────────────────────────────────────────────────
+function saveInputs(){
+  const data={};
+  document.querySelectorAll('input[type=number]').forEach(el=>{ data[el.id]=el.value; });
+  try{ localStorage.setItem('mouldingCalcV1', JSON.stringify(data)); }catch(e){}
+  const now = new Date();
+  document.getElementById('save_indicator').textContent =
+    'Saved '+now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+}
+
+function loadInputs(){
+  try{
+    const raw = localStorage.getItem('mouldingCalcV1');
+    if(!raw) return;
+    const data = JSON.parse(raw);
+    Object.entries(data).forEach(([id,val])=>{
+      const el = document.getElementById(id);
+      if(el) el.value = val;
+    });
+  }catch(e){}
+}
+
+// ── Wire up events ────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',()=>{
+  initCharts();
+  loadInputs();
+  document.querySelectorAll('input[type=number]').forEach(el=>{
+    el.addEventListener('input',()=>{ saveInputs(); calc(); });
+  });
+  calc();
+});
+</script>
+</body>
+</html>

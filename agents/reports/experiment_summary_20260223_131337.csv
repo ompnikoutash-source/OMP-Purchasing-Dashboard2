@@ -1,0 +1,16 @@
+experiment,dataset,sku_count,stockout_sku_rate_pct,avg_stockout_days,inventory_change_pct,avg_orders_per_sku
+baseline,sundries,25,4.0,3.84,-42.555,4.8
+baseline,moulding,25,0.0,0.0,-46.2963,0.92
+baseline,flooring,25,56.0,18.76,-11.0643,9.36
+lean_ss,sundries,25,4.0,3.84,-25.8977,5.68
+lean_ss,moulding,25,0.0,0.0,-49.7072,1.08
+lean_ss,flooring,25,56.0,18.76,-24.2363,10.32
+tight_inactivity,sundries,25,4.0,3.84,-32.8247,3.64
+tight_inactivity,moulding,25,0.0,0.0,-50.8094,1.08
+tight_inactivity,flooring,25,60.0,19.4,-29.5831,9.6
+drift_guard,sundries,25,4.0,3.84,-25.7808,3.72
+drift_guard,moulding,25,0.0,0.0,-39.2814,0.76
+drift_guard,flooring,25,56.0,17.92,-8.4786,8.4
+shorter_lead_time,sundries,25,4.0,3.84,-48.5509,4.12
+shorter_lead_time,moulding,25,0.0,0.0,-47.5389,0.92
+shorter_lead_time,flooring,25,60.0,19.24,-18.5729,8.92

@@ -1,0 +1,116 @@
+/*
+   Source query for nonstock sample/order-note review.
+
+   Parameters:
+     1. start invoice date
+     2. end invoice date
+
+   Important join detail:
+     SHTEXT is joined by company, location, release, order number, and invoice
+     number. Do not collapse only by order number; Gartman order numbers can be
+     reused across years.
+*/
+
+WITH NonstockOrders AS (
+    SELECT
+        H.SHCO AS COMPANY_NUMBER,
+        H.SHLOC AS LOCATION_NUMBER,
+        H.SHREL# AS RELEASE_NUMBER,
+        H.SHORD# AS ORDER_NUMBER_VALUE,
+        TRIM(H.SHINV#) AS INVOICE_NUMBER,
+        H.SHODAT AS GARTMAN_ORDER_DATE,
+        H.SHIDAT AS INVOICE_DATE,
+        TRIM(H.SHCUST) AS ACCOUNT_NUMBER,
+        COUNT(*) AS NONSTOCK_LINE_COUNT,
+        DECIMAL(SUM(COALESCE(L.SLBLUO, 0)), 18, 2) AS NONSTOCK_QTY_UNITS,
+        DECIMAL(SUM(COALESCE(L.SLENET, 0)), 18, 2) AS NONSTOCK_NET_AMOUNT
+    FROM GSFL2K.SHHEAD H
+    JOIN GSFL2K.SHLINE L
+      ON L.SLCO = H.SHCO
+     AND L.SLLOC = H.SHLOC
+     AND L.SLORD# = H.SHORD#
+     AND L.SLREL# = H.SHREL#
+     AND TRIM(L.SLINV#) = TRIM(H.SHINV#)
+    WHERE H.SHIDAT BETWEEN ? AND ?
+      AND TRIM(L.SLITEM) = 'NONSTOCK'
+    GROUP BY
+        H.SHCO,
+        H.SHLOC,
+        H.SHREL#,
+        H.SHORD#,
+        TRIM(H.SHINV#),
+        H.SHODAT,
+        H.SHIDAT,
+        TRIM(H.SHCUST)
+),
+CandidateOrders AS (
+    SELECT N.*
+    FROM NonstockOrders N
+    WHERE EXISTS (
+        SELECT 1
+        FROM GSFL2K.SHTEXT X
+        WHERE X.STCO = N.COMPANY_NUMBER
+          AND X.STLOC = N.LOCATION_NUMBER
+          AND X.STREL# = N.RELEASE_NUMBER
+          AND X.STORD# = N.ORDER_NUMBER_VALUE
+          AND TRIM(X.STINV#) = N.INVOICE_NUMBER
+          AND (
+              UPPER(COALESCE(X.STCMT1, '')) LIKE '%PCS%'
+           OR UPPER(COALESCE(X.STCMT2, '')) LIKE '%PCS%'
+           OR UPPER(COALESCE(X.STCMT1, '')) LIKE '%PIECE%'
+           OR UPPER(COALESCE(X.STCMT2, '')) LIKE '%PIECE%'
+           OR UPPER(COALESCE(X.STCMT1, '')) LIKE '%SAMPLE%'
+           OR UPPER(COALESCE(X.STCMT2, '')) LIKE '%SAMPLE%'
+           OR UPPER(COALESCE(X.STCMT1, '')) LIKE '%CUT%'
+           OR UPPER(COALESCE(X.STCMT2, '')) LIKE '%CUT%'
+           OR UPPER(COALESCE(X.STCMT1, '')) LIKE '%PANEL%'
+           OR UPPER(COALESCE(X.STCMT2, '')) LIKE '%PANEL%'
+           OR UPPER(COALESCE(X.STCMT1, '')) LIKE '%PLANK%'
+           OR UPPER(COALESCE(X.STCMT2, '')) LIKE '%PLANK%'
+          )
+    )
+)
+SELECT
+    C.COMPANY_NUMBER,
+    C.LOCATION_NUMBER,
+    C.RELEASE_NUMBER,
+    TRIM(CHAR(C.ORDER_NUMBER_VALUE)) AS ORDER_NUMBER,
+    C.INVOICE_NUMBER,
+    C.INVOICE_DATE AS ORDER_DATE,
+    C.GARTMAN_ORDER_DATE,
+    C.INVOICE_DATE,
+    C.ACCOUNT_NUMBER,
+    C.NONSTOCK_LINE_COUNT,
+    C.NONSTOCK_QTY_UNITS,
+    C.NONSTOCK_NET_AMOUNT,
+    T.STSEQ# AS NOTE_SEQUENCE,
+    T.STTSEQ AS NOTE_TEXT_SEQUENCE,
+    RRN(T) AS NOTE_RRN,
+    T.STDATE AS NOTE_DATE,
+    TRIM(COALESCE(T.STCMT1, '')) AS NOTE_LINE_1,
+    TRIM(COALESCE(T.STCMT2, '')) AS NOTE_LINE_2,
+    CAST(
+        TRIM(COALESCE(T.STCMT1, '')) ||
+        CASE
+            WHEN TRIM(COALESCE(T.STCMT2, '')) <> ''
+            THEN ' ' || TRIM(COALESCE(T.STCMT2, ''))
+            ELSE ''
+        END
+        AS VARCHAR(500)
+    ) AS NOTE_TEXT
+FROM CandidateOrders C
+JOIN GSFL2K.SHTEXT T
+  ON T.STCO = C.COMPANY_NUMBER
+ AND T.STLOC = C.LOCATION_NUMBER
+ AND T.STREL# = C.RELEASE_NUMBER
+ AND T.STORD# = C.ORDER_NUMBER_VALUE
+ AND TRIM(T.STINV#) = C.INVOICE_NUMBER
+WHERE TRIM(COALESCE(T.STCMT1, '')) <> ''
+   OR TRIM(COALESCE(T.STCMT2, '')) <> ''
+ORDER BY
+    C.INVOICE_DATE,
+    C.ORDER_NUMBER_VALUE,
+    C.INVOICE_NUMBER,
+    T.STSEQ#,
+    T.STTSEQ,
+    RRN(T)

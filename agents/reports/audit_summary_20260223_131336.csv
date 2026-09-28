@@ -1,0 +1,13 @@
+severity,issue_id,dataset,count
+critical,zero_fc_nonzero_policy,flooring,1
+high,negative_history,moulding,43
+high,negative_history,sundries,29
+high,negative_history,flooring,22
+high,low_fc_high_ss,sundries,6
+high,future_level_drift,flooring,5
+high,future_level_drift,moulding,1
+medium,fallback_without_recent_demand,sundries,3
+medium,default_lead_time_used,moulding,2
+medium,default_lead_time_used,flooring,1
+medium,default_lead_time_used,sundries,1
+medium,fallback_without_recent_demand,flooring,1

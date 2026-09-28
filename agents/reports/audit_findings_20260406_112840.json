@@ -1,0 +1,1867 @@
+[
+  {
+    "dataset": "sundries",
+    "sku": "ADBO70088",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "CROSTON",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 1.7682,
+      "weekly_recent_mean": 1.0385,
+      "weekly_recent_sum_26w": 27.0,
+      "safety_stock": 11.7876,
+      "reorder_point": 14.0609,
+      "order_up_to_level": 29.0695,
+      "on_order": 0.0,
+      "catchup_order_qty": 26.07,
+      "trailing_zero_weeks": 1,
+      "backorder": 24.0,
+      "backorder_to_ss_ratio": 2.036
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "ADDR7700",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "PROPHET",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 1.3462,
+      "weekly_recent_sum_26w": 35.0,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 36.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 2,
+      "backorder": 44.0
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "ADSI525540",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "PROPHET",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 44.7022,
+      "weekly_recent_mean": 40.8745,
+      "weekly_recent_sum_26w": 1062.738,
+      "safety_stock": 39.7541,
+      "reorder_point": 84.4563,
+      "order_up_to_level": 281.505,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "backorder": 417.0,
+      "backorder_to_ss_ratio": 10.4895
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "BE3MH1280",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "TSB",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 3.8597,
+      "weekly_recent_mean": 3.9231,
+      "weekly_recent_sum_26w": 102.0,
+      "safety_stock": 9.6191,
+      "reorder_point": 15.133,
+      "order_up_to_level": 32.7225,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "backorder": 20.0,
+      "backorder_to_ss_ratio": 2.0792
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "DPNO1236C",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "RECENT_ZERO_FALLBACK",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 27,
+      "inventory_position": -2.0
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "DPNO1236C",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "RECENT_ZERO_FALLBACK",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 27,
+      "backorder": 2.0
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "DPNO83295",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "CROSTON",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0556,
+      "weekly_recent_mean": 0.0385,
+      "weekly_recent_sum_26w": 1.0,
+      "safety_stock": 0.25,
+      "reorder_point": 0.4487,
+      "order_up_to_level": 0.6987,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 11,
+      "backorder": 1.0,
+      "backorder_to_ss_ratio": 4.0
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "DP3M1250",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "RECENT_AVG",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.1154,
+      "weekly_recent_mean": 0.1154,
+      "weekly_recent_sum_26w": 3.0,
+      "safety_stock": 1.7857,
+      "reorder_point": 2.0,
+      "order_up_to_level": 2.4945,
+      "on_order": 0.0,
+      "catchup_order_qty": 4.49,
+      "trailing_zero_weeks": 20,
+      "inventory_position": -2.0,
+      "ip_to_ss_ratio": -1.12
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FIBOW1556",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "RANDOM_FOREST",
+    "demand_class": "SMOOTH",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 24.5291,
+      "weekly_recent_mean": 20.5385,
+      "weekly_recent_sum_26w": 534.0,
+      "safety_stock": 27.395,
+      "reorder_point": 136.0237,
+      "order_up_to_level": 241.1484,
+      "on_order": 123.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "backorder": 69.0,
+      "backorder_to_ss_ratio": 2.5187
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "HTCR673",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "RANDOM_FOREST",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 50,
+      "backorder": 1.0
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "MBSI401521",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "RANDOM_FOREST",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 11.2863,
+      "weekly_recent_mean": 9.3462,
+      "weekly_recent_sum_26w": 243.0,
+      "safety_stock": 12.5429,
+      "reorder_point": 43.1772,
+      "order_up_to_level": 92.7203,
+      "on_order": 0.0,
+      "catchup_order_qty": 162.72,
+      "trailing_zero_weeks": 1,
+      "inventory_position": -70.0,
+      "ip_to_ss_ratio": -5.5809
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "MBSI401521",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "RANDOM_FOREST",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 11.2863,
+      "weekly_recent_mean": 9.3462,
+      "weekly_recent_sum_26w": 243.0,
+      "safety_stock": 12.5429,
+      "reorder_point": 43.1772,
+      "order_up_to_level": 92.7203,
+      "on_order": 0.0,
+      "catchup_order_qty": 162.72,
+      "trailing_zero_weeks": 1,
+      "backorder": 200.0,
+      "backorder_to_ss_ratio": 15.9453
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "PRSI187782",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "XGBOOST",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0002,
+      "weekly_recent_mean": 0.1538,
+      "weekly_recent_sum_26w": 4.0,
+      "safety_stock": 0.0036,
+      "reorder_point": 0.0039,
+      "order_up_to_level": 0.0048,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 3,
+      "backorder": 4.0,
+      "backorder_to_ss_ratio": 1100.3431
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "UNGA012",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "TSB",
+    "demand_class": "LUMPY",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 1134.7417,
+      "weekly_recent_mean": 1234.6154,
+      "weekly_recent_sum_26w": 32100.0,
+      "safety_stock": 7766.2468,
+      "reorder_point": 11332.5779,
+      "order_up_to_level": 28594.7329,
+      "on_order": 3840.0,
+      "catchup_order_qty": 73774.73,
+      "trailing_zero_weeks": 1,
+      "inventory_position": -45180.0,
+      "ip_to_ss_ratio": -5.8175
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "UNGA012",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "TSB",
+    "demand_class": "LUMPY",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 1134.7417,
+      "weekly_recent_mean": 1234.6154,
+      "weekly_recent_sum_26w": 32100.0,
+      "safety_stock": 7766.2468,
+      "reorder_point": 11332.5779,
+      "order_up_to_level": 28594.7329,
+      "on_order": 3840.0,
+      "catchup_order_qty": 73774.73,
+      "trailing_zero_weeks": 1,
+      "backorder": 50040.0,
+      "backorder_to_ss_ratio": 6.4433
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MONO12M",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "XGBOOST",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 25.1468,
+      "weekly_recent_mean": 18.0543,
+      "weekly_recent_sum_26w": 469.412,
+      "safety_stock": 52.8811,
+      "reorder_point": 95.9898,
+      "order_up_to_level": 199.0559,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "backorder": 246.0,
+      "backorder_to_ss_ratio": 4.6519
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "ENSO",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 317.153,
+      "weekly_recent_sum_26w": 8245.977,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 8845.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "inventory_position": -38956.06
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "ENSO",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 317.153,
+      "weekly_recent_sum_26w": 8245.977,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 8845.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 50874.38
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GDQP2EBD36264",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "COLD_START_RECENT_ZERO",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 4599.0,
+      "weekly_recent_sum_26w": 119574.0,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 89352.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 89352.0
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GDQP2EBD51572",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 7799.1039,
+      "weekly_recent_mean": 6445.7719,
+      "weekly_recent_sum_26w": 167590.0702,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 38123.52,
+      "catchup_order_qty": 8392.664,
+      "trailing_zero_weeks": 0,
+      "backorder": 38123.52
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GDQP2EBD626A9",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 161.3684,
+      "weekly_recent_sum_26w": 4195.5789,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 92178.56,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 92178.56
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GDSP36264860",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "COLD_START_TRAILING_ZERO_DECAY",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 1491.9554,
+      "weekly_recent_mean": 4620.7806,
+      "weekly_recent_sum_26w": 120140.2954,
+      "safety_stock": 18593.248,
+      "reorder_point": 92599.268,
+      "order_up_to_level": 170886.628,
+      "on_order": 58989.0,
+      "catchup_order_qty": 78287.36,
+      "trailing_zero_weeks": 0,
+      "backorder": 57386.28,
+      "backorder_to_ss_ratio": 3.0864
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GFALO7501S",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "Random Forest (Local) (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 173.6697,
+      "weekly_recent_mean": 39.2408,
+      "weekly_recent_sum_26w": 1020.2595,
+      "safety_stock": 1663.4039,
+      "reorder_point": 4867.1825,
+      "order_up_to_level": 8257.8483,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": 4.4257
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GFALO9508",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "Hurdle (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "B",
+    "evidence": {
+      "weekly_fc_mean": 380.6941,
+      "weekly_recent_mean": 107.1437,
+      "weekly_recent_sum_26w": 2785.7375,
+      "safety_stock": 5308.0433,
+      "reorder_point": 12330.9109,
+      "order_up_to_level": 19763.4458,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": 3.5531
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GFCYO1001",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 350.6804,
+      "weekly_recent_sum_26w": 9117.6911,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 1256.13
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GFGIO9501",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 52.3618,
+      "weekly_recent_sum_26w": 1361.4079,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 318.36
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GFLEO7507",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "SARIMA(0,1,1)",
+    "demand_class": "LUMPY",
+    "abc_class": "B",
+    "evidence": {
+      "weekly_fc_mean": 546.7498,
+      "weekly_recent_mean": 454.6377,
+      "weekly_recent_sum_26w": 11820.5807,
+      "safety_stock": 4464.8561,
+      "reorder_point": 13967.9941,
+      "order_up_to_level": 24065.0781,
+      "on_order": 86400.6,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 62031.2,
+      "backorder_to_ss_ratio": 13.8932
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GFLEO9505",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Neural Network (Local) (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 218.7074,
+      "weekly_recent_mean": 266.1727,
+      "weekly_recent_sum_26w": 6920.4901,
+      "safety_stock": 1362.5121,
+      "reorder_point": 5128.151,
+      "order_up_to_level": 9129.1424,
+      "on_order": 21648.48,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 4661.7,
+      "backorder_to_ss_ratio": 3.4214
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GFLEW7501",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "SBA (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 582.3212,
+      "weekly_recent_mean": 660.4776,
+      "weekly_recent_sum_26w": 17172.4184,
+      "safety_stock": 3365.5253,
+      "reorder_point": 13391.7572,
+      "order_up_to_level": 24044.6286,
+      "on_order": 50021.4,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 12546.16,
+      "backorder_to_ss_ratio": 3.7278
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GHCVO568",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "XGBoost (Local) + drift_cap",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 352.5077,
+      "weekly_recent_mean": 296.8476,
+      "weekly_recent_sum_26w": 7718.0373,
+      "safety_stock": 1894.8521,
+      "reorder_point": 8946.0324,
+      "order_up_to_level": 16317.721,
+      "on_order": 23117.5,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 16957.5,
+      "backorder_to_ss_ratio": 8.9492
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GHEXA538",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "TSB",
+    "demand_class": "ERRATIC",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 1104.9854,
+      "weekly_recent_mean": 1121.9457,
+      "weekly_recent_sum_26w": 29170.5888,
+      "safety_stock": 10202.4676,
+      "reorder_point": 29227.7743,
+      "order_up_to_level": 49442.1627,
+      "on_order": 0.0,
+      "catchup_order_qty": 20214.3884,
+      "trailing_zero_weeks": 0,
+      "backorder": 23535.41,
+      "backorder_to_ss_ratio": 2.3068
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GNDV2O704",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 71.8536,
+      "weekly_recent_sum_26w": 1868.1941,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 758.4
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GNDV2O711",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "Historical Avg (fallback capped) + drift_cap",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 1.1012,
+      "weekly_recent_mean": 29.1053,
+      "weekly_recent_sum_26w": 756.7368,
+      "safety_stock": 95.8826,
+      "reorder_point": 115.6197,
+      "order_up_to_level": 155.0938,
+      "on_order": 0.0,
+      "catchup_order_qty": 39.4741,
+      "trailing_zero_weeks": 0,
+      "inventory_position": -3009.9,
+      "ip_to_ss_ratio": -31.3915
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GNDV2O711",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped) + drift_cap",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 1.1012,
+      "weekly_recent_mean": 29.1053,
+      "weekly_recent_sum_26w": 756.7368,
+      "safety_stock": 95.8826,
+      "reorder_point": 115.6197,
+      "order_up_to_level": 155.0938,
+      "on_order": 0.0,
+      "catchup_order_qty": 39.4741,
+      "trailing_zero_weeks": 0,
+      "backorder": 3341.7,
+      "backorder_to_ss_ratio": 34.852
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVCC706",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 112.8289,
+      "weekly_recent_sum_26w": 2933.5526,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 1925.0
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVCC708",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 193.4211,
+      "weekly_recent_sum_26w": 5028.9474,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "inventory_position": -2870.0
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVCC708",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 193.4211,
+      "weekly_recent_sum_26w": 5028.9474,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 4060.0
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVCC712",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 96.0094,
+      "weekly_recent_sum_26w": 2496.2438,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 525.0
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVNS806",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 27.1653,
+      "weekly_recent_sum_26w": 706.2977,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 21.45
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVSPC704",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 23.1606,
+      "weekly_recent_sum_26w": 602.1765,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "inventory_position": -168.98
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVSPC704",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 23.1606,
+      "weekly_recent_sum_26w": 602.1765,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 1158.72
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVSPC902",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 37.757,
+      "weekly_recent_sum_26w": 981.6825,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "inventory_position": -45.76
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVSPC902",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 37.757,
+      "weekly_recent_sum_26w": 981.6825,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 45.76
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVSPC905",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 461.8649,
+      "weekly_recent_sum_26w": 12008.4877,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 8168.16,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 915.2
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVVN910",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "Hurdle (fallback to avg)",
+    "demand_class": "ERRATIC",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 1695.1085,
+      "weekly_recent_mean": 547.0377,
+      "weekly_recent_sum_26w": 14222.9807,
+      "safety_stock": 12648.0222,
+      "reorder_point": 32713.306,
+      "order_up_to_level": 54602.7064,
+      "on_order": 0.0,
+      "catchup_order_qty": 21889.4005,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": 3.0987
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVWPCII101",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 187.202,
+      "weekly_recent_sum_26w": 4867.2527,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "inventory_position": -269.5
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVWPCII101",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 187.202,
+      "weekly_recent_sum_26w": 4867.2527,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 512.05
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVWPCII102",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 218.23,
+      "weekly_recent_sum_26w": 5673.9797,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "inventory_position": -188.65
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVWPCII102",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 218.23,
+      "weekly_recent_sum_26w": 5673.9797,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 215.6
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVWPCII106",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 22.7538,
+      "weekly_recent_sum_26w": 591.5998,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "inventory_position": -862.4
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVWPCII106",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 22.7538,
+      "weekly_recent_sum_26w": 591.5998,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 997.15
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVWPCII107",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 88.9468,
+      "weekly_recent_sum_26w": 2312.6173,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 53.9
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVWPCII110",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 7.2399,
+      "weekly_recent_sum_26w": 188.2363,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 107.8
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCAS3112",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 21.6428,
+      "weekly_recent_mean": 94.2571,
+      "weekly_recent_sum_26w": 2450.6841,
+      "safety_stock": 507.922,
+      "reorder_point": 624.8777,
+      "order_up_to_level": 858.7892,
+      "on_order": 0.0,
+      "catchup_order_qty": 233.9115,
+      "trailing_zero_weeks": 0,
+      "inventory_position": -1327.53,
+      "ip_to_ss_ratio": -2.6136
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCAS3112",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 21.6428,
+      "weekly_recent_mean": 94.2571,
+      "weekly_recent_sum_26w": 2450.6841,
+      "safety_stock": 507.922,
+      "reorder_point": 624.8777,
+      "order_up_to_level": 858.7892,
+      "on_order": 0.0,
+      "catchup_order_qty": 233.9115,
+      "trailing_zero_weeks": 0,
+      "backorder": 1350.82,
+      "backorder_to_ss_ratio": 2.6595
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCAS3113",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 24.3482,
+      "weekly_recent_mean": 24.1327,
+      "weekly_recent_sum_26w": 627.451,
+      "safety_stock": 82.2496,
+      "reorder_point": 108.4508,
+      "order_up_to_level": 160.8533,
+      "on_order": 978.18,
+      "catchup_order_qty": 52.4025,
+      "trailing_zero_weeks": 0,
+      "backorder": 978.18,
+      "backorder_to_ss_ratio": 11.8928
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCDN8708",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "COLD_START_RECENT_ZERO",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 159.5344,
+      "weekly_recent_sum_26w": 4147.8938,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "inventory_position": -326.04
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LAMCDN8708",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "COLD_START_RECENT_ZERO",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 159.5344,
+      "weekly_recent_sum_26w": 4147.8938,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 353.21
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "LASO",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 33.4964,
+      "weekly_recent_sum_26w": 870.9059,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 2070.69,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 2070.69
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "PFAPSO",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "Historical Avg (fallback capped) + drift_cap",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 44.6053,
+      "weekly_recent_mean": 160.4397,
+      "weekly_recent_sum_26w": 4171.432,
+      "safety_stock": 391.7703,
+      "reorder_point": 617.438,
+      "order_up_to_level": 930.8654,
+      "on_order": 1425.6,
+      "catchup_order_qty": 313.4274,
+      "trailing_zero_weeks": 0,
+      "backorder": 1160.0,
+      "backorder_to_ss_ratio": 2.9609
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "RQ314FMS",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "SARIMA(0,1,1) (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 148.3768,
+      "weekly_recent_mean": 219.9973,
+      "weekly_recent_sum_26w": 5719.9287,
+      "safety_stock": 693.4206,
+      "reorder_point": 1491.7666,
+      "order_up_to_level": 2449.7818,
+      "on_order": 0.0,
+      "catchup_order_qty": 958.0152,
+      "trailing_zero_weeks": 0,
+      "backorder": 1406.0,
+      "backorder_to_ss_ratio": 2.0276
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "RQ7SOS",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "Croston (fallback to avg) + cap",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 145.7105,
+      "weekly_recent_mean": 120.3509,
+      "weekly_recent_sum_26w": 3129.1228,
+      "safety_stock": 878.2346,
+      "reorder_point": 1877.211,
+      "order_up_to_level": 3075.9826,
+      "on_order": 0.0,
+      "catchup_order_qty": 1198.7717,
+      "trailing_zero_weeks": 0,
+      "inventory_position": -924.0,
+      "ip_to_ss_ratio": -1.0521
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "RT2SRSNB-24",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "SBA (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 31.0684,
+      "weekly_recent_mean": 78.2895,
+      "weekly_recent_sum_26w": 2035.5263,
+      "safety_stock": 151.6907,
+      "reorder_point": 318.8551,
+      "order_up_to_level": 519.4524,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "backorder": 456.0,
+      "backorder_to_ss_ratio": 3.0061
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "UNGA012",
+    "severity": "high",
+    "issue_id": "negative_inventory_position",
+    "issue_description": "Inventory position is deeply negative relative to safety stock \u2014 active stockout or large backorder deficit.",
+    "method": "SARIMA(0,1,1) (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 492.6688,
+      "weekly_recent_mean": 1107.5658,
+      "weekly_recent_sum_26w": 28796.7105,
+      "safety_stock": 2113.6116,
+      "reorder_point": 3401.1526,
+      "order_up_to_level": 5218.8575,
+      "on_order": 3840.0,
+      "catchup_order_qty": 1817.7049,
+      "trailing_zero_weeks": 0,
+      "inventory_position": -45180.0,
+      "ip_to_ss_ratio": -21.3757
+    },
+    "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236",
+      "flooringwebapp.py:600"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "UNGA012",
+    "severity": "high",
+    "issue_id": "high_backorder_ratio",
+    "issue_description": "Backorders exceed a multiple of safety stock \u2014 customers waiting, replenishment urgent.",
+    "method": "SARIMA(0,1,1) (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 492.6688,
+      "weekly_recent_mean": 1107.5658,
+      "weekly_recent_sum_26w": 28796.7105,
+      "safety_stock": 2113.6116,
+      "reorder_point": 3401.1526,
+      "order_up_to_level": 5218.8575,
+      "on_order": 3840.0,
+      "catchup_order_qty": 1817.7049,
+      "trailing_zero_weeks": 0,
+      "backorder": 50040.0,
+      "backorder_to_ss_ratio": 23.6751
+    },
+    "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:236",
+      "mouldingwebapp_refactored.py:236"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  }
+]

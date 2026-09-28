@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1400">
+<title>OMP Purchasing Dashboard – Light Theme Mockup</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f0f2f6;
+    color: #1a1a2e;
+    font-size: 14px;
+    min-width: 1400px;
+  }
+
+  /* TOP HEADER */
+  .topbar {
+    background: #ffffff;
+    border-bottom: 1px solid #dde1ea;
+    padding: 0 28px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .topbar-logo { font-size: 15px; font-weight: 700; color: #1e3a5f; letter-spacing: 0.04em; }
+  .topbar-sep { color: #c8cdd8; font-size: 18px; }
+  .topbar-title { font-size: 13px; color: #5c6880; font-weight: 500; }
+  .topbar-badge {
+    margin-left: auto;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    color: #3730a3;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  /* LAYOUT */
+  .layout { display: flex; min-height: calc(100vh - 52px); }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 192px;
+    min-width: 192px;
+    background: #ffffff;
+    border-right: 1px solid #dde1ea;
+    padding: 20px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sidebar-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #9aa5b8;
+    text-transform: uppercase;
+    padding: 10px 10px 6px 10px;
+  }
+  .sidebar-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #4a5568;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+  }
+  .sidebar-btn.active { background: #1e3a5f; color: #ffffff; font-weight: 600; }
+  .sidebar-btn .dot { width: 8px; height: 8px; border-radius: 50%; background: #94a3b8; flex-shrink: 0; }
+  .sidebar-btn.active .dot { background: #60a5fa; }
+  .sidebar-divider { height: 1px; background: #edf0f5; margin: 8px 0; }
+
+  /* MAIN CONTENT */
+  .main { flex: 1; padding: 24px 28px; overflow-y: auto; }
+
+  /* PAGE HEADER */
+  .page-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px; }
+  .page-title { font-size: 22px; font-weight: 700; color: #1e3a5f; }
+  .page-subtitle { font-size: 13px; color: #8896aa; }
+  .run-btn {
+    margin-left: auto;
+    background: #1e3a5f;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  /* FILTER ROW */
+  .filter-row { display: flex; gap: 12px; margin-bottom: 22px; flex-wrap: wrap; }
+  .filter-group { display: flex; flex-direction: column; gap: 4px; min-width: 180px; }
+  .filter-label { font-size: 11px; font-weight: 600; color: #6b7a90; text-transform: uppercase; letter-spacing: 0.06em; }
+  .filter-select {
+    background: #ffffff;
+    border: 1px solid #d1d9e6;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #1a1a2e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .filter-select .caret { color: #9aa5b8; font-size: 11px; }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6b7a90;
+    margin-bottom: 10px;
+    padding-left: 2px;
+  }
+
+  /* INVENTORY AT A GLANCE */
+  .glance-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 22px; }
+  .glance-card { border-radius: 12px; padding: 14px 16px; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .glance-card.avail { border-left: 4px solid #16a34a; }
+  .glance-card.onpo  { border-left: 4px solid #2563eb; }
+  .glance-card.bo    { border-left: 4px solid #c0392b; }
+  .glance-card.lt    { border-left: 4px solid #7c3aed; }
+  .glance-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #8896aa; }
+  .glance-val { font-size: 26px; font-weight: 700; color: #1e3a5f; margin-top: 6px; line-height: 1; }
+  .glance-val.red  { color: #c0392b; }
+  .glance-val.blue { color: #2563eb; }
+  .glance-val.grn  { color: #16a34a; }
+  .glance-sub { font-size: 11px; color: #a0aec0; margin-top: 4px; }
+
+  /* On PO sub-breakdown */
+  .onpo-breakdown { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .onpo-chip {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.03em;
+  }
+  .chip-prod  { background: #dbeafe; color: #1d4ed8; }
+  .chip-ready { background: #fef9c3; color: #a16207; }
+  .chip-water { background: #e0f2fe; color: #0369a1; }
+
+  /* PANEL */
+  .panel { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); overflow: hidden; }
+  .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 18px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .panel-title { font-size: 12px; font-weight: 700; color: #1e3a5f; letter-spacing: 0.06em; text-transform: uppercase; }
+  .panel-title span { font-weight: 400; color: #8896aa; font-size: 11px; margin-left: 8px; text-transform: none; letter-spacing: 0; }
+  .panel-chevron { color: #9aa5b8; font-size: 12px; }
+  .panel-body { padding: 16px 18px; }
+
+  /* DATA TABLE */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .data-table thead tr { background: #f1f5fb; border-bottom: 2px solid #d1d9e6; }
+  .data-table thead th {
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #6b7a90;
+    white-space: normal;
+    line-height: 1.3;
+    vertical-align: bottom;
+  }
+  .data-table thead th.num { text-align: right; }
+  .data-table tbody tr { border-bottom: 1px solid #edf0f5; }
+  .data-table tbody tr:hover { background: #f8fafc; }
+  .data-table tbody tr.total-row { background: #eef2ff; font-weight: 700; border-top: 2px solid #c7d2fe; }
+  .data-table td { padding: 8px 10px; color: #2d3748; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
+  .data-table td.item { font-weight: 600; color: #1e3a5f; font-family: monospace; font-size: 11.5px; }
+  .data-table td.num  { text-align: right; font-variant-numeric: tabular-nums; color: #374151; }
+  .data-table td.avail  { text-align: right; color: #16a34a; font-weight: 600; }
+  .data-table td.prod   { text-align: right; color: #2563eb; }
+  .data-table td.ready  { text-align: right; color: #a16207; font-weight: 600; }
+  .data-table td.water  { text-align: right; color: #0369a1; }
+  .data-table td.reorder { text-align: right; color: #c0392b; font-weight: 700; }
+  .data-table td.pct  { text-align: right; color: #7c3aed; font-weight: 600; }
+  .data-table td.dash { text-align: right; color: #cbd5e1; }
+
+  /* Column source badge */
+  .col-badge {
+    display: block;
+    font-size: 8.5px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-weight: 700;
+    margin-top: 3px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+  .badge-sp  { background: #dbeafe; color: #1d4ed8; }
+  .badge-grt { background: #dcfce7; color: #15803d; }
+
+  /* EXPORT BUTTON */
+  .export-btn {
+    background: #f1f5fb;
+    border: 1px solid #d1d9e6;
+    border-radius: 7px;
+    padding: 7px 16px;
+    font-size: 12px;
+    color: #4a5568;
+    font-weight: 600;
+    margin-top: 12px;
+    float: right;
+  }
+
+  /* COLLAPSED PANELS */
+  .panel-collapsed .panel-header { border-bottom: none; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-logo">OMP</div>
+  <div class="topbar-sep">|</div>
+  <div class="topbar-title">Purchasing Dashboard</div>
+  <div class="topbar-badge">&#128197; Last run: March 16, 2026 &nbsp;&#8729;&nbsp; 9:14 AM</div>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-section-label">Buyers</div>
+    <button class="sidebar-btn active">
+      <span class="dot"></span>Ilsy &mdash; Flooring
+    </button>
+    <button class="sidebar-btn">
+      <span class="dot"></span>Veronica &mdash; Unfinished
+    </button>
+    <button class="sidebar-btn">
+      <span class="dot"></span>Carlos &mdash; Sundries
+    </button>
+    <button class="sidebar-btn">
+      <span class="dot"></span>Dilan &mdash; Moulding
+    </button>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-label">Tools</div>
+    <button class="sidebar-btn">
+      <span class="dot"></span>Param Optimizer
+    </button>
+    <button class="sidebar-btn">
+      <span class="dot"></span>Export Package
+    </button>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div class="page-title">Ilsy &mdash; Engineered Flooring</div>
+      <div class="page-subtitle">Week 11 &nbsp;&middot;&nbsp; March 2026</div>
+      <button class="run-btn">&#8635;&nbsp; Refresh Forecast</button>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filter-row">
+      <div class="filter-group">
+        <div class="filter-label">Vendor</div>
+        <div class="filter-select">Evergreen Wood (EW) <span class="caret">&#9662;</span></div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">Collection</div>
+        <div class="filter-select">Beverly Hills <span class="caret">&#9662;</span></div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">Item</div>
+        <div class="filter-select">All Items <span class="caret">&#9662;</span></div>
+      </div>
+    </div>
+
+    <!-- INVENTORY AT A GLANCE -->
+    <div class="section-label">Inventory at a Glance &mdash; Beverly Hills</div>
+    <div class="glance-grid">
+      <div class="glance-card avail">
+        <div class="glance-lbl">Available (SF)</div>
+        <div class="glance-val grn">134,280</div>
+        <div class="glance-sub">Across 8 SKUs</div>
+      </div>
+      <div class="glance-card onpo">
+        <div class="glance-lbl">On PO (SF)</div>
+        <div class="glance-val blue">101,875</div>
+        <div class="onpo-breakdown">
+          <span class="onpo-chip chip-prod">Prod 81,500</span>
+          <span class="onpo-chip chip-ready">Ready 3,775</span>
+          <span class="onpo-chip chip-water">Water 84,500</span>
+        </div>
+      </div>
+      <div class="glance-card bo">
+        <div class="glance-lbl">Backorder (SF)</div>
+        <div class="glance-val red">12,640</div>
+        <div class="glance-sub">4 SKUs affected</div>
+      </div>
+      <div class="glance-card lt">
+        <div class="glance-lbl">Lead Time (Avg)</div>
+        <div class="glance-val">112 days</div>
+        <div class="glance-sub">Production + transit</div>
+      </div>
+    </div>
+
+    <!-- REORDER NOW -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          Reorder Now
+          <span>March 2026 &nbsp;&middot;&nbsp; 8 items flagged</span>
+        </div>
+        <div class="panel-chevron">&#9650;</div>
+      </div>
+      <div class="panel-body">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Item #</th>
+              <th>Collection</th>
+              <th>Description</th>
+              <th class="num">
+                Available<br>(SF)
+                <span class="col-badge badge-grt">Gartman</span>
+              </th>
+              <th class="num">
+                Production<br>(SF)
+                <span class="col-badge badge-sp">SharePoint</span>
+              </th>
+              <th class="num">
+                Ready<br>(SF)
+                <span class="col-badge badge-sp">SharePoint</span>
+              </th>
+              <th class="num">
+                Water<br>(SF)
+                <span class="col-badge badge-sp">SharePoint</span>
+              </th>
+              <th class="num">
+                Reorder<br>Qty (SF)
+              </th>
+              <th class="num">
+                Reorder<br>(Pallets)
+              </th>
+              <th class="num">
+                % of<br>Container
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="item">GFBHO9501</td>
+              <td>Beverly Hills</td>
+              <td>BH BURTON WAY 9.5&quot;</td>
+              <td class="avail">18,510</td>
+              <td class="prod">20,375</td>
+              <td class="dash">&mdash;</td>
+              <td class="water">20,375</td>
+              <td class="reorder">14,200</td>
+              <td class="num">9.7</td>
+              <td class="pct">60.9%</td>
+            </tr>
+            <tr>
+              <td class="item">GFBHO9505</td>
+              <td>Beverly Hills</td>
+              <td>BH RODEO DRIVE 9.5&quot;</td>
+              <td class="avail">23,808</td>
+              <td class="prod">20,375</td>
+              <td class="dash">&mdash;</td>
+              <td class="water">20,375</td>
+              <td class="reorder">18,500</td>
+              <td class="num">12.6</td>
+              <td class="pct">79.0%</td>
+            </tr>
+            <tr>
+              <td class="item">GFBHO9506</td>
+              <td>Beverly Hills</td>
+              <td>BH WALDEN 9.5&quot;</td>
+              <td class="avail">11,301</td>
+              <td class="prod">20,375</td>
+              <td class="dash">&mdash;</td>
+              <td class="water">20,375</td>
+              <td class="reorder">22,800</td>
+              <td class="num">15.6</td>
+              <td class="pct">97.3%</td>
+            </tr>
+            <tr>
+              <td class="item">GFBHO9507</td>
+              <td>Beverly Hills</td>
+              <td>BH ALPINE 9.5&quot;</td>
+              <td class="avail">5,644</td>
+              <td class="dash">&mdash;</td>
+              <td class="ready">1,228</td>
+              <td class="dash">&mdash;</td>
+              <td class="reorder">31,200</td>
+              <td class="num">21.3</td>
+              <td class="pct">133.0%</td>
+            </tr>
+            <tr>
+              <td class="item">GFBHO9503</td>
+              <td>Beverly Hills</td>
+              <td>BH HILLCREST 9.5&quot;</td>
+              <td class="avail">4,115</td>
+              <td class="prod">20,375</td>
+              <td class="dash">&mdash;</td>
+              <td class="dash">&mdash;</td>
+              <td class="reorder">9,600</td>
+              <td class="num">6.6</td>
+              <td class="pct">41.0%</td>
+            </tr>
+            <tr>
+              <td class="item">GFBHO9508</td>
+              <td>Beverly Hills</td>
+              <td>BH DOHENY 9.5&quot;</td>
+              <td class="avail">15,190</td>
+              <td class="dash">&mdash;</td>
+              <td class="ready">2,547</td>
+              <td class="water">20,375</td>
+              <td class="reorder">7,400</td>
+              <td class="num">5.1</td>
+              <td class="pct">31.6%</td>
+            </tr>
+            <tr>
+              <td class="item">GCSETBH-2828</td>
+              <td>Beverly Hills</td>
+              <td>BH SAMPLE SET 28&times;28</td>
+              <td class="avail">224</td>
+              <td class="dash">&mdash;</td>
+              <td class="dash">&mdash;</td>
+              <td class="water">3,000</td>
+              <td class="reorder">520</td>
+              <td class="dash">&mdash;</td>
+              <td class="dash">&mdash;</td>
+            </tr>
+            <tr>
+              <td class="item">GFBHO9502</td>
+              <td>Beverly Hills</td>
+              <td>BH CANON 9.5&quot;</td>
+              <td class="avail">3,707</td>
+              <td class="prod">20,375</td>
+              <td class="dash">&mdash;</td>
+              <td class="dash">&mdash;</td>
+              <td class="reorder">6,100</td>
+              <td class="num">4.2</td>
+              <td class="pct">26.0%</td>
+            </tr>
+            <tr class="total-row">
+              <td colspan="3"><strong>Total</strong></td>
+              <td class="avail">82,499</td>
+              <td class="prod">101,875</td>
+              <td class="ready">3,775</td>
+              <td class="water">84,500</td>
+              <td class="reorder">110,320</td>
+              <td class="num">75.1</td>
+              <td class="dash">&mdash;</td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="export-btn">&#11123; Export to Excel</button>
+        <div style="clear:both;"></div>
+      </div>
+    </div>
+
+    <!-- ARRIVALS / ON PO DETAIL (collapsed) -->
+    <div class="panel panel-collapsed">
+      <div class="panel-header">
+        <div class="panel-title">
+          Open PO &mdash; Arrivals Detail
+          <span>ETA &amp; ETW from SharePoint &middot; 5 containers</span>
+        </div>
+        <div class="panel-chevron">&#9660;</div>
+      </div>
+    </div>
+
+    <!-- DEMAND (collapsed) -->
+    <div class="panel panel-collapsed">
+      <div class="panel-header">
+        <div class="panel-title">
+          Demand
+          <span>Historical sales &middot; forecast &middot; ABC classification</span>
+        </div>
+        <div class="panel-chevron">&#9660;</div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /layout -->
+</body>
+</html>

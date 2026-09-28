@@ -1,0 +1,43 @@
+FINDINGS SUMMARY:
+
+1. USER'S REQUESTED SKUs (NOT FOUND):
+   - GFALPH401L-10
+   - GFALPH401R-10
+   - GFALPH403L-10
+   - GFALPH403R-10
+   - GFALPH405L-10
+   - GFALPH405R-10
+
+2. ACTUAL SKUs IN THE SYSTEM (FOUND IN flooringwebappJSON):
+   - GFALPH401-L
+   - GFALPH401-R
+   - GFALPH403-L
+   - GFALPH403-R
+   - GFALPH404-L  (user didn't mention this one)
+   - GFALPH404-R  (user didn't mention this one)
+   - GFALPH405-L
+   - GFALPH405-R
+
+3. KEY OBSERVATION:
+   - The SKUs in the JSON use format "GFALPH###-L" / "GFALPH###-R"
+   - User is looking for "GFALPH###L-10" / "GFALPH###R-10" format
+   - The "-10" suffix is MISSING from the actual SKUs
+
+4. HOW THE ILSY TAB LOADS DATA:
+   a. _load_webapp_payload() loads from flooringwebappJSON file (line 4583)
+   b. This JSON is built by run_inventory_planning() (lines 3647-4183)
+   c. JSON payload is created by _build_webapp_payload() (line 4182)
+   d. The payload contains ALL flooring SKUs from df_results
+
+5. POTENTIAL FILTERING ISSUES THAT COULD CAUSE SKUs TO DISAPPEAR:
+   a. USE_SKU_LIST = True (line 151) - filters to "Forecast SKU List.xlsx"
+   b. SKU_CONSOLIDATION_GROUPS (line 286) - if these SKUs are consolidated,
+      individual members are removed from display via _consolidate_items_list()
+   c. EXCLUDED_PO_VENDORS (line 194) - lawsuit-hold vendors excluded from POs
+   d. Forecast SKU List may not include these items
+   e. These SKUs may be part of a consolidation group
+
+6. CONSOLIDATION LOGIC:
+   Line 5960: _consolidate_items_list() removes individual member SKUs
+   if they're part of SKU_CONSOLIDATION_GROUPS (from StripSKUList.xlsx)
+   Individual members are replaced by consolidated group entries.

@@ -1,0 +1,118 @@
+{
+  "dataset_paths": {
+    "sundries": "sundrieswebappJSON",
+    "moulding": "mouldingwebappJSON",
+    "flooring": "flooringwebappJSON"
+  },
+  "rules": [
+    {
+      "id": "low_fc_high_ss",
+      "enabled": true,
+      "severity": "high",
+      "description": "Near-zero forecast but safety stock remains elevated.",
+      "thresholds": {
+        "max_fc_weekly": 0.25,
+        "max_recent_weekly_sum": 1.0,
+        "min_safety_stock": 0.5
+      }
+    },
+    {
+      "id": "future_level_drift",
+      "enabled": true,
+      "severity": "high",
+      "description": "Future demand level is materially above recent demand evidence.",
+      "thresholds": {
+        "ratio_recent_nonzero": 2.5,
+        "min_fc_when_recent_zero": 0.25
+      }
+    },
+    {
+      "id": "weekly_monthly_mismatch",
+      "enabled": true,
+      "severity": "medium",
+      "description": "Weekly and monthly forecast totals disagree materially.",
+      "thresholds": {
+        "min_ratio": 0.8,
+        "max_ratio": 1.25,
+        "min_material_units": 1.0
+      }
+    },
+    {
+      "id": "default_lead_time_used",
+      "enabled": true,
+      "severity": "medium",
+      "description": "Inferred lead time appears to be default fallback.",
+      "thresholds": {
+        "default_lt_days": 30.0,
+        "tolerance_days": 1.0
+      }
+    },
+    {
+      "id": "inventory_position_identity",
+      "enabled": true,
+      "severity": "high",
+      "description": "Inventory position does not match available + on_order - backorder.",
+      "thresholds": {
+        "max_abs_error": 0.01
+      }
+    },
+    {
+      "id": "on_order_duplicate_risk",
+      "enabled": true,
+      "severity": "high",
+      "description": "On-order exists and catch-up order is still suggested for low-demand SKU.",
+      "thresholds": {
+        "max_fc_weekly": 0.5
+      }
+    },
+    {
+      "id": "negative_history",
+      "enabled": true,
+      "severity": "high",
+      "description": "Negative demand values exist in historical signal.",
+      "thresholds": {}
+    },
+    {
+      "id": "fallback_without_recent_demand",
+      "enabled": true,
+      "severity": "medium",
+      "description": "Fallback model predicts demand despite no recent demand.",
+      "thresholds": {
+        "max_recent_weekly_sum": 0.0
+      }
+    },
+    {
+      "id": "zero_fc_nonzero_policy",
+      "enabled": true,
+      "severity": "critical",
+      "description": "Zero forecast but SS/ROP/S remains above zero.",
+      "thresholds": {}
+    },
+    {
+      "id": "s_below_rop",
+      "enabled": true,
+      "severity": "critical",
+      "description": "Order-up-to level is below reorder point.",
+      "thresholds": {}
+    },
+    {
+      "id": "negative_inventory_position",
+      "enabled": true,
+      "severity": "high",
+      "description": "Inventory position is deeply negative relative to safety stock — active stockout or large backorder deficit.",
+      "thresholds": {
+        "min_ip_vs_ss_ratio": -1.0
+      }
+    },
+    {
+      "id": "high_backorder_ratio",
+      "enabled": true,
+      "severity": "high",
+      "description": "Backorders exceed a multiple of safety stock — customers waiting, replenishment urgent.",
+      "thresholds": {
+        "min_backorder_to_ss_ratio": 2.0
+      }
+    }
+  ]
+}
+

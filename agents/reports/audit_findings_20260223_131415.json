@@ -1,0 +1,3407 @@
+[
+  {
+    "dataset": "sundries",
+    "sku": "FCWO551525A",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "RECENT_AVG",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.1154,
+      "weekly_recent_mean": 0.1154,
+      "weekly_recent_sum_26w": 3.0,
+      "safety_stock": 1.9414,
+      "reorder_point": 2.2546,
+      "order_up_to_level": 2.7491,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 18,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "BENO45032",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "CROSTON",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.2232,
+      "weekly_recent_mean": 0.4615,
+      "weekly_recent_sum_26w": 12.0,
+      "safety_stock": 3.877,
+      "reorder_point": 4.2596,
+      "order_up_to_level": 5.2161,
+      "on_order": 0.0,
+      "catchup_order_qty": 2.22,
+      "trailing_zero_weeks": 4,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "BE3M840",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "CROSTON",
+    "demand_class": "SMOOTH",
+    "abc_class": "B",
+    "evidence": {
+      "weekly_fc_mean": 21.6121,
+      "weekly_recent_mean": 20.8846,
+      "weekly_recent_sum_26w": 543.0,
+      "safety_stock": 31.2238,
+      "reorder_point": 52.8359,
+      "order_up_to_level": 270.8628,
+      "on_order": 50.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "WPWWCP708",
+    "severity": "high",
+    "issue_id": "low_fc_high_ss",
+    "issue_description": "Near-zero forecast but safety stock remains elevated.",
+    "method": "HISTORICAL_MEAN_CAPPED",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0577,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 1.0022,
+      "reorder_point": 1.0599,
+      "order_up_to_level": 1.3071,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 40
+    },
+    "recommendation": "Tighten safety stock for inactive SKUs (cap/floor ordering and inactivity suppressor).",
+    "likely_code_locations": [
+      "core/forecasting.py:1137",
+      "core/forecasting.py:1195"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "WPWWCP708",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "HISTORICAL_MEAN_CAPPED",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0577,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 1.0022,
+      "reorder_point": 1.0599,
+      "order_up_to_level": 1.3071,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 40,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "WPWWCP708",
+    "severity": "medium",
+    "issue_id": "fallback_without_recent_demand",
+    "issue_description": "Fallback model predicts demand despite no recent demand.",
+    "method": "HISTORICAL_MEAN_CAPPED",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0577,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 1.0022,
+      "reorder_point": 1.0599,
+      "order_up_to_level": 1.3071,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 40,
+      "is_fallback": true
+    },
+    "recommendation": "Force fallback to zero/low carryover when recent demand is absent.",
+    "likely_code_locations": [
+      "core/forecasting.py:993",
+      "core/forecasting.py:1014"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "SWPL200",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "CROSTON",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.333,
+      "weekly_recent_mean": 0.3462,
+      "weekly_recent_sum_26w": 9.0,
+      "safety_stock": 1.7103,
+      "reorder_point": 4.3745,
+      "order_up_to_level": 5.9397,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 3,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "BE3M8150",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "RANDOM_FOREST",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 48,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "PP5",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "TSB",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 1.0742,
+      "weekly_recent_mean": 1.1923,
+      "weekly_recent_sum_26w": 31.0,
+      "safety_stock": 2.7551,
+      "reorder_point": 3.8293,
+      "order_up_to_level": 8.4332,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FIDSO83310",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.9758,
+      "weekly_recent_mean": 1.0385,
+      "weekly_recent_sum_26w": 27.0,
+      "safety_stock": 4.1401,
+      "reorder_point": 6.6495,
+      "order_up_to_level": 10.303,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 4,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FIBOW400618",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SAFE_MEAN",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 1.2778,
+      "weekly_recent_mean": 1.2692,
+      "weekly_recent_sum_26w": 33.0,
+      "safety_stock": 10.1261,
+      "reorder_point": 16.6976,
+      "order_up_to_level": 17.4023,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 5,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "ADDR7900",
+    "severity": "high",
+    "issue_id": "low_fc_high_ss",
+    "issue_description": "Near-zero forecast but safety stock remains elevated.",
+    "method": "HISTORICAL_MEAN_CAPPED",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0577,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 1.0022,
+      "reorder_point": 1.2247,
+      "order_up_to_level": 1.472,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 32
+    },
+    "recommendation": "Tighten safety stock for inactive SKUs (cap/floor ordering and inactivity suppressor).",
+    "likely_code_locations": [
+      "core/forecasting.py:1137",
+      "core/forecasting.py:1195"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "ADDR7900",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "HISTORICAL_MEAN_CAPPED",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0577,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 1.0022,
+      "reorder_point": 1.2247,
+      "order_up_to_level": 1.472,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 32,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "ADDR7900",
+    "severity": "medium",
+    "issue_id": "fallback_without_recent_demand",
+    "issue_description": "Fallback model predicts demand despite no recent demand.",
+    "method": "HISTORICAL_MEAN_CAPPED",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0577,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 1.0022,
+      "reorder_point": 1.2247,
+      "order_up_to_level": 1.472,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 32,
+      "is_fallback": true
+    },
+    "recommendation": "Force fallback to zero/low carryover when recent demand is absent.",
+    "likely_code_locations": [
+      "core/forecasting.py:993",
+      "core/forecasting.py:1014"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FILBW159",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.4183,
+      "weekly_recent_mean": 0.7308,
+      "weekly_recent_sum_26w": 19.0,
+      "safety_stock": 3.208,
+      "reorder_point": 4.2238,
+      "order_up_to_level": 6.0163,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 2,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "WPWWFT201",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.3823,
+      "weekly_recent_mean": 0.3462,
+      "weekly_recent_sum_26w": 9.0,
+      "safety_stock": 2.0459,
+      "reorder_point": 2.7012,
+      "order_up_to_level": 4.3395,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 2,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "HTCR673",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "RANDOM_FOREST",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 44,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "ADWAFL124",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SAFE_MEAN",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.769,
+      "weekly_recent_mean": 0.6154,
+      "weekly_recent_sum_26w": 16.0,
+      "safety_stock": 13.3578,
+      "reorder_point": 20.0587,
+      "order_up_to_level": 21.4588,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 10,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "WPCRCBO9",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 1.7018,
+      "weekly_recent_mean": 1.5769,
+      "weekly_recent_sum_26w": 41.0,
+      "safety_stock": 6.012,
+      "reorder_point": 10.6311,
+      "order_up_to_level": 17.2083,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "SWP161",
+    "severity": "medium",
+    "issue_id": "default_lead_time_used",
+    "issue_description": "Inferred lead time appears to be default fallback.",
+    "method": "XGBOOST",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0079,
+      "weekly_recent_mean": 0.0385,
+      "weekly_recent_sum_26w": 1.0,
+      "safety_stock": 0.1371,
+      "reorder_point": 0.172,
+      "order_up_to_level": 0.2059,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 15,
+      "inferred_lead_time_days": 31.0
+    },
+    "recommendation": "Backfill lead time per vendor/SKU tier and reduce hard default usage.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:525",
+      "mouldingwebapp_refactored.py:527",
+      "flooringwebapp.py:1796"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "DP3M1240",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.115,
+      "weekly_recent_mean": 0.1923,
+      "weekly_recent_sum_26w": 5.0,
+      "safety_stock": 1.4694,
+      "reorder_point": 1.5843,
+      "order_up_to_level": 2.077,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 10,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "UNBO602428",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "TSB",
+    "demand_class": "SMOOTH",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 213.9742,
+      "weekly_recent_mean": 222.6154,
+      "weekly_recent_sum_26w": 5788.0,
+      "safety_stock": 368.1515,
+      "reorder_point": 673.8289,
+      "order_up_to_level": 4220.9712,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "HTCR681",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "CROSTON",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.072,
+      "weekly_recent_mean": 0.0769,
+      "weekly_recent_sum_26w": 2.0,
+      "safety_stock": 1.2502,
+      "reorder_point": 1.3221,
+      "order_up_to_level": 1.6306,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 6,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FIBOW1303",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "SMOOTH",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 9.297,
+      "weekly_recent_mean": 9.1538,
+      "weekly_recent_sum_26w": 238.0,
+      "safety_stock": 15.2607,
+      "reorder_point": 52.4486,
+      "order_up_to_level": 96.3938,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FILB026",
+    "severity": "high",
+    "issue_id": "low_fc_high_ss",
+    "issue_description": "Near-zero forecast but safety stock remains elevated.",
+    "method": "RECENT_AVG",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0385,
+      "weekly_recent_mean": 0.0385,
+      "weekly_recent_sum_26w": 1.0,
+      "safety_stock": 0.6681,
+      "reorder_point": 0.7066,
+      "order_up_to_level": 0.8714,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 2
+    },
+    "recommendation": "Tighten safety stock for inactive SKUs (cap/floor ordering and inactivity suppressor).",
+    "likely_code_locations": [
+      "core/forecasting.py:1137",
+      "core/forecasting.py:1195"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FILB026",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "RECENT_AVG",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0385,
+      "weekly_recent_mean": 0.0385,
+      "weekly_recent_sum_26w": 1.0,
+      "safety_stock": 0.6681,
+      "reorder_point": 0.7066,
+      "order_up_to_level": 0.8714,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 2,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FCDS86700",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "RANDOM_FOREST",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 41,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "WPWFC1",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "CROSTON",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 8.4375,
+      "weekly_recent_mean": 7.6154,
+      "weekly_recent_sum_26w": 198.0,
+      "safety_stock": 9.1326,
+      "reorder_point": 41.6771,
+      "order_up_to_level": 81.9744,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "ADSI813119",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "RANDOM_FOREST",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 3.7741,
+      "weekly_recent_mean": 5.7857,
+      "weekly_recent_sum_26w": 81.0,
+      "safety_stock": 11.7143,
+      "reorder_point": 15.4883,
+      "order_up_to_level": 32.0816,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "WPCP124",
+    "severity": "high",
+    "issue_id": "low_fc_high_ss",
+    "issue_description": "Near-zero forecast but safety stock remains elevated.",
+    "method": "RECENT_AVG",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0385,
+      "weekly_recent_mean": 0.0385,
+      "weekly_recent_sum_26w": 1.0,
+      "safety_stock": 0.6681,
+      "reorder_point": 0.7396,
+      "order_up_to_level": 0.9044,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 21
+    },
+    "recommendation": "Tighten safety stock for inactive SKUs (cap/floor ordering and inactivity suppressor).",
+    "likely_code_locations": [
+      "core/forecasting.py:1137",
+      "core/forecasting.py:1195"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "ACNAMHW",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "CROSTON",
+    "demand_class": "SMOOTH",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 6.7068,
+      "weekly_recent_mean": 6.9615,
+      "weekly_recent_sum_26w": 181.0,
+      "safety_stock": 8.7519,
+      "reorder_point": 20.2492,
+      "order_up_to_level": 49.5987,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "STZA138",
+    "severity": "high",
+    "issue_id": "low_fc_high_ss",
+    "issue_description": "Near-zero forecast but safety stock remains elevated.",
+    "method": "HISTORICAL_MEAN_CAPPED",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0577,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 1.0022,
+      "reorder_point": 1.0599,
+      "order_up_to_level": 1.3071,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 27
+    },
+    "recommendation": "Tighten safety stock for inactive SKUs (cap/floor ordering and inactivity suppressor).",
+    "likely_code_locations": [
+      "core/forecasting.py:1137",
+      "core/forecasting.py:1195"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "STZA138",
+    "severity": "medium",
+    "issue_id": "fallback_without_recent_demand",
+    "issue_description": "Fallback model predicts demand despite no recent demand.",
+    "method": "HISTORICAL_MEAN_CAPPED",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0577,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 1.0022,
+      "reorder_point": 1.0599,
+      "order_up_to_level": 1.3071,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 27,
+      "is_fallback": true
+    },
+    "recommendation": "Force fallback to zero/low carryover when recent demand is absent.",
+    "likely_code_locations": [
+      "core/forecasting.py:993",
+      "core/forecasting.py:1014"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "STDS172",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 5.7588,
+      "weekly_recent_mean": 5.0769,
+      "weekly_recent_sum_26w": 132.0,
+      "safety_stock": 9.3841,
+      "reorder_point": 16.7882,
+      "order_up_to_level": 44.9307,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "STZA117",
+    "severity": "high",
+    "issue_id": "low_fc_high_ss",
+    "issue_description": "Near-zero forecast but safety stock remains elevated.",
+    "method": "RECENT_AVG",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0385,
+      "weekly_recent_mean": 0.0385,
+      "weekly_recent_sum_26w": 1.0,
+      "safety_stock": 0.6681,
+      "reorder_point": 0.7066,
+      "order_up_to_level": 0.8714,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 22
+    },
+    "recommendation": "Tighten safety stock for inactive SKUs (cap/floor ordering and inactivity suppressor).",
+    "likely_code_locations": [
+      "core/forecasting.py:1137",
+      "core/forecasting.py:1195"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "WPCRDE12",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.2209,
+      "weekly_recent_mean": 0.1538,
+      "weekly_recent_sum_26w": 4.0,
+      "safety_stock": 2.0448,
+      "reorder_point": 2.455,
+      "order_up_to_level": 3.4017,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FIDSW80605",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "TSB",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 6.8053,
+      "weekly_recent_mean": 7.7692,
+      "weekly_recent_sum_26w": 202.0,
+      "safety_stock": 17.2463,
+      "reorder_point": 31.8292,
+      "order_up_to_level": 64.7733,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FIDSW80615",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "RANDOM_FOREST",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 3.4351,
+      "weekly_recent_mean": 2.3462,
+      "weekly_recent_sum_26w": 61.0,
+      "safety_stock": 8.8594,
+      "reorder_point": 20.1462,
+      "order_up_to_level": 39.4574,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "sundries",
+    "sku": "FIDSW99412",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 1.4491,
+      "weekly_recent_mean": 1.3077,
+      "weekly_recent_sum_26w": 34.0,
+      "safety_stock": 3.732,
+      "reorder_point": 6.0091,
+      "order_up_to_level": 12.3914,
+      "on_order": 20.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 3,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\sundrieswebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MONO34W",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "XGBOOST",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 1.655,
+      "weekly_recent_mean": 1.5769,
+      "weekly_recent_sum_26w": 41.0,
+      "safety_stock": 28.7492,
+      "reorder_point": 39.1519,
+      "order_up_to_level": 46.2446,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 3,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOQR34W",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "RECENT_AVG",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.2885,
+      "weekly_recent_mean": 0.2885,
+      "weekly_recent_sum_26w": 7.5,
+      "safety_stock": 5.011,
+      "reorder_point": 6.9478,
+      "order_up_to_level": 8.1841,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 5,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOQR34R",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "LUMPY",
+    "abc_class": "B",
+    "evidence": {
+      "weekly_fc_mean": 28.0721,
+      "weekly_recent_mean": 22.0385,
+      "weekly_recent_sum_26w": 573.0,
+      "safety_stock": 352.5239,
+      "reorder_point": 456.7918,
+      "order_up_to_level": 731.3528,
+      "on_order": 900.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MORE38O",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 19.7846,
+      "weekly_recent_mean": 16.25,
+      "weekly_recent_sum_26w": 422.5,
+      "safety_stock": 51.1211,
+      "reorder_point": 141.5648,
+      "order_up_to_level": 246.3922,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 2,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MONO12O",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "ERRATIC",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 95.1763,
+      "weekly_recent_mean": 69.3462,
+      "weekly_recent_sum_26w": 1803.0,
+      "safety_stock": 436.5221,
+      "reorder_point": 803.6306,
+      "order_up_to_level": 2499.4966,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOTHR58",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "CROSTON",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 2.7752,
+      "weekly_recent_mean": 2.5,
+      "weekly_recent_sum_26w": 65.0,
+      "safety_stock": 44.2703,
+      "reorder_point": 69.2474,
+      "order_up_to_level": 69.2474,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 2,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MONO12R",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "ERRATIC",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 39.5278,
+      "weekly_recent_mean": 44.5192,
+      "weekly_recent_sum_26w": 1157.5,
+      "safety_stock": 236.2489,
+      "reorder_point": 445.1814,
+      "order_up_to_level": 1154.8409,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MORE12M",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 5.3323,
+      "weekly_recent_mean": 9.8077,
+      "weekly_recent_sum_26w": 255.0,
+      "safety_stock": 66.8869,
+      "reorder_point": 103.4515,
+      "order_up_to_level": 103.4515,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 2,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOTROPC54",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 9.3101,
+      "weekly_recent_mean": 8.4615,
+      "weekly_recent_sum_26w": 220.0,
+      "safety_stock": 23.3074,
+      "reorder_point": 32.6175,
+      "order_up_to_level": 77.9232,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOTRO2",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SAFE_MEAN",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 3.6706,
+      "weekly_recent_mean": 3.9615,
+      "weekly_recent_sum_26w": 103.0,
+      "safety_stock": 53.3095,
+      "reorder_point": 56.9801,
+      "order_up_to_level": 72.7111,
+      "on_order": 0.0,
+      "catchup_order_qty": 74.21,
+      "trailing_zero_weeks": 16,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOQR34M",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "XGBOOST",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 10.7447,
+      "weekly_recent_mean": 5.3462,
+      "weekly_recent_sum_26w": 139.0,
+      "safety_stock": 131.0983,
+      "reorder_point": 174.0769,
+      "order_up_to_level": 174.0769,
+      "on_order": 300.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 4,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOBT58R",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 11.5797,
+      "weekly_recent_mean": 14.0192,
+      "weekly_recent_sum_26w": 364.5,
+      "safety_stock": 32.9116,
+      "reorder_point": 75.9219,
+      "order_up_to_level": 140.9385,
+      "on_order": 216.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MORE34OLO",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "TSB",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 10.7757,
+      "weekly_recent_mean": 10.3846,
+      "weekly_recent_sum_26w": 270.0,
+      "safety_stock": 50.4656,
+      "reorder_point": 148.9866,
+      "order_up_to_level": 205.863,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 3,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MORIW",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "CROSTON",
+    "demand_class": "LUMPY",
+    "abc_class": "B",
+    "evidence": {
+      "weekly_fc_mean": 35.5574,
+      "weekly_recent_mean": 43.4423,
+      "weekly_recent_sum_26w": 1129.5,
+      "safety_stock": 211.7017,
+      "reorder_point": 333.6127,
+      "order_up_to_level": 646.8349,
+      "on_order": 600.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 3,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MONO12H",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "SAFE_MEAN",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 5.1717,
+      "weekly_recent_mean": 0.9038,
+      "weekly_recent_sum_26w": 23.5,
+      "safety_stock": 89.8401,
+      "reorder_point": 115.6987,
+      "order_up_to_level": 115.6987,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 19,
+      "future_to_recent_ratio": 5.7219
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MONO12H",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SAFE_MEAN",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 5.1717,
+      "weekly_recent_mean": 0.9038,
+      "weekly_recent_sum_26w": 23.5,
+      "safety_stock": 89.8401,
+      "reorder_point": 115.6987,
+      "order_up_to_level": 115.6987,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 19,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOBT58M",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SAFE_MEAN",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 2.8833,
+      "weekly_recent_mean": 6.4808,
+      "weekly_recent_sum_26w": 168.5,
+      "safety_stock": 50.0876,
+      "reorder_point": 68.2114,
+      "order_up_to_level": 68.2114,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 4,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MORE34R",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "ERRATIC",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 46.7533,
+      "weekly_recent_mean": 48.5385,
+      "weekly_recent_sum_26w": 1262.0,
+      "safety_stock": 201.5772,
+      "reorder_point": 421.9856,
+      "order_up_to_level": 1210.6902,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MONO34M",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "CROSTON",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 14.062,
+      "weekly_recent_mean": 13.9573,
+      "weekly_recent_sum_26w": 362.89,
+      "safety_stock": 81.4323,
+      "reorder_point": 147.7248,
+      "order_up_to_level": 166.6439,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MORE34OLR",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "TSB",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 7.0912,
+      "weekly_recent_mean": 6.7115,
+      "weekly_recent_sum_26w": 174.5,
+      "safety_stock": 48.473,
+      "reorder_point": 102.1638,
+      "order_up_to_level": 144.7416,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOBS12R",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "ERRATIC",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 282.6622,
+      "weekly_recent_mean": 272.5962,
+      "weekly_recent_sum_26w": 7087.5,
+      "safety_stock": 1228.034,
+      "reorder_point": 2277.9223,
+      "order_up_to_level": 7278.014,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOCV1234O",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "LUMPY",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 68.1638,
+      "weekly_recent_mean": 80.7692,
+      "weekly_recent_sum_26w": 2100.0,
+      "safety_stock": 815.7475,
+      "reorder_point": 1088.4028,
+      "order_up_to_level": 2163.6743,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MORE34H",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SAFE_MEAN",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.8344,
+      "weekly_recent_mean": 0.6731,
+      "weekly_recent_sum_26w": 17.5,
+      "safety_stock": 14.4956,
+      "reorder_point": 17.3565,
+      "order_up_to_level": 20.9327,
+      "on_order": 102.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 19,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOST12",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "ERRATIC",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 89.8972,
+      "weekly_recent_mean": 84.0962,
+      "weekly_recent_sum_26w": 2186.5,
+      "safety_stock": 488.0381,
+      "reorder_point": 847.6269,
+      "order_up_to_level": 2517.29,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MORE34M",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 8.8567,
+      "weekly_recent_mean": 10.75,
+      "weekly_recent_sum_26w": 279.5,
+      "safety_stock": 123.6524,
+      "reorder_point": 194.5061,
+      "order_up_to_level": 194.5061,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 2,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOTROPC48",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 17.1439,
+      "weekly_recent_mean": 18.1923,
+      "weekly_recent_sum_26w": 473.0,
+      "safety_stock": 40.9606,
+      "reorder_point": 126.68,
+      "order_up_to_level": 215.0131,
+      "on_order": 300.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 3,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MORIR",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "ERRATIC",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 107.9521,
+      "weekly_recent_mean": 117.1346,
+      "weekly_recent_sum_26w": 3045.5,
+      "safety_stock": 635.7741,
+      "reorder_point": 1376.0173,
+      "order_up_to_level": 3206.2068,
+      "on_order": 2500.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MORIM",
+    "severity": "medium",
+    "issue_id": "default_lead_time_used",
+    "issue_description": "Inferred lead time appears to be default fallback.",
+    "method": "CROSTON",
+    "demand_class": "LUMPY",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 50.3447,
+      "weekly_recent_mean": 42.6663,
+      "weekly_recent_sum_26w": 1109.324,
+      "safety_stock": 448.8532,
+      "reorder_point": 657.4241,
+      "order_up_to_level": 1384.0958,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "inferred_lead_time_days": 29.0
+    },
+    "recommendation": "Backfill lead time per vendor/SKU tier and reduce hard default usage.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:525",
+      "mouldingwebapp_refactored.py:527",
+      "flooringwebapp.py:1796"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MORIM",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "CROSTON",
+    "demand_class": "LUMPY",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 50.3447,
+      "weekly_recent_mean": 42.6663,
+      "weekly_recent_sum_26w": 1109.324,
+      "safety_stock": 448.8532,
+      "reorder_point": 657.4241,
+      "order_up_to_level": 1384.0958,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOTMW58",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "RANDOM_FOREST",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 12.3037,
+      "weekly_recent_mean": 7.2692,
+      "weekly_recent_sum_26w": 189.0,
+      "safety_stock": 75.6324,
+      "reorder_point": 188.1233,
+      "order_up_to_level": 195.9392,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOSC316M",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "CROSTON",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 2.8678,
+      "weekly_recent_mean": 5.1731,
+      "weekly_recent_sum_26w": 134.5,
+      "safety_stock": 49.8182,
+      "reorder_point": 65.3864,
+      "order_up_to_level": 65.3864,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 2,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOBT58O",
+    "severity": "medium",
+    "issue_id": "default_lead_time_used",
+    "issue_description": "Inferred lead time appears to be default fallback.",
+    "method": "SBA",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 17.1297,
+      "weekly_recent_mean": 21.4941,
+      "weekly_recent_sum_26w": 558.847,
+      "safety_stock": 36.4226,
+      "reorder_point": 107.3885,
+      "order_up_to_level": 196.3304,
+      "on_order": 200.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "inferred_lead_time_days": 29.0
+    },
+    "recommendation": "Backfill lead time per vendor/SKU tier and reduce hard default usage.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:525",
+      "mouldingwebapp_refactored.py:527",
+      "flooringwebapp.py:1796"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOBT58O",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 17.1297,
+      "weekly_recent_mean": 21.4941,
+      "weekly_recent_sum_26w": 558.847,
+      "safety_stock": 36.4226,
+      "reorder_point": 107.3885,
+      "order_up_to_level": 196.3304,
+      "on_order": 200.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOTROS",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "LUMPY",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 30.6075,
+      "weekly_recent_mean": 67.0192,
+      "weekly_recent_sum_26w": 1742.5,
+      "safety_stock": 396.3541,
+      "reorder_point": 457.569,
+      "order_up_to_level": 986.4345,
+      "on_order": 1600.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 10,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MORE12W",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 3.2358,
+      "weekly_recent_mean": 2.6538,
+      "weekly_recent_sum_26w": 69.0,
+      "safety_stock": 56.2103,
+      "reorder_point": 83.4834,
+      "order_up_to_level": 83.4834,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 2,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOTRM",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "TSB",
+    "demand_class": "LUMPY",
+    "abc_class": "B",
+    "evidence": {
+      "weekly_fc_mean": 41.4589,
+      "weekly_recent_mean": 53.4565,
+      "weekly_recent_sum_26w": 1389.868,
+      "safety_stock": 326.7428,
+      "reorder_point": 528.1144,
+      "order_up_to_level": 847.5406,
+      "on_order": 191.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MONO34R5",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SAFE_MEAN",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 10.7207,
+      "weekly_recent_mean": 9.0577,
+      "weekly_recent_sum_26w": 235.5,
+      "safety_stock": 45.9421,
+      "reorder_point": 64.3205,
+      "order_up_to_level": 121.7708,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MORE38M",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "CROSTON",
+    "demand_class": "INTERMITTENT",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 2.7158,
+      "weekly_recent_mean": 4.4808,
+      "weekly_recent_sum_26w": 116.5,
+      "safety_stock": 13.6044,
+      "reorder_point": 27.1833,
+      "order_up_to_level": 39.5377,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 2,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOBS12W",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "LUMPY",
+    "abc_class": "B",
+    "evidence": {
+      "weekly_fc_mean": 21.2034,
+      "weekly_recent_mean": 23.8846,
+      "weekly_recent_sum_26w": 621.0,
+      "safety_stock": 164.5729,
+      "reorder_point": 200.9215,
+      "order_up_to_level": 471.4079,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 3,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOTRH",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 5.9112,
+      "weekly_recent_mean": 10.8269,
+      "weekly_recent_sum_26w": 281.5,
+      "safety_stock": 102.6865,
+      "reorder_point": 144.9096,
+      "order_up_to_level": 149.5571,
+      "on_order": 400.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 4,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOTRR",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "RANDOM_FOREST",
+    "demand_class": "ERRATIC",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 154.1737,
+      "weekly_recent_mean": 167.5962,
+      "weekly_recent_sum_26w": 4357.5,
+      "safety_stock": 835.0058,
+      "reorder_point": 2068.3954,
+      "order_up_to_level": 4563.8775,
+      "on_order": 2800.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOTMR58",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "ERRATIC",
+    "abc_class": "B",
+    "evidence": {
+      "weekly_fc_mean": 35.1198,
+      "weekly_recent_mean": 37.1731,
+      "weekly_recent_sum_26w": 966.5,
+      "safety_stock": 90.366,
+      "reorder_point": 250.9137,
+      "order_up_to_level": 614.7978,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOQR34O",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "HOLT_DAMPED",
+    "demand_class": "LUMPY",
+    "abc_class": "A",
+    "evidence": {
+      "weekly_fc_mean": 57.0841,
+      "weekly_recent_mean": 42.6731,
+      "weekly_recent_sum_26w": 1109.5,
+      "safety_stock": 991.632,
+      "reorder_point": 1350.4462,
+      "order_up_to_level": 2084.3843,
+      "on_order": 300.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 2,
+      "negative_weekly_present": true,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOSL152O",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "ERRATIC",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 24.9552,
+      "weekly_recent_mean": 22.1731,
+      "weekly_recent_sum_26w": 576.5,
+      "safety_stock": 70.9481,
+      "reorder_point": 234.9394,
+      "order_up_to_level": 362.1367,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MONO34R",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "ERRATIC",
+    "abc_class": "B",
+    "evidence": {
+      "weekly_fc_mean": 38.3775,
+      "weekly_recent_mean": 39.5577,
+      "weekly_recent_sum_26w": 1028.5,
+      "safety_stock": 135.8334,
+      "reorder_point": 278.3784,
+      "order_up_to_level": 718.536,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "moulding",
+    "sku": "MOCV1234R",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "LUMPY",
+    "abc_class": "B",
+    "evidence": {
+      "weekly_fc_mean": 37.5703,
+      "weekly_recent_mean": 32.25,
+      "weekly_recent_sum_26w": 838.5,
+      "safety_stock": 365.1538,
+      "reorder_point": 504.7007,
+      "order_up_to_level": 814.6089,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 1,
+      "negative_weekly_present": true,
+      "negative_monthly_present": false
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\mouldingwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GFFCOB7102",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SARIMA(0,1,1) (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 450.6479,
+      "weekly_recent_mean": -27.8043,
+      "weekly_recent_sum_26w": -722.9112,
+      "safety_stock": 2151.8123,
+      "reorder_point": 4972.6596,
+      "order_up_to_level": 8252.7145,
+      "on_order": 0.0,
+      "catchup_order_qty": 3280.0549,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GFFCOB7102",
+    "severity": "medium",
+    "issue_id": "fallback_without_recent_demand",
+    "issue_description": "Fallback model predicts demand despite no recent demand.",
+    "method": "SARIMA(0,1,1) (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 450.6479,
+      "weekly_recent_mean": -27.8043,
+      "weekly_recent_sum_26w": -722.9112,
+      "safety_stock": 2151.8123,
+      "reorder_point": 4972.6596,
+      "order_up_to_level": 8252.7145,
+      "on_order": 0.0,
+      "catchup_order_qty": 3280.0549,
+      "trailing_zero_weeks": 0,
+      "is_fallback": true
+    },
+    "recommendation": "Force fallback to zero/low carryover when recent demand is absent.",
+    "likely_code_locations": [
+      "core/forecasting.py:993",
+      "core/forecasting.py:1014"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GNIIH538",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SBA",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 467.2628,
+      "weekly_recent_mean": 458.0318,
+      "weekly_recent_sum_26w": 11908.8268,
+      "safety_stock": 3391.2403,
+      "reorder_point": 14680.1767,
+      "order_up_to_level": 26674.6717,
+      "on_order": 16537.5,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GFCOO5PS",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 277.4552,
+      "weekly_recent_mean": 361.9929,
+      "weekly_recent_sum_26w": 9411.8147,
+      "safety_stock": 1472.5815,
+      "reorder_point": 5713.4612,
+      "order_up_to_level": 10237.0663,
+      "on_order": 18900.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GNCVM538W",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 57.7744,
+      "weekly_recent_mean": 38.2812,
+      "weekly_recent_sum_26w": 995.3125,
+      "safety_stock": 501.727,
+      "reorder_point": 1796.9065,
+      "order_up_to_level": 3150.9578,
+      "on_order": 0.0,
+      "catchup_order_qty": 1354.0513,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GHNPPHO5207-R",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "XGBoost (Local)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 34.8009,
+      "weekly_recent_mean": 47.7305,
+      "weekly_recent_sum_26w": 1240.9925,
+      "safety_stock": 221.5631,
+      "reorder_point": 521.2349,
+      "order_up_to_level": 845.8794,
+      "on_order": 0.0,
+      "catchup_order_qty": 324.6445,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GHCAH75103",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "SARIMA(0,1,1) (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 420.9606,
+      "weekly_recent_mean": 45.8991,
+      "weekly_recent_sum_26w": 1193.3772,
+      "safety_stock": 1848.9063,
+      "reorder_point": 3013.2168,
+      "order_up_to_level": 4606.4839,
+      "on_order": 8450.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": 9.1714
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GHCAH75103",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SARIMA(0,1,1) (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 420.9606,
+      "weekly_recent_mean": 45.8991,
+      "weekly_recent_sum_26w": 1193.3772,
+      "safety_stock": 1848.9063,
+      "reorder_point": 3013.2168,
+      "order_up_to_level": 4606.4839,
+      "on_order": 8450.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "EOEWO72DP43",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 22.498,
+      "weekly_recent_mean": 4.4134,
+      "weekly_recent_sum_26w": 114.7478,
+      "safety_stock": 106.4061,
+      "reorder_point": 129.3315,
+      "order_up_to_level": 175.1823,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": 5.0977
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "EOEWO72DP43",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 22.498,
+      "weekly_recent_mean": 4.4134,
+      "weekly_recent_sum_26w": 114.7478,
+      "safety_stock": 106.4061,
+      "reorder_point": 129.3315,
+      "order_up_to_level": 175.1823,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GWCCLW104",
+    "severity": "medium",
+    "issue_id": "default_lead_time_used",
+    "issue_description": "Inferred lead time appears to be default fallback.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 1.7189,
+      "weekly_recent_mean": 52.4309,
+      "weekly_recent_sum_26w": 1363.2039,
+      "safety_stock": 7.6067,
+      "reorder_point": 15.3635,
+      "order_up_to_level": 24.8718,
+      "on_order": 0.0,
+      "catchup_order_qty": 9.5084,
+      "trailing_zero_weeks": 0,
+      "inferred_lead_time_days": 31.0
+    },
+    "recommendation": "Backfill lead time per vendor/SKU tier and reduce hard default usage.",
+    "likely_code_locations": [
+      "sundrieswebapp_refactored.py:525",
+      "mouldingwebapp_refactored.py:527",
+      "flooringwebapp.py:1796"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GNDV2O708",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": -2.0302,
+      "weekly_recent_mean": 21.8289,
+      "weekly_recent_sum_26w": 567.5526,
+      "safety_stock": 24.6187,
+      "reorder_point": 22.5499,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GNDV2O708",
+    "severity": "critical",
+    "issue_id": "zero_fc_nonzero_policy",
+    "issue_description": "Zero forecast but SS/ROP/S remains above zero.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": -2.0302,
+      "weekly_recent_mean": 21.8289,
+      "weekly_recent_sum_26w": 567.5526,
+      "safety_stock": 24.6187,
+      "reorder_point": 22.5499,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0
+    },
+    "recommendation": "Ensure cap is applied after floors and guardrails.",
+    "likely_code_locations": [
+      "core/forecasting.py:1178",
+      "core/forecasting.py:1252"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GHCAH75102",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 9.3869,
+      "weekly_recent_mean": 17.9605,
+      "weekly_recent_sum_26w": 466.9737,
+      "safety_stock": 60.3325,
+      "reorder_point": 87.6617,
+      "order_up_to_level": 124.5561,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GVSPC1201",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 60.5018,
+      "weekly_recent_mean": 38.8803,
+      "weekly_recent_sum_26w": 1010.8883,
+      "safety_stock": 294.5205,
+      "reorder_point": 664.4267,
+      "order_up_to_level": 1095.9839,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GHEXPR538",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SARIMA(0,1,1) (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "B",
+    "evidence": {
+      "weekly_fc_mean": 540.1329,
+      "weekly_recent_mean": 556.4731,
+      "weekly_recent_sum_26w": 14468.3015,
+      "safety_stock": 3609.7484,
+      "reorder_point": 12416.0264,
+      "order_up_to_level": 21772.6968,
+      "on_order": 0.0,
+      "catchup_order_qty": 9356.6704,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GNDVO702",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "SARIMA(0,1,1) (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 616.9848,
+      "weekly_recent_mean": 224.634,
+      "weekly_recent_sum_26w": 5840.4838,
+      "safety_stock": 2730.372,
+      "reorder_point": 5604.4478,
+      "order_up_to_level": 9107.2277,
+      "on_order": 11543.4,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": 2.7466
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GNDVO702",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "SARIMA(0,1,1) (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 616.9848,
+      "weekly_recent_mean": 224.634,
+      "weekly_recent_sum_26w": 5840.4838,
+      "safety_stock": 2730.372,
+      "reorder_point": 5604.4478,
+      "order_up_to_level": 9107.2277,
+      "on_order": 11543.4,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "RQ314QOSSP",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Random Forest (Local) (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 63.7176,
+      "weekly_recent_mean": 90.3015,
+      "weekly_recent_sum_26w": 2347.8399,
+      "safety_stock": 332.4376,
+      "reorder_point": 527.2213,
+      "order_up_to_level": 786.9329,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GHEXS538",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Hurdle",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 250.3686,
+      "weekly_recent_mean": 484.0646,
+      "weekly_recent_sum_26w": 12585.6792,
+      "safety_stock": 2790.4489,
+      "reorder_point": 12052.6822,
+      "order_up_to_level": 21893.8051,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "RQ5SOB",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 33.466,
+      "weekly_recent_mean": 21.4912,
+      "weekly_recent_sum_26w": 558.7719,
+      "safety_stock": 163.0496,
+      "reorder_point": 294.5848,
+      "order_up_to_level": 460.2216,
+      "on_order": 0.0,
+      "catchup_order_qty": 165.6368,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GNDV2O712",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 0.0,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GFCOW7PS",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 136.1186,
+      "weekly_recent_mean": 74.114,
+      "weekly_recent_sum_26w": 1926.9649,
+      "safety_stock": 838.7223,
+      "reorder_point": 2919.2835,
+      "order_up_to_level": 5138.5488,
+      "on_order": 0.0,
+      "catchup_order_qty": 2219.2653,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GHCAM75205",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "XGBoost (Local) (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 70.0605,
+      "weekly_recent_mean": 25.943,
+      "weekly_recent_sum_26w": 674.5175,
+      "safety_stock": 452.929,
+      "reorder_point": 769.0905,
+      "order_up_to_level": 1156.6433,
+      "on_order": 0.0,
+      "catchup_order_qty": 387.5528,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": 2.7006
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GNDVPHO513-R",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 119.6557,
+      "weekly_recent_mean": 189.3822,
+      "weekly_recent_sum_26w": 4923.9382,
+      "safety_stock": 580.8767,
+      "reorder_point": 1242.7742,
+      "order_up_to_level": 2026.6001,
+      "on_order": 0.0,
+      "catchup_order_qty": 783.8259,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GFDBO71882P",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 22.0339,
+      "weekly_recent_mean": 21.4697,
+      "weekly_recent_sum_26w": 558.2132,
+      "safety_stock": 128.279,
+      "reorder_point": 176.3914,
+      "order_up_to_level": 246.9562,
+      "on_order": 0.0,
+      "catchup_order_qty": 70.5648,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GNBLPC506-L",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 55.1042,
+      "weekly_recent_mean": 147.0407,
+      "weekly_recent_sum_26w": 3823.0577,
+      "safety_stock": 306.7214,
+      "reorder_point": 587.4756,
+      "order_up_to_level": 924.3808,
+      "on_order": 0.0,
+      "catchup_order_qty": 336.9051,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "RH112QOSNB-15",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Random Forest (Local) (fallback to avg)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 51.7856,
+      "weekly_recent_mean": 204.8836,
+      "weekly_recent_sum_26w": 5326.9724,
+      "safety_stock": 523.7575,
+      "reorder_point": 1488.6805,
+      "order_up_to_level": 2506.3729,
+      "on_order": 0.0,
+      "catchup_order_qty": 1017.6923,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GHSLBI6129",
+    "severity": "high",
+    "issue_id": "negative_history",
+    "issue_description": "Negative demand values exist in historical signal.",
+    "method": "Historical Avg (fallback)",
+    "demand_class": "LUMPY",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 6.1442,
+      "weekly_recent_mean": 70.9211,
+      "weekly_recent_sum_26w": 1843.9474,
+      "safety_stock": 0.0,
+      "reorder_point": 0.0,
+      "order_up_to_level": 0.0,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "negative_weekly_present": false,
+      "negative_monthly_present": true
+    },
+    "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+    "likely_code_locations": [
+      "core/data_loader.py:211",
+      "core/forecasting.py:57",
+      "flooringwebapp.py:618"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  },
+  {
+    "dataset": "flooring",
+    "sku": "GFBHO9511",
+    "severity": "high",
+    "issue_id": "future_level_drift",
+    "issue_description": "Future demand level is materially above recent demand evidence.",
+    "method": "COLD_START_CONSERVATIVE_MEAN",
+    "demand_class": "INSUFFICIENT_DATA",
+    "abc_class": "C",
+    "evidence": {
+      "weekly_fc_mean": 4.7422,
+      "weekly_recent_mean": 0.0,
+      "weekly_recent_sum_26w": 0.0,
+      "safety_stock": 20.9858,
+      "reorder_point": 98.3018,
+      "order_up_to_level": 180.45,
+      "on_order": 0.0,
+      "catchup_order_qty": 0.0,
+      "trailing_zero_weeks": 0,
+      "future_to_recent_ratio": null
+    },
+    "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+    "likely_code_locations": [
+      "core/forecasting.py:948",
+      "core/forecasting.py:1084"
+    ],
+    "source_file": "\\\\server\\home$\\niko\\2025\\NewForecastingModel\\OMPforecasting5\\flooringwebappJSON"
+  }
+]

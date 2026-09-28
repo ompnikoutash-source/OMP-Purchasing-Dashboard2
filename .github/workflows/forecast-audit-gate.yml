@@ -1,0 +1,50 @@
+name: Forecast Audit Gate
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "sundrieswebappJSON"
+      - "mouldingwebappJSON"
+      - "flooringwebappJSON"
+      - "agents/**"
+      - "core/**"
+      - "sundrieswebapp_refactored.py"
+      - "mouldingwebapp_refactored.py"
+      - "flooringwebapp.py"
+
+jobs:
+  audit:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Unit Tests
+        run: python -m pytest tests/ -v --tb=short
+
+      - name: Run Forecast Audit Gate
+        run: python -m agents.forecast_audit_agent --base-dir . --fail-on-severity high
+
+      - name: Run Layer 1 Regression Triage
+        if: always()
+        run: python -m agents.regression_triage --base-dir .
+
+      - name: Upload triage reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forecast-audit-reports
+          path: |
+            agents/reports/audit_*
+            agents/reports/triage_queue_*
+          if-no-files-found: ignore
+

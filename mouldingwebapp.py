@@ -15,20 +15,8 @@ import sys
 from datetime import datetime, date
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
-import numpy as np
-import pandas as pd
-import pyodbc
-from scipy import stats
-from statsmodels.tsa.holtwinters import ExponentialSmoothing, SimpleExpSmoothing
-from sklearn.neural_network import MLPRegressor
-from sklearn.ensemble import RandomForestRegressor
-from xgboost import XGBRegressor
 
-# Fix Windows console encoding for unicode characters
-if sys.platform.startswith('win'):
-    sys.stdout.reconfigure(encoding='utf-8')
-
-# Suppress all warnings
+# Suppress all warnings BEFORE importing sklearn (to avoid joblib/delayed warnings)
 warnings.filterwarnings("ignore")
 warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -38,12 +26,27 @@ warnings.filterwarnings("ignore", module="statsmodels")
 os.environ['PYTHONWARNINGS'] = 'ignore::UserWarning'
 os.environ['LOKY_MAX_CPU_COUNT'] = '4'
 
+import numpy as np
+import pandas as pd
+import pyodbc
+from scipy import stats
+try:
+    from core.forecasting import forecast_prophet as _prophet_core, is_prophet_available as _is_prophet_available
+except ImportError:
+    _prophet_core = None
+    _is_prophet_available = lambda: False
+
+# Fix Windows console encoding for unicode characters
+if sys.platform.startswith('win'):
+    sys.stdout.reconfigure(encoding='utf-8')
+
 # ============================================================
 # CONFIGURATION
 # ============================================================
 FOCUS_SKU = ""  # Leave blank "" to process all SKUs in the Moulding List
 USE_GLOBAL_MODEL = True
-MOULDING_LIST_FILE = "MouldingSKUList.xlsx"
+SHAREPOINT_DIR = Path(r"C:\Users\niko\OneDrive - Old Master Products\Purchasing - Flooring Reports")
+MOULDING_LIST_FILE = SHAREPOINT_DIR / "MouldingSKUList.xlsx"
 WEBAPP_JSON_PATH = Path(__file__).resolve().parent / "mouldingwebappJSON"
 UI_BUILD = "2026-01-23-moulding"
 
@@ -69,6 +72,12 @@ LUMPY_PCTL_NONZERO = {"A": 0.95, "B": 0.90, "C": 0.85}
 LUMPY_LT_BUFFER_FRAC = 0.10
 ENABLE_GLOBAL_UPLIFT_BUDGET = True
 GLOBAL_UPLIFT_BUDGET_PCT = 0.02
+
+# Order-up-to (s,S) coverage horizon beyond lead time, by ABC class (days)
+#   A: high movers sell fast, larger orders are low risk
+#   C: slow movers, keep orders small to limit risk
+COVERAGE_HORIZON_DAYS = {"A": 90, "B": 60, "C": 30}
+MIN_LEAD_TIME_DAYS = 7  # Floor when IMLT is 0 or missing
 
 DSN_NAME = "Gartman"
 FUTURE_FORECAST_DAYS = 365
@@ -226,14 +235,33 @@ def _fetch_sku_master(conn, focus_sku: str = "", cutoff_date_str: str = CUTOFF_D
         raise ValueError("Moulding SKU list is required but was not provided or is empty")
     if focus_sku:
         sku_filter = f"AND TRIM(M.IMITEM) = '{focus_sku.strip().upper()}'"
+        lpv_filter = f"AND TRIM(L.PLITEM) = '{focus_sku.strip().upper()}'"
         print(f"  Filtering for single SKU: {focus_sku}")
     else:
         sku_list_clean = [s.strip().upper() for s in moulding_sku_list]
         sku_list_str = "'" + "','".join(sku_list_clean) + "'"
         sku_filter = f"AND TRIM(M.IMITEM) IN ({sku_list_str})"
+        lpv_filter = f"AND TRIM(L.PLITEM) IN ({sku_list_str})"
         print(f"  Filtering for {len(moulding_sku_list)} SKUs from Moulding List")
     query = f"""
     WITH
+    PO_MAX_DATE AS (
+      SELECT TRIM(L.PLITEM) AS ITEM_NUMBER, MAX(H.PHDOI) AS LATEST_DATE
+      FROM GSFL2K.POLINE L
+      JOIN GSFL2K.POHEAD H ON H.PHPO# = L.PLPO# AND H.PHCO = L.PLCO
+      WHERE TRIM(H.PHVEND) <> ''
+        {lpv_filter}
+      GROUP BY TRIM(L.PLITEM)
+    ),
+    LATEST_PO_VENDOR AS (
+      SELECT PMD.ITEM_NUMBER, MIN(TRIM(H.PHVEND)) AS VENDOR_NUMBER
+      FROM PO_MAX_DATE PMD
+      JOIN GSFL2K.POLINE L ON TRIM(L.PLITEM) = PMD.ITEM_NUMBER
+      JOIN GSFL2K.POHEAD H ON H.PHPO# = L.PLPO# AND H.PHCO = L.PLCO
+                           AND H.PHDOI = PMD.LATEST_DATE
+      WHERE TRIM(H.PHVEND) <> ''
+      GROUP BY PMD.ITEM_NUMBER
+    ),
     INV AS (
       SELECT B.IBITEM, SUM(B.IBQOH) AS QTY_ON_HAND, SUM(B.IBQOO) AS QTY_COMMITTED
       FROM GSFL2K.ITEMBAL B WHERE B.IBLOC NOT IN (90, 17, 41, 46) GROUP BY B.IBITEM
@@ -248,13 +276,15 @@ def _fetch_sku_master(conn, focus_sku: str = "", cutoff_date_str: str = CUTOFF_D
     )
     SELECT
       TRIM(M.IMITEM) AS ITEM_NUMBER, TRIM(M.IMDESC) AS DESCRIPTION, TRIM(M.IMUM2) AS UNIT_OF_MEASURE,
-      TRIM(M.IMVEND) AS VENDOR_NUMBER, TRIM(V.VMNAME) AS VENDOR_NAME, TRIM(X.IMCOLLECT) AS COLLECTION,
+      COALESCE(TRIM(LPV.VENDOR_NUMBER), TRIM(M.IMVEND)) AS VENDOR_NUMBER,
+      TRIM(V.VMNAME) AS VENDOR_NAME, TRIM(X.IMCOLLECT) AS COLLECTION,
       ((COALESCE(INV.QTY_ON_HAND,0) - COALESCE(INV.QTY_COMMITTED,0)) * COALESCE(M.IMFACT, 1)) AS AVAILABLE_QTY,
       COALESCE(PO.ON_PO_QTY, 0) AS ON_PO_QTY, COALESCE(BO.BO_QTY, 0) AS BACKORDER_QTY,
       COALESCE(M.IMLT, 30) AS LEAD_TIME_IMLT
     FROM GSFL2K.ITEMMAST M
+    LEFT JOIN LATEST_PO_VENDOR LPV ON LPV.ITEM_NUMBER = TRIM(M.IMITEM)
     LEFT JOIN GSFL2K.ITEMXTRA X ON X.IMXITM = M.IMITEM
-    LEFT JOIN GSFL2K.VENDMAST V ON V.VMVEND = M.IMVEND
+    LEFT JOIN GSFL2K.VENDMAST V ON TRIM(V.VMVEND) = COALESCE(TRIM(LPV.VENDOR_NUMBER), TRIM(M.IMVEND))
     LEFT JOIN INV ON INV.IBITEM = M.IMITEM
     LEFT JOIN PO ON PO.PLITEM = M.IMITEM
     LEFT JOIN BO ON BO.OLITEM = M.IMITEM
@@ -288,7 +318,7 @@ def _fetch_sales_history(conn, sku: str, cutoff_date_str: str = CUTOFF_DATE) -> 
     JOIN GSFL2K.SHHEAD H ON H.SHCO = L.SLCO AND H.SHLOC = L.SLLOC AND H.SHORD# = L.SLORD# AND H.SHINV# = L.SLINV#
     WHERE TRIM(L.SLITEM) = '{_sql_escape(sku_clean)}'
       AND L.SLUM2 NOT LIKE '%SF%'
-      AND COALESCE(L.SLBLUO, 0) > 0
+      AND COALESCE(L.SLBLUO, 0) <> 0
       AND H.SHCUST NOT LIKE '%TRANSFER%'
       AND H.SHCUST NOT LIKE '%OMP000%'
       AND H.SHCUST NOT LIKE '%INV000%'
@@ -335,7 +365,7 @@ def load_arrivals(conn, sku_list: List[str]) -> pd.DataFrame:
       TRIM(L.PLITEM) AS ITEM_NUMBER,
       TRIM(L.PLDESC) AS DESCRIPTION,
       COALESCE(L.PLBLUO, 0) AS QUANTITY_SF,
-      TRIM(M.IMVEND) AS VENDOR_NUMBER,
+      TRIM(H.PHVEND) AS VENDOR_NUMBER,
       TRIM(V.VMNAME) AS VENDOR_NAME,
       TRIM(X.IMCOLLECT) AS COLLECTION,
       L.PLPDAT AS DUE_PORT,
@@ -345,11 +375,11 @@ def load_arrivals(conn, sku_list: List[str]) -> pd.DataFrame:
       MAX(TRIM(P.PTCMT1)) AS PTCMT1,
       MAX(TRIM(P.PTCMT2)) AS PTCMT2
     FROM GSFL2K.POLINE L
-    LEFT JOIN GSFL2K.POTEXT P ON P.PTPO# = L.PLPO#
-    LEFT JOIN GSFL2K.POHEAD H ON H.PHPO# = L.PLPO#
+    LEFT JOIN GSFL2K.POTEXT P ON P.PTPO# = L.PLPO# AND P.PTCO = L.PLCO
+    LEFT JOIN GSFL2K.POHEAD H ON H.PHPO# = L.PLPO# AND H.PHCO = L.PLCO
     JOIN GSFL2K.ITEMMAST M ON M.IMITEM = L.PLITEM
     LEFT JOIN GSFL2K.ITEMXTRA X ON X.IMXITM = M.IMITEM
-    LEFT JOIN GSFL2K.VENDMAST V ON V.VMVEND = M.IMVEND
+    LEFT JOIN GSFL2K.VENDMAST V ON V.VMVEND = H.PHVEND
     WHERE L.PLDELT LIKE '%A%'
       AND TRIM(L.PLPO#) <> ''
       AND TRIM(L.PLITEM) <> ''
@@ -359,7 +389,7 @@ def load_arrivals(conn, sku_list: List[str]) -> pd.DataFrame:
       TRIM(L.PLITEM),
       TRIM(L.PLDESC),
       COALESCE(L.PLBLUO, 0),
-      TRIM(M.IMVEND),
+      TRIM(H.PHVEND),
       TRIM(V.VMNAME),
       TRIM(X.IMCOLLECT),
       L.PLPDAT,
@@ -437,12 +467,28 @@ def compute_abc_classification(df_master: pd.DataFrame, shipped_12m_map: Dict[st
 # FORECASTING FUNCTIONS
 # ============================================================
 def aggregate_to_weekly(df: pd.DataFrame) -> pd.DataFrame:
+    """Aggregate daily data to weekly buckets, filling zero-demand weeks."""
     if df.empty:
         return df
     df = df.copy()
     df['week'] = df['transaction_date'].dt.to_period('W').dt.to_timestamp()
     weekly = df.groupby('week').agg({'quantity_shipped': 'sum'}).reset_index()
     weekly.columns = ['week', 'quantity']
+
+    # Reindex to include ALL weeks between first and last sale (fill gaps with 0)
+    if len(weekly) >= 2:
+        full_weeks = pd.date_range(
+            start=weekly['week'].min(),
+            end=weekly['week'].max(),
+            freq='W-MON',
+        )
+        weekly = (
+            weekly.set_index('week')
+            .reindex(full_weeks, fill_value=0.0)
+            .rename_axis('week')
+            .reset_index()
+        )
+
     return weekly
 
 def classify_demand_pattern(df_weekly: pd.DataFrame) -> Tuple[str, float, float]:
@@ -480,6 +526,7 @@ def classify_demand_pattern(df_weekly: pd.DataFrame) -> Tuple[str, float, float]
     return demand_class, adi, cv2
 
 def safe_exponential_smoothing(y_train, seasonal_periods=None, trend=None, seasonal=None, damped_trend=False, max_attempts=3):
+    from statsmodels.tsa.holtwinters import ExponentialSmoothing, SimpleExpSmoothing
     if len(y_train) < 3:
         return None
     nonzero_count = np.sum(y_train > 0)
@@ -512,7 +559,7 @@ def wmape(y_true, y_pred):
         return 0.0 if np.sum(np.abs(y_pred)) == 0 else 1000.0
     return float(np.sum(np.abs(y_true - y_pred)) / denom) * 100
 
-def cap_outliers(series: pd.Series, n_mad: float = 4.0) -> pd.Series:
+def cap_outliers(series: pd.Series, n_mad: float = 10.0) -> pd.Series:
     """Cap extreme outliers using median and MAD (robust to outliers).
 
     Uses median and Median Absolute Deviation (MAD) instead of mean/std
@@ -522,7 +569,7 @@ def cap_outliers(series: pd.Series, n_mad: float = 4.0) -> pd.Series:
 
     Args:
         series: Time series of demand values
-        n_mad: Number of MAD-scaled deviations for the threshold (default 4.0)
+        n_mad: Number of MAD-scaled deviations for the threshold (default 10.0)
 
     Returns:
         Series with outliers capped at median + n_mad * (1.4826 * MAD)
@@ -658,6 +705,7 @@ def _recursive_forecast(model, future_state: Dict[str, Any], h_future: int) -> n
 
 def forecast_random_forest(X_train, y_train, X_val, y_val, future_state, h_future):
     try:
+        from sklearn.ensemble import RandomForestRegressor
         model = RandomForestRegressor(n_estimators=100, max_depth=10, min_samples_split=5, random_state=42, n_jobs=1)
         model.fit(X_train, y_train)
         fc_val = model.predict(X_val)
@@ -671,6 +719,7 @@ def forecast_random_forest(X_train, y_train, X_val, y_val, future_state, h_futur
 
 def forecast_xgboost(X_train, y_train, X_val, y_val, future_state, h_future):
     try:
+        from xgboost import XGBRegressor
         model = XGBRegressor(n_estimators=100, max_depth=6, learning_rate=0.1, random_state=42, n_jobs=1, verbosity=0)
         model.fit(X_train, y_train, verbose=False)
         fc_val = model.predict(X_val)
@@ -833,24 +882,51 @@ def compute_safety_stock(mean_demand: float, std_demand: float, lead_time_weeks:
 
 def compute_reorder_metrics(weekly_forecast: np.ndarray, lead_time_weeks: float,
                            demand_class: str, abc_class: str, y_train: np.ndarray) -> Dict[str, float]:
+    """Compute reorder point and order-up-to level using (s, S) policy."""
     mean_weekly = np.mean(weekly_forecast)
     std_weekly = np.std(y_train) if len(y_train) > 0 else 0.0
-    lead_time_mean_demand = mean_weekly * lead_time_weeks
-    ss_dict = compute_safety_stock(mean_weekly, std_weekly, lead_time_weeks, demand_class, abc_class, y_train)
-    reorder_point = lead_time_mean_demand + ss_dict['safety_stock']
-    reorder_quantity = mean_weekly * WEEKS_PER_MONTH * 2
+    mean_daily = mean_weekly / DAYS_PER_WEEK
+    std_daily = std_weekly / DAYS_PER_WEEK
+
+    # Lead time with floor
+    lead_time_days_raw = lead_time_weeks * DAYS_PER_WEEK
+    lead_time_days = max(lead_time_days_raw, MIN_LEAD_TIME_DAYS)
+    lead_time_weeks_floored = lead_time_days / DAYS_PER_WEEK
+
+    mu_L = mean_daily * lead_time_days
+
+    ss_dict = compute_safety_stock(mean_weekly, std_weekly, lead_time_weeks_floored,
+                                   demand_class, abc_class, y_train)
+
+    reorder_point = mu_L + ss_dict['safety_stock']
+
+    # Order-up-to level: S = μ_(L+T) + z × σ_(L+T) × (1 + uplift)
+    coverage_days = COVERAGE_HORIZON_DAYS.get(abc_class, 60)
+    total_horizon_days = lead_time_days + coverage_days
+    mu_LT = mean_daily * total_horizon_days
+    sigma_LT = std_daily * math.sqrt(total_horizon_days) if total_horizon_days > 0 else 0.0
+
+    uplift_scalar = SS_UPLIFT_SCALAR.get(abc_class, 0.0)
+    buffer_LT = Z_SCORE * sigma_LT * (1 + uplift_scalar)
+
+    order_up_to_level = mu_LT + buffer_LT
+
+    reorder_quantity = max(0.0, order_up_to_level - reorder_point)
+
     return {
-        'lead_time_mean_demand': lead_time_mean_demand,
+        'lead_time_mean_demand': mu_L,
         'reorder_point': reorder_point,
+        'order_up_to_level': order_up_to_level,
         'reorder_quantity': reorder_quantity,
-        'daily_mean_demand': mean_weekly / DAYS_PER_WEEK,
+        'coverage_horizon_days': coverage_days,
+        'daily_mean_demand': mean_daily,
         **ss_dict
     }
 
 # ============================================================
 # MONTHLY PROJECTION SIMULATION
 # ============================================================
-def simulate_monthly_projection(inventory_position, weekly_forecast, reorder_point, reorder_qty, sales_df, as_of_date, safety_stock, months_ahead=12):
+def simulate_monthly_projection(inventory_position, weekly_forecast, reorder_point, reorder_qty, sales_df, as_of_date, safety_stock, months_ahead=12, order_up_to_level=None):
     if as_of_date is None:
         as_of_date = pd.Timestamp.now().normalize()
     else:
@@ -893,12 +969,18 @@ def simulate_monthly_projection(inventory_position, weekly_forecast, reorder_poi
     monthly_demand = pd.DataFrame(monthly_demands)
     # Ensure Demand column is float type to avoid NaT conversion during iteration
     monthly_demand['Demand'] = monthly_demand['Demand'].astype(float)
+    # Use order-up-to (s, S) if available, else fall back to fixed Q
+    s_level = order_up_to_level  # may be None
+
     projections = []
     inventory_level = inventory_position
     beginning_inv = inventory_level
     reorder_triggered = (beginning_inv - total_month_demand) < reorder_point
     if reorder_triggered:
-        inventory_level += reorder_qty
+        oq = max(0, s_level - beginning_inv) if s_level is not None else reorder_qty
+        inventory_level += oq
+    else:
+        oq = 0
     ending_inv = max(0, inventory_level - total_month_demand)
     projections.append({
         'Month': month_start,
@@ -906,7 +988,7 @@ def simulate_monthly_projection(inventory_position, weekly_forecast, reorder_poi
         'Safety Stock': safety_stock,
         'Beginning Inventory': beginning_inv,
         'Forecast': remainder_fc,
-        'Order Quantity': reorder_qty if reorder_triggered else 0,
+        'Order Quantity': oq,
         'Ending Inventory': ending_inv,
         'Row_Type': 'CATCHUP'
     })
@@ -917,8 +999,8 @@ def simulate_monthly_projection(inventory_position, weekly_forecast, reorder_poi
         beginning_inv = inventory_level
         reorder_triggered = beginning_inv <= reorder_point
         if reorder_triggered:
-            inventory_level += reorder_qty
-            reorder_qty_applied = reorder_qty
+            reorder_qty_applied = max(0, s_level - beginning_inv) if s_level is not None else reorder_qty
+            inventory_level += reorder_qty_applied
         else:
             reorder_qty_applied = 0
         ending_inv = max(0, inventory_level - demand)
@@ -1053,6 +1135,9 @@ def process_sku(conn, sku_row: pd.Series, abc_map: Dict[str, str], global_model=
     if len(X_train) >= 10:
         methods['Random_Forest'] = forecast_random_forest(X_train, y_train_ml, X_val, y_val_ml, future_state, h_future)
         methods['XGBoost'] = forecast_xgboost(X_train, y_train_ml, X_val, y_val_ml, future_state, h_future)
+    if _is_prophet_available() and len(y_train) >= 10:
+        train_weeks = df_weekly['week'].values[:split_idx]
+        methods['Prophet'] = _prophet_core(y_train, y_val, h_future, weekly_dates_train=train_weeks)
     best_method, weekly_forecast, best_mape = select_best_forecast(methods, pd.Series(y_train), demand_class)
     # Fallback if forecast is all zeros but historical demand exists
     hist_nonzero = df_weekly['quantity'][df_weekly['quantity'] > 0]
@@ -1063,12 +1148,12 @@ def process_sku(conn, sku_row: pd.Series, abc_map: Dict[str, str], global_model=
             best_method = f"{best_method} (fallback to hist mean)"
     print(f"  Selected Method: {best_method} (wMAPE: {best_mape:.2f}%)")
     reorder_metrics = compute_reorder_metrics(weekly_forecast, lead_time_weeks, demand_class, abc_class, y_train)
-    print(f"  Reorder Point: {reorder_metrics['reorder_point']:.0f}, ROQ: {reorder_metrics['reorder_quantity']:.0f}")
+    print(f"  Reorder Point (s): {reorder_metrics['reorder_point']:.0f}, Order-Up-To (S): {reorder_metrics['order_up_to_level']:.0f}, Nominal Q: {reorder_metrics['reorder_quantity']:.0f}")
     last_week = df_weekly['week'].max()
     # Convert to numpy array to avoid index alignment issues when creating new Series
     weekly_forecast_values = np.asarray(weekly_forecast)
     weekly_fc_series = pd.Series(weekly_forecast_values, index=pd.date_range(last_week + pd.Timedelta(days=7), periods=len(weekly_forecast_values), freq='W'))
-    monthly_proj = simulate_monthly_projection(inventory_position, weekly_fc_series, reorder_metrics['reorder_point'], reorder_metrics['reorder_quantity'], df_sales, AS_OF_DATE, reorder_metrics['safety_stock'], months_ahead=12)
+    monthly_proj = simulate_monthly_projection(inventory_position, weekly_fc_series, reorder_metrics['reorder_point'], reorder_metrics['reorder_quantity'], df_sales, AS_OF_DATE, reorder_metrics['safety_stock'], months_ahead=12, order_up_to_level=reorder_metrics.get('order_up_to_level'))
     if not df_sales.empty:
         df_hist = df_sales.copy()
         df_hist['Month'] = pd.to_datetime(df_hist['transaction_date']).dt.to_period('M').dt.to_timestamp()

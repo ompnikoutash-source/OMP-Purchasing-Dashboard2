@@ -1,0 +1,25 @@
+Available = Pull from Gartman
+On PO = Pull from Gartman
+Backorder (Qty) = Pull from Gartman
+Minimum Order Quantity = Leave as zero for now
+Days per Month Conversion = 30.4 use this below
+Lead Time (Days) = either from Lead Time Excel or Gartman, prioritize Excel
+Average Monthly Demand = Take average of the historical demand
+Daily Mean of Demand = Average Monthly Demand / 30.4
+SD of Demand (Monthly) = std of the historical monthly demand
+Daily Standard Deviation = SD of Demand (Monthly) / sqrt(30.4)
+Lead Time Mean Demand = Lead Time * Daily Mean of Demand
+Standard Deviation of Demand over LT = Daily Standard Deviation * sqrt(lead time in days)
+Service Level = .95
+Z-Score of Service Level = Z score of .95
+Safety Stock (SS) = Z-Score of Service Level * STD of Demand over Lead Time
+Reorder Point (ROP) = Lead Time Mean Demand + Safety Stock
+Multiples/Full Container Only [Don't use yet]
+
+galleher
+floor and decr
+s&s
+mohawk
+
+
+

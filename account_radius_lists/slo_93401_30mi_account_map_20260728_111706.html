@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_28a63b5f52ec4808378295a4ce40cc95 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <div style="
+        position: fixed;
+        bottom: 24px;
+        left: 24px;
+        z-index: 9999;
+        background: white;
+        border: 1px solid #b8b8b8;
+        border-radius: 6px;
+        padding: 10px 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+        font-family: Segoe UI, Arial, sans-serif;
+        font-size: 13px;
+    ">
+        <div style="font-weight:600;margin-bottom:5px;">Account Map</div>
+        <div style='display:flex;align-items:center;gap:7px;margin:3px 0;'><span style='width:11px;height:11px;border-radius:50%;background:#1f77b4;border:1px solid #222;display:inline-block;'></span><span>Sales Rep 106</span></div><div style='display:flex;align-items:center;gap:7px;margin:3px 0;'><span style='width:11px;height:11px;border-radius:50%;background:#d62728;border:1px solid #222;display:inline-block;'></span><span>Sales Rep 19</span></div><div style='display:flex;align-items:center;gap:7px;margin:3px 0;'><span style='width:11px;height:11px;border-radius:50%;background:#2ca02c;border:1px solid #222;display:inline-block;'></span><span>Sales Rep 20</span></div><div style='display:flex;align-items:center;gap:7px;margin:3px 0;'><span style='width:11px;height:11px;border-radius:50%;background:#9467bd;border:1px solid #222;display:inline-block;'></span><span>Sales Rep 888</span></div><div style='display:flex;align-items:center;gap:7px;margin:3px 0;'><span style='width:11px;height:11px;border-radius:50%;background:#ff7f0e;border:1px solid #222;display:inline-block;'></span><span>Sales Rep 999</span></div>
+    </div>
+    
+    
+            <div class="folium-map" id="map_28a63b5f52ec4808378295a4ce40cc95" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_28a63b5f52ec4808378295a4ce40cc95 = L.map(
+                "map_28a63b5f52ec4808378295a4ce40cc95",
+                {
+                    center: [35.1973593478405, -120.5954562961796],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_28a63b5f52ec4808378295a4ce40cc95);
+
+            
+
+        
+    
+            var tile_layer_42661771423e025242a7e66fd51195a2 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_42661771423e025242a7e66fd51195a2.addTo(map_28a63b5f52ec4808378295a4ce40cc95);
+        
+    
+            var marker_7dcab2dfd9b1a9908570e4371ab27cc2 = L.marker(
+                [35.2645356, -120.6563423],
+                {
+}
+            ).addTo(map_28a63b5f52ec4808378295a4ce40cc95);
+        
+    
+            var icon_9bbcf423a4331aed923257a080e442b5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d383f13535539304006e965d437742b8 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_8034f5cfbd91b98862c39d043d2a1f6d = $(`<div id="html_8034f5cfbd91b98862c39d043d2a1f6d" style="width: 100.0%; height: 100.0%;">93401, San Luis Obispo, CA</div>`)[0];
+                popup_d383f13535539304006e965d437742b8.setContent(html_8034f5cfbd91b98862c39d043d2a1f6d);
+            
+        
+
+        marker_7dcab2dfd9b1a9908570e4371ab27cc2.bindPopup(popup_d383f13535539304006e965d437742b8)
+        ;
+
+        
+    
+    
+            marker_7dcab2dfd9b1a9908570e4371ab27cc2.bindTooltip(
+                `<div>
+                     93401, San Luis Obispo, CA
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7dcab2dfd9b1a9908570e4371ab27cc2.setIcon(icon_9bbcf423a4331aed923257a080e442b5);
+            
+    
+            var circle_6d3db54ad73ddde9c30e8791a035c41c = L.circle(
+                [35.2645356, -120.6563423],
+                {"bubblingMouseEvents": true, "color": "#d62728", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d62728", "fillOpacity": 0.04, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 48280.32, "stroke": true, "weight": 2}
+            ).addTo(map_28a63b5f52ec4808378295a4ce40cc95);
+        
+    
+            circle_6d3db54ad73ddde9c30e8791a035c41c.bindTooltip(
+                `<div>
+                     30-mile radius
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var feature_group_0f7315c44bbe873ea12ac97ecd4b8465 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_58a9bf87ad1fb4b8d4c3b98efe4313b6 = L.circleMarker(
+                [35.121934043766, -120.599381039198],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0f7315c44bbe873ea12ac97ecd4b8465);
+        
+    
+        var popup_6baf03e9fd706b527b8ed17fa893c38e = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_227fdd4785cc9881a12765ecbe865c90 = $(`<div id="html_227fdd4785cc9881a12765ecbe865c90" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>FLOOR CONNECTION INC.</h4><strong>Account:</strong> FLO331<br><strong>Address:</strong> 141 BRISCO RD, ARROYO GRANDE, CA, 93420<br><strong>Sales rep:</strong> 106<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_6baf03e9fd706b527b8ed17fa893c38e.setContent(html_227fdd4785cc9881a12765ecbe865c90);
+            
+        
+
+        circle_marker_58a9bf87ad1fb4b8d4c3b98efe4313b6.bindPopup(popup_6baf03e9fd706b527b8ed17fa893c38e)
+        ;
+
+        
+    
+    
+            circle_marker_58a9bf87ad1fb4b8d4c3b98efe4313b6.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>FLOOR CONNECTION INC.</strong><br>Acct: FLO331<br>141 BRISCO RD, ARROYO GRANDE, CA, 93420<br>Sales rep: 106<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_0f7315c44bbe873ea12ac97ecd4b8465.addTo(map_28a63b5f52ec4808378295a4ce40cc95);
+        
+    
+            var feature_group_aed78d7b24235bcea31f8d763117d540 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_192c85ce14827aa37ca3580d065a71f4 = L.circleMarker(
+                [35.25599801692, -120.64613522409462],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d62728", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.97952122623908, "stroke": true, "weight": 1}
+            ).addTo(feature_group_aed78d7b24235bcea31f8d763117d540);
+        
+    
+        var popup_d9c91720bac9ca382d662459d5cdfb5c = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_07addd368781daae8fb14da52dbb1882 = $(`<div id="html_07addd368781daae8fb14da52dbb1882" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>PROSOURCE CINDERELLA CRPT</h4><strong>Account:</strong> PRO239<br><strong>Address:</strong> 3510 BROAD ST, SAN LUIS OBISPO, CA, 93401<br><strong>Sales rep:</strong> 19<br><strong>365-day sales:</strong> $70,747.51</div></div>`)[0];
+                popup_d9c91720bac9ca382d662459d5cdfb5c.setContent(html_07addd368781daae8fb14da52dbb1882);
+            
+        
+
+        circle_marker_192c85ce14827aa37ca3580d065a71f4.bindPopup(popup_d9c91720bac9ca382d662459d5cdfb5c)
+        ;
+
+        
+    
+    
+            circle_marker_192c85ce14827aa37ca3580d065a71f4.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>PROSOURCE CINDERELLA CRPT</strong><br>Acct: PRO239<br>3510 BROAD ST, SAN LUIS OBISPO, CA, 93401<br>Sales rep: 19<br>365-day sales: $70,747.51</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_70e3c5b5db0a828e6a8282d47cb2549a = L.circleMarker(
+                [35.574362522724, -120.696895849284],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d62728", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.308728003326959, "stroke": true, "weight": 1}
+            ).addTo(feature_group_aed78d7b24235bcea31f8d763117d540);
+        
+    
+        var popup_789475c08c5da4927dc899e4b18bbc44 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_fea09ec7679c9c86236d2895aca1412e = $(`<div id="html_fea09ec7679c9c86236d2895aca1412e" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>KNIGHT&#x27;S CARPET &amp; INTR(CC</h4><strong>Account:</strong> KNI102<br><strong>Address:</strong> 3320 RAMADA DR. SUITE A, PASO ROBLES, CA, 93446<br><strong>Sales rep:</strong> 19<br><strong>365-day sales:</strong> $12,164.09</div></div>`)[0];
+                popup_789475c08c5da4927dc899e4b18bbc44.setContent(html_fea09ec7679c9c86236d2895aca1412e);
+            
+        
+
+        circle_marker_70e3c5b5db0a828e6a8282d47cb2549a.bindPopup(popup_789475c08c5da4927dc899e4b18bbc44)
+        ;
+
+        
+    
+    
+            circle_marker_70e3c5b5db0a828e6a8282d47cb2549a.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>KNIGHT&#x27;S CARPET &amp; INTR(CC</strong><br>Acct: KNI102<br>3320 RAMADA DR. SUITE A, PASO ROBLES, CA, 93446<br>Sales rep: 19<br>365-day sales: $12,164.09</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_385ff14620eddf2811d9307fc4a09878 = L.circleMarker(
+                [34.867674501086, -120.456664553125],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d62728", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.028007760888336, "stroke": true, "weight": 1}
+            ).addTo(feature_group_aed78d7b24235bcea31f8d763117d540);
+        
+    
+        var popup_1a04fc70e21f0da5d17dc59a75e3aa34 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_7f05f53a3a55ec24b87c4cf7e64be295 = $(`<div id="html_7f05f53a3a55ec24b87c4cf7e64be295" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>CREATIVE IMAGES-(CC)</h4><strong>Account:</strong> CRE108<br><strong>Address:</strong> 4780 PAINT HORSE TRAIL, ORCUTT, CA, 93455<br><strong>Sales rep:</strong> 19<br><strong>365-day sales:</strong> $10,187.59</div></div>`)[0];
+                popup_1a04fc70e21f0da5d17dc59a75e3aa34.setContent(html_7f05f53a3a55ec24b87c4cf7e64be295);
+            
+        
+
+        circle_marker_385ff14620eddf2811d9307fc4a09878.bindPopup(popup_1a04fc70e21f0da5d17dc59a75e3aa34)
+        ;
+
+        
+    
+    
+            circle_marker_385ff14620eddf2811d9307fc4a09878.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>CREATIVE IMAGES-(CC)</strong><br>Acct: CRE108<br>4780 PAINT HORSE TRAIL, ORCUTT, CA, 93455<br>Sales rep: 19<br>365-day sales: $10,187.59</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_af971c14593bcd5776d323aac8db8d44 = L.circleMarker(
+                [35.128552184966, -120.606038281976],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d62728", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.850667972830763, "stroke": true, "weight": 1}
+            ).addTo(feature_group_aed78d7b24235bcea31f8d763117d540);
+        
+    
+        var popup_41ae82b945230ccf0c9d22920e52d02d = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_aa276b467be407a4e5b588216a7e58a6 = $(`<div id="html_aa276b467be407a4e5b588216a7e58a6" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>DAVE COLLINS FLOORING-(CC</h4><strong>Account:</strong> DAV130<br><strong>Address:</strong> 1631 SHILTON ST., PISMO BEACH, CA, 93449<br><strong>Sales rep:</strong> 19<br><strong>365-day sales:</strong> $804.04</div></div>`)[0];
+                popup_41ae82b945230ccf0c9d22920e52d02d.setContent(html_aa276b467be407a4e5b588216a7e58a6);
+            
+        
+
+        circle_marker_af971c14593bcd5776d323aac8db8d44.bindPopup(popup_41ae82b945230ccf0c9d22920e52d02d)
+        ;
+
+        
+    
+    
+            circle_marker_af971c14593bcd5776d323aac8db8d44.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>DAVE COLLINS FLOORING-(CC</strong><br>Acct: DAV130<br>1631 SHILTON ST., PISMO BEACH, CA, 93449<br>Sales rep: 19<br>365-day sales: $804.04</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_498df5aa2bfb9e17f11686d11e432b32 = L.circleMarker(
+                [35.635916495526, -120.690042302334],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d62728", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_aed78d7b24235bcea31f8d763117d540);
+        
+    
+        var popup_d86beec8728b2f4fd3225a5ff748343f = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_ecc319c940daf6be30dda51fb11f7b4f = $(`<div id="html_ecc319c940daf6be30dda51fb11f7b4f" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>FRONTIER FLOOR CVRNGS  CC</h4><strong>Account:</strong> FRO105<br><strong>Address:</strong> 830 21 STREET, PASO ROBLES, CA, 93447<br><strong>Sales rep:</strong> 19<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_d86beec8728b2f4fd3225a5ff748343f.setContent(html_ecc319c940daf6be30dda51fb11f7b4f);
+            
+        
+
+        circle_marker_498df5aa2bfb9e17f11686d11e432b32.bindPopup(popup_d86beec8728b2f4fd3225a5ff748343f)
+        ;
+
+        
+    
+    
+            circle_marker_498df5aa2bfb9e17f11686d11e432b32.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>FRONTIER FLOOR CVRNGS  CC</strong><br>Acct: FRO105<br>830 21 STREET, PASO ROBLES, CA, 93447<br>Sales rep: 19<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_369006e19928f3da924c44642029de7a = L.circleMarker(
+                [35.253320837046, -120.666578170222],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d62728", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_aed78d7b24235bcea31f8d763117d540);
+        
+    
+        var popup_d3f24765515392f3a4cd9406b36d0d36 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_b61424b99db7caaa6561bd692d36e3cf = $(`<div id="html_b61424b99db7caaa6561bd692d36e3cf" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>TADA SERVICES LLC (CC)</h4><strong>Account:</strong> TAD104<br><strong>Address:</strong> 3437 EMPRESA DRIVE, UNIT A, SAN LUIS OBISPO, CA, 93401<br><strong>Sales rep:</strong> 19<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_d3f24765515392f3a4cd9406b36d0d36.setContent(html_b61424b99db7caaa6561bd692d36e3cf);
+            
+        
+
+        circle_marker_369006e19928f3da924c44642029de7a.bindPopup(popup_d3f24765515392f3a4cd9406b36d0d36)
+        ;
+
+        
+    
+    
+            circle_marker_369006e19928f3da924c44642029de7a.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>TADA SERVICES LLC (CC)</strong><br>Acct: TAD104<br>3437 EMPRESA DRIVE, UNIT A, SAN LUIS OBISPO, CA, 93401<br>Sales rep: 19<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_aed78d7b24235bcea31f8d763117d540.addTo(map_28a63b5f52ec4808378295a4ce40cc95);
+        
+    
+            var feature_group_1c42215a34c84b6cf05c605431079e07 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_7bd5034ba40e5a217138cbed69511c98 = L.circleMarker(
+                [35.570702019879, -120.698281964612],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.144324737028175, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_783d2f8d7f2859f52ebea3eabe6e8c92 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_d24af7624cc9bc47a1372caa9ad0086e = $(`<div id="html_d24af7624cc9bc47a1372caa9ad0086e" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>NORTH COUNTY FLR OUTLET-(</h4><strong>Account:</strong> FLO137<br><strong>Address:</strong> 3850 RAMADA DRIVE, E-2, PASO ROBLES, CA, 93446<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $29,404.53</div></div>`)[0];
+                popup_783d2f8d7f2859f52ebea3eabe6e8c92.setContent(html_d24af7624cc9bc47a1372caa9ad0086e);
+            
+        
+
+        circle_marker_7bd5034ba40e5a217138cbed69511c98.bindPopup(popup_783d2f8d7f2859f52ebea3eabe6e8c92)
+        ;
+
+        
+    
+    
+            circle_marker_7bd5034ba40e5a217138cbed69511c98.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>NORTH COUNTY FLR OUTLET-(</strong><br>Acct: FLO137<br>3850 RAMADA DRIVE, E-2, PASO ROBLES, CA, 93446<br>Sales rep: 20<br>365-day sales: $29,404.53</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_42fda8865bd23b571b56e9c8f33d22eb = L.circleMarker(
+                [35.246036418363, -120.666559143302],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.828840424985088, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_79638485f7986454c4e2336f8a1ff129 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_f3b0e65fb95a47899600265febc1c373 = $(`<div id="html_f3b0e65fb95a47899600265febc1c373" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>CENTRAL COAST FLOORING(CC</h4><strong>Account:</strong> SER101<br><strong>Address:</strong> 225 TANK FARM RD #C4, SAN LUIS OBISPO, CA, 93401<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $16,288.91</div></div>`)[0];
+                popup_79638485f7986454c4e2336f8a1ff129.setContent(html_f3b0e65fb95a47899600265febc1c373);
+            
+        
+
+        circle_marker_42fda8865bd23b571b56e9c8f33d22eb.bindPopup(popup_79638485f7986454c4e2336f8a1ff129)
+        ;
+
+        
+    
+    
+            circle_marker_42fda8865bd23b571b56e9c8f33d22eb.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>CENTRAL COAST FLOORING(CC</strong><br>Acct: SER101<br>225 TANK FARM RD #C4, SAN LUIS OBISPO, CA, 93401<br>Sales rep: 20<br>365-day sales: $16,288.91</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d6dab2e23923d5c641b999e199bbb5a2 = L.circleMarker(
+                [35.121668924169, -120.618559839492],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.284413646299747, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_ff9a78d0a608bb9e116cc21f0be59066 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_1f8e43f7550e0a7d897a9d7cc8f0c3fd = $(`<div id="html_1f8e43f7550e0a7d897a9d7cc8f0c3fd" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>MAJESTIC TILE &amp; FLOOR  CC</h4><strong>Account:</strong> MAJ109<br><strong>Address:</strong> 1045 W. GRAND AVE, GROVER BEACH, CA, 93433<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $11,985.97</div></div>`)[0];
+                popup_ff9a78d0a608bb9e116cc21f0be59066.setContent(html_1f8e43f7550e0a7d897a9d7cc8f0c3fd);
+            
+        
+
+        circle_marker_d6dab2e23923d5c641b999e199bbb5a2.bindPopup(popup_ff9a78d0a608bb9e116cc21f0be59066)
+        ;
+
+        
+    
+    
+            circle_marker_d6dab2e23923d5c641b999e199bbb5a2.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>MAJESTIC TILE &amp; FLOOR  CC</strong><br>Acct: MAJ109<br>1045 W. GRAND AVE, GROVER BEACH, CA, 93433<br>Sales rep: 20<br>365-day sales: $11,985.97</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_511391912684a58d9cbfa58293089a2e = L.circleMarker(
+                [35.119892589338, -120.595082380155],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.255382926784497, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_f5f8edb0b9be80ed3fe4e1797abd406c = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_07083bcc4c67e2e3fedcd5e7ffe29d93 = $(`<div id="html_07083bcc4c67e2e3fedcd5e7ffe29d93" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>ANGELLO&#x27;S FLOOR COVERINGS</h4><strong>Account:</strong> DIA114<br><strong>Address:</strong> 1052 E. GRAND AVE., ARROYO GRANDE, CA, 93420<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $11,775.02</div></div>`)[0];
+                popup_f5f8edb0b9be80ed3fe4e1797abd406c.setContent(html_07083bcc4c67e2e3fedcd5e7ffe29d93);
+            
+        
+
+        circle_marker_511391912684a58d9cbfa58293089a2e.bindPopup(popup_f5f8edb0b9be80ed3fe4e1797abd406c)
+        ;
+
+        
+    
+    
+            circle_marker_511391912684a58d9cbfa58293089a2e.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>ANGELLO&#x27;S FLOOR COVERINGS</strong><br>Acct: DIA114<br>1052 E. GRAND AVE., ARROYO GRANDE, CA, 93420<br>Sales rep: 20<br>365-day sales: $11,775.02</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0f3856848ee10e3aa5175955264c65d6 = L.circleMarker(
+                [35.314069225133, -120.83371507974],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.512874746963542, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_3a418a8b709875cab44f4408074e6d5d = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_93cab05285e9eb2c19d964e38936f844 = $(`<div id="html_93cab05285e9eb2c19d964e38936f844" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>HENSON FLOORING-(CC)</h4><strong>Account:</strong> HEN112<br><strong>Address:</strong> 2055 9TH ST. SUITE B, LOS OSOS, CA, 93402<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $2,543.10</div></div>`)[0];
+                popup_3a418a8b709875cab44f4408074e6d5d.setContent(html_93cab05285e9eb2c19d964e38936f844);
+            
+        
+
+        circle_marker_0f3856848ee10e3aa5175955264c65d6.bindPopup(popup_3a418a8b709875cab44f4408074e6d5d)
+        ;
+
+        
+    
+    
+            circle_marker_0f3856848ee10e3aa5175955264c65d6.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>HENSON FLOORING-(CC)</strong><br>Acct: HEN112<br>2055 9TH ST. SUITE B, LOS OSOS, CA, 93402<br>Sales rep: 20<br>365-day sales: $2,543.10</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6a937ba606557c82d2048a412dd9c787 = L.circleMarker(
+                [34.902724979866, -120.448133032978],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.469507188443372, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_87bdcde330e7787aba2dea8673946e51 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_b446c4e63a8f6203012285bd650b8d46 = $(`<div id="html_b446c4e63a8f6203012285bd650b8d46" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>HALSELL BUILDERS     (CC)</h4><strong>Account:</strong> HAL104<br><strong>Address:</strong> 3130 SKYWAY DRIVE STE 601, SANTA MARIA, CA, 93455<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $244.93</div></div>`)[0];
+                popup_87bdcde330e7787aba2dea8673946e51.setContent(html_b446c4e63a8f6203012285bd650b8d46);
+            
+        
+
+        circle_marker_6a937ba606557c82d2048a412dd9c787.bindPopup(popup_87bdcde330e7787aba2dea8673946e51)
+        ;
+
+        
+    
+    
+            circle_marker_6a937ba606557c82d2048a412dd9c787.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>HALSELL BUILDERS     (CC)</strong><br>Acct: HAL104<br>3130 SKYWAY DRIVE STE 601, SANTA MARIA, CA, 93455<br>Sales rep: 20<br>365-day sales: $244.93</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3e3073d1c661f110e769c4dc4dca0448 = L.circleMarker(
+                [35.015572637792, -120.500680860365],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_6937e44d45ba1c7c6ce5e9788184173b = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_8c388c9de106a74835a1639c19a32c5c = $(`<div id="html_8c388c9de106a74835a1639c19a32c5c" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>BILL EVANS HRDWD FLRS-(CC</h4><strong>Account:</strong> BIL102<br><strong>Address:</strong> 1457 LA QUINTA DR., NIPOMO, CA, 93444<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_6937e44d45ba1c7c6ce5e9788184173b.setContent(html_8c388c9de106a74835a1639c19a32c5c);
+            
+        
+
+        circle_marker_3e3073d1c661f110e769c4dc4dca0448.bindPopup(popup_6937e44d45ba1c7c6ce5e9788184173b)
+        ;
+
+        
+    
+    
+            circle_marker_3e3073d1c661f110e769c4dc4dca0448.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>BILL EVANS HRDWD FLRS-(CC</strong><br>Acct: BIL102<br>1457 LA QUINTA DR., NIPOMO, CA, 93444<br>Sales rep: 20<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4c7b360f665c8a0d3abd7aaf97b63c72 = L.circleMarker(
+                [34.930579175675, -120.437339069525],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_0f90b13401e95c11076940d1df9c1f97 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_acb1451752e8eff8e289124a81a4dddd = $(`<div id="html_acb1451752e8eff8e289124a81a4dddd" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>BROADWAY CARPET COMPANY(C</h4><strong>Account:</strong> BRO122<br><strong>Address:</strong> 1627 S BROADWAY, SANTA MARIA, CA, 93454<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_0f90b13401e95c11076940d1df9c1f97.setContent(html_acb1451752e8eff8e289124a81a4dddd);
+            
+        
+
+        circle_marker_4c7b360f665c8a0d3abd7aaf97b63c72.bindPopup(popup_0f90b13401e95c11076940d1df9c1f97)
+        ;
+
+        
+    
+    
+            circle_marker_4c7b360f665c8a0d3abd7aaf97b63c72.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>BROADWAY CARPET COMPANY(C</strong><br>Acct: BRO122<br>1627 S BROADWAY, SANTA MARIA, CA, 93454<br>Sales rep: 20<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7eaf7365a0032663e8d2337626d4f2d9 = L.circleMarker(
+                [35.106001093567, -120.622131619892],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_ea88d90853adbdd8670ab17d37a7f83b = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_29e01078baa1bcdacea329b56af3a76f = $(`<div id="html_29e01078baa1bcdacea329b56af3a76f" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>CAL COAST CARPET WHSE</h4><strong>Account:</strong> CAL183<br><strong>Address:</strong> 1309 PACIFIC BLVD, OCEANO, CA, 93445<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_ea88d90853adbdd8670ab17d37a7f83b.setContent(html_29e01078baa1bcdacea329b56af3a76f);
+            
+        
+
+        circle_marker_7eaf7365a0032663e8d2337626d4f2d9.bindPopup(popup_ea88d90853adbdd8670ab17d37a7f83b)
+        ;
+
+        
+    
+    
+            circle_marker_7eaf7365a0032663e8d2337626d4f2d9.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>CAL COAST CARPET WHSE</strong><br>Acct: CAL183<br>1309 PACIFIC BLVD, OCEANO, CA, 93445<br>Sales rep: 20<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c3f497543e1939db8f73bb2e5b8ff263 = L.circleMarker(
+                [34.931485, -120.4337594442547],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_6a8fd4c3a65f55aca66e61ff6557e7e9 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_3d5c38c46948d53b04163f9c368ce4c0 = $(`<div id="html_3d5c38c46948d53b04163f9c368ce4c0" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>CARPETS UNLIMITED OF SANT</h4><strong>Account:</strong> CAR145<br><strong>Address:</strong> PO BOX 460, SANTA MARIA, CA, 93456<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_6a8fd4c3a65f55aca66e61ff6557e7e9.setContent(html_3d5c38c46948d53b04163f9c368ce4c0);
+            
+        
+
+        circle_marker_c3f497543e1939db8f73bb2e5b8ff263.bindPopup(popup_6a8fd4c3a65f55aca66e61ff6557e7e9)
+        ;
+
+        
+    
+    
+            circle_marker_c3f497543e1939db8f73bb2e5b8ff263.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>CARPETS UNLIMITED OF SANT</strong><br>Acct: CAR145<br>PO BOX 460, SANTA MARIA, CA, 93456<br>Sales rep: 20<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_39de238a04deded1d73a026bab9ff7ab = L.circleMarker(
+                [34.873612408933, -120.445524752348],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_9fad3248788addfeef67ae1dcf120ba4 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_4f7050b0dc0eef25b258a18f12f95032 = $(`<div id="html_4f7050b0dc0eef25b258a18f12f95032" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>COFIELD&#x27;S CABINETS   (CC)</h4><strong>Account:</strong> COF101<br><strong>Address:</strong> 4526 CALIFORNIA BLVD, SANTA MARIA, CA, 93455<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_9fad3248788addfeef67ae1dcf120ba4.setContent(html_4f7050b0dc0eef25b258a18f12f95032);
+            
+        
+
+        circle_marker_39de238a04deded1d73a026bab9ff7ab.bindPopup(popup_9fad3248788addfeef67ae1dcf120ba4)
+        ;
+
+        
+    
+    
+            circle_marker_39de238a04deded1d73a026bab9ff7ab.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>COFIELD&#x27;S CABINETS   (CC)</strong><br>Acct: COF101<br>4526 CALIFORNIA BLVD, SANTA MARIA, CA, 93455<br>Sales rep: 20<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_576ef9ea0dd62df4686de8ec98fc0a7c = L.circleMarker(
+                [35.068175157098, -120.554055562501],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_31876b462f1ddec0baa5b26ace2b4a00 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_5e32932f638055040d36e23784a4087b = $(`<div id="html_5e32932f638055040d36e23784a4087b" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>FLOOR&#x27;S OF WOOD    (CC)</h4><strong>Account:</strong> FLO154<br><strong>Address:</strong> 533 STANTON STREET, ARROYO GRANDE, CA, 93420<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_31876b462f1ddec0baa5b26ace2b4a00.setContent(html_5e32932f638055040d36e23784a4087b);
+            
+        
+
+        circle_marker_576ef9ea0dd62df4686de8ec98fc0a7c.bindPopup(popup_31876b462f1ddec0baa5b26ace2b4a00)
+        ;
+
+        
+    
+    
+            circle_marker_576ef9ea0dd62df4686de8ec98fc0a7c.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>FLOOR&#x27;S OF WOOD    (CC)</strong><br>Acct: FLO154<br>533 STANTON STREET, ARROYO GRANDE, CA, 93420<br>Sales rep: 20<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_221d24c5abdfbc32dbff42b3099c180c = L.circleMarker(
+                [34.967038359012, -120.432062158562],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_ca76b5c552ed5ba94c5d7018dff8110b = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_738895967108ea1b42150e7cb4ca166a = $(`<div id="html_738895967108ea1b42150e7cb4ca166a" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>G &amp; S CARPET COMPANY</h4><strong>Account:</strong> GSC101<br><strong>Address:</strong> 222 E. DONEVAN ROAD, SANTA MARIA, CA, 93454<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_ca76b5c552ed5ba94c5d7018dff8110b.setContent(html_738895967108ea1b42150e7cb4ca166a);
+            
+        
+
+        circle_marker_221d24c5abdfbc32dbff42b3099c180c.bindPopup(popup_ca76b5c552ed5ba94c5d7018dff8110b)
+        ;
+
+        
+    
+    
+            circle_marker_221d24c5abdfbc32dbff42b3099c180c.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>G &amp; S CARPET COMPANY</strong><br>Acct: GSC101<br>222 E. DONEVAN ROAD, SANTA MARIA, CA, 93454<br>Sales rep: 20<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f37b66a1acfd276d8d88b3d899590c44 = L.circleMarker(
+                [34.920938017276, -120.4406874667248],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_5b68c3701e0cad2d018a9fee34658ae9 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_6870e9c28482ac14ec0edb506ec81970 = $(`<div id="html_6870e9c28482ac14ec0edb506ec81970" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>JEFF&#x27;S HDWD FLRING,INC-(C</h4><strong>Account:</strong> JEF104<br><strong>Address:</strong> 427 W.BETTERAVIA STE.A, SANTA MARIA, CA, 93454<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_5b68c3701e0cad2d018a9fee34658ae9.setContent(html_6870e9c28482ac14ec0edb506ec81970);
+            
+        
+
+        circle_marker_f37b66a1acfd276d8d88b3d899590c44.bindPopup(popup_5b68c3701e0cad2d018a9fee34658ae9)
+        ;
+
+        
+    
+    
+            circle_marker_f37b66a1acfd276d8d88b3d899590c44.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>JEFF&#x27;S HDWD FLRING,INC-(C</strong><br>Acct: JEF104<br>427 W.BETTERAVIA STE.A, SANTA MARIA, CA, 93454<br>Sales rep: 20<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a0f16d8093eb04e323d603564ed572a6 = L.circleMarker(
+                [35.690228210618, -120.693484163235],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_e6303412d99d118deb3ba4dce491da93 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_72364db410669084796d9701e615b737 = $(`<div id="html_72364db410669084796d9701e615b737" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>PASO ROBLES FLOOR CO</h4><strong>Account:</strong> PAS106<br><strong>Address:</strong> 6240 MONTEREY RD., PASO ROBLES, CA, 93446<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_e6303412d99d118deb3ba4dce491da93.setContent(html_72364db410669084796d9701e615b737);
+            
+        
+
+        circle_marker_a0f16d8093eb04e323d603564ed572a6.bindPopup(popup_e6303412d99d118deb3ba4dce491da93)
+        ;
+
+        
+    
+    
+            circle_marker_a0f16d8093eb04e323d603564ed572a6.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>PASO ROBLES FLOOR CO</strong><br>Acct: PAS106<br>6240 MONTEREY RD., PASO ROBLES, CA, 93446<br>Sales rep: 20<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_face4aa090246e666b15a0de324620e4 = L.circleMarker(
+                [35.116704858071, -120.6242174756],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_1646886eacbe9467089ab41b89bfb969 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_729334f745043701545bc6d5f9adba82 = $(`<div id="html_729334f745043701545bc6d5f9adba82" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>PINEGAR FLOORING INC - CC</h4><strong>Account:</strong> PIN120<br><strong>Address:</strong> 591 S 6TH ST, GROVER BEACH, CA, 93433<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_1646886eacbe9467089ab41b89bfb969.setContent(html_729334f745043701545bc6d5f9adba82);
+            
+        
+
+        circle_marker_face4aa090246e666b15a0de324620e4.bindPopup(popup_1646886eacbe9467089ab41b89bfb969)
+        ;
+
+        
+    
+    
+            circle_marker_face4aa090246e666b15a0de324620e4.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>PINEGAR FLOORING INC - CC</strong><br>Acct: PIN120<br>591 S 6TH ST, GROVER BEACH, CA, 93433<br>Sales rep: 20<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_81baec7dc14b719c975ede027388f2bf = L.circleMarker(
+                [35.271984904665, -120.65623378136496],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_43f4064cb5baef128211954edee57d9b = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_a9b018b72dfb361e2ae7b45a710d96eb = $(`<div id="html_a9b018b72dfb361e2ae7b45a710d96eb" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>QUAGLINO&#x27;S FLOORING -(CC)</h4><strong>Account:</strong> QUA129<br><strong>Address:</strong> 2015 SANTA BARBARA AVE, SAN LUIS OBISPO, CA, 93401<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_43f4064cb5baef128211954edee57d9b.setContent(html_a9b018b72dfb361e2ae7b45a710d96eb);
+            
+        
+
+        circle_marker_81baec7dc14b719c975ede027388f2bf.bindPopup(popup_43f4064cb5baef128211954edee57d9b)
+        ;
+
+        
+    
+    
+            circle_marker_81baec7dc14b719c975ede027388f2bf.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>QUAGLINO&#x27;S FLOORING -(CC)</strong><br>Acct: QUA129<br>2015 SANTA BARBARA AVE, SAN LUIS OBISPO, CA, 93401<br>Sales rep: 20<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_13bbe526e6a5e542f888ae4777d112fd = L.circleMarker(
+                [35.620551, -120.689275],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_2ed43800347895f8b7ab6c66ef86d16d = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_cf33e4bc696f6e8185203eea10afa350 = $(`<div id="html_cf33e4bc696f6e8185203eea10afa350" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>S.E. HARDWOOD-(CC)</h4><strong>Account:</strong> SEH100<br><strong>Address:</strong> P.O. BOX 1416, PASO ROBLES, CA, 93447<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_2ed43800347895f8b7ab6c66ef86d16d.setContent(html_cf33e4bc696f6e8185203eea10afa350);
+            
+        
+
+        circle_marker_13bbe526e6a5e542f888ae4777d112fd.bindPopup(popup_2ed43800347895f8b7ab6c66ef86d16d)
+        ;
+
+        
+    
+    
+            circle_marker_13bbe526e6a5e542f888ae4777d112fd.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>S.E. HARDWOOD-(CC)</strong><br>Acct: SEH100<br>P.O. BOX 1416, PASO ROBLES, CA, 93447<br>Sales rep: 20<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_48e8af96e8bddd55f09a9de73f44c276 = L.circleMarker(
+                [35.621676983136, -120.688683009096],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_3c332f4d0cd136aa0dfc24c55b4d56df = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_19838ad883e6e55b8a817a6cdcdf5f7d = $(`<div id="html_19838ad883e6e55b8a817a6cdcdf5f7d" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>SOLEIL FLOORS &amp; DESIGN</h4><strong>Account:</strong> SOL111<br><strong>Address:</strong> 705 E PINE ST #E, PASO ROBLES, CA, 93446<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_3c332f4d0cd136aa0dfc24c55b4d56df.setContent(html_19838ad883e6e55b8a817a6cdcdf5f7d);
+            
+        
+
+        circle_marker_48e8af96e8bddd55f09a9de73f44c276.bindPopup(popup_3c332f4d0cd136aa0dfc24c55b4d56df)
+        ;
+
+        
+    
+    
+            circle_marker_48e8af96e8bddd55f09a9de73f44c276.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>SOLEIL FLOORS &amp; DESIGN</strong><br>Acct: SOL111<br>705 E PINE ST #E, PASO ROBLES, CA, 93446<br>Sales rep: 20<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f0b7960831bf3ef5b8642e514ad743e0 = L.circleMarker(
+                [35.032296294827, -120.47777026914],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_f082bf5a28a57966944697309ffef5f4 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_f620e245f83a3cbac48908374b20d26e = $(`<div id="html_f620e245f83a3cbac48908374b20d26e" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>TAYLOR&#x27;D FLOOR COVER-(CC)</h4><strong>Account:</strong> TAY113<br><strong>Address:</strong> 436 GROVE LANE, NIPOMO, CA, 93444<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_f082bf5a28a57966944697309ffef5f4.setContent(html_f620e245f83a3cbac48908374b20d26e);
+            
+        
+
+        circle_marker_f0b7960831bf3ef5b8642e514ad743e0.bindPopup(popup_f082bf5a28a57966944697309ffef5f4)
+        ;
+
+        
+    
+    
+            circle_marker_f0b7960831bf3ef5b8642e514ad743e0.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>TAYLOR&#x27;D FLOOR COVER-(CC)</strong><br>Acct: TAY113<br>436 GROVE LANE, NIPOMO, CA, 93444<br>Sales rep: 20<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8c4f6d7af590148d69098042029953ea = L.circleMarker(
+                [35.547097281342, -120.707675228225],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_4292b2a2f98969f11b4808611bb98b8d = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_b3d6c6e57f131fb38513dbc3ddeb4146 = $(`<div id="html_b3d6c6e57f131fb38513dbc3ddeb4146" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>TEMPLETON FLOOR COMPANY</h4><strong>Account:</strong> TEM102<br><strong>Address:</strong> 734 S MAIN ST, TEMPLETON, CA, 93465<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_4292b2a2f98969f11b4808611bb98b8d.setContent(html_b3d6c6e57f131fb38513dbc3ddeb4146);
+            
+        
+
+        circle_marker_8c4f6d7af590148d69098042029953ea.bindPopup(popup_4292b2a2f98969f11b4808611bb98b8d)
+        ;
+
+        
+    
+    
+            circle_marker_8c4f6d7af590148d69098042029953ea.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>TEMPLETON FLOOR COMPANY</strong><br>Acct: TEM102<br>734 S MAIN ST, TEMPLETON, CA, 93465<br>Sales rep: 20<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cdcc86267e40fd2dd048b7f378d00c42 = L.circleMarker(
+                [35.261936762958, -120.650115358015],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_1c42215a34c84b6cf05c605431079e07);
+        
+    
+        var popup_eda6ffb34540c797f1373b13bd03e64e = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_a3768127a7a61e530f220447880ceec8 = $(`<div id="html_a3768127a7a61e530f220447880ceec8" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>PHILLIPS FLR COVERING-(CC</h4><strong>Account:</strong> PHI100<br><strong>Address:</strong> 3050 BROAD ST #129, SAN LUIS OBISPO, CA, 93401<br><strong>Sales rep:</strong> 20<br><strong>365-day sales:</strong> $-169.98</div></div>`)[0];
+                popup_eda6ffb34540c797f1373b13bd03e64e.setContent(html_a3768127a7a61e530f220447880ceec8);
+            
+        
+
+        circle_marker_cdcc86267e40fd2dd048b7f378d00c42.bindPopup(popup_eda6ffb34540c797f1373b13bd03e64e)
+        ;
+
+        
+    
+    
+            circle_marker_cdcc86267e40fd2dd048b7f378d00c42.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>PHILLIPS FLR COVERING-(CC</strong><br>Acct: PHI100<br>3050 BROAD ST #129, SAN LUIS OBISPO, CA, 93401<br>Sales rep: 20<br>365-day sales: $-169.98</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_1c42215a34c84b6cf05c605431079e07.addTo(map_28a63b5f52ec4808378295a4ce40cc95);
+        
+    
+            var feature_group_0e2b8f35831b8c28a88055b6dd0a6349 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_b5f8be97c0ecf43e07b12a317937bd5e = L.circleMarker(
+                [34.868952112677, -120.44447793646],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.913875769486406, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_51dec41ee0976decc686273063b52e62 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_bab32aa5eb1610af4f4f1d940de7fd98 = $(`<div id="html_bab32aa5eb1610af4f4f1d940de7fd98" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>DON&#x27;S HARDWOOD FLRS-(CC)</h4><strong>Account:</strong> DON109<br><strong>Address:</strong> 644 HARTNEWLL RD, ORCUTT, CA, 93455<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $9,434.08</div></div>`)[0];
+                popup_51dec41ee0976decc686273063b52e62.setContent(html_bab32aa5eb1610af4f4f1d940de7fd98);
+            
+        
+
+        circle_marker_b5f8be97c0ecf43e07b12a317937bd5e.bindPopup(popup_51dec41ee0976decc686273063b52e62)
+        ;
+
+        
+    
+    
+            circle_marker_b5f8be97c0ecf43e07b12a317937bd5e.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>DON&#x27;S HARDWOOD FLRS-(CC)</strong><br>Acct: DON109<br>644 HARTNEWLL RD, ORCUTT, CA, 93455<br>Sales rep: 888<br>365-day sales: $9,434.08</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e50a2d5d7db4e2aaace52745cd0f2536 = L.circleMarker(
+                [34.922359504235, -120.437778532709],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_29f6dff3a7387e8a6c5570e62ec95f80 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_c1ad42883f5328ccf61e2bc71c539806 = $(`<div id="html_c1ad42883f5328ccf61e2bc71c539806" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>ABBEY CARPET OF SANTA M</h4><strong>Account:</strong> ABB112<br><strong>Address:</strong> 2051 S BROADWAY, SANTA MARIA, CA, 93454<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_29f6dff3a7387e8a6c5570e62ec95f80.setContent(html_c1ad42883f5328ccf61e2bc71c539806);
+            
+        
+
+        circle_marker_e50a2d5d7db4e2aaace52745cd0f2536.bindPopup(popup_29f6dff3a7387e8a6c5570e62ec95f80)
+        ;
+
+        
+    
+    
+            circle_marker_e50a2d5d7db4e2aaace52745cd0f2536.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>ABBEY CARPET OF SANTA M</strong><br>Acct: ABB112<br>2051 S BROADWAY, SANTA MARIA, CA, 93454<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1e35bcbd5466a6fc23d1cbfb8c28bb81 = L.circleMarker(
+                [35.098391163674, -120.607748609319],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_aa64b976416c7a1dbbf40cbc4333a4ea = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_7a96081c034095733c44c896187c564b = $(`<div id="html_7a96081c034095733c44c896187c564b" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>ALL AMERICAN WD &amp; TILE-(C</h4><strong>Account:</strong> ALL120<br><strong>Address:</strong> 2181 CIENAGA STREET, OCEANO, CA, 93445<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_aa64b976416c7a1dbbf40cbc4333a4ea.setContent(html_7a96081c034095733c44c896187c564b);
+            
+        
+
+        circle_marker_1e35bcbd5466a6fc23d1cbfb8c28bb81.bindPopup(popup_aa64b976416c7a1dbbf40cbc4333a4ea)
+        ;
+
+        
+    
+    
+            circle_marker_1e35bcbd5466a6fc23d1cbfb8c28bb81.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>ALL AMERICAN WD &amp; TILE-(C</strong><br>Acct: ALL120<br>2181 CIENAGA STREET, OCEANO, CA, 93445<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_931fe0ba7bad96e330d4d6f234c98cd4 = L.circleMarker(
+                [35.121376060472, -120.580249009924],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_6d0944131a237b2abaec504dbcd36545 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_c3bc91b8b8d1446ad776d51c9414e0b5 = $(`<div id="html_c3bc91b8b8d1446ad776d51c9414e0b5" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>BARNICK HOME INTERIORS</h4><strong>Account:</strong> BAR121<br><strong>Address:</strong> 174 STATION WAY, ARROYO GRANDE, CA, 93420<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_6d0944131a237b2abaec504dbcd36545.setContent(html_c3bc91b8b8d1446ad776d51c9414e0b5);
+            
+        
+
+        circle_marker_931fe0ba7bad96e330d4d6f234c98cd4.bindPopup(popup_6d0944131a237b2abaec504dbcd36545)
+        ;
+
+        
+    
+    
+            circle_marker_931fe0ba7bad96e330d4d6f234c98cd4.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>BARNICK HOME INTERIORS</strong><br>Acct: BAR121<br>174 STATION WAY, ARROYO GRANDE, CA, 93420<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e9442bfd24957261af23098e471da041 = L.circleMarker(
+                [35.274777796713, -120.667221984205],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_2db334262b634c0b8bd59adbb0fbe449 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_4a22cd1c8afe22a6edc4fe2f33239d8e = $(`<div id="html_4a22cd1c8afe22a6edc4fe2f33239d8e" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>FLOORING CONCEPTS-(CC)</h4><strong>Account:</strong> FLO132<br><strong>Address:</strong> 393 PACIFIC ST, SAN LUIS OBISPO, CA, 93401<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_2db334262b634c0b8bd59adbb0fbe449.setContent(html_4a22cd1c8afe22a6edc4fe2f33239d8e);
+            
+        
+
+        circle_marker_e9442bfd24957261af23098e471da041.bindPopup(popup_2db334262b634c0b8bd59adbb0fbe449)
+        ;
+
+        
+    
+    
+            circle_marker_e9442bfd24957261af23098e471da041.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>FLOORING CONCEPTS-(CC)</strong><br>Acct: FLO132<br>393 PACIFIC ST, SAN LUIS OBISPO, CA, 93401<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dcb3fb0675c0a1e0e5a1fa78f3344572 = L.circleMarker(
+                [35.36632108752, -120.843463233134],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_917c0e662609596e2035dd86e1a642c1 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_0d30cf4d2c323ab53cdbf9f648099ed9 = $(`<div id="html_0d30cf4d2c323ab53cdbf9f648099ed9" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>FLOORING DISCOUNT CENT-(C</h4><strong>Account:</strong> FLO309<br><strong>Address:</strong> 787 HARBOR ST, MORRO BAY, CA, 93442<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_917c0e662609596e2035dd86e1a642c1.setContent(html_0d30cf4d2c323ab53cdbf9f648099ed9);
+            
+        
+
+        circle_marker_dcb3fb0675c0a1e0e5a1fa78f3344572.bindPopup(popup_917c0e662609596e2035dd86e1a642c1)
+        ;
+
+        
+    
+    
+            circle_marker_dcb3fb0675c0a1e0e5a1fa78f3344572.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>FLOORING DISCOUNT CENT-(C</strong><br>Acct: FLO309<br>787 HARBOR ST, MORRO BAY, CA, 93442<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c67fad3559f639c608de71baa8d76619 = L.circleMarker(
+                [35.489345591278, -120.670816311925],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_a16b04304d6c2f1af14067264c73140d = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_0310af417709624ccdf824f5dd227515 = $(`<div id="html_0310af417709624ccdf824f5dd227515" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>GREEN GOODS-(CC)</h4><strong>Account:</strong> GRE110<br><strong>Address:</strong> 5940 EL CAMINO REAL, ATASCADERO, CA, 93422<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_a16b04304d6c2f1af14067264c73140d.setContent(html_0310af417709624ccdf824f5dd227515);
+            
+        
+
+        circle_marker_c67fad3559f639c608de71baa8d76619.bindPopup(popup_a16b04304d6c2f1af14067264c73140d)
+        ;
+
+        
+    
+    
+            circle_marker_c67fad3559f639c608de71baa8d76619.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>GREEN GOODS-(CC)</strong><br>Acct: GRE110<br>5940 EL CAMINO REAL, ATASCADERO, CA, 93422<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_16b3730a96bb4944eb92f1239b4cd990 = L.circleMarker(
+                [34.925622830598, -120.463421959646],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_2a67fe112c338129c3d837a2e5c19650 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_4b791985b760b0367e0e1fb4a71bb87a = $(`<div id="html_4b791985b760b0367e0e1fb4a71bb87a" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>GREG&#x27;S HARDWOOD FLOORS-(C</h4><strong>Account:</strong> GRE106<br><strong>Address:</strong> 1915 ROSITA AVE., SANTA MARIA, CA, 93458<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_2a67fe112c338129c3d837a2e5c19650.setContent(html_4b791985b760b0367e0e1fb4a71bb87a);
+            
+        
+
+        circle_marker_16b3730a96bb4944eb92f1239b4cd990.bindPopup(popup_2a67fe112c338129c3d837a2e5c19650)
+        ;
+
+        
+    
+    
+            circle_marker_16b3730a96bb4944eb92f1239b4cd990.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>GREG&#x27;S HARDWOOD FLOORS-(C</strong><br>Acct: GRE106<br>1915 ROSITA AVE., SANTA MARIA, CA, 93458<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8cdba3dccfa9824efe70709cbdfe35ef = L.circleMarker(
+                [34.953319991451, -120.433799978548],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_d554468a7c5873e52e8d95fcde6a5e5d = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_e6d774f3d06cc60d02704648a71a38b4 = $(`<div id="html_e6d774f3d06cc60d02704648a71a38b4" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>IMPERIAL FLOOR COVERING</h4><strong>Account:</strong> IMP114<br><strong>Address:</strong> 207 E. MAIN ST., SANTA MARIA, CA, 93454<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_d554468a7c5873e52e8d95fcde6a5e5d.setContent(html_e6d774f3d06cc60d02704648a71a38b4);
+            
+        
+
+        circle_marker_8cdba3dccfa9824efe70709cbdfe35ef.bindPopup(popup_d554468a7c5873e52e8d95fcde6a5e5d)
+        ;
+
+        
+    
+    
+            circle_marker_8cdba3dccfa9824efe70709cbdfe35ef.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>IMPERIAL FLOOR COVERING</strong><br>Acct: IMP114<br>207 E. MAIN ST., SANTA MARIA, CA, 93454<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dbeb3865189f1553b5cdd3509df77c59 = L.circleMarker(
+                [35.258399557908, -120.645679068121],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_3429ff69e1e25f436794612296edea00 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_125ce6651ba3d1eb461114fc56cb64fb = $(`<div id="html_125ce6651ba3d1eb461114fc56cb64fb" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>J P TOOL REPAIR-(CC)</h4><strong>Account:</strong> JPT100<br><strong>Address:</strong> 3440 SACRAMENTO DR., SAN LUIS OBISPO, CA, 93401<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_3429ff69e1e25f436794612296edea00.setContent(html_125ce6651ba3d1eb461114fc56cb64fb);
+            
+        
+
+        circle_marker_dbeb3865189f1553b5cdd3509df77c59.bindPopup(popup_3429ff69e1e25f436794612296edea00)
+        ;
+
+        
+    
+    
+            circle_marker_dbeb3865189f1553b5cdd3509df77c59.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>J P TOOL REPAIR-(CC)</strong><br>Acct: JPT100<br>3440 SACRAMENTO DR., SAN LUIS OBISPO, CA, 93401<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5c7b15831a087f689884dc269df8bfa3 = L.circleMarker(
+                [35.060018810937, -120.529422154897],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_78b0dc351e47c49d1a7c1f59be643d6a = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_64d15239be5e531e5f8a59d7bbf44222 = $(`<div id="html_64d15239be5e531e5f8a59d7bbf44222" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>KEITH EVANS HRDWD FLRG-(C</h4><strong>Account:</strong> KEI100<br><strong>Address:</strong> 1271 POMEROY RD, ARROYO GRANDE, CA, 93420<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_78b0dc351e47c49d1a7c1f59be643d6a.setContent(html_64d15239be5e531e5f8a59d7bbf44222);
+            
+        
+
+        circle_marker_5c7b15831a087f689884dc269df8bfa3.bindPopup(popup_78b0dc351e47c49d1a7c1f59be643d6a)
+        ;
+
+        
+    
+    
+            circle_marker_5c7b15831a087f689884dc269df8bfa3.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>KEITH EVANS HRDWD FLRG-(C</strong><br>Acct: KEI100<br>1271 POMEROY RD, ARROYO GRANDE, CA, 93420<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0b9a8de956afc930978e1696be357802 = L.circleMarker(
+                [34.937890123081, -120.439376374911],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_7afff62ab3da6e7478d7b604f89d5d0d = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_d8cdb13658bdac29184a47652c3e61f3 = $(`<div id="html_d8cdb13658bdac29184a47652c3e61f3" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>LARRY ANDERSONS HDWD-(CC</h4><strong>Account:</strong> LAR103<br><strong>Address:</strong> 1319 RONALD PL, SANTA MARIA, CA, 93458<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_7afff62ab3da6e7478d7b604f89d5d0d.setContent(html_d8cdb13658bdac29184a47652c3e61f3);
+            
+        
+
+        circle_marker_0b9a8de956afc930978e1696be357802.bindPopup(popup_7afff62ab3da6e7478d7b604f89d5d0d)
+        ;
+
+        
+    
+    
+            circle_marker_0b9a8de956afc930978e1696be357802.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>LARRY ANDERSONS HDWD-(CC</strong><br>Acct: LAR103<br>1319 RONALD PL, SANTA MARIA, CA, 93458<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_081987d0ed87a1d64f19834a03bcec21 = L.circleMarker(
+                [35.135087512962, -120.624559521966],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_acb49861e932f789d88a17bfb25678cc = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_1e0b104b787e288c83ba0b4e8915e23b = $(`<div id="html_1e0b104b787e288c83ba0b4e8915e23b" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>MACIE&#x27;S FLOOR COVERING ()</h4><strong>Account:</strong> MAC117<br><strong>Address:</strong> 533 FIVE CITIES DRIVE, PISMO BEACH, CA, 93449<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_acb49861e932f789d88a17bfb25678cc.setContent(html_1e0b104b787e288c83ba0b4e8915e23b);
+            
+        
+
+        circle_marker_081987d0ed87a1d64f19834a03bcec21.bindPopup(popup_acb49861e932f789d88a17bfb25678cc)
+        ;
+
+        
+    
+    
+            circle_marker_081987d0ed87a1d64f19834a03bcec21.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>MACIE&#x27;S FLOOR COVERING ()</strong><br>Acct: MAC117<br>533 FIVE CITIES DRIVE, PISMO BEACH, CA, 93449<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_844daa9b819f233971c631eb078178e9 = L.circleMarker(
+                [35.295001107871, -120.684178825786],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_2f09dc22bea35c6b444aa504c8c0d0b8 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_71e38229d762a0f66d27caaaa490cedc = $(`<div id="html_71e38229d762a0f66d27caaaa490cedc" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>MICHAEL PARK &amp; CO-(CC)</h4><strong>Account:</strong> MIC103<br><strong>Address:</strong> 165 CERRO ROMAULDO, SAN LUIS OBISPO, CA, 93405<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_2f09dc22bea35c6b444aa504c8c0d0b8.setContent(html_71e38229d762a0f66d27caaaa490cedc);
+            
+        
+
+        circle_marker_844daa9b819f233971c631eb078178e9.bindPopup(popup_2f09dc22bea35c6b444aa504c8c0d0b8)
+        ;
+
+        
+    
+    
+            circle_marker_844daa9b819f233971c631eb078178e9.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>MICHAEL PARK &amp; CO-(CC)</strong><br>Acct: MIC103<br>165 CERRO ROMAULDO, SAN LUIS OBISPO, CA, 93405<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c1a4d76c2bf2f84ff0332b47977ac775 = L.circleMarker(
+                [35.477565622645, -120.719003118909],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_2a704884ce7cdb5a9a44f9ad237b788a = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_3161c55f56b2f656c636b554b1b1ebce = $(`<div id="html_3161c55f56b2f656c636b554b1b1ebce" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>MICHAEL RUEFF HDWD FLR-(C</h4><strong>Account:</strong> MIC110<br><strong>Address:</strong> 12600 SAN CAYETANO RD, ATASCADERO, CA, 93422<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_2a704884ce7cdb5a9a44f9ad237b788a.setContent(html_3161c55f56b2f656c636b554b1b1ebce);
+            
+        
+
+        circle_marker_c1a4d76c2bf2f84ff0332b47977ac775.bindPopup(popup_2a704884ce7cdb5a9a44f9ad237b788a)
+        ;
+
+        
+    
+    
+            circle_marker_c1a4d76c2bf2f84ff0332b47977ac775.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>MICHAEL RUEFF HDWD FLR-(C</strong><br>Acct: MIC110<br>12600 SAN CAYETANO RD, ATASCADERO, CA, 93422<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f571a55ac6b1c366bec7b2fee780a7a1 = L.circleMarker(
+                [35.504340103597, -120.691692447612],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_c5b25c6c01bd2c79df1d5fe1c0ac2dd5 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_5f9864120c155d79f01647b84ce302ac = $(`<div id="html_5f9864120c155d79f01647b84ce302ac" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>NEXGEN ARCH HDWDS-(CC)</h4><strong>Account:</strong> NEX104<br><strong>Address:</strong> 3232 EL CAMINO REAL, ATASCADERO, CA, 93422<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_c5b25c6c01bd2c79df1d5fe1c0ac2dd5.setContent(html_5f9864120c155d79f01647b84ce302ac);
+            
+        
+
+        circle_marker_f571a55ac6b1c366bec7b2fee780a7a1.bindPopup(popup_c5b25c6c01bd2c79df1d5fe1c0ac2dd5)
+        ;
+
+        
+    
+    
+            circle_marker_f571a55ac6b1c366bec7b2fee780a7a1.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>NEXGEN ARCH HDWDS-(CC)</strong><br>Acct: NEX104<br>3232 EL CAMINO REAL, ATASCADERO, CA, 93422<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dcce8a615df6a0d69cbbd94a982942d9 = L.circleMarker(
+                [35.488833289355, -120.66992338778],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_c032ddd6ded73fc9555672c2977c6188 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_ed68bb95796731c9da04966391488e08 = $(`<div id="html_ed68bb95796731c9da04966391488e08" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>OBISPO PACIFIC-(CC)</h4><strong>Account:</strong> OBI100<br><strong>Address:</strong> 6100 EL CAMINO REAL, ATASCADERO, CA, 93422<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_c032ddd6ded73fc9555672c2977c6188.setContent(html_ed68bb95796731c9da04966391488e08);
+            
+        
+
+        circle_marker_dcce8a615df6a0d69cbbd94a982942d9.bindPopup(popup_c032ddd6ded73fc9555672c2977c6188)
+        ;
+
+        
+    
+    
+            circle_marker_dcce8a615df6a0d69cbbd94a982942d9.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>OBISPO PACIFIC-(CC)</strong><br>Acct: OBI100<br>6100 EL CAMINO REAL, ATASCADERO, CA, 93422<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a0e2905138c8a9c8e188a03d1b45a06e = L.circleMarker(
+                [34.87386369839, -120.452925302299],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_989ba8ecf9079c0a1401d5a45a467542 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_3822252c3997e7e69d54a500d1a66f8d = $(`<div id="html_3822252c3997e7e69d54a500d1a66f8d" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>PAUL&#x27;S CONSTRUCTION  (CC)</h4><strong>Account:</strong> PAU108<br><strong>Address:</strong> 4522 EDENBURY DR., ORCUTT, CA, 93455<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_989ba8ecf9079c0a1401d5a45a467542.setContent(html_3822252c3997e7e69d54a500d1a66f8d);
+            
+        
+
+        circle_marker_a0e2905138c8a9c8e188a03d1b45a06e.bindPopup(popup_989ba8ecf9079c0a1401d5a45a467542)
+        ;
+
+        
+    
+    
+            circle_marker_a0e2905138c8a9c8e188a03d1b45a06e.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>PAUL&#x27;S CONSTRUCTION  (CC)</strong><br>Acct: PAU108<br>4522 EDENBURY DR., ORCUTT, CA, 93455<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cb3346ff543f8c321fe410a55c0a21df = L.circleMarker(
+                [35.25599801692, -120.64657608659539],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_75c3cf8e7bb29a6b94463634a94ebcc9 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_531398c970e500ec08be0efe81021b91 = $(`<div id="html_531398c970e500ec08be0efe81021b91" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>PROSOURCE OF SAN L. OB-(C</h4><strong>Account:</strong> PRO123<br><strong>Address:</strong> 3510 SOUTH BROAD STREET, SAN LUIS OBISPO, CA, 93401<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_75c3cf8e7bb29a6b94463634a94ebcc9.setContent(html_531398c970e500ec08be0efe81021b91);
+            
+        
+
+        circle_marker_cb3346ff543f8c321fe410a55c0a21df.bindPopup(popup_75c3cf8e7bb29a6b94463634a94ebcc9)
+        ;
+
+        
+    
+    
+            circle_marker_cb3346ff543f8c321fe410a55c0a21df.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>PROSOURCE OF SAN L. OB-(C</strong><br>Acct: PRO123<br>3510 SOUTH BROAD STREET, SAN LUIS OBISPO, CA, 93401<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_39063f5a7ebb4e58915137b38702aa45 = L.circleMarker(
+                [35.271984904665, -120.65667473085503],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_9b04df9d646037746aa40df114209742 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_41cb537e8597d013faeeedb6347f0f4e = $(`<div id="html_41cb537e8597d013faeeedb6347f0f4e" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>QUAGLINO&#x27;S FLOORING-(CC</h4><strong>Account:</strong> QUA112<br><strong>Address:</strong> 2015 SANTA BARBARA AVE, SAN LUIS OBISPO, CA, 93401<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_9b04df9d646037746aa40df114209742.setContent(html_41cb537e8597d013faeeedb6347f0f4e);
+            
+        
+
+        circle_marker_39063f5a7ebb4e58915137b38702aa45.bindPopup(popup_9b04df9d646037746aa40df114209742)
+        ;
+
+        
+    
+    
+            circle_marker_39063f5a7ebb4e58915137b38702aa45.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>QUAGLINO&#x27;S FLOORING-(CC</strong><br>Acct: QUA112<br>2015 SANTA BARBARA AVE, SAN LUIS OBISPO, CA, 93401<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e5a1dc095564967226f213d0ab62dec6 = L.circleMarker(
+                [35.316057454476, -120.844151219746],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_e738db6ebe0f0dfa6eaf058408edb071 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_f731ad10922d953f4d0f95ee97e828bb = $(`<div id="html_f731ad10922d953f4d0f95ee97e828bb" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>ROBERT E. LEE JR-(CC)</h4><strong>Account:</strong> LEE105<br><strong>Address:</strong> 556 SKYLINE DR., LOS OSOS, CA, 93402<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_e738db6ebe0f0dfa6eaf058408edb071.setContent(html_f731ad10922d953f4d0f95ee97e828bb);
+            
+        
+
+        circle_marker_e5a1dc095564967226f213d0ab62dec6.bindPopup(popup_e738db6ebe0f0dfa6eaf058408edb071)
+        ;
+
+        
+    
+    
+            circle_marker_e5a1dc095564967226f213d0ab62dec6.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>ROBERT E. LEE JR-(CC)</strong><br>Acct: LEE105<br>556 SKYLINE DR., LOS OSOS, CA, 93402<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_35828d4ee96b0eca51c1a257a4af9873 = L.circleMarker(
+                [34.931485, -120.43419855574528],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9467bd", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_0e2b8f35831b8c28a88055b6dd0a6349);
+        
+    
+        var popup_291c3fd9a60b1bd894cc64e68387f769 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_94de0dd8d82b9a4cb7ff14005485477a = $(`<div id="html_94de0dd8d82b9a4cb7ff14005485477a" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>VALLEY FLOORING CARP ONE-</h4><strong>Account:</strong> VAL127<br><strong>Address:</strong> P O  BOX 7509, SANTA MARIA, CA, 93456<br><strong>Sales rep:</strong> 888<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_291c3fd9a60b1bd894cc64e68387f769.setContent(html_94de0dd8d82b9a4cb7ff14005485477a);
+            
+        
+
+        circle_marker_35828d4ee96b0eca51c1a257a4af9873.bindPopup(popup_291c3fd9a60b1bd894cc64e68387f769)
+        ;
+
+        
+    
+    
+            circle_marker_35828d4ee96b0eca51c1a257a4af9873.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>VALLEY FLOORING CARP ONE-</strong><br>Acct: VAL127<br>P O  BOX 7509, SANTA MARIA, CA, 93456<br>Sales rep: 888<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_0e2b8f35831b8c28a88055b6dd0a6349.addTo(map_28a63b5f52ec4808378295a4ce40cc95);
+        
+    
+            var feature_group_4cd925ac25ebd7b2f785bb56d430b65b = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_ea6cf1ff44719513bfe642f84562d059 = L.circleMarker(
+                [34.920938017276, -120.4411265217752],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_4cd925ac25ebd7b2f785bb56d430b65b);
+        
+    
+        var popup_9b95905f615c7d61cf906da42b0151b5 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_c2f48e277535dcf78f32c0ea9fb99419 = $(`<div id="html_c2f48e277535dcf78f32c0ea9fb99419" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>* MILLER&#x27;S HRDWD FLNG****</h4><strong>Account:</strong> MIL111<br><strong>Address:</strong> 427-A W BETTERAVIA, SANTA MARIA, CA, 93455<br><strong>Sales rep:</strong> 999<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_9b95905f615c7d61cf906da42b0151b5.setContent(html_c2f48e277535dcf78f32c0ea9fb99419);
+            
+        
+
+        circle_marker_ea6cf1ff44719513bfe642f84562d059.bindPopup(popup_9b95905f615c7d61cf906da42b0151b5)
+        ;
+
+        
+    
+    
+            circle_marker_ea6cf1ff44719513bfe642f84562d059.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>* MILLER&#x27;S HRDWD FLNG****</strong><br>Acct: MIL111<br>427-A W BETTERAVIA, SANTA MARIA, CA, 93455<br>Sales rep: 999<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dcea8a9b18fb1d40076f7bb433c3d262 = L.circleMarker(
+                [35.623385173093, -120.654956745289],
+                {"bubblingMouseEvents": true, "color": "#222222", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.86, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(feature_group_4cd925ac25ebd7b2f785bb56d430b65b);
+        
+    
+        var popup_a78aa0a1089c306ba6e6b266d814fcd9 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_98b3551626d3455b3619248f9bd27395 = $(`<div id="html_98b3551626d3455b3619248f9bd27395" style="width: 100.0%; height: 100.0%;"><div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.35;'><h4 style='margin:0 0 6px 0;'>* R E HOLLAND PROF FLR</h4><strong>Account:</strong> REH100<br><strong>Address:</strong> 305 RED RIVER DRIVE, PASO ROBLES, CA, 93446<br><strong>Sales rep:</strong> 999<br><strong>365-day sales:</strong> $0.00</div></div>`)[0];
+                popup_a78aa0a1089c306ba6e6b266d814fcd9.setContent(html_98b3551626d3455b3619248f9bd27395);
+            
+        
+
+        circle_marker_dcea8a9b18fb1d40076f7bb433c3d262.bindPopup(popup_a78aa0a1089c306ba6e6b266d814fcd9)
+        ;
+
+        
+    
+    
+            circle_marker_dcea8a9b18fb1d40076f7bb433c3d262.bindTooltip(
+                `<div>
+                     <div style='font-family:Segoe UI,Arial,sans-serif;font-size:13px;'><strong>* R E HOLLAND PROF FLR</strong><br>Acct: REH100<br>305 RED RIVER DRIVE, PASO ROBLES, CA, 93446<br>Sales rep: 999<br>365-day sales: $0.00</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_4cd925ac25ebd7b2f785bb56d430b65b.addTo(map_28a63b5f52ec4808378295a4ce40cc95);
+        
+    
+            var layer_control_fb99a70c66d8b11f3f27f590d84b76ff_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_42661771423e025242a7e66fd51195a2,
+                },
+                overlays :  {
+                    "Sales Rep 106" : feature_group_0f7315c44bbe873ea12ac97ecd4b8465,
+                    "Sales Rep 19" : feature_group_aed78d7b24235bcea31f8d763117d540,
+                    "Sales Rep 20" : feature_group_1c42215a34c84b6cf05c605431079e07,
+                    "Sales Rep 888" : feature_group_0e2b8f35831b8c28a88055b6dd0a6349,
+                    "Sales Rep 999" : feature_group_4cd925ac25ebd7b2f785bb56d430b65b,
+                },
+            };
+            let layer_control_fb99a70c66d8b11f3f27f590d84b76ff = L.control.layers(
+                layer_control_fb99a70c66d8b11f3f27f590d84b76ff_layers.base_layers,
+                layer_control_fb99a70c66d8b11f3f27f590d84b76ff_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_28a63b5f52ec4808378295a4ce40cc95);
+
+        
+    
+            map_28a63b5f52ec4808378295a4ce40cc95.fitBounds(
+                [[35.121934043766, -120.599381039198], [35.25599801692, -120.64613522409462], [35.574362522724, -120.696895849284], [34.867674501086, -120.456664553125], [35.128552184966, -120.606038281976], [35.635916495526, -120.690042302334], [35.253320837046, -120.666578170222], [35.570702019879, -120.698281964612], [35.246036418363, -120.666559143302], [35.121668924169, -120.618559839492], [35.119892589338, -120.595082380155], [35.314069225133, -120.83371507974], [34.902724979866, -120.448133032978], [35.015572637792, -120.500680860365], [34.930579175675, -120.437339069525], [35.106001093567, -120.622131619892], [34.931485, -120.4337594442547], [34.873612408933, -120.445524752348], [35.068175157098, -120.554055562501], [34.967038359012, -120.432062158562], [34.920938017276, -120.4406874667248], [35.690228210618, -120.693484163235], [35.116704858071, -120.6242174756], [35.271984904665, -120.65623378136496], [35.620551, -120.689275], [35.621676983136, -120.688683009096], [35.032296294827, -120.47777026914], [35.547097281342, -120.707675228225], [35.261936762958, -120.650115358015], [34.868952112677, -120.44447793646], [34.922359504235, -120.437778532709], [35.098391163674, -120.607748609319], [35.121376060472, -120.580249009924], [35.274777796713, -120.667221984205], [35.36632108752, -120.843463233134], [35.489345591278, -120.670816311925], [34.925622830598, -120.463421959646], [34.953319991451, -120.433799978548], [35.258399557908, -120.645679068121], [35.060018810937, -120.529422154897], [34.937890123081, -120.439376374911], [35.135087512962, -120.624559521966], [35.295001107871, -120.684178825786], [35.477565622645, -120.719003118909], [35.504340103597, -120.691692447612], [35.488833289355, -120.66992338778], [34.87386369839, -120.452925302299], [35.25599801692, -120.64657608659539], [35.271984904665, -120.65667473085503], [35.316057454476, -120.844151219746], [34.931485, -120.43419855574528], [34.920938017276, -120.4411265217752], [35.623385173093, -120.654956745289], [35.2645356, -120.6563423]],
+                {"padding": [24, 24]}
+            );
+        
+</script>
+</html>

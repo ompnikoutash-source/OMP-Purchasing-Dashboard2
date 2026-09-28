@@ -1,0 +1,182 @@
+{
+  "fix_map": {
+    "low_fc_high_ss": {
+      "likely_code_locations": [
+        "core/forecasting.py:1137",
+        "core/forecasting.py:1195"
+      ],
+      "recommendation": "Tighten safety stock for inactive SKUs (cap/floor ordering and inactivity suppressor).",
+      "candidate_experiments": [
+        "lean_ss",
+        "tight_inactivity"
+      ]
+    },
+    "future_level_drift": {
+      "likely_code_locations": [
+        "core/forecasting.py:948",
+        "core/forecasting.py:1084"
+      ],
+      "recommendation": "Harden fallback cap and scale-ratio guardrails against recent demand.",
+      "candidate_experiments": [
+        "tight_inactivity",
+        "drift_guard"
+      ]
+    },
+    "weekly_monthly_mismatch": {
+      "likely_code_locations": [
+        "core/inventory.py:224",
+        "flooringwebapp.py:1748"
+      ],
+      "recommendation": "Standardize weekly->monthly conversion to one pathway and one calendar basis.",
+      "candidate_experiments": [
+        "baseline"
+      ]
+    },
+    "default_lead_time_used": {
+      "likely_code_locations": [
+        "sundrieswebapp_refactored.py:525",
+        "mouldingwebapp_refactored.py:527",
+        "flooringwebapp.py:1796"
+      ],
+      "recommendation": "Backfill lead time per vendor/SKU tier and reduce hard default usage.",
+      "candidate_experiments": [
+        "shorter_lead_time"
+      ]
+    },
+    "inventory_position_identity": {
+      "likely_code_locations": [
+        "sundrieswebapp_refactored.py:157",
+        "mouldingwebapp_refactored.py:159",
+        "flooringwebapp.py:600"
+      ],
+      "recommendation": "Fix inventory position arithmetic or source fields before planning stage.",
+      "candidate_experiments": [
+        "baseline"
+      ]
+    },
+    "on_order_duplicate_risk": {
+      "likely_code_locations": [
+        "core/inventory.py:95",
+        "flooringwebapp.py:1816"
+      ],
+      "recommendation": "Include inbound PO due quantity in reorder trigger simulation to avoid duplicate orders.",
+      "candidate_experiments": [
+        "inbound_credit"
+      ]
+    },
+    "negative_history": {
+      "likely_code_locations": [
+        "core/data_loader.py:211",
+        "core/forecasting.py:57",
+        "flooringwebapp.py:618"
+      ],
+      "recommendation": "Use return-aware demand netting so returns erase prior shipments.",
+      "candidate_experiments": [
+        "returns_aware"
+      ]
+    },
+    "fallback_without_recent_demand": {
+      "likely_code_locations": [
+        "core/forecasting.py:993",
+        "core/forecasting.py:1014"
+      ],
+      "recommendation": "Force fallback to zero/low carryover when recent demand is absent.",
+      "candidate_experiments": [
+        "tight_inactivity"
+      ]
+    },
+    "zero_fc_nonzero_policy": {
+      "likely_code_locations": [
+        "core/forecasting.py:1178",
+        "core/forecasting.py:1252"
+      ],
+      "recommendation": "Ensure cap is applied after floors and guardrails.",
+      "candidate_experiments": [
+        "returns_aware",
+        "lean_ss"
+      ]
+    },
+    "s_below_rop": {
+      "likely_code_locations": [
+        "core/forecasting.py:1266"
+      ],
+      "recommendation": "Enforce structural guardrail S >= ROP after all adjustments.",
+      "candidate_experiments": [
+        "baseline"
+      ]
+    },
+    "negative_inventory_position": {
+      "likely_code_locations": [
+        "sundrieswebapp_refactored.py:236",
+        "mouldingwebapp_refactored.py:236",
+        "flooringwebapp.py:600"
+      ],
+      "recommendation": "Trigger emergency replenishment review; inventory position deeply negative indicates unresolved backorder or receiving discrepancy.",
+      "candidate_experiments": [
+        "inbound_credit"
+      ]
+    },
+    "high_backorder_ratio": {
+      "likely_code_locations": [
+        "sundrieswebapp_refactored.py:236",
+        "mouldingwebapp_refactored.py:236"
+      ],
+      "recommendation": "Escalate to purchasing: expedite open PO or place emergency order to clear customer backorders.",
+      "candidate_experiments": [
+        "inbound_credit"
+      ]
+    }
+  },
+  "experiments": {
+    "baseline": {
+      "ss_scale": 1.0,
+      "rop_offset_days": 0.0,
+      "s_scale": 1.0,
+      "forecast_scale": 1.0,
+      "inbound_credit": false
+    },
+    "lean_ss": {
+      "ss_scale": 0.85,
+      "rop_offset_days": 0.0,
+      "s_scale": 0.9,
+      "forecast_scale": 1.0,
+      "inbound_credit": false
+    },
+    "tight_inactivity": {
+      "ss_scale": 0.75,
+      "rop_offset_days": -2.0,
+      "s_scale": 0.85,
+      "forecast_scale": 1.0,
+      "inbound_credit": false
+    },
+    "drift_guard": {
+      "ss_scale": 1.0,
+      "rop_offset_days": 0.0,
+      "s_scale": 1.0,
+      "forecast_scale": 0.9,
+      "inbound_credit": false
+    },
+    "shorter_lead_time": {
+      "ss_scale": 0.95,
+      "rop_offset_days": -3.0,
+      "s_scale": 0.95,
+      "forecast_scale": 1.0,
+      "inbound_credit": false
+    },
+    "inbound_credit": {
+      "ss_scale": 1.0,
+      "rop_offset_days": 0.0,
+      "s_scale": 1.0,
+      "forecast_scale": 1.0,
+      "inbound_credit": true
+    },
+    "returns_aware": {
+      "ss_scale": 1.0,
+      "rop_offset_days": 0.0,
+      "s_scale": 1.0,
+      "forecast_scale": 1.0,
+      "inbound_credit": false
+    }
+  }
+}
+
