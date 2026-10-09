@@ -1822,3 +1822,423 @@ Wrote demand_health_dashboard_live.html
 --no-browser passed, not opening a browser tab (data is refreshed on disk).
 2026-09-28 08:07:19 [INFO] Demand Health refresh completed in 41s
 2026-09-28 08:07:19 [INFO] ============================================================
+2026-09-28 15:00:01 [INFO] ============================================================
+2026-09-28 15:00:01 [INFO] Demand Health refresh started
+Connecting to Gartman...
+Running MonthlyPanel extract (EXTRACT A)...
+  15,522 item-month rows
+Running ItemSnapshot extract (EXTRACT B)...
+  17,130 items
+Loading purchasing plan...
+  708 plan SKUs, updated 2026-09-28 02:32 PM (0.0 days old)
+Scoring...
+  49 planned SKUs are over their order-up-to level but unscored
+Fetching dashboard item metadata...
+  metadata coverage: FAMILY_NAME=1,087, DIVISION=1,087, COLLECTION=198, VENDOR_NUMBER=1,087, VENDOR_NAME=1,084, SALES_UOM=1,087
+Loading marketing blast analysis...
+  51 campaign index rows, sales data through 2026-08-29
+Wrote scored.xlsx and quadrant.png
+Scored 1,087 items (1,500 excluded for insufficient history, 85 excluded for no PO receipt in 24 months).
+  overstocked: 41  ($1,970,284 excess)   |   understocked: 95   |   total excess above target: $3,057,062
+Demand-health metric weights:
+            Metric  Demand-health weight
+             UNITS                  0.35
+           REVENUE                  0.40
+            ORDERS                  0.20
+DISTINCT_CUSTOMERS                  0.05
+Wrote demand_health_dashboard_live.html
+--no-browser passed, not opening a browser tab (data is refreshed on disk).
+2026-09-28 15:00:27 [INFO] Demand Health refresh completed in 26s
+2026-09-28 15:00:27 [INFO] ============================================================
+2026-09-29 08:13:20 [INFO] ============================================================
+2026-09-29 08:13:20 [INFO] Demand Health refresh started
+Connecting to Gartman...
+Running MonthlyPanel extract (EXTRACT A)...
+  15,522 item-month rows
+Running ItemSnapshot extract (EXTRACT B)...
+  17,130 items
+Loading purchasing plan...
+  708 plan SKUs, updated 2026-09-28 02:32 PM (0.7 days old)
+Scoring...
+  49 planned SKUs are over their order-up-to level but unscored
+Fetching dashboard item metadata...
+  metadata coverage: FAMILY_NAME=1,087, DIVISION=1,087, COLLECTION=198, VENDOR_NUMBER=1,087, VENDOR_NAME=1,084, SALES_UOM=1,087
+Loading marketing blast analysis...
+  51 campaign index rows, sales data through 2026-08-29
+Wrote scored.xlsx and quadrant.png
+Scored 1,087 items (1,500 excluded for insufficient history, 85 excluded for no PO receipt in 24 months).
+  overstocked: 41  ($1,963,755 excess)   |   understocked: 95   |   total excess above target: $3,050,232
+Demand-health metric weights:
+            Metric  Demand-health weight
+             UNITS                  0.35
+           REVENUE                  0.40
+            ORDERS                  0.20
+DISTINCT_CUSTOMERS                  0.05
+Wrote demand_health_dashboard_live.html
+--no-browser passed, not opening a browser tab (data is refreshed on disk).
+2026-09-29 08:13:55 [INFO] Demand Health refresh completed in 35s
+2026-09-29 08:13:55 [INFO] ============================================================
+2026-09-29 15:00:01 [INFO] ============================================================
+2026-09-29 15:00:01 [INFO] Demand Health refresh started
+Connecting to Gartman...
+Running MonthlyPanel extract (EXTRACT A)...
+  15,522 item-month rows
+Running ItemSnapshot extract (EXTRACT B)...
+  17,131 items
+Loading purchasing plan...
+  708 plan SKUs, updated 2026-09-29 02:31 PM (0.0 days old)
+Scoring...
+  90 planned SKUs are over their order-up-to level but unscored
+Fetching dashboard item metadata...
+  metadata coverage: FAMILY_NAME=1,087, DIVISION=1,087, COLLECTION=198, VENDOR_NUMBER=1,087, VENDOR_NAME=1,084, SALES_UOM=1,087
+Loading marketing blast analysis...
+  51 campaign index rows, sales data through 2026-08-29
+Wrote scored.xlsx and quadrant.png
+Scored 1,087 items (1,500 excluded for insufficient history, 85 excluded for no PO receipt in 24 months).
+  overstocked: 56  ($2,873,317 excess)   |   understocked: 67   |   total excess above target: $4,290,167
+Demand-health metric weights:
+            Metric  Demand-health weight
+             UNITS                  0.35
+           REVENUE                  0.40
+            ORDERS                  0.20
+DISTINCT_CUSTOMERS                  0.05
+Wrote demand_health_dashboard_live.html
+--no-browser passed, not opening a browser tab (data is refreshed on disk).
+2026-09-29 15:00:28 [INFO] Demand Health refresh completed in 26s
+2026-09-29 15:00:28 [INFO] ============================================================
+2026-09-30 08:15:56 [INFO] ============================================================
+2026-09-30 08:15:56 [INFO] Demand Health refresh started
+Connecting to Gartman...
+Running MonthlyPanel extract (EXTRACT A)...
+  15,522 item-month rows
+Running ItemSnapshot extract (EXTRACT B)...
+  17,131 items
+Loading purchasing plan...
+  708 plan SKUs, updated 2026-09-29 02:31 PM (0.7 days old)
+Scoring...
+  90 planned SKUs are over their order-up-to level but unscored
+Fetching dashboard item metadata...
+  metadata coverage: FAMILY_NAME=1,087, DIVISION=1,087, COLLECTION=198, VENDOR_NUMBER=1,087, VENDOR_NAME=1,084, SALES_UOM=1,087
+Loading marketing blast analysis...
+  51 campaign index rows, sales data through 2026-08-29
+Wrote scored.xlsx and quadrant.png
+Scored 1,087 items (1,500 excluded for insufficient history, 85 excluded for no PO receipt in 24 months).
+  overstocked: 56  ($2,875,807 excess)   |   understocked: 67   |   total excess above target: $4,288,126
+Demand-health metric weights:
+            Metric  Demand-health weight
+             UNITS                  0.35
+           REVENUE                  0.40
+            ORDERS                  0.20
+DISTINCT_CUSTOMERS                  0.05
+Wrote demand_health_dashboard_live.html
+--no-browser passed, not opening a browser tab (data is refreshed on disk).
+2026-09-30 08:16:30 [INFO] Demand Health refresh completed in 33s
+2026-09-30 08:16:30 [INFO] ============================================================
+2026-09-30 15:00:02 [INFO] ============================================================
+2026-09-30 15:00:02 [INFO] Demand Health refresh started
+Connecting to Gartman...
+Running MonthlyPanel extract (EXTRACT A)...
+  15,522 item-month rows
+Running ItemSnapshot extract (EXTRACT B)...
+  17,136 items
+Loading purchasing plan...
+  708 plan SKUs, updated 2026-09-30 02:31 PM (0.0 days old)
+Scoring...
+  90 planned SKUs are over their order-up-to level but unscored
+Fetching dashboard item metadata...
+  metadata coverage: FAMILY_NAME=1,087, DIVISION=1,087, COLLECTION=198, VENDOR_NUMBER=1,087, VENDOR_NAME=1,084, SALES_UOM=1,087
+Loading marketing blast analysis...
+  51 campaign index rows, sales data through 2026-08-29
+Wrote scored.xlsx and quadrant.png
+Scored 1,087 items (1,500 excluded for insufficient history, 85 excluded for no PO receipt in 24 months).
+  overstocked: 54  ($2,839,354 excess)   |   understocked: 68   |   total excess above target: $4,253,149
+Demand-health metric weights:
+            Metric  Demand-health weight
+             UNITS                  0.35
+           REVENUE                  0.40
+            ORDERS                  0.20
+DISTINCT_CUSTOMERS                  0.05
+Wrote demand_health_dashboard_live.html
+--no-browser passed, not opening a browser tab (data is refreshed on disk).
+2026-09-30 15:00:28 [INFO] Demand Health refresh completed in 26s
+2026-09-30 15:00:28 [INFO] ============================================================
+2026-10-02 08:09:18 [INFO] ============================================================
+2026-10-02 08:09:19 [INFO] Demand Health refresh started
+Connecting to Gartman...
+Running MonthlyPanel extract (EXTRACT A)...
+  15,320 item-month rows
+Running ItemSnapshot extract (EXTRACT B)...
+  17,137 items
+Loading purchasing plan...
+  708 plan SKUs, updated 2026-09-30 02:31 PM (1.7 days old)  *** STALE -- re-run the purchasing refresh ***
+Scoring...
+  93 planned SKUs are over their order-up-to level but unscored
+Fetching dashboard item metadata...
+  metadata coverage: FAMILY_NAME=1,073, DIVISION=1,073, COLLECTION=194, VENDOR_NUMBER=1,073, VENDOR_NAME=1,070, SALES_UOM=1,073
+Loading marketing blast analysis...
+  51 campaign index rows, sales data through 2026-08-29
+Wrote scored.xlsx and quadrant.png
+Scored 1,073 items (1,481 excluded for insufficient history, 77 excluded for no PO receipt in 24 months).
+  overstocked: 51  ($2,687,321 excess)   |   understocked: 69   |   total excess above target: $4,095,086
+Demand-health metric weights:
+            Metric  Demand-health weight
+             UNITS                  0.35
+           REVENUE                  0.40
+            ORDERS                  0.20
+DISTINCT_CUSTOMERS                  0.05
+Wrote demand_health_dashboard_live.html
+--no-browser passed, not opening a browser tab (data is refreshed on disk).
+2026-10-02 08:09:56 [INFO] Demand Health refresh completed in 37s
+2026-10-02 08:09:56 [INFO] ============================================================
+2026-10-02 15:00:01 [INFO] ============================================================
+2026-10-02 15:00:01 [INFO] Demand Health refresh started
+Connecting to Gartman...
+Running MonthlyPanel extract (EXTRACT A)...
+  15,320 item-month rows
+Running ItemSnapshot extract (EXTRACT B)...
+  17,138 items
+Loading purchasing plan...
+  708 plan SKUs, updated 2026-10-02 02:31 PM (0.0 days old)
+Scoring...
+  93 planned SKUs are over their order-up-to level but unscored
+Fetching dashboard item metadata...
+  metadata coverage: FAMILY_NAME=1,073, DIVISION=1,073, COLLECTION=194, VENDOR_NUMBER=1,073, VENDOR_NAME=1,070, SALES_UOM=1,073
+Loading marketing blast analysis...
+  51 campaign index rows, sales data through 2026-08-29
+Wrote scored.xlsx and quadrant.png
+Scored 1,073 items (1,481 excluded for insufficient history, 77 excluded for no PO receipt in 24 months).
+  overstocked: 50  ($2,631,119 excess)   |   understocked: 72   |   total excess above target: $4,020,824
+Demand-health metric weights:
+            Metric  Demand-health weight
+             UNITS                  0.35
+           REVENUE                  0.40
+            ORDERS                  0.20
+DISTINCT_CUSTOMERS                  0.05
+Wrote demand_health_dashboard_live.html
+--no-browser passed, not opening a browser tab (data is refreshed on disk).
+2026-10-02 15:00:25 [INFO] Demand Health refresh completed in 24s
+2026-10-02 15:00:25 [INFO] ============================================================
+2026-10-05 15:00:01 [INFO] ============================================================
+2026-10-05 15:00:01 [INFO] Demand Health refresh started
+Connecting to Gartman...
+Running MonthlyPanel extract (EXTRACT A)...
+  15,320 item-month rows
+Running ItemSnapshot extract (EXTRACT B)...
+  17,146 items
+Loading purchasing plan...
+  707 plan SKUs, updated 2026-10-05 02:35 PM (0.0 days old)
+Scoring...
+  95 planned SKUs are over their order-up-to level but unscored
+Fetching dashboard item metadata...
+  metadata coverage: FAMILY_NAME=1,072, DIVISION=1,072, COLLECTION=194, VENDOR_NUMBER=1,072, VENDOR_NAME=1,069, SALES_UOM=1,072
+Loading marketing blast analysis...
+  51 campaign index rows, sales data through 2026-08-29
+Wrote scored.xlsx and quadrant.png
+Scored 1,072 items (1,481 excluded for insufficient history, 78 excluded for no PO receipt in 24 months).
+  overstocked: 51  ($2,579,826 excess)   |   understocked: 73   |   total excess above target: $4,014,974
+Demand-health metric weights:
+            Metric  Demand-health weight
+             UNITS                  0.35
+           REVENUE                  0.40
+            ORDERS                  0.20
+DISTINCT_CUSTOMERS                  0.05
+Wrote demand_health_dashboard_live.html
+--no-browser passed, not opening a browser tab (data is refreshed on disk).
+2026-10-05 15:00:35 [INFO] Demand Health refresh completed in 34s
+2026-10-05 15:00:35 [INFO] ============================================================
+2026-10-06 07:21:53 [INFO] ============================================================
+2026-10-06 07:21:54 [INFO] Demand Health refresh started
+Connecting to Gartman...
+Running MonthlyPanel extract (EXTRACT A)...
+  15,320 item-month rows
+Running ItemSnapshot extract (EXTRACT B)...
+  17,146 items
+Loading purchasing plan...
+  707 plan SKUs, updated 2026-10-05 02:35 PM (0.7 days old)
+Scoring...
+  95 planned SKUs are over their order-up-to level but unscored
+Fetching dashboard item metadata...
+  metadata coverage: FAMILY_NAME=1,072, DIVISION=1,072, COLLECTION=194, VENDOR_NUMBER=1,072, VENDOR_NAME=1,069, SALES_UOM=1,072
+Loading marketing blast analysis...
+  51 campaign index rows, sales data through 2026-08-29
+Wrote scored.xlsx and quadrant.png
+Scored 1,072 items (1,481 excluded for insufficient history, 78 excluded for no PO receipt in 24 months).
+  overstocked: 50  ($2,549,092 excess)   |   understocked: 73   |   total excess above target: $3,992,989
+Demand-health metric weights:
+            Metric  Demand-health weight
+             UNITS                  0.35
+           REVENUE                  0.40
+            ORDERS                  0.20
+DISTINCT_CUSTOMERS                  0.05
+Wrote demand_health_dashboard_live.html
+--no-browser passed, not opening a browser tab (data is refreshed on disk).
+2026-10-06 07:22:28 [INFO] Demand Health refresh completed in 34s
+2026-10-06 07:22:28 [INFO] ============================================================
+2026-10-06 15:00:01 [INFO] ============================================================
+2026-10-06 15:00:01 [INFO] Demand Health refresh started
+Connecting to Gartman...
+Running MonthlyPanel extract (EXTRACT A)...
+  15,320 item-month rows
+Running ItemSnapshot extract (EXTRACT B)...
+  17,148 items
+Loading purchasing plan...
+  707 plan SKUs, updated 2026-10-06 02:36 PM (0.0 days old)
+Scoring...
+  95 planned SKUs are over their order-up-to level but unscored
+Fetching dashboard item metadata...
+  metadata coverage: FAMILY_NAME=1,072, DIVISION=1,072, COLLECTION=194, VENDOR_NUMBER=1,072, VENDOR_NAME=1,069, SALES_UOM=1,072
+Loading marketing blast analysis...
+  51 campaign index rows, sales data through 2026-08-29
+Wrote scored.xlsx and quadrant.png
+Scored 1,072 items (1,481 excluded for insufficient history, 78 excluded for no PO receipt in 24 months).
+  overstocked: 49  ($2,555,720 excess)   |   understocked: 73   |   total excess above target: $3,872,796
+Demand-health metric weights:
+            Metric  Demand-health weight
+             UNITS                  0.35
+           REVENUE                  0.40
+            ORDERS                  0.20
+DISTINCT_CUSTOMERS                  0.05
+Wrote demand_health_dashboard_live.html
+--no-browser passed, not opening a browser tab (data is refreshed on disk).
+2026-10-06 15:00:28 [INFO] Demand Health refresh completed in 27s
+2026-10-06 15:00:28 [INFO] ============================================================
+2026-10-07 06:30:02 [INFO] ============================================================
+2026-10-07 06:30:02 [INFO] Demand Health refresh started
+Connecting to Gartman...
+Running MonthlyPanel extract (EXTRACT A)...
+  15,320 item-month rows
+Running ItemSnapshot extract (EXTRACT B)...
+  17,148 items
+Loading purchasing plan...
+  707 plan SKUs, updated 2026-10-06 02:36 PM (0.7 days old)
+Scoring...
+  95 planned SKUs are over their order-up-to level but unscored
+Fetching dashboard item metadata...
+  metadata coverage: FAMILY_NAME=1,072, DIVISION=1,072, COLLECTION=195, VENDOR_NUMBER=1,072, VENDOR_NAME=1,069, SALES_UOM=1,072
+Loading marketing blast analysis...
+  51 campaign index rows, sales data through 2026-08-29
+Wrote scored.xlsx and quadrant.png
+Scored 1,072 items (1,481 excluded for insufficient history, 78 excluded for no PO receipt in 24 months).
+  overstocked: 49  ($2,555,416 excess)   |   understocked: 73   |   total excess above target: $3,875,252
+Demand-health metric weights:
+            Metric  Demand-health weight
+             UNITS                  0.35
+           REVENUE                  0.40
+            ORDERS                  0.20
+DISTINCT_CUSTOMERS                  0.05
+Wrote demand_health_dashboard_live.html
+--no-browser passed, not opening a browser tab (data is refreshed on disk).
+2026-10-07 06:30:37 [INFO] Demand Health refresh completed in 36s
+2026-10-07 06:30:37 [INFO] ============================================================
+2026-10-07 15:00:01 [INFO] ============================================================
+2026-10-07 15:00:01 [INFO] Demand Health refresh started
+Connecting to Gartman...
+Running MonthlyPanel extract (EXTRACT A)...
+  15,320 item-month rows
+Running ItemSnapshot extract (EXTRACT B)...
+  17,152 items
+Loading purchasing plan...
+  707 plan SKUs, updated 2026-10-07 02:31 PM (0.0 days old)
+Scoring...
+  92 planned SKUs are over their order-up-to level but unscored
+Fetching dashboard item metadata...
+  metadata coverage: FAMILY_NAME=1,072, DIVISION=1,072, COLLECTION=195, VENDOR_NUMBER=1,072, VENDOR_NAME=1,069, SALES_UOM=1,072
+Loading marketing blast analysis...
+  51 campaign index rows, sales data through 2026-08-29
+Wrote scored.xlsx and quadrant.png
+Scored 1,072 items (1,481 excluded for insufficient history, 78 excluded for no PO receipt in 24 months).
+  overstocked: 46  ($2,438,470 excess)   |   understocked: 74   |   total excess above target: $3,827,335
+Demand-health metric weights:
+            Metric  Demand-health weight
+             UNITS                  0.35
+           REVENUE                  0.40
+            ORDERS                  0.20
+DISTINCT_CUSTOMERS                  0.05
+Wrote demand_health_dashboard_live.html
+--no-browser passed, not opening a browser tab (data is refreshed on disk).
+2026-10-07 15:00:27 [INFO] Demand Health refresh completed in 26s
+2026-10-07 15:00:27 [INFO] ============================================================
+2026-10-08 07:58:00 [INFO] ============================================================
+2026-10-08 07:58:00 [INFO] Demand Health refresh started
+Connecting to Gartman...
+Running MonthlyPanel extract (EXTRACT A)...
+  15,320 item-month rows
+Running ItemSnapshot extract (EXTRACT B)...
+  17,152 items
+Loading purchasing plan...
+  707 plan SKUs, updated 2026-10-07 02:31 PM (0.7 days old)
+Scoring...
+  92 planned SKUs are over their order-up-to level but unscored
+Fetching dashboard item metadata...
+  metadata coverage: FAMILY_NAME=1,071, DIVISION=1,071, COLLECTION=195, VENDOR_NUMBER=1,071, VENDOR_NAME=1,068, SALES_UOM=1,071
+Loading marketing blast analysis...
+  51 campaign index rows, sales data through 2026-08-29
+Wrote scored.xlsx and quadrant.png
+Scored 1,071 items (1,481 excluded for insufficient history, 79 excluded for no PO receipt in 24 months).
+  overstocked: 46  ($2,430,695 excess)   |   understocked: 74   |   total excess above target: $3,805,736
+Demand-health metric weights:
+            Metric  Demand-health weight
+             UNITS                  0.35
+           REVENUE                  0.40
+            ORDERS                  0.20
+DISTINCT_CUSTOMERS                  0.05
+Wrote demand_health_dashboard_live.html
+--no-browser passed, not opening a browser tab (data is refreshed on disk).
+2026-10-08 07:58:32 [INFO] Demand Health refresh completed in 32s
+2026-10-08 07:58:32 [INFO] ============================================================
+2026-10-08 15:00:01 [INFO] ============================================================
+2026-10-08 15:00:02 [INFO] Demand Health refresh started
+Connecting to Gartman...
+Running MonthlyPanel extract (EXTRACT A)...
+  15,320 item-month rows
+Running ItemSnapshot extract (EXTRACT B)...
+  17,156 items
+Loading purchasing plan...
+  707 plan SKUs, updated 2026-10-08 02:37 PM (0.0 days old)
+Scoring...
+  51 planned SKUs are over their order-up-to level but unscored
+Fetching dashboard item metadata...
+  metadata coverage: FAMILY_NAME=1,071, DIVISION=1,071, COLLECTION=195, VENDOR_NUMBER=1,071, VENDOR_NAME=1,068, SALES_UOM=1,071
+Loading marketing blast analysis...
+  51 campaign index rows, sales data through 2026-08-29
+Wrote scored.xlsx and quadrant.png
+Scored 1,071 items (1,481 excluded for insufficient history, 79 excluded for no PO receipt in 24 months).
+  overstocked: 28  ($1,463,057 excess)   |   understocked: 100   |   total excess above target: $2,742,837
+Demand-health metric weights:
+            Metric  Demand-health weight
+             UNITS                  0.35
+           REVENUE                  0.40
+            ORDERS                  0.20
+DISTINCT_CUSTOMERS                  0.05
+Wrote demand_health_dashboard_live.html
+--no-browser passed, not opening a browser tab (data is refreshed on disk).
+2026-10-08 15:00:29 [INFO] Demand Health refresh completed in 28s
+2026-10-08 15:00:29 [INFO] ============================================================
+2026-10-09 06:30:02 [INFO] ============================================================
+2026-10-09 06:30:02 [INFO] Demand Health refresh started
+Connecting to Gartman...
+Running MonthlyPanel extract (EXTRACT A)...
+  15,320 item-month rows
+Running ItemSnapshot extract (EXTRACT B)...
+  17,156 items
+Loading purchasing plan...
+  707 plan SKUs, updated 2026-10-08 02:37 PM (0.7 days old)
+Scoring...
+  51 planned SKUs are over their order-up-to level but unscored
+Fetching dashboard item metadata...
+  metadata coverage: FAMILY_NAME=1,071, DIVISION=1,071, COLLECTION=195, VENDOR_NUMBER=1,071, VENDOR_NAME=1,068, SALES_UOM=1,071
+Loading marketing blast analysis...
+  51 campaign index rows, sales data through 2026-08-29
+Wrote scored.xlsx and quadrant.png
+Scored 1,071 items (1,481 excluded for insufficient history, 79 excluded for no PO receipt in 24 months).
+  overstocked: 28  ($1,459,997 excess)   |   understocked: 100   |   total excess above target: $2,746,777
+Demand-health metric weights:
+            Metric  Demand-health weight
+             UNITS                  0.35
+           REVENUE                  0.40
+            ORDERS                  0.20
+DISTINCT_CUSTOMERS                  0.05
+Wrote demand_health_dashboard_live.html
+--no-browser passed, not opening a browser tab (data is refreshed on disk).
+2026-10-09 06:30:34 [INFO] Demand Health refresh completed in 33s
+2026-10-09 06:30:34 [INFO] ============================================================
